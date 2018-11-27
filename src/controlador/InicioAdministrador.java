@@ -1,10 +1,13 @@
 package controlador;
 
 import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -51,7 +54,15 @@ public class InicioAdministrador implements Initializable {
         AnchorPane.setRightAnchor(root, 0.0);
         AnchorPane.setLeftAnchor(root, 0.0);
         AnchorPane.setBottomAnchor(root, 0.0);
+
+
+
+        root.setPrefHeight(Pane.getHeight());
+        root.setPrefWidth(Pane.getWidth());
+
         Pane.getChildren().setAll(root);
+
+
     }
 
     @FXML
@@ -67,8 +78,22 @@ public class InicioAdministrador implements Initializable {
     public void init() {
         Estado.setText(usuario.getNombre());
         ((Stage)Pane.getScene().getWindow()).setTitle(usuario.getaPaterno()+ " "+usuario.getaMaterno()+", "+usuario.getNombre());
+
+
+        Stage escenario = (Stage) Pane.getScene().getWindow();
+
+        escenario.widthProperty().addListener((observable, oldValue, newValue) -> {
+            if(Pane.getChildren().size()>0) {
+                AnchorPane root = (AnchorPane) Pane.getChildren().get(0);
+                root.setPrefHeight(Pane.getHeight());
+                root.setPrefWidth(Pane.getWidth());
+            }
+        });
+
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     }
+
+
 }

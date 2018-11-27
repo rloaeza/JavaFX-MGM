@@ -29,7 +29,7 @@
             </Menu>
         </menus>
       </MenuBar>
-      <Pane fx:id="Pane" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: gray;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0" />
+      <Pane fx:id="Pane" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0" />
       <Label fx:id="Estado" layoutY="378.0" prefHeight="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>
