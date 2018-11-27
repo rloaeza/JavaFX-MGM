@@ -67,6 +67,16 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Separator prefWidth="200.0" visible="false" />
+            <Button mnemonicParsing="false" onAction="#regresar">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/regresar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </HBox>
       <JFXTextField alignment="CENTER" layoutX="14.0" layoutY="23.0" prefHeight="27.0" prefWidth="300.0" promptText="buscar" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="30.0" />

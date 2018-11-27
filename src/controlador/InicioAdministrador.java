@@ -48,18 +48,8 @@ public class InicioAdministrador implements Initializable {
     @FXML
     void catalogoTiposDeProductos(ActionEvent event) throws IOException {
         AnchorPane root = FXMLLoader.load(getClass().getResource("/vista/tipos_productos.fxml"));
-
-
-        AnchorPane.setTopAnchor(root, 0.0);
-        AnchorPane.setRightAnchor(root, 0.0);
-        AnchorPane.setLeftAnchor(root, 0.0);
-        AnchorPane.setBottomAnchor(root, 0.0);
-
-
-
         root.setPrefHeight(Pane.getHeight());
         root.setPrefWidth(Pane.getWidth());
-
         Pane.getChildren().setAll(root);
 
 

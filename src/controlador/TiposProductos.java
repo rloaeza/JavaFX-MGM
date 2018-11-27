@@ -44,4 +44,9 @@ public class TiposProductos {
 
     }
 
+    @FXML
+    void regresar(ActionEvent event) {
+
+    }
+
 }
