@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import modelo.Funciones;
@@ -37,6 +38,25 @@ public class InicioAdministrador implements Initializable {
     @FXML
     void salir(ActionEvent event) {
         Platform.exit();
+    }
+
+
+
+    @FXML
+    void catalogoTiposDeProductos(ActionEvent event) throws IOException {
+        AnchorPane root = FXMLLoader.load(getClass().getResource("/vista/tipos_productos.fxml"));
+
+
+        AnchorPane.setTopAnchor(root, 0.0);
+        AnchorPane.setRightAnchor(root, 0.0);
+        AnchorPane.setLeftAnchor(root, 0.0);
+        AnchorPane.setBottomAnchor(root, 0.0);
+        Pane.getChildren().setAll(root);
+    }
+
+    @FXML
+    void catologoProductos(ActionEvent event) {
+
     }
 
 

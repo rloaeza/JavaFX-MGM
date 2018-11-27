@@ -12,12 +12,12 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.TiposProductos">
+<AnchorPane fx:id="Pane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.TiposProductos">
    <children>
-      <JFXListView layoutX="7.0" minWidth="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="80.0" />
-      <JFXTextField layoutX="489.0" layoutY="194.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <JFXTextField layoutX="489.0" layoutY="274.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <JFXTextArea layoutX="489.0" layoutY="352.0" prefHeight="91.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <JFXListView fx:id="ListaTiposDeProductos" layoutX="7.0" minWidth="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="80.0" />
+      <JFXTextField fx:id="Clave" layoutX="489.0" layoutY="194.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <JFXTextField fx:id="Nombre" layoutX="489.0" layoutY="274.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <JFXTextArea fx:id="Descripcion" layoutX="489.0" layoutY="352.0" prefHeight="91.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
       <Label layoutX="394.0" layoutY="213.0" prefHeight="17.0" prefWidth="73.0" text="Clave" AnchorPane.leftAnchor="394.0" />
       <Label layoutX="394.0" layoutY="289.0" prefHeight="17.0" prefWidth="73.0" text="Nombre" AnchorPane.leftAnchor="394.0" />
       <Label layoutX="394.0" layoutY="355.0" text="Descripción" AnchorPane.leftAnchor="394.0" />
@@ -28,7 +28,17 @@
       </Label>
       <HBox alignment="CENTER" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0">
          <children>
-            <Button mnemonicParsing="false">
+            <Button mnemonicParsing="false" onAction="#limpiar">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/limpiar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator prefWidth="200.0" visible="false" />
+            <Button mnemonicParsing="false" onAction="#agregar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -38,7 +48,7 @@
                </graphic>
             </Button>
             <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false">
+            <Button mnemonicParsing="false" onAction="#actualizar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -48,7 +58,7 @@
                </graphic>
             </Button>
             <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false">
+            <Button mnemonicParsing="false" onAction="#eliminar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
