@@ -19,6 +19,8 @@ import modelo.Personal;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.LinkedHashMap;
+import java.util.Map;
 import java.util.ResourceBundle;
 
 public class InicioAdministrador implements Initializable {
@@ -55,11 +57,13 @@ public class InicioAdministrador implements Initializable {
 
     }
 
+
     @FXML
-    void catologoProductos(ActionEvent event) {
-
+    void catalogoTratamientos(ActionEvent event) throws IOException {
+        Map<String,Object> params = new LinkedHashMap<>();
+        params.put("idClinica", 1);
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource("/vista/tratamientos.fxml"), params, new Productos());
     }
-
 
     public void setUsuario(Personal p) {
         this.usuario = p;

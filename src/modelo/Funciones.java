@@ -3,10 +3,13 @@ package modelo;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import controlador.Controlador;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -82,5 +85,19 @@ public class Funciones {
         window.showAndWait();
 
     }
+
+    public static void CargarVista(AnchorPane Pane, URL vista, Map<String, Object> params, Controlador c ) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(vista);
+        AnchorPane root = fxmlLoader.load();
+        root.setPrefHeight(Pane.getHeight());
+        root.setPrefWidth(Pane.getWidth());
+        Pane.getChildren().setAll(root);
+        c = fxmlLoader.getController();
+        c.setParams(params);
+        c.init();
+
+    }
+
+
 
 }

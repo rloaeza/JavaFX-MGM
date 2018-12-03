@@ -5,7 +5,6 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.InicioAdministrador">
    <children>
@@ -19,17 +18,13 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Catálogos">
                <items>
-                  <Menu mnemonicParsing="false" text="Productos">
-                    <items>
-                        <MenuItem mnemonicParsing="false" onAction="#catalogoTiposDeProductos" text="Tipos de productos" />
-                        <MenuItem mnemonicParsing="false" onAction="#catologoProductos" text="Productos" />
-                    </items>
-                  </Menu>
+                  <MenuItem mnemonicParsing="false" onAction="#catalogoTiposDeProductos" text="Productos" />
+                  <MenuItem mnemonicParsing="false" onAction="#catalogoTratamientos" text="Tratamientos" />
                </items>
             </Menu>
         </menus>
       </MenuBar>
-      <Pane fx:id="Pane" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0" />
+      <AnchorPane fx:id="Pane" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0" />
       <Label fx:id="Estado" layoutY="378.0" prefHeight="30.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>

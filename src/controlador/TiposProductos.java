@@ -11,6 +11,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -24,7 +25,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class TiposProductos implements Initializable {
+public class TiposProductos extends Controlador implements Initializable {
 
 
 
@@ -46,26 +47,26 @@ public class TiposProductos implements Initializable {
 
     @FXML
     void actualizar(ActionEvent event) throws IOException {
-        Map<String,Object> params = new LinkedHashMap<>();
-        params.put("Actividad", "TiposProductos: Actualizar");
-        params.put("clave", Clave.getText());
-        params.put("nombre", Nombre.getText());
-        params.put("descripcion", Descripcion.getText());
-        params.put("idClinica", ListaTiposDeProductos.getSelectionModel().getSelectedItem().getIdClinica());
-        params.put("idTipoProducto", ListaTiposDeProductos.getSelectionModel().getSelectedItem().getIdTipoProducto());
-        JsonArray rootArray = Funciones.consultarBD(params);
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "TiposProductos: Actualizar");
+        paramsJSON.put("clave", Clave.getText());
+        paramsJSON.put("nombre", Nombre.getText());
+        paramsJSON.put("descripcion", Descripcion.getText());
+        paramsJSON.put("idClinica", ListaTiposDeProductos.getSelectionModel().getSelectedItem().getIdClinica());
+        paramsJSON.put("idTipoProducto", ListaTiposDeProductos.getSelectionModel().getSelectedItem().getIdTipoProducto());
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
     }
 
     @FXML
     void agregar(ActionEvent event) throws IOException {
-        Map<String,Object> params = new LinkedHashMap<>();
-        params.put("Actividad", "TiposProductos: Agregar");
-        params.put("clave", Clave.getText());
-        params.put("nombre", Nombre.getText());
-        params.put("descripcion", Descripcion.getText());
-        params.put("idClinica", 1);
-        JsonArray rootArray = Funciones.consultarBD(params);
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "TiposProductos: Agregar");
+        paramsJSON.put("clave", Clave.getText());
+        paramsJSON.put("nombre", Nombre.getText());
+        paramsJSON.put("descripcion", Descripcion.getText());
+        paramsJSON.put("idClinica", 1);
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
 
     }
@@ -73,13 +74,13 @@ public class TiposProductos implements Initializable {
     @FXML
     void eliminar(ActionEvent event) throws IOException {
 
-        Map<String,Object> params = new LinkedHashMap<>();
-        params.put("Actividad", "TiposProductos: Eliminar");
-        params.put("idTipoProducto", ListaTiposDeProductos.getSelectionModel().getSelectedItem().getIdTipoProducto());
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "TiposProductos: Eliminar");
+        paramsJSON.put("idTipoProducto", ListaTiposDeProductos.getSelectionModel().getSelectedItem().getIdTipoProducto());
 
 
 
-        JsonArray rootArray = Funciones.consultarBD(params);
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
 
 
@@ -107,9 +108,27 @@ public class TiposProductos implements Initializable {
             e.printStackTrace();
         }
         ListaTiposDeProductos.setOnMouseClicked(event -> {
-            ListaTiposDeProductos.getSelectionModel().getSelectedIndex();
-            cargarDatosPantalla(ListaTiposDeProductos.getSelectionModel().getSelectedItem());
+            if(event.getClickCount()==1) {
+                ListaTiposDeProductos.getSelectionModel().getSelectedIndex();
+                cargarDatosPantalla(ListaTiposDeProductos.getSelectionModel().getSelectedItem());
+            }
+            else if(event.getClickCount()==2) {
+                try {
+                    params = new LinkedHashMap<>();
+                    params.put("TituloTipoProducto", ListaTiposDeProductos.getSelectionModel().getSelectedItem().toString());
+                    params.put("idTipoProducto", ListaTiposDeProductos.getSelectionModel().getSelectedItem().getIdTipoProducto());
+                    params.put("idClinica", ListaTiposDeProductos.getSelectionModel().getSelectedItem().getIdClinica());
+                    Funciones.CargarVista(Pane, getClass().getResource("/vista/productos.fxml"), params, new Productos());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+
         });
+
+
 
     }
     private void cargarDatosPantalla(modelo.TiposProductos p ) {
@@ -123,10 +142,10 @@ public class TiposProductos implements Initializable {
 
         ObservableList<modelo.TiposProductos> listaTiposProductos = FXCollections.observableArrayList();
 
-        Map<String,Object> params = new LinkedHashMap<>();
-        params.put("Actividad", "TiposProductos: Lista");
-        params.put("idClinica", "1");
-        JsonArray rootArray = Funciones.consultarBD(params);
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "TiposProductos: Lista");
+        paramsJSON.put("idClinica", "1");
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
             for(int i = 1; i< t; i++) {
