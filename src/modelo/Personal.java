@@ -3,13 +3,29 @@ package modelo;
 public class Personal {
     private int idPersonal;
     private String nombre;
-    private String aPaterno;
-    private String aMaterno;
+    private String apellidos;
+
     private String email;
+    private String telefono;
     private String movil;
     private String usuario;
     private String clave;
     private int idClinica;
+
+    public Personal() {
+    }
+
+    public Personal(int idPersonal, String nombre, String apellidos, String email, String telefono, String movil, String usuario, String clave, int idClinica) {
+        this.idPersonal = idPersonal;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.email = email;
+        this.telefono = telefono;
+        this.movil = movil;
+        this.usuario = usuario;
+        this.clave = clave;
+        this.idClinica = idClinica;
+    }
 
     public int getIdPersonal() {
         return idPersonal;
@@ -27,20 +43,12 @@ public class Personal {
         this.nombre = nombre;
     }
 
-    public String getaPaterno() {
-        return aPaterno;
+    public String getApellidos() {
+        return apellidos;
     }
 
-    public void setaPaterno(String aPaterno) {
-        this.aPaterno = aPaterno;
-    }
-
-    public String getaMaterno() {
-        return aMaterno;
-    }
-
-    public void setaMaterno(String aMaterno) {
-        this.aMaterno = aMaterno;
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
     }
 
     public String getEmail() {
@@ -49,6 +57,14 @@ public class Personal {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
     }
 
     public String getMovil() {
@@ -81,5 +97,10 @@ public class Personal {
 
     public void setIdClinica(int idClinica) {
         this.idClinica = idClinica;
+    }
+
+    @Override
+    public String toString() {
+        return nombre+ " "+apellidos;
     }
 }

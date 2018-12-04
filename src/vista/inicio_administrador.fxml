@@ -18,6 +18,7 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Catálogos">
                <items>
+                  <MenuItem mnemonicParsing="false" onAction="#catalogoPersonal" text="Personal" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoPacientes" text="Pacientes" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoTiposDeProductos" text="Productos" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoTratamientos" text="Tratamientos" />
