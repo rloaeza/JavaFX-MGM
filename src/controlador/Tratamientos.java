@@ -108,6 +108,17 @@ public class Tratamientos extends Controlador implements Initializable {
 
                 cargarDatosPantalla(ListaDeTratamientos.getSelectionModel().getSelectedItem());
             }
+            else {
+                try {
+                    Map<String,Object> paramsView = new LinkedHashMap<>();
+                    paramsView.put("TituloTratamiento", ListaDeTratamientos.getSelectionModel().getSelectedItem().getNombre());
+                    paramsView.put("idTratamiento", ListaDeTratamientos.getSelectionModel().getSelectedItem().getIdTratamiento());
+                    Funciones.CargarVista(Pane, getClass().getResource("/vista/detalle_tratamientos.fxml"), paramsView, new Productos());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            }
         });
     }
 
