@@ -12,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import modelo.Funciones;
-import modelo.Productos;
 
 import java.io.IOException;
 import java.net.URL;
