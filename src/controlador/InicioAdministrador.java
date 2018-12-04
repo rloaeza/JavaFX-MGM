@@ -1,13 +1,11 @@
 package controlador;
 
 import javafx.application.Platform;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -23,7 +21,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class InicioAdministrador implements Initializable {
+public class InicioAdministrador extends  Controlador implements Initializable {
 
     @FXML
     private Pane Pane;
@@ -57,12 +55,18 @@ public class InicioAdministrador implements Initializable {
 
     }
 
-
+    @FXML
+    void catalogoPacientes(ActionEvent event) throws IOException {
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", params.get("idClinica"));
+        paramsVista.put("idPersonal", params.get("idPersonal"));
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource("/vista/pacientes.fxml"), paramsVista, new Pacientes());
+    }
     @FXML
     void catalogoTratamientos(ActionEvent event) throws IOException {
-        Map<String,Object> params = new LinkedHashMap<>();
-        params.put("idClinica", 1);
-        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource("/vista/tratamientos.fxml"), params, new Productos());
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", 1);
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource("/vista/tratamientos.fxml"), paramsVista, new Productos());
     }
 
     public void setUsuario(Personal p) {
@@ -70,8 +74,8 @@ public class InicioAdministrador implements Initializable {
     }
 
     public void init() {
-        Estado.setText(usuario.getNombre());
-        ((Stage)Pane.getScene().getWindow()).setTitle(usuario.getaPaterno()+ " "+usuario.getaMaterno()+", "+usuario.getNombre());
+        //Estado.setText(usuario.getNombre());
+        ((Stage)Pane.getScene().getWindow()).setTitle(params.get("nombre").toString());
 
 
         Stage escenario = (Stage) Pane.getScene().getWindow();

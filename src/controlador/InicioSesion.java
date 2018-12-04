@@ -6,11 +6,8 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 import modelo.Funciones;
 import modelo.Personal;
 
@@ -41,17 +38,29 @@ public class InicioSesion  {
         JsonArray rootArray = Funciones.consultarBD(params);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
 
+
+            /*
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/vista/inicio_administrador.fxml"));
             Parent root = fxmlLoader.load();
             Stage escenario = (Stage) Pane.getScene().getWindow();
             escenario.setScene(new Scene(root, Funciones.ancho, Funciones.alto));
             InicioAdministrador inicioAdministrador = fxmlLoader.getController();
 
-            Personal usuario = new Gson().fromJson(rootArray.get(1).getAsJsonObject(), Personal.class);
+
 
 
             inicioAdministrador.setUsuario(usuario);
             inicioAdministrador.init();
+
+
+*/
+            Personal usuario = new Gson().fromJson(rootArray.get(1).getAsJsonObject(), Personal.class);
+            params = new LinkedHashMap<>();
+            params.put("idPersonal", usuario.getIdPersonal());
+            params.put("idClinica", usuario.getIdClinica());
+            params.put("nombre", usuario.getNombre());
+
+            Funciones.CargarVista(Pane, getClass().getResource("/vista/inicio_administrador.fxml"), params, new InicioAdministrador());
 
         }
         else {
