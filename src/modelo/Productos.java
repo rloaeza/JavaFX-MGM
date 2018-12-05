@@ -8,6 +8,7 @@ public class Productos {
     private String descripcion;
     private String barCode;
 
+
     public Productos(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, String barCode) {
         this.idProducto = idProducto;
         this.idTipoProducto = idTipoProducto;

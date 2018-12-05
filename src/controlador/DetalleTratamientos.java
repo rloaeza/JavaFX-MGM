@@ -3,11 +3,13 @@ package controlador;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyEvent;
 import modelo.Funciones;
 import modelo.Productos;
 
@@ -15,30 +17,59 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class DetalleTratamientos extends Controlador {
+public class DetalleTratamientos extends Controlador{
 
     @FXML
     private JFXListView<modelo.Productos> ListaDeProductos;
 
     @FXML
-    private JFXListView<modelo.Productos> Tratamiento;
+    private JFXListView<modelo.DetalleTratamientos> Tratamiento;
 
     @FXML
     private Label Titulo;
+    @FXML
+    private JFXTextField Buscar;
 
     @FXML
-    void agregar(ActionEvent event) {
+    private JFXTextField Cantidad;
 
+    @FXML
+    void agregar(ActionEvent event) throws IOException {
+        Productos p = ListaDeProductos.getSelectionModel().getSelectedItem();
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Detalle tratamiento: Agregar");
+
+        paramsJSON.put("idProducto", p.getIdProducto());
+        paramsJSON.put("idTratamiento", params.get("idTratamiento"));
+        paramsJSON.put("cantidad", Cantidad.getText());
+
+
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        cargarTratamiento();
     }
 
     @FXML
-    void eliminar(ActionEvent event) {
-
+    void eliminar(ActionEvent event) throws IOException {
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Detalle tratamiento: Eliminar");
+        paramsJSON.put("idDetalleTratamiento", Tratamiento.getSelectionModel().getSelectedItem().getIdDetalleTratamiento());
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        cargarTratamiento();
     }
 
     @FXML
     void regresar(ActionEvent event) {
 
+    }
+
+
+    @FXML
+    void buscar(ActionEvent event) throws IOException {
+        String patron = Buscar.getText().toString();
+        if(patron.length()!=0)
+            cargarProductosConPatron(patron);
+        else
+            cargarProductos();
     }
 
     @Override
@@ -70,19 +101,36 @@ public class DetalleTratamientos extends Controlador {
         ListaDeProductos.setItems(listaProductos);
 
     }
+    private void cargarProductosConPatron(String patron) throws IOException {
 
-    private void cargarTratamiento() throws IOException {
-
-        ObservableList<Productos> listaTratamiento = FXCollections.observableArrayList();
+        ObservableList<Productos> listaProductos = FXCollections.observableArrayList();
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
-        paramsJSON.put("Actividad", "Detalle Tratamiento: Lista");
+        paramsJSON.put("Actividad", "Productos: Lista total con patron");
+        paramsJSON.put("patron", patron);
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            int t = rootArray.size();
+            for(int i = 1; i< t; i++) {
+                listaProductos.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), modelo.Productos.class) );
+            }
+        }
+
+        ListaDeProductos.setItems(listaProductos);
+
+    }
+    private void cargarTratamiento() throws IOException {
+
+        ObservableList<modelo.DetalleTratamientos> listaTratamiento = FXCollections.observableArrayList();
+
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Detalle tratamiento: Lista");
         paramsJSON.put("idTratamiento", params.get("idTratamiento"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
             for(int i = 1; i< t; i++) {
-                listaTratamiento.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), modelo.Productos.class) );
+                listaTratamiento.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), modelo.DetalleTratamientos.class) );
             }
         }
 

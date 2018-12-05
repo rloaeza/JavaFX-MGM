@@ -14,7 +14,7 @@
 <AnchorPane prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.DetalleTratamientos">
    <children>
       <JFXListView fx:id="ListaDeProductos" layoutX="34.0" layoutY="121.0" prefHeight="379.0" prefWidth="272.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="140.0" />
-      <JFXTextField alignment="CENTER" layoutX="374.0" layoutY="221.0" prefHeight="27.0" prefWidth="101.0" text="1" />
+      <JFXTextField fx:id="Cantidad" alignment="CENTER" layoutX="374.0" layoutY="221.0" prefHeight="27.0" prefWidth="101.0" text="1" />
       <Button layoutX="391.0" layoutY="269.0" mnemonicParsing="false" onAction="#agregar">
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -25,7 +25,7 @@
          </graphic>
       </Button>
       <JFXListView fx:id="Tratamiento" layoutX="551.0" layoutY="76.0" prefHeight="350.0" prefWidth="340.0" AnchorPane.bottomAnchor="120.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="140.0" />
-      <JFXTextField alignment="CENTER" layoutX="34.0" layoutY="63.0" prefHeight="27.0" prefWidth="272.0" promptText="Buscar" AnchorPane.topAnchor="90.0" />
+      <JFXTextField fx:id="Buscar" alignment="CENTER" layoutX="34.0" layoutY="63.0" onAction="#buscar" prefHeight="27.0" prefWidth="272.0" promptText="Buscar" AnchorPane.topAnchor="90.0" />
       <HBox alignment="CENTER_RIGHT" layoutX="481.0" layoutY="436.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="60.0" prefWidth="388.0" AnchorPane.bottomAnchor="40.0" AnchorPane.rightAnchor="30.0">
          <children>
             <Button mnemonicParsing="false" onAction="#eliminar">
