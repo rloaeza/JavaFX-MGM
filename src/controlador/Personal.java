@@ -10,6 +10,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.layout.AnchorPane;
 import modelo.Funciones;
 
@@ -47,6 +49,7 @@ public class Personal extends Controlador implements Initializable {
 
     @FXML
     private JFXPasswordField Clave;
+
 
     @FXML
     void actualizar(ActionEvent event) throws IOException {
@@ -99,7 +102,10 @@ public class Personal extends Controlador implements Initializable {
     }
 
     @FXML
-    void regresar(ActionEvent event) {
+    void regresar(ActionEvent event) throws IOException {
+
+        parametros.remove(0);
+        Funciones.CargarVista2((AnchorPane)Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new Pacientes());
 
     }
 

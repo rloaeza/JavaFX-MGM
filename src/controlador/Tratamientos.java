@@ -33,6 +33,8 @@ public class Tratamientos extends Controlador implements Initializable {
     @FXML
     private JFXTextArea Descripcion;
 
+
+
     @FXML
     void actualizar(ActionEvent event) throws IOException {
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
@@ -50,7 +52,7 @@ public class Tratamientos extends Controlador implements Initializable {
         paramsJSON.put("Actividad", "Tratamientos: Agregar");
         paramsJSON.put("nombre", Nombre.getText());
         paramsJSON.put("descripcion", Descripcion.getText());
-        paramsJSON.put("idClinica", params.get("idClinica"));
+        paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
     }
@@ -82,7 +84,7 @@ public class Tratamientos extends Controlador implements Initializable {
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Tratamientos: Lista");
-        paramsJSON.put("idClinica", params.get("idClinica").toString());
+        paramsJSON.put("idClinica", parametros.get(0).get("idClinica").toString());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
@@ -113,7 +115,9 @@ public class Tratamientos extends Controlador implements Initializable {
                     Map<String,Object> paramsView = new LinkedHashMap<>();
                     paramsView.put("TituloTratamiento", ListaDeTratamientos.getSelectionModel().getSelectedItem().getNombre());
                     paramsView.put("idTratamiento", ListaDeTratamientos.getSelectionModel().getSelectedItem().getIdTratamiento());
-                    Funciones.CargarVista(Pane, getClass().getResource("/vista/detalle_tratamientos.fxml"), paramsView, new Productos());
+                    paramsView.put("vista", "/vista/detalle_tratamientos.fxml");
+
+                    Funciones.CargarVista(Pane, getClass().getResource("/vista/detalle_tratamientos.fxml"), paramsView, new DetalleTratamientos());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -125,7 +129,6 @@ public class Tratamientos extends Controlador implements Initializable {
 
     @Override
     public void init() {
-        super.init();
         try {
             cargarDatos();
         } catch (IOException e) {

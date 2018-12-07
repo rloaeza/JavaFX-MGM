@@ -43,6 +43,7 @@ public class Productos extends Controlador implements Initializable {
     @FXML
     private Label Titulo;
 
+
     @FXML
     void actualizar(ActionEvent event) throws IOException {
 
@@ -67,7 +68,7 @@ public class Productos extends Controlador implements Initializable {
         paramsJSON.put("nombre", Nombre.getText());
         paramsJSON.put("descripcion", Descripcion.getText());
         paramsJSON.put("barCode", BarCode.getText());
-        paramsJSON.put("idTipoProducto", params.get("idTipoProducto"));
+        paramsJSON.put("idTipoProducto", parametros.get(0).get("idTipoProducto"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
     }
@@ -95,8 +96,7 @@ public class Productos extends Controlador implements Initializable {
 
     @Override
     public void init() {
-        super.init();
-        Titulo.setText(params.get("TituloTipoProducto").toString());
+        Titulo.setText(parametros.get(0).get("TituloTipoProducto").toString());
         try {
             cargarDatos();
         } catch (IOException e) {
@@ -118,7 +118,7 @@ public class Productos extends Controlador implements Initializable {
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Productos: Lista");
-        paramsJSON.put("idTipoProducto", params.get("idTipoProducto").toString());
+        paramsJSON.put("idTipoProducto", parametros.get(0).get("idTipoProducto").toString());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();

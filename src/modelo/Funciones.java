@@ -92,12 +92,23 @@ public class Funciones {
         root.setPrefHeight(Pane.getHeight());
         root.setPrefWidth(Pane.getWidth());
         Pane.getChildren().setAll(root);
+
         c = fxmlLoader.getController();
         c.setParams(params);
         c.init();
 
     }
 
+    public static void CargarVista2(AnchorPane Pane, URL vista, Controlador c ) throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(vista);
+        AnchorPane root = fxmlLoader.load();
+        root.setPrefHeight(Pane.getHeight());
+        root.setPrefWidth(Pane.getWidth());
+        Pane.getChildren().setAll(root);
 
+        c = fxmlLoader.getController();
+        c.init();
+
+    }
 
 }

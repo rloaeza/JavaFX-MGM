@@ -39,6 +39,7 @@ public class TiposProductos extends Controlador implements Initializable {
     @FXML
     private JFXTextArea Descripcion;
 
+
     @FXML
     void actualizar(ActionEvent event) throws IOException {
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
@@ -108,11 +109,12 @@ public class TiposProductos extends Controlador implements Initializable {
             }
             else if(event.getClickCount()==2) {
                 try {
-                    params = new LinkedHashMap<>();
+                    Map<String,Object> params = new LinkedHashMap<>();
                     params.put("TituloTipoProducto", ListaTiposDeProductos.getSelectionModel().getSelectedItem().toString());
                     params.put("idTipoProducto", ListaTiposDeProductos.getSelectionModel().getSelectedItem().getIdTipoProducto());
                     params.put("idClinica", ListaTiposDeProductos.getSelectionModel().getSelectedItem().getIdClinica());
-                    Funciones.CargarVista(Pane, getClass().getResource("/vista/productos.fxml"), params, new Productos());
+                    params.put("vista", "/vista/productos.fxml");
+                    Funciones.CargarVista(Pane, getClass().getResource(params.get("vista").toString()), params, new Productos());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -151,4 +153,8 @@ public class TiposProductos extends Controlador implements Initializable {
 
     }
 
+    @Override
+    public void init() {
+
+    }
 }

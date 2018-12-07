@@ -23,6 +23,7 @@ import java.util.ResourceBundle;
 
 public class InicioAdministrador extends  Controlador implements Initializable {
 
+
     @FXML
     private Pane Pane;
 
@@ -31,11 +32,13 @@ public class InicioAdministrador extends  Controlador implements Initializable {
 
     private Personal usuario;
 
+
     @FXML
     void cerrarSesion(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/vista/inicio_sesion.fxml"));
         Stage escenario = (Stage) Pane.getScene().getWindow();
         escenario.setScene(new Scene(root, Funciones.ancho, Funciones.alto));
+
     }
 
     @FXML
@@ -47,32 +50,43 @@ public class InicioAdministrador extends  Controlador implements Initializable {
 
     @FXML
     void catalogoTiposDeProductos(ActionEvent event) throws IOException {
+        /*
         AnchorPane root = FXMLLoader.load(getClass().getResource("/vista/tipos_productos.fxml"));
         root.setPrefHeight(Pane.getHeight());
         root.setPrefWidth(Pane.getWidth());
         Pane.getChildren().setAll(root);
+
+        */
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", parametros.get(0).get("idClinica"));
+        paramsVista.put("vista", "/vista/tipos_productos.fxml");
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new controlador.TiposProductos());
 
 
     }
     @FXML
     void catalogoPersonal(ActionEvent event) throws IOException {
         Map<String,Object> paramsVista = new LinkedHashMap<>();
-        paramsVista.put("idClinica", params.get("idClinica"));
-        paramsVista.put("idPersonal", params.get("idPersonal"));
+        paramsVista.put("idClinica", parametros.get(0).get("idClinica"));
+        paramsVista.put("idPersonal", parametros.get(0).get("idPersonal"));
+        paramsVista.put("vista", "/vista/personal.fxml");
+
+
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource("/vista/personal.fxml"), paramsVista, new controlador.Personal());
     }
     @FXML
     void catalogoPacientes(ActionEvent event) throws IOException {
         Map<String,Object> paramsVista = new LinkedHashMap<>();
-        paramsVista.put("idClinica", params.get("idClinica"));
-        paramsVista.put("idPersonal", params.get("idPersonal"));
+        paramsVista.put("idClinica", parametros.get(0).get("idClinica"));
+        paramsVista.put("idPersonal", parametros.get(0).get("idPersonal"));
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource("/vista/pacientes.fxml"), paramsVista, new Pacientes());
     }
     @FXML
     void catalogoTratamientos(ActionEvent event) throws IOException {
         Map<String,Object> paramsVista = new LinkedHashMap<>();
         paramsVista.put("idClinica", 1);
-        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource("/vista/tratamientos.fxml"), paramsVista, new Productos());
+        paramsVista.put("vista", "/vista/tratamientos.fxml" );
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new Productos());
     }
 
     public void setUsuario(Personal p) {
@@ -81,7 +95,7 @@ public class InicioAdministrador extends  Controlador implements Initializable {
 
     public void init() {
         //Estado.setText(usuario.getNombre());
-        ((Stage)Pane.getScene().getWindow()).setTitle(params.get("nombre").toString());
+        ((Stage)Pane.getScene().getWindow()).setTitle(parametros.get(0).get("nombre").toString());
 
 
         Stage escenario = (Stage) Pane.getScene().getWindow();
@@ -94,9 +108,11 @@ public class InicioAdministrador extends  Controlador implements Initializable {
             }
         });
 
+
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
     }
 
 

@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.DetalleTratamientos">
+<AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.DetalleTratamientos">
    <children>
       <JFXListView fx:id="ListaDeProductos" layoutX="34.0" layoutY="121.0" prefHeight="379.0" prefWidth="272.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="34.0" AnchorPane.topAnchor="140.0" />
       <JFXTextField fx:id="Cantidad" alignment="CENTER" layoutX="374.0" layoutY="221.0" prefHeight="27.0" prefWidth="101.0" text="1" />

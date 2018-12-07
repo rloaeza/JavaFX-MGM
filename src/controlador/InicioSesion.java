@@ -59,6 +59,7 @@ public class InicioSesion  {
             params.put("idPersonal", usuario.getIdPersonal());
             params.put("idClinica", usuario.getIdClinica());
             params.put("nombre", usuario.getNombre());
+            params.put("vista", "/vista/inicio_administrador.fxml");
 
             Funciones.CargarVista(Pane, getClass().getResource("/vista/inicio_administrador.fxml"), params, new InicioAdministrador());
 

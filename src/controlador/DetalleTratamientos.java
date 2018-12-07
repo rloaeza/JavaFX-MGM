@@ -9,7 +9,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import modelo.Funciones;
 import modelo.Productos;
 
@@ -34,13 +35,20 @@ public class DetalleTratamientos extends Controlador{
     private JFXTextField Cantidad;
 
     @FXML
+    private AnchorPane Pane;
+
+    public DetalleTratamientos() {
+        super();
+    }
+
+    @FXML
     void agregar(ActionEvent event) throws IOException {
         Productos p = ListaDeProductos.getSelectionModel().getSelectedItem();
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Detalle tratamiento: Agregar");
 
         paramsJSON.put("idProducto", p.getIdProducto());
-        paramsJSON.put("idTratamiento", params.get("idTratamiento"));
+        paramsJSON.put("idTratamiento", parametros.get(0).get("idTratamiento"));
         paramsJSON.put("cantidad", Cantidad.getText());
 
 
@@ -58,8 +66,10 @@ public class DetalleTratamientos extends Controlador{
     }
 
     @FXML
-    void regresar(ActionEvent event) {
-
+    void regresar(ActionEvent event) throws IOException {
+        parametros.remove(0);
+        System.out.println("Tam->"+parametros.size());
+        Funciones.CargarVista2((AnchorPane)Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new Tratamientos());
     }
 
 
@@ -74,8 +84,7 @@ public class DetalleTratamientos extends Controlador{
 
     @Override
     public void init() {
-        super.init();
-        Titulo.setText(params.get("TituloTratamiento").toString());
+        Titulo.setText(parametros.get(0).get("TituloTratamiento").toString());
         try {
             cargarProductos();
             cargarTratamiento();
@@ -125,7 +134,7 @@ public class DetalleTratamientos extends Controlador{
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Detalle tratamiento: Lista");
-        paramsJSON.put("idTratamiento", params.get("idTratamiento"));
+        paramsJSON.put("idTratamiento", parametros.get(0).get("idTratamiento"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();

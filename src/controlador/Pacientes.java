@@ -44,6 +44,7 @@ public class Pacientes extends Controlador implements Initializable {
     @FXML
     private JFXPasswordField Clave;
 
+
     @FXML
     void actualizar(ActionEvent event) throws IOException {
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
@@ -56,7 +57,7 @@ public class Pacientes extends Controlador implements Initializable {
         paramsJSON.put("telefono", Telefono.getText());
         paramsJSON.put("movil", Celular.getText());
         paramsJSON.put("clave", Clave.getText());
-        paramsJSON.put("idPersonal", params.get("idPersonal"));
+        paramsJSON.put("idPersonal", parametros.get(0).get("idPersonal"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
     }
@@ -72,7 +73,7 @@ public class Pacientes extends Controlador implements Initializable {
         paramsJSON.put("telefono", Telefono.getText());
         paramsJSON.put("movil", Celular.getText());
         paramsJSON.put("clave", Clave.getText());
-        paramsJSON.put("idPersonal", params.get("idPersonal"));
+        paramsJSON.put("idPersonal", parametros.get(0).get("idPersonal"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
     }
@@ -112,7 +113,7 @@ public class Pacientes extends Controlador implements Initializable {
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Pacientes: Lista");
-        paramsJSON.put("idPersonal", params.get("idPersonal"));
+        paramsJSON.put("idPersonal", parametros.get(0).get("idPersonal"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
