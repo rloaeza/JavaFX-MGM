@@ -68,8 +68,7 @@ public class DetalleTratamientos extends Controlador{
     @FXML
     void regresar(ActionEvent event) throws IOException {
         parametros.remove(0);
-        System.out.println("Tam->"+parametros.size());
-        Funciones.CargarVista2((AnchorPane)Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new Tratamientos());
+        Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new Tratamientos());
     }
 
 

@@ -94,8 +94,9 @@ public class Pacientes extends Controlador implements Initializable {
     }
 
     @FXML
-    void regresar(ActionEvent event) {
-
+    void regresar(ActionEvent event) throws IOException {
+        parametros.remove(0);
+        Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new InicioAdministrador());
     }
 
     private void cargarDatosPantalla(modelo.Pacientes p ) {

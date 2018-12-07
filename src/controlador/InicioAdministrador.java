@@ -79,7 +79,9 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         Map<String,Object> paramsVista = new LinkedHashMap<>();
         paramsVista.put("idClinica", parametros.get(0).get("idClinica"));
         paramsVista.put("idPersonal", parametros.get(0).get("idPersonal"));
-        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource("/vista/pacientes.fxml"), paramsVista, new Pacientes());
+        paramsVista.put("vista", "/vista/pacientes.fxml");
+
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new Pacientes());
     }
     @FXML
     void catalogoTratamientos(ActionEvent event) throws IOException {
@@ -107,6 +109,8 @@ public class InicioAdministrador extends  Controlador implements Initializable {
                 root.setPrefWidth(Pane.getWidth());
             }
         });
+
+
 
 
     }

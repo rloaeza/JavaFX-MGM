@@ -64,7 +64,7 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("movil", Celular.getText());
         paramsJSON.put("usuario", Usuario.getText());
         paramsJSON.put("clave", Clave.getText());
-        paramsJSON.put("idClinica", params.get("idClinica"));
+        paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
     }
@@ -81,7 +81,7 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("movil", Celular.getText());
         paramsJSON.put("usuario", Usuario.getText());
         paramsJSON.put("clave", Clave.getText());
-        paramsJSON.put("idClinica", params.get("idClinica"));
+        paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
     }
@@ -105,9 +105,10 @@ public class Personal extends Controlador implements Initializable {
     void regresar(ActionEvent event) throws IOException {
 
         parametros.remove(0);
-        Funciones.CargarVista2((AnchorPane)Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new Pacientes());
+        Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new InicioAdministrador());
 
     }
+
 
     private void cargarDatosPantalla(modelo.Personal p ) {
         Nombre.setText(p.getNombre());
@@ -125,7 +126,7 @@ public class Personal extends Controlador implements Initializable {
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Personal: Lista");
-        paramsJSON.put("idClinica", params.get("idClinica"));
+        paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
