@@ -25,6 +25,15 @@
                   <MenuItem mnemonicParsing="false" onAction="#catalogoTratamientos" text="Tratamientos" />
                </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Movimientos">
+              <items>
+                  <Menu mnemonicParsing="false" text="Almacen">
+                    <items>
+                      <MenuItem mnemonicParsing="false" onAction="#almacenEntradas" text="Entradas" />
+                    </items>
+                  </Menu>
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
       <AnchorPane fx:id="Pane" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0" />

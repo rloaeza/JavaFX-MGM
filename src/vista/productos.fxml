@@ -16,18 +16,20 @@
    <children>
       <JFXListView fx:id="ListaDeProductos" layoutX="7.0" minWidth="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0" />
       <JFXTextField fx:id="Clave" layoutX="489.0" layoutY="117.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <JFXTextField fx:id="Nombre" layoutX="489.0" layoutY="197.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <JFXTextArea fx:id="Descripcion" layoutX="489.0" layoutY="275.0" prefHeight="70.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <JFXTextField fx:id="Nombre" layoutX="489.0" layoutY="165.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <JFXTextArea fx:id="Descripcion" layoutX="489.0" layoutY="220.0" prefHeight="70.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <JFXTextField fx:id="CantidadMinima" layoutX="489.0" layoutY="332.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
       <JFXTextField fx:id="BarCode" layoutX="489.0" layoutY="379.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
       <Label layoutX="394.0" layoutY="131.0" prefHeight="17.0" prefWidth="73.0" text="Clave" AnchorPane.leftAnchor="394.0" />
-      <Label layoutX="394.0" layoutY="212.0" prefHeight="17.0" prefWidth="73.0" text="Nombre" AnchorPane.leftAnchor="394.0" />
-      <Label layoutX="394.0" layoutY="278.0" text="Descripción" AnchorPane.leftAnchor="394.0" />
+      <Label layoutX="394.0" layoutY="180.0" prefHeight="17.0" prefWidth="73.0" text="Nombre" AnchorPane.leftAnchor="394.0" />
+      <Label layoutX="394.0" layoutY="223.0" text="Descripción" AnchorPane.leftAnchor="394.0" />
       <Label fx:id="Titulo" alignment="CENTER" layoutX="348.0" layoutY="58.0" prefHeight="44.0" prefWidth="522.0" text="Productos" textAlignment="CENTER" AnchorPane.leftAnchor="348.0" AnchorPane.rightAnchor="30.0">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
       <Label layoutX="394.0" layoutY="388.0" prefHeight="17.0" prefWidth="73.0" text="BarCode" AnchorPane.leftAnchor="394.0" />
+      <Label layoutX="394.0" layoutY="343.0" text="C. Mínima" />
       <HBox alignment="CENTER" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0">
          <children>
             <Button mnemonicParsing="false" onAction="#limpiar">

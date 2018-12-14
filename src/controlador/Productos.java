@@ -41,6 +41,12 @@ public class Productos extends Controlador implements Initializable {
     private JFXTextField BarCode;
 
     @FXML
+    private JFXTextField CantidadMinima;
+
+
+
+
+    @FXML
     private Label Titulo;
 
 
@@ -52,6 +58,7 @@ public class Productos extends Controlador implements Initializable {
         paramsJSON.put("clave", Clave.getText());
         paramsJSON.put("nombre", Nombre.getText());
         paramsJSON.put("descripcion", Descripcion.getText());
+        paramsJSON.put("cantidadMinima", CantidadMinima.getText());
         paramsJSON.put("barCode", BarCode.getText());
         paramsJSON.put("idTipoProducto", ListaDeProductos.getSelectionModel().getSelectedItem().getIdTipoProducto());
         paramsJSON.put("idProducto", ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
@@ -67,6 +74,7 @@ public class Productos extends Controlador implements Initializable {
         paramsJSON.put("clave", Clave.getText());
         paramsJSON.put("nombre", Nombre.getText());
         paramsJSON.put("descripcion", Descripcion.getText());
+        paramsJSON.put("cantidadMinima", CantidadMinima.getText());
         paramsJSON.put("barCode", BarCode.getText());
         paramsJSON.put("idTipoProducto", parametros.get(0).get("idTipoProducto"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
@@ -84,7 +92,7 @@ public class Productos extends Controlador implements Initializable {
 
     @FXML
     void limpiar(ActionEvent event) {
-        cargarDatosPantalla(new modelo.Productos(-1, -1,"", "","",""));
+        cargarDatosPantalla(new modelo.Productos(-1, -1,"", "","",-1, ""));
         ListaDeProductos.getSelectionModel().clearSelection();
     }
 
@@ -110,6 +118,7 @@ public class Productos extends Controlador implements Initializable {
         Clave.setText(p.getClave());
         Nombre.setText(p.getNombre());
         Descripcion.setText(p.getDescripcion());
+        CantidadMinima.setText(String.valueOf( p.getCantidadMinima() ));
         BarCode.setText(p.getBarCode());
     }
 

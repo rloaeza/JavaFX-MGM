@@ -1,16 +1,17 @@
 package modelo;
 
-public class Productos {
+public class AlmacenProductos {
     private int idProducto;
     private int idTipoProducto;
     private String clave;
     private String nombre;
     private String descripcion;
     private double cantidadMinima;
+    private double cantidad;
     private String barCode;
 
 
-    public Productos(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, double cantidadMinima, String barCode) {
+    public AlmacenProductos(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, double cantidadMinima, String barCode) {
         this.idProducto = idProducto;
         this.idTipoProducto = idTipoProducto;
         this.clave = clave;
@@ -20,7 +21,7 @@ public class Productos {
         this.barCode = barCode;
     }
 
-    public Productos() {
+    public AlmacenProductos() {
     }
 
     public double getCantidadMinima() {

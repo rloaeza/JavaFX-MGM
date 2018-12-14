@@ -49,7 +49,11 @@ public class InicioSesion  {
 
         }
         else {
-            Funciones.display("Error","Usuario y/o clave incorrectos");
+            Map<String,Object> paramsAlert = new LinkedHashMap<>();
+            paramsAlert.put("titulo", "Error");
+            paramsAlert.put("texto", "Usuario y/o clave incorrectos");
+            paramsAlert.put("vista", "/vista/alert_box.fxml");
+            Funciones.display(paramsAlert, getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
         }
     }
 
