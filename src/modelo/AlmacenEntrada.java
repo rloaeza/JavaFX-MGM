@@ -60,6 +60,6 @@ public class AlmacenEntrada {
 
     @Override
     public String toString() {
-        return fecha.substring(0,10)+": "+nombre+ ", "+ cantidad;
+        return fecha.substring(0,15)+": "+nombre+ ", "+ cantidad;
     }
 }

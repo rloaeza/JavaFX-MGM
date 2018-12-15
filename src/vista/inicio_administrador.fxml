@@ -30,6 +30,7 @@
                   <Menu mnemonicParsing="false" text="Almacen">
                     <items>
                       <MenuItem mnemonicParsing="false" onAction="#almacenEntradas" text="Entradas" />
+                        <MenuItem mnemonicParsing="false" onAction="#almacenSalidas" text="Salidas" />
                     </items>
                   </Menu>
               </items>

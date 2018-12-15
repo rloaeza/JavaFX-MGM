@@ -10,18 +10,26 @@ public class AlmacenProductos {
     private double cantidad;
     private String barCode;
 
+    public AlmacenProductos() {
+    }
 
-    public AlmacenProductos(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, double cantidadMinima, String barCode) {
+    public AlmacenProductos(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, double cantidadMinima, double cantidad, String barCode) {
         this.idProducto = idProducto;
         this.idTipoProducto = idTipoProducto;
         this.clave = clave;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.cantidadMinima = cantidadMinima;
+        this.cantidad = cantidad;
         this.barCode = barCode;
     }
 
-    public AlmacenProductos() {
+    public double getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(double cantidad) {
+        this.cantidad = cantidad;
     }
 
     public double getCantidadMinima() {
@@ -82,6 +90,6 @@ public class AlmacenProductos {
 
     @Override
     public String toString() {
-        return clave+": "+nombre;
+        return clave+": "+nombre + "("+cantidad+")";
     }
 }
