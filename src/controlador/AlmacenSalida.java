@@ -147,7 +147,7 @@ public class AlmacenSalida extends Controlador implements Initializable {
         ObservableList<modelo.AlmacenEntrada> listaAlmacen = FXCollections.observableArrayList();
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
-        paramsJSON.put("Actividad", "Almacen: Lista");
+        paramsJSON.put("Actividad", "Almacen: Lista salidas");
 
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {

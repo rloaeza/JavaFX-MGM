@@ -17,7 +17,6 @@ import java.util.TimerTask;
 
 public class AlertBox extends Controlador {
 
-    Timer timer = new Timer();
 
     Timeline tl= null;
     int tiempo = 5;
