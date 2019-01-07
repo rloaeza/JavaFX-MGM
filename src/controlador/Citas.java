@@ -97,7 +97,7 @@ public class Citas extends  Controlador implements Initializable {
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Pacientes: Lista con patron");
-        paramsJSON.put("idPersonal", parametros.get(0).get("idPersonal"));
+        paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         paramsJSON.put("patron", patron);
 
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
@@ -118,7 +118,7 @@ public class Citas extends  Controlador implements Initializable {
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Pacientes: Lista");
-        paramsJSON.put("idPersonal", parametros.get(0).get("idPersonal"));
+        paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();

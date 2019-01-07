@@ -8,12 +8,12 @@ public class Pacientes {
     private String telefono;
     private String movil;
     private String clave;
-    private int idPersonal;
+    private int idClinica;
 
     public Pacientes() {
     }
 
-    public Pacientes(int idPaciente, String nombre, String apellidos, String email, String telefono, String movil, String clave, int idPersonal) {
+    public Pacientes(int idPaciente, String nombre, String apellidos, String email, String telefono, String movil, String clave, int idClinica) {
         this.idPaciente = idPaciente;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -21,7 +21,7 @@ public class Pacientes {
         this.telefono = telefono;
         this.movil = movil;
         this.clave = clave;
-        this.idPersonal = idPersonal;
+        this.idClinica = idClinica;
     }
 
     public int getIdPaciente() {
@@ -80,12 +80,12 @@ public class Pacientes {
         this.clave = clave;
     }
 
-    public int getIdPersonal() {
-        return idPersonal;
+    public int getIdClinica() {
+        return idClinica;
     }
 
-    public void setIdPersonal(int idPersonal) {
-        this.idPersonal = idPersonal;
+    public void setIdClinica(int idClinica) {
+        this.idClinica = idClinica;
     }
 
     @Override

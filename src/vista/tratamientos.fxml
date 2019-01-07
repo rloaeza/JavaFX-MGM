@@ -16,9 +16,9 @@
    <children>
       <JFXListView fx:id="ListaDeTratamientos" layoutX="7.0" minWidth="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0" />
       <JFXTextField fx:id="Nombre" layoutX="489.0" layoutY="195.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <JFXTextArea fx:id="Descripcion" layoutX="489.0" layoutY="291.0" prefHeight="141.0" prefWidth="381.0" AnchorPane.bottomAnchor="118.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <JFXTextArea fx:id="Descripcion" layoutX="489.0" layoutY="261.0" prefHeight="92.0" prefWidth="381.0" AnchorPane.bottomAnchor="197.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
       <Label layoutX="394.0" layoutY="210.0" prefHeight="17.0" prefWidth="73.0" text="Nombre" AnchorPane.leftAnchor="394.0" />
-      <Label layoutX="394.0" layoutY="294.0" text="Descripción" AnchorPane.leftAnchor="394.0" />
+      <Label layoutX="394.0" layoutY="259.0" text="Descripción" AnchorPane.leftAnchor="394.0" />
       <Label alignment="CENTER" layoutX="357.0" layoutY="58.0" prefHeight="44.0" prefWidth="513.0" text="Tratamientos" textAlignment="CENTER" AnchorPane.leftAnchor="357.0" AnchorPane.rightAnchor="30.0">
          <font>
             <Font name="System Bold" size="36.0" />
@@ -77,5 +77,7 @@
             </Button>
          </children>
       </HBox>
+      <JFXTextField fx:id="Sesiones" layoutX="489.0" layoutY="384.0" prefHeight="27.0" prefWidth="381.0" />
+      <Label layoutX="394.0" layoutY="393.0" prefHeight="17.0" prefWidth="73.0" text="Sesiones" />
    </children>
 </AnchorPane>

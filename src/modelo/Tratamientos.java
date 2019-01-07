@@ -4,15 +4,19 @@ public class Tratamientos {
     private int idTratamiento;
     private String nombre;
     private String descripcion;
+
+
+    private int sesiones;
     private int idClinica;
 
     public Tratamientos() {
     }
 
-    public Tratamientos(int idTratamiento, String nombre, String descripcion, int idClinica) {
+    public Tratamientos(int idTratamiento, String nombre, String descripcion, int sesiones, int idClinica) {
         this.idTratamiento = idTratamiento;
         this.nombre = nombre;
         this.descripcion = descripcion;
+        this.sesiones = sesiones;
         this.idClinica = idClinica;
     }
 
@@ -47,6 +51,15 @@ public class Tratamientos {
     public void setIdClinica(int idClinica) {
         this.idClinica = idClinica;
     }
+
+    public int getSesiones() {
+        return sesiones;
+    }
+
+    public void setSesiones(int sesiones) {
+        this.sesiones = sesiones;
+    }
+
 
     @Override
     public String toString() {

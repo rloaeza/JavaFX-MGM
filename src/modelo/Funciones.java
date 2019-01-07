@@ -3,6 +3,7 @@ package modelo;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
 import controlador.AlertBox;
 import controlador.Controlador;
 import javafx.fxml.FXMLLoader;
@@ -28,6 +29,9 @@ import java.util.Map;
 public class Funciones {
 
     static String sitio =  "http://mgm.mas-aplicaciones.com/php/";
+
+    //static String sitio =  "http://localhost/php/";
+
     public static String res = "Resultados";
     public static int alto = 600;
     public static int ancho = 900;
@@ -59,6 +63,7 @@ public class Funciones {
 
         JsonParser jp = new JsonParser();
         JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
+
         JsonArray rootArray = root.getAsJsonArray();
         return rootArray;
 

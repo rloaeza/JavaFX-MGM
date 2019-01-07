@@ -57,7 +57,7 @@ public class Pacientes extends Controlador implements Initializable {
         paramsJSON.put("telefono", Telefono.getText());
         paramsJSON.put("movil", Celular.getText());
         paramsJSON.put("clave", Clave.getText());
-        paramsJSON.put("idPersonal", parametros.get(0).get("idPersonal"));
+        paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
     }
@@ -73,7 +73,8 @@ public class Pacientes extends Controlador implements Initializable {
         paramsJSON.put("telefono", Telefono.getText());
         paramsJSON.put("movil", Celular.getText());
         paramsJSON.put("clave", Clave.getText());
-        paramsJSON.put("idPersonal", parametros.get(0).get("idPersonal"));
+        paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
+        //System.out.println(paramsJSON.toString());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
     }
@@ -114,7 +115,7 @@ public class Pacientes extends Controlador implements Initializable {
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Pacientes: Lista");
-        paramsJSON.put("idPersonal", parametros.get(0).get("idPersonal"));
+        paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();

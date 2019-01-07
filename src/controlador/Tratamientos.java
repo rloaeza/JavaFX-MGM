@@ -33,7 +33,8 @@ public class Tratamientos extends Controlador implements Initializable {
     @FXML
     private JFXTextArea Descripcion;
 
-
+    @FXML
+    private JFXTextField Sesiones;
 
     @FXML
     void actualizar(ActionEvent event) throws IOException {
@@ -41,7 +42,9 @@ public class Tratamientos extends Controlador implements Initializable {
         paramsJSON.put("Actividad", "Tratamientos: Actualizar");
         paramsJSON.put("nombre", Nombre.getText());
         paramsJSON.put("descripcion", Descripcion.getText());
+        paramsJSON.put("sesiones", Sesiones.getText());
         paramsJSON.put("idTratamiento", ListaDeTratamientos.getSelectionModel().getSelectedItem().getIdTratamiento());
+
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
     }
@@ -52,6 +55,7 @@ public class Tratamientos extends Controlador implements Initializable {
         paramsJSON.put("Actividad", "Tratamientos: Agregar");
         paramsJSON.put("nombre", Nombre.getText());
         paramsJSON.put("descripcion", Descripcion.getText());
+        paramsJSON.put("sesiones", Sesiones.getText());
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
@@ -68,7 +72,7 @@ public class Tratamientos extends Controlador implements Initializable {
 
     @FXML
     void limpiar(ActionEvent event) {
-        cargarDatosPantalla(new modelo.Tratamientos(-1,"", "",-1));
+        cargarDatosPantalla(new modelo.Tratamientos(-1,"", "",-1, -1));
         ListaDeTratamientos.getSelectionModel().clearSelection();
 
     }
@@ -101,6 +105,7 @@ public class Tratamientos extends Controlador implements Initializable {
     private void cargarDatosPantalla(modelo.Tratamientos t ) {
         Nombre.setText(t.getNombre());
         Descripcion.setText(t.getDescripcion());
+        Sesiones.setText(t.getSesiones()<0?"":t.getSesiones()+"");
 
     }
 
