@@ -6,6 +6,7 @@
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
 
 <AnchorPane fx:id="Pane" prefHeight="436.0" prefWidth="741.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.InicioSesion">
    <children>
@@ -16,10 +17,14 @@
             <JFXButton layoutX="98.0" layoutY="255.0" onAction="#entrarSistema" prefHeight="27.0" prefWidth="157.0" style="-fx-background-color: lightblue;" text="Entrar" />
          </children>
       </AnchorPane>
-      <ImageView fitHeight="256.0" fitWidth="330.0" layoutX="52.0" layoutY="90.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="90.0" AnchorPane.topAnchor="90.0">
-         <image>
-            <Image url="@../imgs/logo.jpg" />
-         </image>
-      </ImageView>
+      <VBox alignment="CENTER" layoutX="14.0" layoutY="30.0" prefHeight="376.0" prefWidth="330.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="30.0">
+         <children>
+            <ImageView fitHeight="256.0" fitWidth="330.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imgs/logo_mgm.jpg" />
+               </image>
+            </ImageView>
+         </children>
+      </VBox>
    </children>
 </AnchorPane>
