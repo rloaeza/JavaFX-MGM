@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
+<?import com.jfoenix.controls.JFXPasswordField?>
 <AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.RelojChecador">
    <children>
       <Label fx:id="Hora" alignment="CENTER" layoutX="30.0" layoutY="158.0" prefHeight="44.0" prefWidth="823.0" text="10:30 AM" textAlignment="CENTER" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
@@ -12,6 +13,6 @@
             <Font name="System Bold" size="72.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="UsuarioEntrada" layoutX="375.0" layoutY="355.0" onAction="#entrar" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="374.0" />
+      <JFXPasswordField fx:id="UsuarioEntrada" alignment="CENTER" layoutX="375.0" layoutY="355.0" onAction="#entrar" AnchorPane.leftAnchor="375.0" AnchorPane.rightAnchor="374.0" />
    </children>
 </AnchorPane>
