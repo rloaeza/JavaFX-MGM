@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="cmu_time_awb">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/../libs/tts-lib/cmu_time_awb.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../libs/tts-lib/cmu_us_kal.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../libs/tts-lib/cmudict04.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../libs/tts-lib/cmulex.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../libs/tts-lib/cmutimelex.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../libs/tts-lib/en_us.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../libs/tts-lib/freetts-jsapi10.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../libs/tts-lib/freetts.jar!/" />
+      <root url="jar://$PROJECT_DIR$/../libs/tts-lib/mbrola.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

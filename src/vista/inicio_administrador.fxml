@@ -37,6 +37,12 @@
                   <MenuItem mnemonicParsing="false" onAction="#costoProductos" text="Costos de productos" />
               </items>
             </Menu>
+            <Menu mnemonicParsing="false" text="Reloj Checador">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#relojChecadorEntradaSalida" text="Entradas / Salidas" />
+                  <MenuItem mnemonicParsing="false" text="Especificar Horarios" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
       <AnchorPane fx:id="Pane" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0" />
