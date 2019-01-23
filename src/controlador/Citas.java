@@ -182,6 +182,7 @@ public class Citas extends  Controlador implements Initializable {
                 paramsVista.put("idClinica", 1);
                 paramsVista.put("idPaciente", ListaDeCitas.getSelectionModel().getSelectedItem().getIdPaciente());
                 paramsVista.put("nombre", ListaDeCitas.getSelectionModel().getSelectedItem().getNombre());
+                paramsVista.put("fecha", ListaDeCitas.getSelectionModel().getSelectedItem().getFecha());
                 paramsVista.put("vista", "/vista/consultas.fxml" );
                 try {
                     Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new Productos());
