@@ -173,6 +173,22 @@ public class Citas extends  Controlador implements Initializable {
 
                 cargarDatosPantalla(ListaDePacientes.getSelectionModel().getSelectedItem());
             }
+
+
+        });
+        ListaDeCitas.setOnMouseClicked(event -> {
+            if(event.getClickCount() == 2) {
+                Map<String,Object> paramsVista = new LinkedHashMap<>();
+                paramsVista.put("idClinica", 1);
+                paramsVista.put("idPaciente", ListaDeCitas.getSelectionModel().getSelectedItem().getIdPaciente());
+                paramsVista.put("nombre", ListaDeCitas.getSelectionModel().getSelectedItem().getNombre());
+                paramsVista.put("vista", "/vista/consultas.fxml" );
+                try {
+                    Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new Productos());
+                } catch (IOException e) {
+
+                }
+            }
         });
     }
 
