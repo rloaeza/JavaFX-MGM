@@ -136,6 +136,16 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new RelojChecador());
     }
 
+    @FXML
+    void relojChecadorFijarHorarios(ActionEvent event) throws IOException {
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", 1);
+        paramsVista.put("vista", "/vista/horarios.fxml" );
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new Horarios());
+    }
+
+
+
 
 
     public void setUsuario(Personal p) {

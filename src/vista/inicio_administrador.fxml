@@ -40,7 +40,7 @@
             <Menu mnemonicParsing="false" text="Reloj Checador">
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#relojChecadorEntradaSalida" text="Entradas / Salidas" />
-                  <MenuItem mnemonicParsing="false" text="Especificar Horarios" />
+                  <MenuItem mnemonicParsing="false" onAction="#relojChecadorFijarHorarios" text="Especificar Horarios" />
               </items>
             </Menu>
         </menus>
