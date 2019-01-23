@@ -48,6 +48,9 @@ public class Citas extends  Controlador implements Initializable {
     private JFXTextField Celular;
 
     @FXML
+    private JFXTextField Email;
+
+    @FXML
     private JFXDatePicker Fecha;
 
     @FXML
@@ -178,6 +181,7 @@ public class Citas extends  Controlador implements Initializable {
         Apellidos.setText(p.getApellidos());
         Telefono.setText(p.getTelefono());
         Celular.setText(p.getMovil());
+        Email.setText(p.getEmail());
 
     }
 }

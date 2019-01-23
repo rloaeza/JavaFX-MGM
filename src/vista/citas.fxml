@@ -19,7 +19,7 @@
       <JFXTextField fx:id="Apellidos" layoutX="313.0" layoutY="167.0" prefHeight="27.0" prefWidth="257.0" promptText="Apellidos" AnchorPane.leftAnchor="313.0" AnchorPane.rightAnchor="330.0" />
       <JFXTextField fx:id="Telefono" layoutX="40.0" layoutY="212.0" prefHeight="27.0" prefWidth="257.0" promptText="Télefono" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="603.0" />
       <JFXTextField fx:id="Celular" layoutX="313.0" layoutY="212.0" prefHeight="27.0" prefWidth="257.0" promptText="Celular" AnchorPane.leftAnchor="313.0" AnchorPane.rightAnchor="330.0" />
-      <JFXTextField layoutX="40.0" layoutY="253.0" prefHeight="27.0" prefWidth="257.0" promptText="E-Mail" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="603.0" />
+      <JFXTextField fx:id="Email" layoutX="40.0" layoutY="253.0" prefHeight="27.0" prefWidth="257.0" promptText="E-Mail" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="603.0" />
       <JFXDatePicker fx:id="Fecha" layoutX="40.0" layoutY="304.0" prefWidth="257.0" promptText="Fecha para cita" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="603.0" />
       <JFXTimePicker fx:id="Hora" layoutX="313.0" layoutY="304.0" prefWidth="257.0" />
       <Button fx:id="Tratamientos" alignment="TOP_LEFT" layoutX="40.0" layoutY="366.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="257.0" text="Tratamientos">
