@@ -18,6 +18,7 @@ import modelo.Personal;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -127,11 +128,12 @@ public class Horarios extends Controlador implements Initializable {
         paramsJSON.put("idHorarios", ListaDeHorarios.getSelectionModel().getSelectedItem().getIdHorarios());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
+        limpiar(null);
     }
 
     @FXML
     void limpiar(ActionEvent event) {
-
+        cargarDatosPantalla(new modelo.Horarios(-1, "", "", "", "", "", "", "", -1, -1, -1, "", ""));
 
     }
 
@@ -181,35 +183,40 @@ public class Horarios extends Controlador implements Initializable {
     }
 
     private void cargarDatosPantalla(modelo.Horarios horarios) {
+        fijarHora(LunesEntrada, LunesSalida, horarios.getLunes());
+        fijarHora(MartesEntrada, MartesSalida, horarios.getMartes());
+        fijarHora(MiercolesEntrada, MiercolesSalida, horarios.getMiercoles());
+        fijarHora(JuevesEntrada, JuevesSalida, horarios.getJueves());
+        fijarHora(ViernesEntrada, ViernesSalida, horarios.getViernes());
+        fijarHora(SabadoEntrada, SabadoSalida, horarios.getSabado());
+        fijarHora(DomingoEntrada, DomingoSalida, horarios.getDomingo());
 
-        LunesEntrada.setValue(LocalTime.parse(horarios.getLunes().split("@")[0]));
-        LunesSalida.setValue(LocalTime.parse(horarios.getLunes().split("@")[1]));
 
-        MartesEntrada.setValue(LocalTime.parse(horarios.getMartes().split("@")[0]));
-        MartesSalida.setValue(LocalTime.parse(horarios.getMartes().split("@")[1]));
+        Tolerancia.setText( (horarios.getToleranciaEntrada()>0?horarios.getToleranciaEntrada():"")+"");
 
-        MiercolesEntrada.setValue(LocalTime.parse(horarios.getMiercoles().split("@")[0]));
-        MiercolesSalida.setValue(LocalTime.parse(horarios.getMiercoles().split("@")[1]));
-
-        JuevesEntrada.setValue(LocalTime.parse(horarios.getJueves().split("@")[0]));
-        JuevesSalida.setValue(LocalTime.parse(horarios.getJueves().split("@")[1]));
-
-        ViernesEntrada.setValue(LocalTime.parse(horarios.getViernes().split("@")[0]));
-        ViernesSalida.setValue(LocalTime.parse(horarios.getViernes().split("@")[1]));
-
-        SabadoEntrada.setValue(LocalTime.parse(horarios.getSabado().split("@")[0]));
-        SabadoSalida.setValue(LocalTime.parse(horarios.getSabado().split("@")[1]));
-
-        DomingoEntrada.setValue(LocalTime.parse(horarios.getDomingo().split("@")[0]));
-        DomingoSalida.setValue(LocalTime.parse(horarios.getDomingo().split("@")[1]));
-
-        Tolerancia.setText(horarios.getToleranciaEntrada()+"");
-
+        ListaDePersonal.getSelectionModel().clearSelection();
         for(int i=0; i<ListaDePersonal.getItems().size(); i++ ){
             if(ListaDePersonal.getItems().get(i).getIdPersonal() == horarios.getIdPersonal()) {
                 ListaDePersonal.getSelectionModel().select(i);
                 break;
             }
+        }
+    }
+
+    private void fijarHora(JFXTimePicker entrada, JFXTimePicker salida, String horario) {
+        entrada.setValue(null);
+        salida.setValue(null);
+        try {
+            String strEntrada = horario.split("@")[0];
+            String strSalida = horario.split("@")[1];
+            entrada.setValue(LocalTime.parse(strEntrada));
+
+            salida.setValue(LocalTime.parse(strSalida));
+        }catch (DateTimeParseException dpe) {
+
+        }
+        catch (IndexOutOfBoundsException ioobe) {
+
         }
     }
 

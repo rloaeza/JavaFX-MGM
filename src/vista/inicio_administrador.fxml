@@ -4,6 +4,9 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SeparatorMenuItem?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
@@ -20,6 +23,8 @@
             <Menu mnemonicParsing="false" text="Catálogos">
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#catalogoPersonal" text="Personal" />
+                  <MenuItem mnemonicParsing="false" onAction="#relojChecadorFijarHorarios" text="Especificar Horarios" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoPacientes" text="Pacientes" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoServicios" text="Servicios" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoTiposDeProductos" text="Productos" />
@@ -37,15 +42,22 @@
                   <MenuItem mnemonicParsing="false" onAction="#costoProductos" text="Costos de productos" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Reloj Checador">
+            <Menu mnemonicParsing="false" text="Vistas">
               <items>
-                <MenuItem mnemonicParsing="false" onAction="#relojChecadorEntradaSalida" text="Entradas / Salidas" />
-                  <MenuItem mnemonicParsing="false" onAction="#relojChecadorFijarHorarios" text="Especificar Horarios" />
+                <MenuItem mnemonicParsing="false" onAction="#relojChecadorEntradaSalida" text="Reloj Checador" />
+                  <MenuItem mnemonicParsing="false" onAction="#AgendarCitas" text="Agendar Citas" />
               </items>
             </Menu>
         </menus>
       </MenuBar>
-      <AnchorPane fx:id="Pane" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0" />
+      <AnchorPane fx:id="Pane" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="200.0" layoutY="135.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="135.0625" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="135.0">
+               <image>
+                  <Image url="@../imgs/logo_mgm.jpg" />
+               </image>
+            </ImageView>
+         </children></AnchorPane>
       <HBox layoutY="372.0" prefHeight="30.0" prefWidth="600.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
          <children>
             <JFXButton fx:id="BarraFecha" prefWidth="150.0" />

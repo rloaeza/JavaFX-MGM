@@ -37,12 +37,16 @@ public class Tratamientos extends Controlador implements Initializable {
     private JFXTextField Sesiones;
 
     @FXML
+    private JFXTextField Caducidad;
+
+    @FXML
     void actualizar(ActionEvent event) throws IOException {
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Tratamientos: Actualizar");
         paramsJSON.put("nombre", Nombre.getText());
         paramsJSON.put("descripcion", Descripcion.getText());
         paramsJSON.put("sesiones", Sesiones.getText());
+        paramsJSON.put("caducidad", Caducidad.getText());
         paramsJSON.put("idTratamiento", ListaDeTratamientos.getSelectionModel().getSelectedItem().getIdTratamiento());
 
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
@@ -56,6 +60,7 @@ public class Tratamientos extends Controlador implements Initializable {
         paramsJSON.put("nombre", Nombre.getText());
         paramsJSON.put("descripcion", Descripcion.getText());
         paramsJSON.put("sesiones", Sesiones.getText());
+        paramsJSON.put("caducidad", Caducidad.getText());
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
@@ -72,7 +77,7 @@ public class Tratamientos extends Controlador implements Initializable {
 
     @FXML
     void limpiar(ActionEvent event) {
-        cargarDatosPantalla(new modelo.Tratamientos(-1,"", "",-1, -1));
+        cargarDatosPantalla(new modelo.Tratamientos(-1,"", "",-1, -1, -1));
         ListaDeTratamientos.getSelectionModel().clearSelection();
 
     }
@@ -106,6 +111,7 @@ public class Tratamientos extends Controlador implements Initializable {
         Nombre.setText(t.getNombre());
         Descripcion.setText(t.getDescripcion());
         Sesiones.setText(t.getSesiones()<0?"":t.getSesiones()+"");
+        Caducidad.setText(t.getCaducidad()<0?"":t.getCaducidad()+"");
 
     }
 
