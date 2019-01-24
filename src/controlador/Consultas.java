@@ -72,7 +72,7 @@ public class Consultas extends Controlador implements Initializable {
     private Button BotonCrearHistorial;
 
     @FXML
-    private Button BotonCancelarHistorial;
+    private TilePane HistorialTratamientos;
 
     @FXML
     private JFXTextArea HistorialDiagnostico;
@@ -102,14 +102,47 @@ public class Consultas extends Controlador implements Initializable {
             JsonArray rootArray = Funciones.consultarBD(paramsJSON);
 
 
-            Funciones.CargarArchivo(foto.getAbsolutePath(), nombre);
-            cargarFotosHistorial();
+
+
+            SubirFoto subirFoto = new SubirFoto(foto.getAbsolutePath(), nombre);
+            subirFoto.setOnRunning(e->{
+                BotonCargarFoto.setDisable(true);
+                BotonAgregarFoto.setDisable(true);
+                BotonAgregarFoto.setText("Subiendo foto...");
+            });
+            subirFoto.setOnSucceeded(e->{
+                BotonCargarFoto.setDisable(false);
+                BotonAgregarFoto.setDisable(false);
+                BotonAgregarFoto.setText("Agregar foto");
+                ImagenCargar.setImage(null);
+                try {
+                    cargarFotosHistorial();
+                } catch (IOException e1) {
+
+                }
+            });
+            ExecutorService executorService = Executors.newFixedThreadPool(1);
+            executorService.execute(subirFoto);
+            executorService.shutdown();
+
+
+
+
 
         }
     }
 
     @FXML
-    void agregarTratamiento(ActionEvent event) {
+    void agregarTratamiento(ActionEvent event) throws IOException {
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Tratamientos recetados: Agregar");
+        paramsJSON.put("sesiones",  ListaDeTratamientos.getSelectionModel().getSelectedItem().getSesiones());
+        paramsJSON.put("caducidad",  0);
+        paramsJSON.put("idTratamiento",  ListaDeTratamientos.getSelectionModel().getSelectedItem().getIdTratamiento());
+        paramsJSON.put("idHistorial",  ListaDeHistorial.getSelectionModel().getSelectedItem().getIdHistorial());
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+
+        cargarTratamientosHistorial();
 
     }
 
@@ -192,6 +225,27 @@ public class Consultas extends Controlador implements Initializable {
         ListaDeHistorial.setItems(listraHistorial);
 
     }
+    private void cargarTratamientosHistorial() throws IOException {
+        while (HistorialTratamientos.getChildren().size() > 0)
+            HistorialTratamientos.getChildren().remove(0);
+        Map<String, Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Tratamientos recetados: Listar");
+        paramsJSON.put("idHistorial", ListaDeHistorial.getSelectionModel().getSelectedItem().getIdHistorial());
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        if (rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt() > 0) {
+            int t = rootArray.size();
+            for (int i = 1; i < t; i++) {
+                modelo.TratamientosRecetados tratamientosRecetados = new Gson().fromJson(rootArray.get(i).getAsJsonObject(), modelo.TratamientosRecetados.class);
+
+                HistorialTratamientos.getChildren().add(new Button(tratamientosRecetados.getNombre() + "("+tratamientosRecetados.getSesiones()+")"));
+            }
+        }
+    }
+
+
+
+
+
 
     private void cargarFotosHistorial() throws IOException {
         while(HistorialFotos.getChildren().size()>0)
@@ -266,7 +320,9 @@ public class Consultas extends Controlador implements Initializable {
             if (event.getClickCount() == 1) {
                 activarConsulta(true);
                 HistorialDiagnostico.setText(ListaDeHistorial.getSelectionModel().getSelectedItem().getDescripcion());
+
                 try {
+                    cargarTratamientosHistorial();
                     cargarFotosHistorial();
                 } catch (IOException e) {
 
