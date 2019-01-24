@@ -16,11 +16,24 @@ import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.ContentType;
+import org.apache.http.entity.FileEntity;
+import org.apache.http.entity.mime.MultipartEntityBuilder;
+import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.entity.mime.content.StringBody;
+import org.apache.http.impl.client.CloseableHttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.params.CoreProtocolPNames;
+import org.apache.http.util.EntityUtils;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -33,7 +46,7 @@ public class Funciones {
     //static String sitio =  "http://localhost/php/";
 
     public static String res = "Resultados";
-    public static int alto = 600;
+    public static int alto = 700;
     public static int ancho = 900;
 
     public static byte[] prepareVars(Map<String,Object> params) throws UnsupportedEncodingException {
@@ -139,6 +152,46 @@ public class Funciones {
         c = fxmlLoader.getController();
         c.init();
 
+    }
+
+
+    public static void CargarArchivo(String archivo, String nombre) throws IOException {
+
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        try {
+            HttpPost httppost = new HttpPost(sitio+"upload.php");
+
+            FileBody bin = new FileBody(new File(archivo));
+            StringBody comment = new StringBody(nombre, ContentType.TEXT_PLAIN);
+
+            HttpEntity reqEntity = MultipartEntityBuilder.create()
+                    .addPart("userfile", bin)
+                    .addPart("nombreFoto", comment)
+                    .build();
+
+
+            httppost.setEntity(reqEntity);
+
+            //System.out.println("executing request " + httppost.getRequestLine());
+            CloseableHttpResponse response = httpclient.execute(httppost);
+            try {
+                //System.out.println("----------------------------------------");
+                //System.out.println(response.getStatusLine());
+                HttpEntity resEntity = response.getEntity();
+                if (resEntity != null) {
+                    //System.out.println("Response content length: " + resEntity.getContentLength());
+                }
+                EntityUtils.consume(resEntity);
+            } finally {
+                response.close();
+            }
+        } finally {
+            httpclient.close();
+        }
+    }
+
+    public static String getURLfoto(String archivo) {
+        return sitio+"fotos/"+archivo;
     }
 
 }
