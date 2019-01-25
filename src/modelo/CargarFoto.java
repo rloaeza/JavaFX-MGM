@@ -13,6 +13,7 @@ public class CargarFoto extends Task<Image> {
 
     @Override
     protected Image call() {
+        //System.out.println(url);
         return new Image(url);
 
     }

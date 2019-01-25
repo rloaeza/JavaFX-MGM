@@ -191,7 +191,8 @@ public class Funciones {
     }
 
     public static String getURLfoto(String archivo) {
-        return sitio+"fotos/"+archivo;
+        //return sitio+"foto_preview.php?foto="+archivo;
+        return sitio+"fotos/_"+archivo;
     }
 
 }
