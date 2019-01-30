@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="Pane" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.ImagenDetalle">
+   <children>
+      <ScrollPane layoutX="83.0" layoutY="28.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+        <content>
+          <AnchorPane fx:id="PaneImagen" minHeight="0.0" minWidth="0.0" />
+        </content>
+      </ScrollPane>
+      <JFXButton fx:id="BotonAceptar" alignment="CENTER" layoutX="90.0" layoutY="541.0" onAction="#aceptar" prefHeight="45.0" prefWidth="329.0" style="-fx-background-color: lightgreen;" text="Aceptar" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="50.0" AnchorPane.rightAnchor="50.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXProgressBar fx:id="ProgressBar" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0" />
+   </children>
+</AnchorPane>

@@ -3,19 +3,19 @@ package modelo;
 import javafx.concurrent.Task;
 import javafx.scene.image.Image;
 
-public class CargarFoto extends Task<Image> {
+public class CargarFotoCompleta extends Task<Image> {
 
     private String url;
 
 
-    public CargarFoto(String url) {
+    public CargarFotoCompleta(String url) {
         this.url = url;
     }
 
     @Override
     protected Image call() {
         //System.out.println(url);
-        return new Image(url.replace("#", "_"));
+        return new Image(url.replace("#", ""));
 
     }
 

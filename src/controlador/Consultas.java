@@ -11,6 +11,7 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Node;
@@ -18,6 +19,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.TilePane;
 import javafx.stage.FileChooser;
@@ -263,6 +265,21 @@ public class Consultas extends Controlador implements Initializable {
 
                     try {
                         ImageView imageView = new ImageView(cargarFoto.get());
+
+                        imageView.setOnMouseClicked(event -> {
+
+                                    try {
+                                        Map<String, Object> paramsAlert = new LinkedHashMap<>();
+                                        paramsAlert.put("url", cargarFoto.getUrl().replace("#", ""));
+                                        paramsAlert.put("titulo", cargarFoto.getUrl().replace("#", ""));
+                                        paramsAlert.put("vista", "/vista/imagen_detalle.fxml");
+                                        Funciones.displayImage(paramsAlert, getClass().getResource("/vista/imagen_detalle.fxml"), new ImagenDetalle());
+                                    } catch (IOException e1) {
+                                        e1.printStackTrace();
+                                    }
+                                }
+                        );
+
                         imageView.setFitWidth(200);
                         imageView.setPreserveRatio(true);
                         HistorialFotos.getChildren().add(imageView);
