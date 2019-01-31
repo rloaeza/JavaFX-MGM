@@ -70,6 +70,7 @@ public class Tratamientos {
         this.caducidad = caducidad;
     }
 
+
     @Override
     public String toString() {
         return getNombre();

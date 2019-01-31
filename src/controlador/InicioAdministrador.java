@@ -97,6 +97,14 @@ public class InicioAdministrador extends  Controlador implements Initializable {
     }
 
     @FXML
+    void costoTratamientos(ActionEvent event) throws IOException {
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", 1);
+        paramsVista.put("vista", "/vista/costo_tratamientos.fxml" );
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new CostoTratamientos());
+    }
+
+    @FXML
     void catalogoServicios(ActionEvent event) throws IOException {
         Map<String,Object> paramsVista = new LinkedHashMap<>();
         paramsVista.put("idClinica", 1);

@@ -40,6 +40,9 @@ public class Tratamientos extends Controlador implements Initializable {
     private JFXTextField Caducidad;
 
     @FXML
+    private JFXTextField Costo;
+
+    @FXML
     void actualizar(ActionEvent event) throws IOException {
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Tratamientos: Actualizar");
@@ -112,6 +115,7 @@ public class Tratamientos extends Controlador implements Initializable {
         Descripcion.setText(t.getDescripcion());
         Sesiones.setText(t.getSesiones()<0?"":t.getSesiones()+"");
         Caducidad.setText(t.getCaducidad()<0?"":t.getCaducidad()+"");
+
 
     }
 
