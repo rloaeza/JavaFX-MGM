@@ -20,7 +20,7 @@
 <AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Consultas">
    <children>
       <JFXListView fx:id="ListaDeHistorial" layoutX="7.0" minWidth="211.0" prefHeight="275.0" prefWidth="211.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="42.0" />
-      <Label fx:id="Paciente" alignment="CENTER" layoutX="297.0" layoutY="20.0" prefHeight="50.0" prefWidth="599.0" text="Paciente" AnchorPane.leftAnchor="271.0" AnchorPane.rightAnchor="30.0">
+      <Label fx:id="Paciente" alignment="CENTER" layoutX="297.0" layoutY="20.0" prefHeight="50.0" prefWidth="599.0" text="Paciente" AnchorPane.leftAnchor="271.0" AnchorPane.rightAnchor="90.0">
          <font>
             <Font size="18.0" />
          </font>
@@ -67,9 +67,9 @@
          </graphic>
       </Button>
       <Label alignment="CENTER" layoutX="30.0" layoutY="20.0" prefHeight="17.0" prefWidth="211.0" text="Historial" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0" />
-      <VBox layoutX="820.0" layoutY="81.0" prefHeight="89.0" prefWidth="50.0">
+      <VBox layoutX="820.0" layoutY="81.0" prefHeight="151.0" prefWidth="50.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="20.0">
          <children>
-            <Button fx:id="BotonCrearHistorial" mnemonicParsing="false" onAction="#crearHistorial">
+            <Button fx:id="BotonFinalizar" mnemonicParsing="false" onAction="#finalizar">
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -79,6 +79,25 @@
                </graphic>
             </Button>
             <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
+            <Button fx:id="BotonCrearHistorial" mnemonicParsing="false" onAction="#crearHistorial">
+               <graphic>
+                  <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/agregar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
+            <Button fx:id="BotonGuardarHistorial" disable="true" mnemonicParsing="false" onAction="#guardarHistorial">
+               <graphic>
+                  <ImageView fitHeight="150.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/guardar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children></VBox>
    </children>
 </AnchorPane>

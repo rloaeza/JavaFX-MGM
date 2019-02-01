@@ -74,6 +74,12 @@ public class Consultas extends Controlador implements Initializable {
     private Button BotonCrearHistorial;
 
     @FXML
+    private Button BotonGuardarHistorial;
+
+    @FXML
+    private Button BotonFinalizar;
+
+    @FXML
     private TilePane HistorialTratamientos;
 
     @FXML
@@ -176,6 +182,22 @@ public class Consultas extends Controlador implements Initializable {
 
     }
 
+    @FXML
+    void guardarHistorial(ActionEvent event) {
+        actualizarDiagnostico();
+    }
+
+    @FXML
+    void finalizar(ActionEvent event) throws IOException {
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Citas: Finalizar");
+        paramsJSON.put("idCita", parametros.get(0).get("idCita").toString());
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+
+        parametros.remove(0);
+        Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new InicioAdministrador());
+
+    }
 
 
 
@@ -184,8 +206,11 @@ public class Consultas extends Controlador implements Initializable {
         Diagnostico.setDisable(!b);
         BotonAgregarFoto.setDisable(!b);
 
+
         BotonAgregarTratamiento.setDisable(!b);
         BotonCargarFoto.setDisable(!b);
+
+        BotonGuardarHistorial.setDisable(!b);
 
         BotonCrearHistorial.setDisable(b);
     }
@@ -303,6 +328,20 @@ public class Consultas extends Controlador implements Initializable {
     }
 
 
+    private void actualizarDiagnostico() {
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Historial: Actualizar");
+        paramsJSON.put("descripcion", Diagnostico.getText());
+        paramsJSON.put("fecha", parametros.get(0).get("fecha").toString());
+        paramsJSON.put("idPaciente", parametros.get(0).get("idPaciente").toString());
+        try {
+            JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+            cargarDatosHistorial();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public void init() {
         try {
@@ -317,27 +356,18 @@ public class Consultas extends Controlador implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        /*
         Diagnostico.focusedProperty().addListener( (ov, oldv, newV) -> {
             if(!newV) {
-                Map<String,Object> paramsJSON = new LinkedHashMap<>();
-                paramsJSON.put("Actividad", "Historial: Actualizar");
-                paramsJSON.put("descripcion", Diagnostico.getText());
-                paramsJSON.put("fecha", parametros.get(0).get("fecha").toString());
-                paramsJSON.put("idPaciente", parametros.get(0).get("idPaciente").toString());
-                try {
-                    JsonArray rootArray = Funciones.consultarBD(paramsJSON);
-                    cargarDatosHistorial();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+                actualizarDiagnostico();
             }
         });
+        */
 
         ListaDeHistorial.setOnMouseClicked(event -> {
             if (event.getClickCount() == 1) {
-                activarConsulta(true);
+                //activarConsulta(true);
                 HistorialDiagnostico.setText(ListaDeHistorial.getSelectionModel().getSelectedItem().getDescripcion());
-
                 try {
                     cargarTratamientosHistorial();
                     cargarFotosHistorial();

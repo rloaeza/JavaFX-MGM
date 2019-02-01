@@ -181,6 +181,7 @@ public class Citas extends  Controlador implements Initializable {
                 Map<String,Object> paramsVista = new LinkedHashMap<>();
                 paramsVista.put("idClinica", 1);
                 paramsVista.put("idPaciente", ListaDeCitas.getSelectionModel().getSelectedItem().getIdPaciente());
+                paramsVista.put("idCita", ListaDeCitas.getSelectionModel().getSelectedItem().getIdCita());
                 paramsVista.put("nombre", ListaDeCitas.getSelectionModel().getSelectedItem().getNombre());
                 paramsVista.put("fecha", ListaDeCitas.getSelectionModel().getSelectedItem().getFecha());
                 paramsVista.put("vista", "/vista/consultas.fxml" );
