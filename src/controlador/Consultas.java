@@ -146,6 +146,7 @@ public class Consultas extends Controlador implements Initializable {
         paramsJSON.put("Actividad", "Tratamientos recetados: Agregar");
         paramsJSON.put("sesiones",  ListaDeTratamientos.getSelectionModel().getSelectedItem().getSesiones());
         paramsJSON.put("caducidad",  0);
+        paramsJSON.put("costo",  ListaDeTratamientos.getSelectionModel().getSelectedItem().getCosto());
         paramsJSON.put("idTratamiento",  ListaDeTratamientos.getSelectionModel().getSelectedItem().getIdTratamiento());
         paramsJSON.put("idHistorial",  ListaDeHistorial.getSelectionModel().getSelectedItem().getIdHistorial());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
@@ -220,7 +221,7 @@ public class Consultas extends Controlador implements Initializable {
         ObservableList<Tratamientos> listaTratamientos = FXCollections.observableArrayList();
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
-        paramsJSON.put("Actividad", "Tratamientos: Lista");
+        paramsJSON.put("Actividad", "Tratamientos: Lista con costo");
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica").toString());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
@@ -264,7 +265,28 @@ public class Consultas extends Controlador implements Initializable {
             for (int i = 1; i < t; i++) {
                 modelo.TratamientosRecetados tratamientosRecetados = new Gson().fromJson(rootArray.get(i).getAsJsonObject(), modelo.TratamientosRecetados.class);
 
-                HistorialTratamientos.getChildren().add(new Button(tratamientosRecetados.getNombre() + "("+tratamientosRecetados.getSesiones()+")"));
+                Button b = new Button(tratamientosRecetados.getNombre() + "("+tratamientosRecetados.getSesiones()+" de " + tratamientosRecetados.getSesionesTotales() +" sesiones)");
+                b.setOnAction(e->{
+
+                    try {
+                        Map<String, Object> paramsAlert = new LinkedHashMap<>();
+                        paramsAlert.put("titulo", tratamientosRecetados.getNombre());
+                        paramsAlert.put("sesiones", tratamientosRecetados.getSesiones());
+                        double costo = Double.valueOf(tratamientosRecetados.getCosto());
+                        costo /= tratamientosRecetados.getSesionesTotales();
+                        paramsAlert.put("cobro", costo);
+                        paramsAlert.put("idTratamientoRecetado", tratamientosRecetados.getIdTratamientoRecetado());
+                        paramsAlert.put("vista", "/vista/imagen_detalle.fxml");
+                        paramsAlert.put("ancho", "468");
+                        paramsAlert.put("alto", "300");
+                        Funciones.displayBox(paramsAlert, getClass().getResource("/vista/tratamiento_recetado_detalle.fxml"), new TratamientoRecetadoDetalle());
+                        cargarTratamientosHistorial();
+
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
+                });
+                HistorialTratamientos.getChildren().add(b);
             }
         }
     }

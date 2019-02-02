@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="Pane" prefHeight="300.0" prefWidth="468.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.TratamientoRecetadoDetalle">
+   <children>
+      <JFXButton fx:id="BotonAceptar" alignment="CENTER" layoutX="71.0" layoutY="231.0" onAction="#aceptar" prefHeight="45.0" prefWidth="422.0" style="-fx-background-color: lightgreen;" text="Aceptar" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <Label alignment="CENTER_RIGHT" layoutX="74.0" layoutY="107.0" prefHeight="17.0" prefWidth="122.0" text="Sesiones:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="100.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="74.0" layoutY="162.0" prefHeight="17.0" prefWidth="122.0" text="Cobro:" AnchorPane.leftAnchor="20.0" AnchorPane.topAnchor="160.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <JFXTextField fx:id="Sesiones" layoutX="224.0" layoutY="108.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="160.0" AnchorPane.topAnchor="100.0" />
+      <JFXTextField fx:id="Cobro" layoutX="224.0" layoutY="163.0" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="160.0" />
+      <JFXButton fx:id="BotonAumentar" layoutX="329.0" layoutY="101.0" onAction="#aumentar" prefHeight="27.0" prefWidth="92.0" style="-fx-background-color: lightblue;" text="Aumentar" AnchorPane.leftAnchor="330.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="100.0" />
+      <Label fx:id="Titulo" alignment="CENTER" layoutX="222.0" layoutY="14.0" prefHeight="17.0" prefWidth="122.0" text="Tratamiento" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font size="30.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>

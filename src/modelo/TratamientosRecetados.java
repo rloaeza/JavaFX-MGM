@@ -5,15 +5,19 @@ public class TratamientosRecetados {
     private int idHistorial;
     private int idTratamiento;
     private int sesiones;
+    private int sesionesTotales;
     private String caducidad;
+    private String costo;
     private String nombre;
 
-    public TratamientosRecetados(int idTratamientoRecetado, int idHistorial, int idTratamiento, int sesiones, String caducidad, String nombre) {
+    public TratamientosRecetados(int idTratamientoRecetado, int idHistorial, int idTratamiento, int sesiones, int sesionesTotales, String caducidad, String costo, String nombre) {
         this.idTratamientoRecetado = idTratamientoRecetado;
         this.idHistorial = idHistorial;
         this.idTratamiento = idTratamiento;
         this.sesiones = sesiones;
+        this.sesionesTotales = sesionesTotales;
         this.caducidad = caducidad;
+        this.costo = costo;
         this.nombre = nombre;
     }
 
@@ -66,6 +70,22 @@ public class TratamientosRecetados {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
+    }
+
+    public String getCosto() {
+        return costo;
+    }
+
+    public void setCosto(String costo) {
+        this.costo = costo;
+    }
+
+    public int getSesionesTotales() {
+        return sesionesTotales;
+    }
+
+    public void setSesionesTotales(int sesionesTotales) {
+        this.sesionesTotales = sesionesTotales;
     }
 }
 

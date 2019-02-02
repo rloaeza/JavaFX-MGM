@@ -8,9 +8,20 @@ public class Tratamientos {
 
     private int sesiones;
     private int caducidad;
+    private double costo;
     private int idClinica;
 
     public Tratamientos() {
+    }
+
+    public Tratamientos(int idTratamiento, String nombre, String descripcion, int sesiones, int caducidad, double costo, int idClinica) {
+        this.idTratamiento = idTratamiento;
+        this.nombre = nombre;
+        this.descripcion = descripcion;
+        this.sesiones = sesiones;
+        this.caducidad = caducidad;
+        this.costo = costo;
+        this.idClinica = idClinica;
     }
 
     public Tratamientos(int idTratamiento, String nombre, String descripcion, int sesiones, int caducidad, int idClinica) {
@@ -70,6 +81,13 @@ public class Tratamientos {
         this.caducidad = caducidad;
     }
 
+    public double getCosto() {
+        return costo;
+    }
+
+    public void setCosto(double costo) {
+        this.costo = costo;
+    }
 
     @Override
     public String toString() {

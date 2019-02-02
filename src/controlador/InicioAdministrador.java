@@ -46,6 +46,9 @@ public class InicioAdministrador extends  Controlador implements Initializable {
     private JFXButton BarraAlmacen;
 
     @FXML
+    private JFXButton BarraPagosTratamientos;
+
+    @FXML
     void cerrarSesion(ActionEvent event) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/vista/inicio_sesion.fxml"));
         Stage escenario = (Stage) Pane.getScene().getWindow();
@@ -160,7 +163,13 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new Citas());
     }
 
-
+    @FXML
+    void pagoTratamientos(ActionEvent event) throws IOException {
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", 1);
+        paramsVista.put("vista", "/vista/deuda_tratamientos.fxml" );
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new DeudaTratamientos());
+    }
 
     public void setUsuario(Personal p) {
         this.usuario = p;
@@ -234,6 +243,24 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         t3.setCycleCount(1);
         t3.play();
 
+
+
+        Timeline tPagos = new Timeline(new KeyFrame(Duration.millis(10000), ae -> {
+
+            try {
+                if(verificarPagos()) {
+                    BarraPagosTratamientos.setBackground(new Background(new BackgroundFill(Color.ORANGE, CornerRadii.EMPTY, Insets.EMPTY)));
+                }
+                else {
+                    BarraPagosTratamientos.setBackground(null);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } ));
+        tPagos.setCycleCount(Animation.INDEFINITE);
+        tPagos.play();
+
     }
 
 
@@ -248,5 +275,15 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         return false;
     }
 
+    private boolean verificarPagos() throws IOException {
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Tratamientos recetados: Pagos pendientes");
+
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            return true;
+        }
+        return false;
+    }
 
 }

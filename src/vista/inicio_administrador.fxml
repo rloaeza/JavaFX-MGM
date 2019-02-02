@@ -67,6 +67,7 @@
          <children>
             <JFXButton fx:id="BarraFecha" prefWidth="150.0" />
             <JFXButton fx:id="BarraAlmacen" prefWidth="100.0" text="Almacen" />
+            <JFXButton fx:id="BarraPagosTratamientos" onAction="#pagoTratamientos" prefWidth="100.0" text="Tratamientos" />
          </children>
       </HBox>
    </children>
