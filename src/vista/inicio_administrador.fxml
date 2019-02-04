@@ -51,6 +51,7 @@
               <items>
                 <MenuItem mnemonicParsing="false" onAction="#relojChecadorEntradaSalida" text="Reloj Checador" />
                   <MenuItem mnemonicParsing="false" onAction="#AgendarCitas" text="Agendar Citas" />
+                  <MenuItem mnemonicParsing="false" onAction="#VentaMostrador" text="Venta Mostrador" />
               </items>
             </Menu>
         </menus>
