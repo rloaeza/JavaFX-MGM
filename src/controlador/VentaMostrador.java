@@ -69,13 +69,7 @@ public class VentaMostrador extends Controlador implements Initializable {
         for(ProductosConCosto p : ListaDeProductos.getItems()) {
             if(Busqueda.getText().equalsIgnoreCase(p.getClave()) || Busqueda.getText().equalsIgnoreCase(p.getBarCode()))
             {
-                listaVentaMostrador.add(new modelo.VentaMostrador(
-                        p.getIdProducto(),
-                        Cantidad.getText().isEmpty()?1:Integer.valueOf(Cantidad.getText()),
-                        p.getNombre(),
-                        p.getPrecio()
-                ));
-                calcularTotal();
+                agregarProducto(p);
                 Busqueda.setText("");
                 return;
             }
@@ -199,18 +193,22 @@ public class VentaMostrador extends Controlador implements Initializable {
 
         ListaDeProductos.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
-                ProductosConCosto p = ListaDeProductos.getSelectionModel().getSelectedItem();
-                listaVentaMostrador.add(new modelo.VentaMostrador(
-                        p.getIdProducto(),
-                        Cantidad.getText().isEmpty()?1:Integer.valueOf(Cantidad.getText()),
-                        p.getNombre(),
-                        p.getPrecio()
-                ));
-                calcularTotal();
+                agregarProducto(ListaDeProductos.getSelectionModel().getSelectedItem());
             }
         });
     }
 
+
+    @FXML
+    void aceptar(ActionEvent event) {
+
+    }
+
+    @FXML
+    void limpiar(ActionEvent event) {
+        listaVentaMostrador.clear();
+        calcularTotal();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -252,6 +250,27 @@ public class VentaMostrador extends Controlador implements Initializable {
         Subtotal.setText(subtotal+"");
         IVA.setText(iva+"");
         Total.setText(total+"");
+    }
+
+    private void agregarProducto(ProductosConCosto p) {
+        int cantidad=0;
+        for(modelo.VentaMostrador producto : listaVentaMostrador) {
+            if(producto.getIdProducto()==p.getIdProducto()) {
+                cantidad = producto.getCant();
+                listaVentaMostrador.remove(producto);
+                break;
+            }
+        }
+
+        int cantidad2 =Cantidad.getText().isEmpty()?1:Integer.valueOf(Cantidad.getText());
+        listaVentaMostrador.add(new modelo.VentaMostrador(
+                p.getIdProducto(),
+                cantidad+cantidad2,
+                p.getNombre(),
+                p.getPrecio()
+        ));
+        calcularTotal();
+        TablaVenta.getSelectionModel().select(listaVentaMostrador.size()-1);
     }
 
 }

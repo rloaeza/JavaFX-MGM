@@ -400,4 +400,6 @@ public class Consultas extends Controlador implements Initializable {
         });
 
     }
+
+
 }
