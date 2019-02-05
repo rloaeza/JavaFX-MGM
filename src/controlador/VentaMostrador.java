@@ -14,6 +14,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -62,6 +63,25 @@ public class VentaMostrador extends Controlador implements Initializable {
 
     @FXML
     private Label Total;
+
+    @FXML
+    void insertar(ActionEvent event) {
+        for(ProductosConCosto p : ListaDeProductos.getItems()) {
+            if(Busqueda.getText().equalsIgnoreCase(p.getClave()) || Busqueda.getText().equalsIgnoreCase(p.getBarCode()))
+            {
+                listaVentaMostrador.add(new modelo.VentaMostrador(
+                        p.getIdProducto(),
+                        Cantidad.getText().isEmpty()?1:Integer.valueOf(Cantidad.getText()),
+                        p.getNombre(),
+                        p.getPrecio()
+                ));
+                calcularTotal();
+                Busqueda.setText("");
+                return;
+            }
+        }
+    }
+
 
     private ObservableList<modelo.VentaMostrador> listaVentaMostrador;
 
@@ -134,10 +154,12 @@ public class VentaMostrador extends Controlador implements Initializable {
 
                     int index = t.getTreeTablePosition().getRow();
                     double costo = Double.valueOf(listaVentaMostrador.get(index).getCosto());
+
                     int cantidad = Integer.valueOf(t.getNewValue());
+                    int idProducto = listaVentaMostrador.get(index).getIdProducto();
                     String producto = listaVentaMostrador.get(index).getProducto();
 
-                    modelo.VentaMostrador vM = new modelo.VentaMostrador(cantidad,producto,costo);
+                    modelo.VentaMostrador vM = new modelo.VentaMostrador(idProducto, cantidad,producto,costo);
                     listaVentaMostrador.remove(index);
                     listaVentaMostrador.add( vM);
                     t.getTreeTableView().getSelectionModel().select(listaVentaMostrador.size()-1);
@@ -145,6 +167,7 @@ public class VentaMostrador extends Controlador implements Initializable {
                     if(cantidad<=0) {
                         listaVentaMostrador.remove(listaVentaMostrador.size()-1);
                     }
+                    calcularTotal();
 
                 }
         );
@@ -163,9 +186,6 @@ public class VentaMostrador extends Controlador implements Initializable {
         });
 */
 
-        listaVentaMostrador.add(new modelo.VentaMostrador(1,"Crema I",10));
-        listaVentaMostrador.add(new modelo.VentaMostrador(2,"Crema II",22));
-        listaVentaMostrador.add(new modelo.VentaMostrador(3,"Crema III",33));
 
 
         TreeItem<modelo.VentaMostrador> root = new RecursiveTreeItem<>(listaVentaMostrador, RecursiveTreeObject::getChildren);
@@ -177,8 +197,20 @@ public class VentaMostrador extends Controlador implements Initializable {
         TablaVenta.setEditable(true);
         TablaVenta.setShowRoot(false);
 
-
+        ListaDeProductos.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 2) {
+                ProductosConCosto p = ListaDeProductos.getSelectionModel().getSelectedItem();
+                listaVentaMostrador.add(new modelo.VentaMostrador(
+                        p.getIdProducto(),
+                        Cantidad.getText().isEmpty()?1:Integer.valueOf(Cantidad.getText()),
+                        p.getNombre(),
+                        p.getPrecio()
+                ));
+                calcularTotal();
+            }
+        });
     }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -202,6 +234,24 @@ public class VentaMostrador extends Controlador implements Initializable {
 
         ListaDeProductos.setItems(listaDeProductos);
 
+    }
+
+    private void calcularTotal() {
+        double subtotal=0;
+        double iva;
+        double total;
+        int cantidadProductos=0;
+
+        for(modelo.VentaMostrador producto: listaVentaMostrador) {
+            subtotal+=producto.getTotal();
+            cantidadProductos+= producto.getCant();
+        }
+        iva = subtotal*0.16;
+        total = subtotal + iva;
+        CantidadProductos.setText(cantidadProductos+"");
+        Subtotal.setText(subtotal+"");
+        IVA.setText(iva+"");
+        Total.setText(total+"");
     }
 
 }

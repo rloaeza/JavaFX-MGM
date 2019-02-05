@@ -10,7 +10,7 @@
    <children>
       <JFXTreeTableView fx:id="TablaVenta" layoutX="59.0" layoutY="187.0" prefHeight="342.0" prefWidth="802.0" />
       <JFXListView fx:id="ListaDeProductos" layoutX="59.0" layoutY="68.0" prefHeight="109.0" prefWidth="385.0" />
-      <JFXTextField fx:id="Busqueda" alignment="CENTER" layoutX="59.0" layoutY="29.0" prefHeight="27.0" prefWidth="296.0" promptText="Código o nombre de producto" />
+      <JFXTextField fx:id="Busqueda" alignment="CENTER" layoutX="59.0" layoutY="29.0" onAction="#insertar" prefHeight="27.0" prefWidth="296.0" promptText="Clave o código de producto" />
       <JFXTextField fx:id="Cantidad" alignment="CENTER" layoutX="369.0" layoutY="29.0" prefHeight="27.0" prefWidth="74.0" promptText="1" />
       <Label alignment="CENTER_RIGHT" layoutX="521.0" layoutY="160.0" prefHeight="17.0" prefWidth="104.0" text="Total:" AnchorPane.leftAnchor="510.0" AnchorPane.topAnchor="160.0" />
       <Label alignment="CENTER_RIGHT" layoutX="514.0" layoutY="68.0" prefHeight="17.0" prefWidth="104.0" text="Productos:" AnchorPane.leftAnchor="510.0" AnchorPane.topAnchor="70.0" />
