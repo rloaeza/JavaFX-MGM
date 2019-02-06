@@ -46,6 +46,7 @@ public class Funciones {
     //static String sitio =  "http://localhost/php/";
 
     public static String res = "Resultados";
+    public static String ultimoInsertado = "ultimoInsertado";
     public static int alto = 700;
     public static int ancho = 900;
 
