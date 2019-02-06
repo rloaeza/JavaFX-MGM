@@ -212,7 +212,6 @@ public class InicioAdministrador extends  Controlador implements Initializable {
 
             finalDoc.save(new File("nombre2.pdf"));
             doc.close();
-            finalDoc.close();
         }catch (IOException ioe) {
             System.out.println(ioe.toString());
         }
