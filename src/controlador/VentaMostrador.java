@@ -200,7 +200,34 @@ public class VentaMostrador extends Controlador implements Initializable {
 
 
     @FXML
-    void aceptar(ActionEvent event) {
+    void aceptar(ActionEvent event) throws IOException {
+
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Venta Productos: Agregar");
+        paramsJSON.put("cantidadProductos", CantidadProductos.getText());
+        paramsJSON.put("subtotal", Subtotal.getText());
+        paramsJSON.put("iva", IVA.getText());
+        paramsJSON.put("total", Total.getText());
+        paramsJSON.put("idPersonal", 1);
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            int ultimoInsertado = rootArray.get(1).getAsJsonObject().get(Funciones.ultimoInsertado).getAsInt();
+
+            for(modelo.VentaMostrador ventaMostrador: listaVentaMostrador) {
+                Map<String,Object> paramsJSON2 = new LinkedHashMap<>();
+                paramsJSON2.put("Actividad", "Venta Productos: Agregar detalles");
+                paramsJSON2.put("cantidad", ventaMostrador.getCantidad());
+                paramsJSON2.put("costo", ventaMostrador.getCosto());
+                paramsJSON2.put("total", ventaMostrador.getTotal());
+                paramsJSON2.put("idProducto", ventaMostrador.getIdProducto());
+                paramsJSON2.put("idVentasProductos", ultimoInsertado);
+                JsonArray rootArray2 = Funciones.consultarBD(paramsJSON2);
+
+            }
+            listaVentaMostrador.clear();
+            calcularTotal();
+
+        }
 
     }
 
