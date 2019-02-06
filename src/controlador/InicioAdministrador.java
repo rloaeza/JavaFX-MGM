@@ -21,14 +21,18 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 import modelo.Funciones;
 import modelo.Personal;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
+import org.apache.pdfbox.pdmodel.interactive.form.PDField;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class InicioAdministrador extends  Controlador implements Initializable {
 
@@ -177,6 +181,41 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         paramsVista.put("idClinica", 1);
         paramsVista.put("vista", "/vista/deuda_tratamientos.fxml" );
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new DeudaTratamientos());
+    }
+
+
+
+    @FXML
+    void uno(ActionEvent event)  {
+        try {
+            final File RESULT_FOLDER = new File("target/test-outputs", "form");
+            File origen = new File("nombre.pdf");
+
+            PDDocument doc = new PDDocument().load(origen);
+            PDDocumentCatalog docCatalog = doc.getDocumentCatalog();
+            PDAcroForm acroForm = docCatalog.getAcroForm();
+            PDField field = acroForm.getField("nombre");
+            field.setValue("juan perez");
+
+
+            PDDocument finalDoc = new PDDocument();
+
+            finalDoc.addPage(doc.getPage(0));
+            List<PDField> fields = new ArrayList<>();
+
+            PDAcroForm finalForm = new PDAcroForm(finalDoc);
+            finalDoc.getDocumentCatalog().setAcroForm(finalForm);
+
+            fields.add(field);
+            finalForm.setFields(fields);
+
+            finalDoc.save(new File("nombre2.pdf"));
+            doc.close();
+            finalDoc.close();
+        }catch (IOException ioe) {
+            System.out.println(ioe.toString());
+        }
+
     }
 
     public void setUsuario(Personal p) {
