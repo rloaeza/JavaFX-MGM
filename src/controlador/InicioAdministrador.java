@@ -20,12 +20,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 import modelo.Funciones;
+import modelo.PDFvalores;
 import modelo.Personal;
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDDocumentCatalog;
-import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.*;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDField;
+import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 
 import java.io.File;
 import java.io.IOException;
@@ -189,31 +190,80 @@ public class InicioAdministrador extends  Controlador implements Initializable {
     @FXML
     void uno(ActionEvent event)  {
         try {
-            final File RESULT_FOLDER = new File("target/test-outputs", "form");
-            File origen = new File("nombre.pdf");
 
-            PDDocument doc = new PDDocument().load(origen);
-            PDDocumentCatalog docCatalog = doc.getDocumentCatalog();
-            PDAcroForm acroForm = docCatalog.getAcroForm();
-            PDField field = acroForm.getField("nombre");
-            field.setValue("juan perez");
+            PDDocument document = new PDDocument();
+            PDDocumentInformation documentInformation = document.getDocumentInformation();
+            documentInformation.setAuthor("Roberto Loaeza Valerio");
 
 
-            PDDocument finalDoc = new PDDocument();
+            PDPage page = new PDPage();
+            document.addPage(page);
+            /*
+            PDPageContentStream contentStream = new PDPageContentStream(document, page);
 
-            finalDoc.addPage(doc.getPage(0));
-            List<PDField> fields = new ArrayList<>();
+            //Begin the Content stream
+            contentStream.beginText();
+            contentStream.setLeading(30);
 
-            PDAcroForm finalForm = new PDAcroForm(finalDoc);
-            finalDoc.getDocumentCatalog().setAcroForm(finalForm);
+            //Setting the font to the Content stream
+            contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
 
-            fields.add(field);
-            finalForm.setFields(fields);
+            //Setting the position for the line
 
-            finalDoc.save(new File("nombre2.pdf"));
-            doc.close();
+            contentStream.newLineAtOffset(1, 500);
+            String text = "This is the sample document and we are adding content to it 1 . contentStream.newLineAtOffset(1, 1); contentStream.setFont(PDType1Font.TIMES_ROMAN, 12); contentStream.setFont(PDType1Font.TIMES_ROMAN, 12); This is the sample document and we are adding content to it 1 . contentStream.newLineAtOffset(1, 1); contentStream.setFont(PDType1Font.TIMES_ROMAN, 12); contentStream.setFont(PDType1Font.TIMES_ROMAN, 12); This is the sample document and we are adding content to it 1 . contentStream.newLineAtOffset(1, 1); contentStream.setFont(PDType1Font.TIMES_ROMAN, 12); contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);";
+            contentStream.showText(text);
+
+            contentStream.newLine();
+            String text2 = "This is the sample document and we are adding content to it 2.";
+            contentStream.showText(text2);
+
+            //Ending the content stream
+            contentStream.endText();
+
+            contentStream.close();
+
+            document.save("salida1.pdf");
+
+            document.close();
+
+
+            /*
+
+
+            File file = new File("pdf1.pdf");
+            System.out.print("Abriendo: "+file.getAbsolutePath());
+            PDDocument document = PDDocument.load(file);
+            PDAcroForm acroForm = document.getDocumentCatalog().getAcroForm();
+            if(acroForm!=null ) {
+                PDTextField field = (PDTextField) acroForm.getField("tbNombre");
+                field.setValue("Skynet es la onda cabron\n o que?\n de que?");
+
+            }
+            else {
+                System.out.println("AcronForm null");
+            }
+            document.save("pdf2.pdf");
+            document.close();
+            */
+            ArrayList<PDFvalores> valores = new ArrayList<>();
+
+            valores.add(new PDFvalores("nombre", "Roberto"));
+            valores.add(new PDFvalores("apellidos", "Loaeza Valerio"));
+            valores.add(new PDFvalores("direccion", "Nicolas Bravo 2016"));
+            valores.add(new PDFvalores("telefono", "4235253413"));
+            valores.add(new PDFvalores("movil", "4521181954"));
+            valores.add(new PDFvalores("correoElectronico", "roberto.loaeza@gmail.com"));
+
+            valores.add(new PDFvalores("fechaInicio", "01 / Enero / 2019"));
+            valores.add(new PDFvalores("fechaFin", "01 / Febrero / 2019"));
+            valores.add(new PDFvalores("DiasTrabajados", "20"));
+            valores.add(new PDFvalores("DiasConRetraso", "2"));
+
+            Funciones.llenarPDF("informe1.pdf", "informe1-.pdf", valores);
+
         }catch (IOException ioe) {
-            System.out.println(ioe.toString());
+            System.out.println("Causa: "+ ioe.getCause()+", Mensaje: "+ ioe.getMessage());
         }
 
     }

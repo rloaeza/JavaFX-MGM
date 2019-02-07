@@ -32,11 +32,17 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.util.EntityUtils;
+import org.apache.pdfbox.pdmodel.PDDocument;
+import org.apache.pdfbox.pdmodel.PDDocumentInformation;
+import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
+import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
 
 import java.io.*;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.Map;
 
 public class Funciones {
@@ -49,6 +55,9 @@ public class Funciones {
     public static String ultimoInsertado = "ultimoInsertado";
     public static int alto = 700;
     public static int ancho = 900;
+
+
+    public static String pdfAutor = "Robeto Loaeza Valerio";
 
     public static byte[] prepareVars(Map<String,Object> params) throws UnsupportedEncodingException {
         StringBuilder postData = new StringBuilder();
@@ -240,6 +249,34 @@ public class Funciones {
     public static String getURLfoto(String archivo) {
         //return sitio+"foto_preview.php?foto="+archivo;
         return sitio+"fotos/#"+archivo;
+    }
+
+
+    public static  void crearPDFLimpio(String archivo) throws IOException {
+        PDDocument document = new PDDocument();
+        PDDocumentInformation documentInformation = document.getDocumentInformation();
+        documentInformation.setAuthor(pdfAutor);
+        PDPage page = new PDPage();
+        document.addPage(page);
+        document.save("salida1.pdf");
+        document.close();
+    }
+
+    public static void llenarPDF(String archivoOrigen, String archivoDestino, ArrayList<PDFvalores>  valores) throws IOException {
+        File file = new File(archivoOrigen);
+        PDDocument document = PDDocument.load(file);
+        PDAcroForm acroForm = document.getDocumentCatalog().getAcroForm();
+
+        if(acroForm!=null ) {
+            for(PDFvalores valor : valores) {
+                ((PDTextField) acroForm.getField(valor.getCampo()) ).setValue(valor.getValor());
+            }
+        }
+        else {
+            System.out.println("AcronForm null");
+        }
+        document.save(archivoDestino);
+        document.close();
     }
 
 }
