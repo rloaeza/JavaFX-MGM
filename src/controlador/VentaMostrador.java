@@ -250,14 +250,15 @@ public class VentaMostrador extends Controlador implements Initializable {
 
             }
             valoresPDF.add(new PDFvalores("cantidad", strCantidades));
-            valoresPDF.add(new PDFvalores("productos", strProductos));
-            valoresPDF.add(new PDFvalores("costos", strCostosU));
-            valoresPDF.add(new PDFvalores("costostotales", strCostoT));
+            valoresPDF.add(new PDFvalores("producto", strProductos));
+            valoresPDF.add(new PDFvalores("costounitario", strCostosU));
+            valoresPDF.add(new PDFvalores("costo", strCostoT));
+
+            valoresPDF.add(new PDFvalores("cliente", "Mostrador"));
             listaVentaMostrador.clear();
             calcularTotal();
 
-            Funciones.llenarPDFImprimir("formatos/venta.pdf", valoresPDF);
-
+            Funciones.llenarPDFImprimir("formatos/venta2.pdf", valoresPDF);
 
         }
 
