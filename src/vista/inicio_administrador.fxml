@@ -54,11 +54,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#VentaMostrador" text="Venta Mostrador" />
               </items>
             </Menu>
-            <Menu mnemonicParsing="false" text="Reportes">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#uno" text="Uno" />
-              </items>
-            </Menu>
+            <Menu mnemonicParsing="false" text="Reportes" />
         </menus>
       </MenuBar>
       <AnchorPane fx:id="Pane" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="29.0">

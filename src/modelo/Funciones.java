@@ -37,8 +37,16 @@ import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
+import org.apache.pdfbox.printing.PDFPageable;
+import org.apache.pdfbox.printing.PDFPrintable;
+import org.apache.pdfbox.printing.Scaling;
 
+import java.awt.print.PageFormat;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.*;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
@@ -262,7 +270,7 @@ public class Funciones {
         document.close();
     }
 
-    public static void llenarPDF(String archivoOrigen, String archivoDestino, ArrayList<PDFvalores>  valores) throws IOException {
+    public static void llenarPDF(String archivoOrigen, String archivoDestino, ArrayList<PDFvalores>  valores) throws IOException, PrinterException {
         File file = new File(archivoOrigen);
         PDDocument document = PDDocument.load(file);
         PDAcroForm acroForm = document.getDocumentCatalog().getAcroForm();
@@ -275,8 +283,37 @@ public class Funciones {
         else {
             System.out.println("AcronForm null");
         }
+
         document.save(archivoDestino);
         document.close();
     }
 
+    public static void llenarPDFImprimir(String archivoOrigen, ArrayList<PDFvalores>  valores) throws IOException, PrinterException {
+        File file = new File(archivoOrigen);
+        PDDocument document = PDDocument.load(file);
+        PDAcroForm acroForm = document.getDocumentCatalog().getAcroForm();
+
+        if(acroForm!=null ) {
+            for(PDFvalores valor : valores) {
+                ((PDTextField) acroForm.getField(valor.getCampo()) ).setValue(valor.getValor());
+            }
+        }
+        else {
+            System.out.println("AcronForm null");
+        }
+        PDFPrintable printable = new PDFPrintable(document, Scaling.SHRINK_TO_FIT);
+        PrinterJob job = PrinterJob.getPrinterJob();
+        job.setPrintable(printable);
+        job.print();
+        document.close();
+    }
+
+    public static double fixN(double n, int lugares) {
+        BigDecimal bd = new BigDecimal(n);
+        bd = bd.setScale(lugares, RoundingMode.HALF_UP);
+
+
+
+        return bd.doubleValue();
+    }
 }

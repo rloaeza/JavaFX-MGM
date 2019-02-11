@@ -26,11 +26,16 @@ import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import modelo.Funciones;
+import modelo.PDFvalores;
 import modelo.ProductosConCosto;
 import modelo.Tratamientos;
 
+import java.awt.print.PrinterException;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -200,7 +205,11 @@ public class VentaMostrador extends Controlador implements Initializable {
 
 
     @FXML
-    void aceptar(ActionEvent event) throws IOException {
+    void aceptar(ActionEvent event) throws IOException, PrinterException {
+
+        ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
+
+
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Venta Productos: Agregar");
@@ -210,7 +219,17 @@ public class VentaMostrador extends Controlador implements Initializable {
         paramsJSON.put("total", Total.getText());
         paramsJSON.put("idPersonal", 1);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+
+        String strCantidades="";
+        String strProductos="";
+        String strCostosU="";
+        String strCostoT="";
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+
+            valoresPDF.add(new PDFvalores("iva", IVA.getText()));
+            valoresPDF.add(new PDFvalores("total", Total.getText()));
+            valoresPDF.add(new PDFvalores("subtotal", Subtotal.getText()));
+
             int ultimoInsertado = rootArray.get(1).getAsJsonObject().get(Funciones.ultimoInsertado).getAsInt();
 
             for(modelo.VentaMostrador ventaMostrador: listaVentaMostrador) {
@@ -223,9 +242,22 @@ public class VentaMostrador extends Controlador implements Initializable {
                 paramsJSON2.put("idVentasProductos", ultimoInsertado);
                 JsonArray rootArray2 = Funciones.consultarBD(paramsJSON2);
 
+
+                strCantidades+=ventaMostrador.getCantidad()+"\n";
+                strProductos+=ventaMostrador.getProducto()+"\n";
+                strCostosU+=ventaMostrador.getCosto()+"\n";
+                strCostoT+=ventaMostrador.getTotal()+"\n";
+
             }
+            valoresPDF.add(new PDFvalores("cantidad", strCantidades));
+            valoresPDF.add(new PDFvalores("productos", strProductos));
+            valoresPDF.add(new PDFvalores("costos", strCostosU));
+            valoresPDF.add(new PDFvalores("costostotales", strCostoT));
             listaVentaMostrador.clear();
             calcularTotal();
+
+            Funciones.llenarPDFImprimir("formatos/venta.pdf", valoresPDF);
+
 
         }
 
@@ -274,9 +306,10 @@ public class VentaMostrador extends Controlador implements Initializable {
         iva = subtotal*0.16;
         total = subtotal + iva;
         CantidadProductos.setText(cantidadProductos+"");
-        Subtotal.setText(subtotal+"");
-        IVA.setText(iva+"");
-        Total.setText(total+"");
+        Subtotal.setText(Funciones.fixN(subtotal, 2)+"");
+        IVA.setText(Funciones.fixN(iva, 2)+"");
+
+        Total.setText(Funciones.fixN(total,2)+"");
     }
 
     private void agregarProducto(ProductosConCosto p) {
