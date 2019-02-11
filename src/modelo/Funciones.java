@@ -3,8 +3,6 @@ package modelo;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
-import controlador.AlertBox;
 import controlador.Controlador;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -12,36 +10,26 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.HttpVersion;
-import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.ContentType;
-import org.apache.http.entity.FileEntity;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 import org.apache.http.entity.mime.content.FileBody;
 import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.impl.client.HttpClients;
-import org.apache.http.params.CoreProtocolPNames;
 import org.apache.http.util.EntityUtils;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
-import org.apache.pdfbox.pdmodel.interactive.form.PDTextField;
-import org.apache.pdfbox.printing.PDFPageable;
 import org.apache.pdfbox.printing.PDFPrintable;
 import org.apache.pdfbox.printing.Scaling;
 
-import java.awt.print.PageFormat;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.*;
@@ -266,46 +254,34 @@ public class Funciones {
         documentInformation.setAuthor(pdfAutor);
         PDPage page = new PDPage();
         document.addPage(page);
-        document.save("salida1.pdf");
+        document.save(archivo);
         document.close();
     }
 
-    public static void llenarPDF(String archivoOrigen, String archivoDestino, ArrayList<PDFvalores>  valores) throws IOException, PrinterException {
+    public static void llenarPDF(String archivoOrigen,  ArrayList<PDFvalores>  valores, boolean imprimir, String archivoDestino) throws IOException, PrinterException {
         File file = new File(archivoOrigen);
         PDDocument document = PDDocument.load(file);
-        PDAcroForm acroForm = document.getDocumentCatalog().getAcroForm();
-
-        if(acroForm!=null ) {
-            for(PDFvalores valor : valores) {
-                ((PDTextField) acroForm.getField(valor.getCampo()) ).setValue(valor.getValor());
-            }
-        }
-        else {
-            System.out.println("AcronForm null");
-        }
-
-        document.save(archivoDestino);
+        llenarPDF(document.getDocumentCatalog().getAcroForm(), valores);
+        if(imprimir)
+            imprimirPDF(document);
+        if(archivoDestino!=null)
+            document.save(archivoDestino);
         document.close();
     }
 
-    public static void llenarPDFImprimir(String archivoOrigen, ArrayList<PDFvalores>  valores) throws IOException, PrinterException {
-        File file = new File(archivoOrigen);
-        PDDocument document = PDDocument.load(file);
-        PDAcroForm acroForm = document.getDocumentCatalog().getAcroForm();
 
-        if(acroForm!=null ) {
-            for(PDFvalores valor : valores) {
-                ((PDTextField) acroForm.getField(valor.getCampo()) ).setValue(valor.getValor());
+    private static void llenarPDF(PDAcroForm acroForm, ArrayList<PDFvalores>  valores) throws IOException {
+        if(acroForm!=null) {
+            for (PDFvalores valor : valores) {
+                acroForm.getField(valor.getCampo()).setValue(valor.getValor());
             }
         }
-        else {
-            System.out.println("AcronForm null");
-        }
-        PDFPrintable printable = new PDFPrintable(document, Scaling.SHRINK_TO_FIT);
+    }
+    private static void imprimirPDF(PDDocument pdf) throws PrinterException {
+        PDFPrintable printable = new PDFPrintable(pdf, Scaling.SHRINK_TO_FIT);
         PrinterJob job = PrinterJob.getPrinterJob();
         job.setPrintable(printable);
         job.print();
-        document.close();
     }
 
     public static double fixN(double n, int lugares) {

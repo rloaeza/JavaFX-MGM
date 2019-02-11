@@ -12,7 +12,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import modelo.DeudasTratamientos;
 import modelo.Funciones;
-import modelo.Productos;
 
 import java.io.IOException;
 import java.util.LinkedHashMap;

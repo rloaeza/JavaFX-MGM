@@ -13,7 +13,6 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import modelo.Funciones;
-import modelo.Productos;
 import modelo.Servicios;
 
 import java.io.IOException;

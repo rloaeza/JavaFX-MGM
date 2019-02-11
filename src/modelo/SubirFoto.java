@@ -1,7 +1,6 @@
 package modelo;
 
 import javafx.concurrent.Task;
-import javafx.scene.image.Image;
 
 public class SubirFoto extends Task {
 

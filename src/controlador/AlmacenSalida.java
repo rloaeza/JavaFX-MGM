@@ -15,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import modelo.AlmacenProductos;
 import modelo.Funciones;
-import modelo.Productos;
 
 import java.io.IOException;
 import java.net.URL;

@@ -13,7 +13,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import modelo.Funciones;
-import modelo.Personal;
 
 import java.io.IOException;
 import java.net.URL;

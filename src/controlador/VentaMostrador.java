@@ -6,34 +6,26 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import javafx.beans.InvalidationListener;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableCell;
-import javafx.scene.control.TreeTableColumn.CellEditEvent;
-
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableColumn.CellEditEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import modelo.Funciones;
 import modelo.PDFvalores;
 import modelo.ProductosConCosto;
-import modelo.Tratamientos;
 
 import java.awt.print.PrinterException;
 import java.io.IOException;
-import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -258,7 +250,8 @@ public class VentaMostrador extends Controlador implements Initializable {
             listaVentaMostrador.clear();
             calcularTotal();
 
-            Funciones.llenarPDFImprimir("formatos/venta2.pdf", valoresPDF);
+
+            Funciones.llenarPDF("formatos/venta2.pdf",  valoresPDF, false, "Venta.pdf");
 
         }
 

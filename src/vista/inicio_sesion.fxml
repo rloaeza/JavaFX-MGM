@@ -5,9 +5,7 @@
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.VBox?>
-
+<?import javafx.scene.layout.*?>
 <AnchorPane fx:id="Pane" prefHeight="436.0" prefWidth="741.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.InicioSesion">
    <children>
       <AnchorPane layoutX="342.0" layoutY="61.0" prefHeight="345.0" prefWidth="353.0" style="-fx-background-color: #e0f9db;" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">

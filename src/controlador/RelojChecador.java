@@ -3,7 +3,6 @@ package controlador;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.jfoenix.controls.JFXPasswordField;
-import com.jfoenix.controls.JFXTextField;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;

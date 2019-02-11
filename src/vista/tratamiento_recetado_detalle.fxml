@@ -3,9 +3,8 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.*?>
 <?import javafx.scene.text.Font?>
-
 <AnchorPane fx:id="Pane" prefHeight="300.0" prefWidth="468.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.TratamientoRecetadoDetalle">
    <children>
       <JFXButton fx:id="BotonAceptar" alignment="CENTER" layoutX="71.0" layoutY="231.0" onAction="#aceptar" prefHeight="45.0" prefWidth="422.0" style="-fx-background-color: lightgreen;" text="Aceptar" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">

@@ -1,6 +1,11 @@
 package modelo;
 
 public class PDFvalores {
+
+    public static String rutaFormatosVacios = "formatos/";
+    public static String prefijoGuardado = "Formato_";
+
+
     private String campo;
     private String valor;
 

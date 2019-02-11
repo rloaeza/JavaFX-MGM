@@ -9,11 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.util.Duration;
-
-import java.util.Timer;
-import java.util.TimerTask;
 
 public class AlertBox extends Controlador {
 

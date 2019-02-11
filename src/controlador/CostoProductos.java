@@ -3,7 +3,6 @@ package controlador;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
