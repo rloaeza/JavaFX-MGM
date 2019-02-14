@@ -14,13 +14,19 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import modelo.Funciones;
+import modelo.PDFvalores;
 import modelo.ProductosConCosto;
+import modelo.ReporteExistenciaAlmacen;
 
+import java.awt.print.PrinterException;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -48,7 +54,7 @@ public class VistaReporte extends Controlador implements Initializable {
 
     @FXML
     void descargar(ActionEvent event) {
-
+        prepararPDF();
     }
 
     @FXML
@@ -56,28 +62,63 @@ public class VistaReporte extends Controlador implements Initializable {
 
     }
     private ObservableList<modelo.VistaReporte> listaReporte;
+    private String[] titulos;
+    private void prepararPDF() {
+        ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
+        Map<String, String> valorPDf = new LinkedHashMap<>();
+
+        for(modelo.VistaReporte elemento : listaReporte) {
+
+
+            for(String t: titulos) {
+                String titulo = (t.split(":")[0]).replace(" ","");
+                String valor = (valorPDf.get(titulo)==null?"":valorPDf.get(titulo)+"\n")+elemento.getDato(titulo);
+                valorPDf.put(titulo, valor);
+            }
+
+
+
+
+        }
+
+
+
+        String[] titulosPDF = (String[]) parametros.get(0).get("pdf");
+
+        for(String t: titulos) {
+            String titulo = (t.split(":")[0]).replace(" ","");
+            valoresPDF.add(new PDFvalores(titulo, valorPDf.get(titulo)));
+        }
+
+
+        try {
+            Funciones.llenarPDF("formatos/existencia.pdf",  valoresPDF, false, "Existencia.pdf");
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (PrinterException e) {
+            e.printStackTrace();
+        }
+
+    }
 
     @Override
     public void init() {
-        try {
-            cargarDatos();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
         listaReporte = FXCollections.observableArrayList();
         TreeItem<modelo.VistaReporte> root = new RecursiveTreeItem<>(listaReporte, RecursiveTreeObject::getChildren);
 
-        for(int i = 0; i<10; i++) {
-            JFXTreeTableColumn<modelo.VistaReporte, String> column = new JFXTreeTableColumn<>("Cant");
-            column.setPrefWidth(100);
-            column.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<modelo.VistaReporte, String>, ObservableValue<String>>() {
-                @Override
-                public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<modelo.VistaReporte, String> param) {
-                    return new SimpleStringProperty(param.getValue().getValue().getDato("Cant")) ;
-                }
-            });
-            column.setStyle("-fx-alignment: CENTER;");
+        titulos= (String[]) parametros.get(0).get("titulos");
+        double anchoTabla = TablaReporte.getPrefWidth();
+
+        for(String t : titulos) {
+            String titulo = t.split(":")[0];
+            double ancho = Double.valueOf(t.split(":")[1]);
+            String alineacion = t.split(":")[2];
+            JFXTreeTableColumn<modelo.VistaReporte, String> column = new JFXTreeTableColumn<>(titulo);
+
+            column.setPrefWidth(( (ancho*anchoTabla)/100) -1);
+            column.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue().getDato(titulo.replace(" ", ""))));
+            column.setStyle("-fx-alignment: "+alineacion+";");
             TablaReporte.getColumns().add(column);
         }
 
@@ -86,6 +127,13 @@ public class VistaReporte extends Controlador implements Initializable {
 
         TablaReporte.setEditable(true);
         TablaReporte.setShowRoot(false);
+        TablaReporte.setColumnResizePolicy(TreeTableView.UNCONSTRAINED_RESIZE_POLICY);
+        try {
+            cargarDatos();
+        } catch (IOException  e) {
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -96,22 +144,20 @@ public class VistaReporte extends Controlador implements Initializable {
     }
 
     private void cargarDatos() throws IOException {
-/*
-        ObservableList<ProductosConCosto> listaDeProductos = FXCollections.observableArrayList();
+        String actividad = (String) parametros.get(0).get("reporte");
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
-        paramsJSON.put("Actividad", "Productos: Lista con precio");
+        paramsJSON.put("Actividad", actividad);
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica").toString());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
             for(int i = 1; i< t; i++) {
-                listaDeProductos.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), ProductosConCosto.class) );
+                Map<String, Object> v = new LinkedHashMap<>();
+                v= new Gson().fromJson(rootArray.get(i).getAsJsonObject(), v.getClass());
+                listaReporte.add(new modelo.VistaReporte(v));
             }
         }
-
-        ListaDeProductos.setItems(listaDeProductos);
-*/
     }
 
 }

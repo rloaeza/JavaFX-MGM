@@ -23,9 +23,12 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
+import org.apache.pdfbox.cos.COSName;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
+import org.apache.pdfbox.pdmodel.PDResources;
+import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.printing.PDFPrintable;
 import org.apache.pdfbox.printing.Scaling;
@@ -272,6 +275,11 @@ public class Funciones {
 
     private static void llenarPDF(PDAcroForm acroForm, ArrayList<PDFvalores>  valores) throws IOException {
         if(acroForm!=null) {
+
+            PDResources resources = new PDResources();
+            resources.put(COSName.getPDFName("Courier"), PDType1Font.COURIER);
+            acroForm.setDefaultResources(resources);
+
             for (PDFvalores valor : valores) {
                 acroForm.getField(valor.getCampo()).setValue(valor.getValor());
             }

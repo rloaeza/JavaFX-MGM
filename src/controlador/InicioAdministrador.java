@@ -183,6 +183,11 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         Map<String,Object> paramsVista = new LinkedHashMap<>();
         paramsVista.put("idClinica", 1);
         paramsVista.put("vista", "/vista/vista_reporte.fxml" );
+
+        paramsVista.put("titulos", new String[]{"Producto:70:CENTER-LEFT", "Cantidad Minima:20:CENTER", "Existencia:10:CENTER"});
+
+        paramsVista.put("pdf", new String[]{"existencia.pdf","producto", "cantidadminima", "existencia"});
+        paramsVista.put("reporte", "Reportes: Existencia en almacen");
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReporte());
     }
 
@@ -193,7 +198,7 @@ public class InicioAdministrador extends  Controlador implements Initializable {
 
     public void init() {
 
-        //Estado.setText(usuario.getNombre());
+        //Estado.setText(usuario.getProducto());
         ((Stage)Pane.getScene().getWindow()).setTitle(parametros.get(0).get("nombre").toString());
 
 

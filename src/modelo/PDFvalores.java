@@ -29,4 +29,12 @@ public class PDFvalores {
     public void setValor(String valor) {
         this.valor = valor;
     }
+
+    @Override
+    public String toString() {
+        return "PDFvalores{" +
+                "campo='" + campo + '\'' +
+                ", valor='" + valor + '\'' +
+                '}';
+    }
 }
