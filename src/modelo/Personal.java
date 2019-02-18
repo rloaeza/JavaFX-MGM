@@ -12,6 +12,8 @@ public class Personal {
     private String clave;
     private int idClinica;
 
+    private String titulo;
+
     public Personal() {
     }
 
@@ -99,8 +101,17 @@ public class Personal {
         this.idClinica = idClinica;
     }
 
+    public String getTitulo() {
+        return titulo;
+    }
+
+    public void setTitulo(String titulo) {
+        this.titulo = titulo;
+    }
+
     @Override
     public String toString() {
         return nombre+ " "+apellidos;
     }
 }
+

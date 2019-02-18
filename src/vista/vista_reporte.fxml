@@ -13,12 +13,12 @@
 <AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VistaReporte">
    <children>
       <JFXTreeTableView fx:id="TablaReporte" layoutX="59.0" layoutY="151.0" prefHeight="304.0" prefWidth="820.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="150.0" />
-      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="59.0" layoutY="14.0" text="Título de reporte" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
+      <Label fx:id="titulo" alignment="CENTER" contentDisplay="CENTER" layoutX="59.0" layoutY="14.0" text="Título de reporte" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Label alignment="TOP_CENTER" contentDisplay="TOP" layoutX="121.0" layoutY="70.0" prefHeight="70.0" prefWidth="356.0" text="Descripción del reporte" wrapText="true" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="70.0" />
+      <Label fx:id="descripcion" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="121.0" layoutY="70.0" prefHeight="70.0" prefWidth="356.0" text="Descripción del reporte" wrapText="true" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="70.0" />
       <HBox alignment="TOP_RIGHT" layoutX="40.0" layoutY="466.0" prefHeight="70.0" prefWidth="820.0" spacing="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
          <children>
             <Button mnemonicParsing="false" onAction="#imprimir">

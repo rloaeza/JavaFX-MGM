@@ -5,7 +5,6 @@ import com.google.gson.JsonArray;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,7 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import javafx.util.Callback;
 import modelo.Funciones;
 import modelo.PDFvalores;
@@ -23,6 +24,7 @@ import modelo.ProductosConCosto;
 import modelo.ReporteExistenciaAlmacen;
 
 import java.awt.print.PrinterException;
+import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
@@ -45,16 +47,16 @@ public class VistaReporte extends Controlador implements Initializable {
     private Label titulo;
 
     @FXML
-    private Label descripcon;
+    private Label descripcion;
 
     @FXML
     void imprimir(ActionEvent event) {
-
+        prepararPDF(true, false);
     }
 
     @FXML
     void descargar(ActionEvent event) {
-        prepararPDF();
+        prepararPDF(false, true);
     }
 
     @FXML
@@ -63,7 +65,7 @@ public class VistaReporte extends Controlador implements Initializable {
     }
     private ObservableList<modelo.VistaReporte> listaReporte;
     private String[] titulos;
-    private void prepararPDF() {
+    private void prepararPDF(boolean imprimir, boolean guardar) {
         ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
         Map<String, String> valorPDf = new LinkedHashMap<>();
 
@@ -82,17 +84,36 @@ public class VistaReporte extends Controlador implements Initializable {
         }
 
 
-
-        String[] titulosPDF = (String[]) parametros.get(0).get("pdf");
-
         for(String t: titulos) {
             String titulo = (t.split(":")[0]).replace(" ","");
             valoresPDF.add(new PDFvalores(titulo, valorPDf.get(titulo)));
         }
 
+        System.out.println("titulo="+(String) parametros.get(0).get("clinicaDescripcion"));
+        valoresPDF.add(new PDFvalores("Descripcion", (String) parametros.get(0).get("clinicaDescripcion")));
+
+
+        File file = null;
+        String destino=null;
+        if(guardar) {
+            final FileChooser fileChooser = new FileChooser();
+
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Portable Document Format(*.pdf)", "*.pdf"));
+
+
+
+            file = fileChooser.showSaveDialog(Pane.getScene().getWindow());
+            if(file == null)
+                return;
+
+            destino = file.getAbsolutePath();
+
+
+        }
+
 
         try {
-            Funciones.llenarPDF("formatos/existencia.pdf",  valoresPDF, false, "Existencia.pdf");
+            Funciones.llenarPDF((String) parametros.get(0).get("pdf"),  valoresPDF, imprimir, guardar?destino:null);
         } catch (IOException e) {
             e.printStackTrace();
         } catch (PrinterException e) {
@@ -108,6 +129,9 @@ public class VistaReporte extends Controlador implements Initializable {
         TreeItem<modelo.VistaReporte> root = new RecursiveTreeItem<>(listaReporte, RecursiveTreeObject::getChildren);
 
         titulos= (String[]) parametros.get(0).get("titulos");
+
+        titulo.setText((String) parametros.get(0).get("clinicaDescripcion"));
+
         double anchoTabla = TablaReporte.getPrefWidth();
 
         for(String t : titulos) {

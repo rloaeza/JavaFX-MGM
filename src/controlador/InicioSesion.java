@@ -41,6 +41,9 @@ public class InicioSesion  {
             params = new LinkedHashMap<>();
             params.put("idPersonal", usuario.getIdPersonal());
             params.put("idClinica", usuario.getIdClinica());
+
+            params.put("clinicaDescripcion", usuario.getTitulo());
+
             params.put("nombre", usuario.getNombre());
             params.put("vista", "/vista/inicio_resumen.fxml");
 
