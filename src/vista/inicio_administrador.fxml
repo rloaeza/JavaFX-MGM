@@ -56,7 +56,7 @@
             </Menu>
             <Menu mnemonicParsing="false" text="Reportes">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#ReporteUno" text="Uno" />
+                  <MenuItem mnemonicParsing="false" onAction="#ReporteExistenciaAlmacen" text="Existencia en almacen" />
                </items></Menu>
         </menus>
       </MenuBar>

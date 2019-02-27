@@ -60,7 +60,9 @@ public class VistaReporte extends Controlador implements Initializable {
     }
 
     @FXML
-    void aceptar(ActionEvent event) {
+    void aceptar(ActionEvent event) throws IOException {
+        quitarVistas();
+        Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new InicioAdministrador());
 
     }
     private ObservableList<modelo.VistaReporte> listaReporte;

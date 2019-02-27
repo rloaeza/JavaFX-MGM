@@ -251,7 +251,9 @@ public class VentaMostrador extends Controlador implements Initializable {
             calcularTotal();
 
 
-            Funciones.llenarPDF("formatos/venta2.pdf",  valoresPDF, false, "Venta.pdf");
+            //Funciones.llenarPDF("formatos/venta2.pdf",  valoresPDF, false, "Venta.pdf");
+
+            Funciones.llenarPDF("formatos/venta2.pdf",  valoresPDF, true, null);
 
         }
 

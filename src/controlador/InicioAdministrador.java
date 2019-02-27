@@ -179,7 +179,7 @@ public class InicioAdministrador extends  Controlador implements Initializable {
 
 
     @FXML
-    void ReporteUno(ActionEvent event) throws IOException {
+    void ReporteExistenciaAlmacen(ActionEvent event) throws IOException {
         Map<String,Object> paramsVista = new LinkedHashMap<>();
         paramsVista.put("idClinica", 1);
         paramsVista.put("vista", "/vista/vista_reporte.fxml" );

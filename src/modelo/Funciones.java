@@ -278,6 +278,8 @@ public class Funciones {
 
             PDResources resources = new PDResources();
             resources.put(COSName.getPDFName("Courier"), PDType1Font.COURIER);
+            resources.put(COSName.getPDFName("Cour"), PDType1Font.COURIER);
+
             acroForm.setDefaultResources(resources);
 
             for (PDFvalores valor : valores) {
