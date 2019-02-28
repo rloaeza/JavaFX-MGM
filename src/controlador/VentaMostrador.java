@@ -18,12 +18,12 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableColumn.CellEditEvent;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Callback;
 import modelo.Funciones;
 import modelo.PDFvalores;
 import modelo.ProductosConCosto;
-
 import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.net.URL;
@@ -255,6 +255,25 @@ public class VentaMostrador extends Controlador implements Initializable {
 
             Funciones.llenarPDF("formatos/venta2.pdf",  valoresPDF, true, null);
 
+        }
+
+    }
+
+    @FXML
+    void agregar_quitar(KeyEvent event) {
+        if(event.getText().contains("+")) {
+            if(!ListaDeProductos.getSelectionModel().isEmpty())
+                agregarProducto(ListaDeProductos.getSelectionModel().getSelectedItem());
+
+        }
+    }
+
+    @FXML
+    void eliminar(ActionEvent event) {
+        if(!TablaVenta.getSelectionModel().isEmpty()) {
+            listaVentaMostrador.remove(TablaVenta.getSelectionModel().getSelectedIndex());
+            TablaVenta.getSelectionModel().clearSelection();
+            calcularTotal();
         }
 
     }
