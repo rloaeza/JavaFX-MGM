@@ -182,6 +182,15 @@ public class VentaMostrador extends Controlador implements Initializable {
 
         FormaPago.setItems(valoresTipoPago);
 
+        FormaPago.setOnMouseClicked(event -> {
+            if(FormaPago.getSelectionModel().getSelectedItem().equalsIgnoreCase("Efectivo")) {
+                FormaPagoAuxiliar.setPromptText("Efectivo recibido");
+            }
+            else {
+                FormaPagoAuxiliar.setPromptText("Id Transacción");
+            }
+        });
+
     }
 
 
