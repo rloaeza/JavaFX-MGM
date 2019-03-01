@@ -62,6 +62,15 @@ public class VentaMostrador extends Controlador implements Initializable {
     private Label Total;
 
     @FXML
+    private JFXComboBox<String> FormaPago;
+
+    @FXML
+    private JFXTextField FormaPagoAuxiliar;
+
+    @FXML
+    private Label FormaPagoRespuesta;
+
+    @FXML
     void insertar(ActionEvent event) {
         for(ProductosConCosto p : ListaDeProductos.getItems()) {
             if(Busqueda.getText().equalsIgnoreCase(p.getClave()) || Busqueda.getText().equalsIgnoreCase(p.getBarCode()))
@@ -104,21 +113,11 @@ public class VentaMostrador extends Controlador implements Initializable {
 
         JFXTreeTableColumn<modelo.VentaMostrador, String> columnProducto = new JFXTreeTableColumn<>("Producto");
         columnProducto.setPrefWidth(380);
-        columnProducto.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<modelo.VentaMostrador, String>, ObservableValue<String>>() {
-            @Override
-            public ObservableValue<String> call(TreeTableColumn.CellDataFeatures<modelo.VentaMostrador, String> param) {
-                return new SimpleStringProperty(param.getValue().getValue().getProducto()) ;
-            }
-        });
+        columnProducto.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue().getProducto()));
 
         JFXTreeTableColumn<modelo.VentaMostrador, Double> columnCosto = new JFXTreeTableColumn<>("Costo");
         columnCosto.setPrefWidth(150);
-        columnCosto.setCellValueFactory(new Callback<TreeTableColumn.CellDataFeatures<modelo.VentaMostrador, Double>, ObservableValue<Double>>() {
-            @Override
-            public ObservableValue<Double> call(TreeTableColumn.CellDataFeatures<modelo.VentaMostrador, Double> param) {
-                return new ReadOnlyObjectWrapper<Double>(param.getValue().getValue().getCosto()) ;
-            }
-        });
+        columnCosto.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().getCosto()));
         columnCosto.setStyle("-fx-alignment: CENTER;");
 
 
@@ -131,17 +130,8 @@ public class VentaMostrador extends Controlador implements Initializable {
         columnSubTotal.setStyle("-fx-alignment: CENTER;");
 
 
-
-
-
         columnCantidad.setStyle("-fx-alignment: CENTER;");
         columnCantidad.setOnEditCommit((CellEditEvent<modelo.VentaMostrador, String> t) -> {
-            /*
-            t.getTreeTableView()
-                            .getTreeItem(t.getTreeTablePosition()
-                                    .getRow())
-                            .getValue().setCantidad(t.getNewValue());
-                    */
 
                     int index = t.getTreeTablePosition().getRow();
                     double costo = Double.valueOf(listaVentaMostrador.get(index).getCosto());
@@ -166,16 +156,6 @@ public class VentaMostrador extends Controlador implements Initializable {
 
 
         listaVentaMostrador = FXCollections.observableArrayList();
-/*
-        listaVentaMostrador.addListener((ListChangeListener) change -> {
-            System.out.println("cambiando...");
-            while(change.next()) {
-                if(change.wasUpdated()) {
-                    listaVentaMostrador.get(change.getFrom()).setTotal("22");
-                }
-            }
-        });
-*/
 
 
 
@@ -193,6 +173,15 @@ public class VentaMostrador extends Controlador implements Initializable {
                 agregarProducto(ListaDeProductos.getSelectionModel().getSelectedItem());
             }
         });
+
+
+
+        ObservableList<String> valoresTipoPago;
+        valoresTipoPago = FXCollections.observableArrayList();
+        valoresTipoPago.addAll("Efectivo", "Débito / Crédito");
+
+        FormaPago.setItems(valoresTipoPago);
+
     }
 
 
