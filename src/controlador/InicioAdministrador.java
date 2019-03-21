@@ -149,7 +149,7 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         Map<String,Object> paramsVista = new LinkedHashMap<>();
         paramsVista.put("idClinica", parametros.get(0).get("idClinica").toString());
         paramsVista.put("idPersonal", parametros.get(0).get("idPersonal").toString());
-        paramsVista.put("vista", "/vista/venta_mostrador.fxml" );
+        paramsVista.put("vista", "/vista/venta_mostrador2.fxml" );
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new Citas());
     }
 
