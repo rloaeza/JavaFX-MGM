@@ -313,16 +313,15 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     @FXML
     void aceptar(ActionEvent event) throws IOException, PrinterException {
+        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+
 
         ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
-
-
-
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Venta Productos: Agregar");
         paramsJSON.put("cantidadProductos", CantidadProductos.getText());
         paramsJSON.put("subtotal", Subtotal.getText());
-        paramsJSON.put("iva", IVA.getText());
+        paramsJSON.put("iva", "iva");
         paramsJSON.put("total", Total.getText());
         paramsJSON.put("idPersonal", 1);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
@@ -333,13 +332,12 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         String strCostoT="";
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
 
-            valoresPDF.add(new PDFvalores("iva", IVA.getText()));
             valoresPDF.add(new PDFvalores("total", Total.getText()));
             valoresPDF.add(new PDFvalores("subtotal", Subtotal.getText()));
 
             int ultimoInsertado = rootArray.get(1).getAsJsonObject().get(Funciones.ultimoInsertado).getAsInt();
 
-            for(modelo.VentaMostrador ventaMostrador: listaVentaMostrador) {
+            for(modelo.VentaMostrador ventaMostrador: listasVentasMostrador.get(nVentaSelect)) {
                 Map<String,Object> paramsJSON2 = new LinkedHashMap<>();
                 paramsJSON2.put("Actividad", "Venta Productos: Agregar detalles");
                 paramsJSON2.put("cantidad", ventaMostrador.getCantidad());
@@ -362,7 +360,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             valoresPDF.add(new PDFvalores("costo", strCostoT));
 
             valoresPDF.add(new PDFvalores("cliente", "Mostrador"));
-            listaVentaMostrador.clear();
+            listasVentasMostrador.get(nVentaSelect).clear();
             calcularTotal();
 
 
@@ -446,8 +444,6 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     private void agregarProducto(ProductosConCosto p) {
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
-        System.out.println("Agregando producto "+ p.getNombre() + " en venta " + nVentaSelect);
-
         int cantidad=0;
         for(modelo.VentaMostrador producto : listasVentasMostrador.get(nVentaSelect)) {
             if(producto.getIdProducto()==p.getIdProducto()) {
