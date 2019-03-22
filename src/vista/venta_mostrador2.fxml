@@ -3,37 +3,19 @@
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
-<?import javafx.scene.control.Tab?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="Pane" prefHeight="617.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentaMostrador2">
    <children>
-      <JFXTabPane layoutX="60.0" layoutY="210.0" prefHeight="306.0" prefWidth="802.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="210.0">
-         <tabs>
-            <Tab text="Ticket 002">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
-                     <children>
-                        <JFXTreeTableView fx:id="TablaVenta" AnchorPane.bottomAnchor="-0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-                     </children>
-                  </AnchorPane>
-              </content>
-            </Tab>
-            <Tab text="Ticker 007">
-              <content>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
-              </content>
-            </Tab>
-         </tabs>
-      </JFXTabPane>
+      <JFXTabPane fx:id="Tabs" layoutX="60.0" layoutY="210.0" onMouseClicked="#TabCambiando" prefHeight="306.0" prefWidth="802.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="210.0" />
       <JFXListView fx:id="ListaDeProductos" layoutX="59.0" layoutY="68.0" onKeyReleased="#agregar_quitar" prefHeight="109.0" prefWidth="385.0" AnchorPane.leftAnchor="60.0" />
       <JFXTextField fx:id="Busqueda" alignment="CENTER" layoutX="59.0" layoutY="29.0" onAction="#insertar" prefHeight="27.0" prefWidth="296.0" promptText="Clave o código de producto" AnchorPane.leftAnchor="60.0" />
       <JFXTextField fx:id="Cantidad" alignment="CENTER" layoutX="369.0" layoutY="29.0" prefHeight="27.0" prefWidth="74.0" promptText="1" />
@@ -72,14 +54,36 @@
             </Button>
          </children>
       </VBox>
-      <Button layoutX="60.0" layoutY="543.0" mnemonicParsing="false" onAction="#eliminar" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="60.0">
-         <graphic>
-            <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imgs/eliminar.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
+      <HBox layoutX="60.0" layoutY="549.0" prefWidth="200.0" spacing="10.0" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="60.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#agregarTab">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/agregar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#eliminarTab">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/eliminar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#eliminar">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/limpiar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

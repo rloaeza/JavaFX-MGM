@@ -14,17 +14,21 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableColumn.CellEditEvent;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import modelo.Funciones;
 import modelo.PDFvalores;
 import modelo.ProductosConCosto;
+import modelo.VentaMostrador;
 
 import java.awt.print.PrinterException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -32,12 +36,22 @@ import java.util.Map;
 import java.util.ResourceBundle;
 
 public class VentaMostrador2 extends Controlador implements Initializable {
+    private int nVenta=1;
+    private int nVentaSelect = 1;
 
     @FXML
     private AnchorPane Pane;
 
+    private ArrayList<JFXTreeTableView<modelo.VentaMostrador>> TablasVentas = new ArrayList<>();
+
+
+    private ArrayList<ObservableList<VentaMostrador>> listasVentasMostrador = new ArrayList<>();
+
+
+
     @FXML
     private JFXTreeTableView<modelo.VentaMostrador> TablaVenta;
+
 
     @FXML
     private JFXListView<ProductosConCosto> ListaDeProductos;
@@ -70,6 +84,111 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     private Label FormaPagoRespuesta;
 
     @FXML
+    private JFXTabPane Tabs;
+
+    @FXML
+    void TabCambiando(MouseEvent event) {
+        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+        calcularTotal();
+    }
+
+
+    @FXML
+    void agregarTab(ActionEvent event) {
+        Tab tab = new Tab();
+        tab.setText("Venta "+nVenta++);
+
+
+
+        TablasVentas.add(cargarTabla(new JFXTreeTableView<>() ));
+
+        tab.setContent(TablasVentas.get(TablasVentas.size()-1));
+
+        Tabs.getTabs().add(tab);
+        Tabs.getSelectionModel().select(Tabs.getTabs().size()-1);
+        calcularTotal();
+
+
+    }
+
+    private  JFXTreeTableView<VentaMostrador> cargarTabla(JFXTreeTableView<modelo.VentaMostrador> fxTreeTableView) {
+
+        JFXTreeTableColumn<modelo.VentaMostrador, String> columnCantidad = new JFXTreeTableColumn<>("Cant");
+        columnCantidad.setPrefWidth(100);
+        columnCantidad.setCellValueFactory((TreeTableColumn.CellDataFeatures<modelo.VentaMostrador, String> param) ->  {
+            if (columnCantidad.validateValue(param)) {
+                return new ReadOnlyObjectWrapper<String>(param.getValue().getValue().getCantidad());
+            }
+            else {
+                return columnCantidad.getComputedValue(param);
+
+            }
+        });
+
+        columnCantidad.setCellFactory((TreeTableColumn<modelo.VentaMostrador, String> param) ->
+                new GenericEditableTreeTableCell<>(new TextFieldEditorBuilder())
+        );
+        columnCantidad.setStyle("-fx-alignment: CENTER;");
+
+
+
+        JFXTreeTableColumn<modelo.VentaMostrador, String> columnProducto = new JFXTreeTableColumn<>("Producto");
+        columnProducto.setPrefWidth(380);
+        columnProducto.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue().getProducto()));
+
+        JFXTreeTableColumn<modelo.VentaMostrador, Double> columnCosto = new JFXTreeTableColumn<>("Costo");
+        columnCosto.setPrefWidth(150);
+        columnCosto.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().getCosto()));
+        columnCosto.setStyle("-fx-alignment: CENTER;");
+
+
+        JFXTreeTableColumn<modelo.VentaMostrador, Double> columnSubTotal = new JFXTreeTableColumn<>("SubTotal");
+        columnSubTotal.setPrefWidth(150);
+        columnSubTotal.setCellValueFactory((TreeTableColumn.CellDataFeatures<modelo.VentaMostrador, Double> param) ->
+                new ReadOnlyObjectWrapper<>(param.getValue().getValue().getTotal())
+
+        );
+        columnSubTotal.setStyle("-fx-alignment: CENTER;");
+
+
+
+        listasVentasMostrador.add(FXCollections.observableArrayList());
+
+
+
+
+        TreeItem<modelo.VentaMostrador> root = new RecursiveTreeItem<>(listasVentasMostrador.get(listasVentasMostrador.size()-1), RecursiveTreeObject::getChildren);
+
+
+
+        fxTreeTableView.getColumns().addAll(columnCantidad, columnProducto, columnCosto, columnSubTotal);
+        fxTreeTableView.setRoot(root);
+        fxTreeTableView.setEditable(true);
+        fxTreeTableView.setShowRoot(false);
+
+
+
+        return fxTreeTableView;
+    }
+
+    @FXML
+    void eliminarTab(ActionEvent event) {
+
+        int index = Tabs.getSelectionModel().getSelectedIndex();
+        Tabs.getTabs().remove(index);
+        listasVentasMostrador.remove(index);
+        nVenta--;
+        if(nVenta==1) {
+            agregarTab(null);
+        }
+
+        calcularTotal();
+
+
+
+
+    }
+    @FXML
     void insertar(ActionEvent event) {
         for(ProductosConCosto p : ListaDeProductos.getItems()) {
             if(Busqueda.getText().equalsIgnoreCase(p.getClave()) || Busqueda.getText().equalsIgnoreCase(p.getBarCode()))
@@ -82,6 +201,10 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     }
 
 
+
+
+
+
     private ObservableList<modelo.VentaMostrador> listaVentaMostrador;
 
     @Override
@@ -92,6 +215,9 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             e.printStackTrace();
         }
 
+
+
+        /*
         JFXTreeTableColumn<modelo.VentaMostrador, String> columnCantidad = new JFXTreeTableColumn<>("Cant");
         columnCantidad.setPrefWidth(100);
         columnCantidad.setCellValueFactory((TreeTableColumn.CellDataFeatures<modelo.VentaMostrador, String> param) ->  {
@@ -127,7 +253,6 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
         );
         columnSubTotal.setStyle("-fx-alignment: CENTER;");
-
 
         columnCantidad.setStyle("-fx-alignment: CENTER;");
         columnCantidad.setOnEditCommit((CellEditEvent<modelo.VentaMostrador, String> t) -> {
@@ -167,6 +292,12 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         TablaVenta.setEditable(true);
         TablaVenta.setShowRoot(false);
 
+
+
+        */
+
+
+        agregarTab(null);
         ListaDeProductos.setOnMouseClicked(event -> {
             if (event.getClickCount() == 2) {
                 agregarProducto(ListaDeProductos.getSelectionModel().getSelectedItem());
@@ -175,20 +306,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
 
-        ObservableList<String> valoresTipoPago;
-        valoresTipoPago = FXCollections.observableArrayList();
-        valoresTipoPago.addAll("Efectivo", "Débito / Crédito");
 
-        FormaPago.setItems(valoresTipoPago);
-
-        FormaPago.setOnMouseClicked(event -> {
-            if(FormaPago.getSelectionModel().getSelectedItem().equalsIgnoreCase("Efectivo")) {
-                FormaPagoAuxiliar.setPromptText("Efectivo recibido");
-            }
-            else {
-                FormaPagoAuxiliar.setPromptText("Id Transacción");
-            }
-        });
 
     }
 
@@ -267,9 +385,10 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     @FXML
     void eliminar(ActionEvent event) {
-        if(!TablaVenta.getSelectionModel().isEmpty()) {
-            listaVentaMostrador.remove(TablaVenta.getSelectionModel().getSelectedIndex());
-            TablaVenta.getSelectionModel().clearSelection();
+        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+        if(!TablasVentas.get(nVentaSelect).getSelectionModel().isEmpty()) {
+            listasVentasMostrador.get(nVentaSelect).remove(TablasVentas.get(nVentaSelect).getSelectionModel().getSelectedIndex());
+            TablasVentas.get(nVentaSelect).getSelectionModel().clearSelection();
             calcularTotal();
         }
 
@@ -277,7 +396,8 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     @FXML
     void limpiar(ActionEvent event) {
-        listaVentaMostrador.clear();
+        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+        listasVentasMostrador.get(nVentaSelect).clear();
         calcularTotal();
     }
 
@@ -306,43 +426,46 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     }
 
     private void calcularTotal() {
+        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+
         double subtotal=0;
-        double iva;
         double total;
         int cantidadProductos=0;
 
-        for(modelo.VentaMostrador producto: listaVentaMostrador) {
+        for(modelo.VentaMostrador producto: listasVentasMostrador.get(nVentaSelect)) {
             subtotal+=producto.getTotal();
             cantidadProductos+= producto.getCant();
         }
-        iva = subtotal*0.16;
-        total = subtotal + iva;
+        total = subtotal;
         CantidadProductos.setText(cantidadProductos+"");
         Subtotal.setText(Funciones.fixN(subtotal, 2)+"");
-        IVA.setText(Funciones.fixN(iva, 2)+"");
+
 
         Total.setText(Funciones.fixN(total,2)+"");
     }
 
     private void agregarProducto(ProductosConCosto p) {
+        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+        System.out.println("Agregando producto "+ p.getNombre() + " en venta " + nVentaSelect);
+
         int cantidad=0;
-        for(modelo.VentaMostrador producto : listaVentaMostrador) {
+        for(modelo.VentaMostrador producto : listasVentasMostrador.get(nVentaSelect)) {
             if(producto.getIdProducto()==p.getIdProducto()) {
                 cantidad = producto.getCant();
-                listaVentaMostrador.remove(producto);
+                listasVentasMostrador.get(nVentaSelect).remove(producto);
                 break;
             }
         }
 
         int cantidad2 =Cantidad.getText().isEmpty()?1:Integer.valueOf(Cantidad.getText());
-        listaVentaMostrador.add(new modelo.VentaMostrador(
+        listasVentasMostrador.get(nVentaSelect).add(new modelo.VentaMostrador(
                 p.getIdProducto(),
                 cantidad+cantidad2,
                 p.getNombre(),
                 p.getPrecio()
         ));
         calcularTotal();
-        TablaVenta.getSelectionModel().select(listaVentaMostrador.size()-1);
+        TablasVentas.get(nVentaSelect).getSelectionModel().select(listasVentasMostrador.get(nVentaSelect).size()-1);
     }
 
 }
