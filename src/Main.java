@@ -12,6 +12,8 @@ public class Main extends Application {
         Parent root = FXMLLoader.load(getClass().getResource("/vista/inicio_sesion.fxml"));
         primaryStage.setTitle("MGM");
         primaryStage.setScene(new Scene(root, Funciones.ancho, Funciones.alto));
+        //primaryStage.setFullScreen(true);
+        primaryStage.setMaximized(true);
         primaryStage.show();
     }
 

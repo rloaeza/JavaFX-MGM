@@ -7,6 +7,7 @@ import com.jfoenix.controls.JFXTextField;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
+import modelo.Configuraciones;
 import modelo.Funciones;
 import modelo.Personal;
 
@@ -47,6 +48,10 @@ public class InicioSesion  {
             params.put("nombre", usuario.getNombre());
             params.put("vista", "/vista/inicio_resumen.fxml");
 
+
+            Configuraciones.idClinica = usuario.getIdClinica();
+            Configuraciones.idPersonal = usuario.getIdPersonal();
+            Configuraciones.clinicaDescripcion = usuario.getTitulo();
 
             Funciones.CargarVista(Pane, getClass().getResource("/vista/inicio_administrador.fxml"), params, new InicioAdministrador());
 

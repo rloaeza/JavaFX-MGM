@@ -384,7 +384,10 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     @FXML
     void eliminar(ActionEvent event) {
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+        System.out.println("tab="+nVentaSelect+", fila="+TablasVentas.get(nVentaSelect).getSelectionModel().getSelectedIndex());
         if(!TablasVentas.get(nVentaSelect).getSelectionModel().isEmpty()) {
+
+
             listasVentasMostrador.get(nVentaSelect).remove(TablasVentas.get(nVentaSelect).getSelectionModel().getSelectedIndex());
             TablasVentas.get(nVentaSelect).getSelectionModel().clearSelection();
             calcularTotal();
