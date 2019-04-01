@@ -225,7 +225,7 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         Pane.getScene().addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             KeyCode kc = ke.getCode();
             try {
-                if (kc == KeyCode.F1) {
+                if (kc == KeyCode.F1 ) {
                     VentaMostrador(null);
                     ke.consume();
                 }
