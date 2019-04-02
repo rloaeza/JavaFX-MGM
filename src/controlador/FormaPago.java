@@ -61,6 +61,8 @@ public class FormaPago extends Controlador {
     @FXML
     void pagando(KeyEvent event) {
         pagoValido = false;
+        if(Pago.getText().length()==0)
+            return;
         switch (FormaPago.getSelectionModel().getSelectedIndex()) {
 
             case 0:

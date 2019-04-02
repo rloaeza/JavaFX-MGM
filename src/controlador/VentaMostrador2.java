@@ -310,10 +310,10 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
     @FXML
-    void aceptar(ActionEvent event) throws IOException, PrinterException {
+    void aceptarVenta(ActionEvent event) throws IOException, PrinterException {
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
         Map<String,Object> paramsAlert = new LinkedHashMap<>();
-        paramsAlert.put("titulo", "Error");
+        paramsAlert.put("titulo", "Pago de venta");
 
         paramsAlert.put("vista", "/vista/forma_pago.fxml");
         Configuraciones.ventaAceptada=false;
