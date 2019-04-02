@@ -21,9 +21,7 @@ import javafx.scene.control.TreeTableColumn.CellEditEvent;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import modelo.Funciones;
-import modelo.PDFvalores;
-import modelo.ProductosConCosto;
+import modelo.*;
 import modelo.VentaMostrador;
 
 import java.awt.print.PrinterException;
@@ -38,6 +36,7 @@ import java.util.ResourceBundle;
 public class VentaMostrador2 extends Controlador implements Initializable {
     private int nVenta=1;
     private int nVentaSelect = 1;
+    private boolean pagoValido=false;
 
     @FXML
     private AnchorPane Pane;
@@ -48,6 +47,14 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     private ArrayList<ObservableList<VentaMostrador>> listasVentasMostrador = new ArrayList<>();
 
 
+    @FXML
+    private JFXComboBox<String> FormaPago;
+
+    @FXML
+    private JFXTextField Pago;
+
+    @FXML
+    private Label Cambio;
 
     @FXML
     private JFXTreeTableView<modelo.VentaMostrador> TablaVenta;
@@ -74,8 +81,6 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     @FXML
     private Label Total;
 
-    @FXML
-    private JFXComboBox<String> FormaPago;
 
     @FXML
     private JFXTextField FormaPagoAuxiliar;
@@ -296,6 +301,14 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
         */
 
+        ObservableList<String> valoresTipoPago;
+        valoresTipoPago = FXCollections.observableArrayList();
+        valoresTipoPago.addAll(Configuraciones.formasPago);
+
+
+
+        FormaPago.setItems(valoresTipoPago);
+
 
         agregarTab(null);
         ListaDeProductos.setOnMouseClicked(event -> {
@@ -310,10 +323,52 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     }
 
+    @FXML
+    void pagando(KeyEvent event) {
+        pagoValido = false;
+        switch (FormaPago.getSelectionModel().getSelectedIndex()) {
+
+            case 0:
+                if( Double.valueOf(Pago.getText()) >= Double.valueOf(Total.getText()) ) {
+                    Cambio.setVisible(true);
+                    double cambio =   Double.valueOf(Pago.getText()) - Double.valueOf(Total.getText());
+                    Cambio.setText("Cambio: "+String.valueOf(cambio));
+                    pagoValido = true;
+                }
+                else {
+                    Cambio.setText("Falta efectivo");
+                    return;
+                }
+                break;
+
+            case 1:
+                if( !Pago.getText().isEmpty()) {
+                    Cambio.setVisible(false);
+                    pagoValido = true;
+                }
+                else {
+                    pagoValido = false;
+                }
+        }
+
+
+
+    }
 
     @FXML
     void aceptar(ActionEvent event) throws IOException, PrinterException {
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+
+
+        if(!pagoValido) {
+            Map<String,Object> paramsAlert = new LinkedHashMap<>();
+            paramsAlert.put("titulo", "Error");
+            paramsAlert.put("texto", "Error en la forma de pago");
+            paramsAlert.put("vista", "/vista/alert_box.fxml");
+            Funciones.display(paramsAlert, getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
+            return;
+        }
+
 
 
         ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
@@ -369,7 +424,24 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             Funciones.llenarPDF("formatos/venta2.pdf",  valoresPDF, true, null);
 
         }
+        pagoValido = false;
 
+        Pago.setText("");
+
+    }
+    @FXML
+    void formaPagoSelect(ActionEvent event) {
+        Pago.setText("");
+        if( FormaPago.getSelectionModel().getSelectedIndex()==0) {
+            Cambio.setText("");
+            Cambio.setVisible(true);
+            Pago.setPromptText("Pago en efectivo");
+
+        }
+        else {
+            Cambio.setVisible(false);
+            Pago.setPromptText("Número de transferencia");
+        }
     }
 
     @FXML

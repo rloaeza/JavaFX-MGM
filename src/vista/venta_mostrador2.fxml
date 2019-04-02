@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import com.jfoenix.controls.JFXTextField?>
@@ -16,20 +17,20 @@
 <AnchorPane fx:id="Pane" prefHeight="617.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentaMostrador2">
    <children>
       <JFXTabPane fx:id="Tabs" layoutX="60.0" layoutY="210.0" onMouseClicked="#TabCambiando" prefHeight="306.0" prefWidth="802.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="210.0" />
-      <JFXListView fx:id="ListaDeProductos" layoutX="59.0" layoutY="68.0" onKeyReleased="#agregar_quitar" prefHeight="109.0" prefWidth="385.0" AnchorPane.leftAnchor="60.0" />
-      <JFXTextField fx:id="Busqueda" alignment="CENTER" layoutX="59.0" layoutY="29.0" onAction="#insertar" prefHeight="27.0" prefWidth="296.0" promptText="Clave o código de producto" AnchorPane.leftAnchor="60.0" />
-      <JFXTextField fx:id="Cantidad" alignment="CENTER" layoutX="369.0" layoutY="29.0" prefHeight="27.0" prefWidth="74.0" promptText="1" />
-      <Label alignment="CENTER_RIGHT" layoutX="676.0" layoutY="590.0" prefHeight="17.0" prefWidth="104.0" text="Total:" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="676.0">
+      <JFXListView fx:id="ListaDeProductos" layoutX="59.0" layoutY="68.0" onKeyReleased="#agregar_quitar" prefHeight="109.0" prefWidth="385.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="455.0" />
+      <JFXTextField fx:id="Busqueda" alignment="CENTER" layoutX="59.0" layoutY="29.0" onAction="#insertar" prefHeight="27.0" prefWidth="296.0" promptText="Clave o código de producto" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="544.0" />
+      <JFXTextField fx:id="Cantidad" alignment="CENTER" layoutX="369.0" layoutY="29.0" prefHeight="27.0" prefWidth="74.0" promptText="1" AnchorPane.rightAnchor="455.0" />
+      <Label alignment="CENTER_RIGHT" layoutX="676.0" layoutY="590.0" prefHeight="17.0" prefWidth="104.0" text="Total:" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="120.0">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="24.0" />
          </font></Label>
-      <Label alignment="CENTER_RIGHT" layoutX="492.0" layoutY="538.0" prefHeight="17.0" prefWidth="104.0" text="Productos:" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="492.0" />
-      <Label alignment="CENTER_RIGHT" layoutX="676.0" layoutY="538.0" prefHeight="17.0" prefWidth="104.0" text="Sub Total:" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="676.0" />
-      <Label fx:id="CantidadProductos" layoutX="608.0" layoutY="538.0" prefHeight="17.0" prefWidth="68.0" text="0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="608.0" />
-      <Label fx:id="Subtotal" layoutX="792.0" layoutY="538.0" prefHeight="17.0" prefWidth="68.0" text="0.0" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="792.0" />
-      <Label fx:id="Total" layoutX="792.0" layoutY="590.0" prefHeight="17.0" prefWidth="68.0" text="0.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="792.0">
+      <Label alignment="CENTER_RIGHT" layoutX="492.0" layoutY="538.0" prefHeight="17.0" prefWidth="104.0" text="Productos:" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="300.0" />
+      <Label alignment="CENTER_RIGHT" layoutX="676.0" layoutY="538.0" prefHeight="17.0" prefWidth="104.0" text="Sub Total:" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="120.0" />
+      <Label fx:id="CantidadProductos" layoutX="608.0" layoutY="538.0" prefHeight="17.0" prefWidth="68.0" text="0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="220.0" />
+      <Label fx:id="Subtotal" layoutX="792.0" layoutY="538.0" prefHeight="17.0" prefWidth="68.0" text="0.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="40.0" />
+      <Label fx:id="Total" layoutX="792.0" layoutY="590.0" prefHeight="17.0" prefWidth="68.0" text="0.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="40.0">
          <font>
-            <Font name="System Bold" size="18.0" />
+            <Font name="System Bold" size="24.0" />
          </font></Label>
       <VBox layoutX="761.0" layoutY="21.0" prefHeight="150.0" prefWidth="50.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="20.0">
          <children>
@@ -85,5 +86,9 @@
             </Button>
          </children>
       </HBox>
+      <JFXComboBox fx:id="FormaPago" layoutX="492.0" layoutY="68.0" onAction="#formaPagoSelect" prefHeight="27.0" prefWidth="280.0" AnchorPane.rightAnchor="128.0" />
+      <Label alignment="CENTER" layoutX="492.0" layoutY="48.0" prefHeight="17.0" prefWidth="280.0" text="Forma de pago" AnchorPane.rightAnchor="128.0" />
+      <JFXTextField fx:id="Pago" layoutX="492.0" layoutY="143.0" onKeyTyped="#pagando" prefHeight="27.0" prefWidth="152.0" AnchorPane.rightAnchor="256.0" />
+      <Label fx:id="Cambio" layoutX="668.0" layoutY="148.0" prefHeight="17.0" prefWidth="104.0" text="Cambio" AnchorPane.rightAnchor="128.0" />
    </children>
 </AnchorPane>
