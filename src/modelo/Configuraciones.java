@@ -9,4 +9,5 @@ public class Configuraciones {
     public static String[] formasPago = new String[] {"Efectivo", "Crédito / Débito"};
 
     public static double ventaPago;
+    public static boolean ventaAceptada;
 }

@@ -47,14 +47,6 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     private ArrayList<ObservableList<VentaMostrador>> listasVentasMostrador = new ArrayList<>();
 
 
-    @FXML
-    private JFXComboBox<String> FormaPago;
-
-    @FXML
-    private JFXTextField Pago;
-
-    @FXML
-    private Label Cambio;
 
     @FXML
     private JFXTreeTableView<modelo.VentaMostrador> TablaVenta;
@@ -301,14 +293,6 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
         */
 
-        ObservableList<String> valoresTipoPago;
-        valoresTipoPago = FXCollections.observableArrayList();
-        valoresTipoPago.addAll(Configuraciones.formasPago);
-
-
-
-        FormaPago.setItems(valoresTipoPago);
-
 
         agregarTab(null);
         ListaDeProductos.setOnMouseClicked(event -> {
@@ -323,51 +307,25 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     }
 
-    @FXML
-    void pagando(KeyEvent event) {
-        pagoValido = false;
-        switch (FormaPago.getSelectionModel().getSelectedIndex()) {
 
-            case 0:
-                if( Double.valueOf(Pago.getText()) >= Double.valueOf(Total.getText()) ) {
-                    Cambio.setVisible(true);
-                    double cambio =   Double.valueOf(Pago.getText()) - Double.valueOf(Total.getText());
-                    Cambio.setText("Cambio: "+String.valueOf(cambio));
-                    pagoValido = true;
-                }
-                else {
-                    Cambio.setText("Falta efectivo");
-                    return;
-                }
-                break;
-
-            case 1:
-                if( !Pago.getText().isEmpty()) {
-                    Cambio.setVisible(false);
-                    pagoValido = true;
-                }
-                else {
-                    pagoValido = false;
-                }
-        }
-
-
-
-    }
 
     @FXML
     void aceptar(ActionEvent event) throws IOException, PrinterException {
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+        Map<String,Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("titulo", "Error");
 
+        paramsAlert.put("vista", "/vista/forma_pago.fxml");
+        Configuraciones.ventaAceptada=false;
+        Configuraciones.ventaPago = Double.valueOf(Total.getText());
+        Funciones.display(paramsAlert, getClass().getResource("/vista/forma_pago.fxml"), new FormaPago() ,818, 311);
 
-        if(!pagoValido) {
-            Map<String,Object> paramsAlert = new LinkedHashMap<>();
-            paramsAlert.put("titulo", "Error");
-            paramsAlert.put("texto", "Error en la forma de pago");
-            paramsAlert.put("vista", "/vista/alert_box.fxml");
-            Funciones.display(paramsAlert, getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
+        if(!Configuraciones.ventaAceptada)
             return;
-        }
+
+
+
+
 
 
 
@@ -426,23 +384,10 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         }
         pagoValido = false;
 
-        Pago.setText("");
+
 
     }
-    @FXML
-    void formaPagoSelect(ActionEvent event) {
-        Pago.setText("");
-        if( FormaPago.getSelectionModel().getSelectedIndex()==0) {
-            Cambio.setText("");
-            Cambio.setVisible(true);
-            Pago.setPromptText("Pago en efectivo");
 
-        }
-        else {
-            Cambio.setVisible(false);
-            Pago.setPromptText("Número de transferencia");
-        }
-    }
 
     @FXML
     void agregar_quitar(KeyEvent event) {
