@@ -84,6 +84,15 @@
       </HBox>
       <ButtonBar layoutX="6.0" layoutY="29.0" nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0" AnchorPane.leftAnchor="8.0" AnchorPane.rightAnchor="110.0" AnchorPane.topAnchor="35.0">
          <buttons>
+            <Button mnemonicParsing="false" onAction="#f7" text="F7 Editar Ventas">
+               <graphic>
+                  <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/editar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             <Button mnemonicParsing="false" onAction="#f6" text="F6 Reloj Checador">
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">

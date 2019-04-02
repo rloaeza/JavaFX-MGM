@@ -271,6 +271,13 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         relojChecadorEntradaSalida(null);
     }
 
+    @FXML
+    void f7(ActionEvent event) throws IOException {
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("vista", "/vista/venta_editar.fxml" );
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VentaEditar());
+    }
+
 
 
     @Override
