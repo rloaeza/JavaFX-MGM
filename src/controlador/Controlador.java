@@ -23,6 +23,12 @@ public abstract class  Controlador {
 
     }
 
+    public void quitarVistas(int n) {
+        while (parametros.size()>n)
+            parametros.remove(0);
+
+    }
+
     public abstract void init();
 
 

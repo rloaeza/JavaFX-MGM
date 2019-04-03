@@ -11,11 +11,31 @@ public class VentaMostrador extends RecursiveTreeObject<VentaMostrador> {
     private double costo;
     private double total;
 
+    private int idVentaProductosDetalle;
+
     public VentaMostrador(int idProducto, int cantidad, String producto, double costo) {
         this.idProducto = idProducto;
         this.cant = cantidad;
         this.producto = producto;
         this.costo = costo;
+    }
+
+    public VentaMostrador(int idProducto, int cantidad,  String producto, double costo, int idVentaProductosDetalle) {
+        this.idProducto = idProducto;
+
+        this.cant = cantidad;
+        this.producto = producto;
+        this.costo = costo;
+
+        this.idVentaProductosDetalle = idVentaProductosDetalle;
+    }
+
+    public int getIdVentaProductosDetalle() {
+        return idVentaProductosDetalle;
+    }
+
+    public void setIdVentaProductosDetalle(int idVentaProductosDetalle) {
+        this.idVentaProductosDetalle = idVentaProductosDetalle;
     }
 
     public int getIdProducto() {
