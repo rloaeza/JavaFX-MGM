@@ -133,7 +133,7 @@ public class Personal extends Controlador implements Initializable {
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Personal: Lista");
-        paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
+        paramsJSON.put("idClinica", Configuraciones.idClinica);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();

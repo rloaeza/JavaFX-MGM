@@ -53,6 +53,19 @@ public class InicioSesion  {
             Configuraciones.idPersonal = usuario.getIdPersonal();
             Configuraciones.clinicaDescripcion = usuario.getTitulo();
 
+            //Usuario de venta
+            if(usuario.getTipo()==2) {
+                Map<String,Object> paramsAlert = new LinkedHashMap<>();
+                paramsAlert.put("titulo", "Corte de caja");
+
+                paramsAlert.put("vista", "/vista/corte_caja.fxml");
+
+                Configuraciones.corteCajaValido = false;
+                Funciones.display(paramsAlert, getClass().getResource("/vista/corte_caja.fxml"), new CorteCaja() ,762, 418);
+                if(!Configuraciones.corteCajaValido)
+                    return;
+            }
+
             Funciones.CargarVista(Pane, getClass().getResource("/vista/inicio_administrador.fxml"), params, new InicioAdministrador());
 
         }

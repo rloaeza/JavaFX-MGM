@@ -11,4 +11,7 @@ public class Configuraciones {
 
     public static double ventaPago;
     public static boolean ventaAceptada;
+
+
+    public static boolean corteCajaValido;
 }
