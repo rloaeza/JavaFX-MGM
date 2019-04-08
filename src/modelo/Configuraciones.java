@@ -7,6 +7,7 @@ public class Configuraciones {
 
 
     public static String[] formasPago = new String[] {"Efectivo", "Crédito / Débito"};
+    public static String[] tiposUsuarios = new String[] {"Administrador", "Supervisor", "Vendedor", "Cosmeatra"};
 
     public static double ventaPago;
     public static boolean ventaAceptada;

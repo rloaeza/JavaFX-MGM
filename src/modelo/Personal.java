@@ -11,13 +11,14 @@ public class Personal {
     private String usuario;
     private String clave;
     private int idClinica;
-
     private String titulo;
+
+    private int tipo;
 
     public Personal() {
     }
 
-    public Personal(int idPersonal, String nombre, String apellidos, String email, String telefono, String movil, String usuario, String clave, int idClinica) {
+    public Personal(int idPersonal, String nombre, String apellidos, String email, String telefono, String movil, String usuario, String clave, int idClinica, int tipo) {
         this.idPersonal = idPersonal;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -27,6 +28,7 @@ public class Personal {
         this.usuario = usuario;
         this.clave = clave;
         this.idClinica = idClinica;
+        this.tipo = tipo;
     }
 
     public int getIdPersonal() {
@@ -107,6 +109,14 @@ public class Personal {
 
     public void setTitulo(String titulo) {
         this.titulo = titulo;
+    }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
     }
 
     @Override

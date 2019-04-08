@@ -2,6 +2,7 @@ package controlador;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -11,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import modelo.Configuraciones;
 import modelo.Funciones;
 
 import java.io.IOException;
@@ -50,6 +52,10 @@ public class Personal extends Controlador implements Initializable {
 
 
     @FXML
+    private JFXComboBox<String> TipoUsuario;
+
+
+    @FXML
     void actualizar(ActionEvent event) throws IOException {
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Personal: Actualizar");
@@ -62,6 +68,7 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("movil", Celular.getText());
         paramsJSON.put("usuario", Usuario.getText());
         paramsJSON.put("clave", Clave.getText());
+        paramsJSON.put("tipo", TipoUsuario.getSelectionModel().getSelectedIndex());
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
@@ -79,6 +86,7 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("movil", Celular.getText());
         paramsJSON.put("usuario", Usuario.getText());
         paramsJSON.put("clave", Clave.getText());
+        paramsJSON.put("tipo", TipoUsuario.getSelectionModel().getSelectedIndex());
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
@@ -95,7 +103,7 @@ public class Personal extends Controlador implements Initializable {
 
     @FXML
     void limpiar(ActionEvent event) {
-        cargarDatosPantalla(new modelo.Personal(-1, "", "","","","","","",-1 ));
+        cargarDatosPantalla(new modelo.Personal(-1, "", "","","","","","",-1,-1 ));
         ListaDePersonal.getSelectionModel().clearSelection();
     }
 
@@ -116,6 +124,7 @@ public class Personal extends Controlador implements Initializable {
         Celular.setText(p.getMovil());
         Usuario.setText(p.getUsuario());
         Clave.setText(p.getClave());
+        TipoUsuario.getSelectionModel().select(p.getTipo());
     }
 
     private void cargarDatos() throws IOException {
@@ -154,5 +163,9 @@ public class Personal extends Controlador implements Initializable {
                 cargarDatosPantalla(ListaDePersonal.getSelectionModel().getSelectedItem());
             }
         });
+        ObservableList<String> valoresTipoUsuarios;
+        valoresTipoUsuarios = FXCollections.observableArrayList();
+        valoresTipoUsuarios.addAll(Configuraciones.tiposUsuarios);
+        TipoUsuario.setItems(valoresTipoUsuarios);
     }
 }
