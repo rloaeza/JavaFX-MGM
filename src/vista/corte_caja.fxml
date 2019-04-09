@@ -10,13 +10,12 @@
 
 <AnchorPane fx:id="Pane" prefHeight="418.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.CorteCaja">
    <children>
-      <JFXButton buttonType="RAISED" layoutX="79.0" layoutY="253.0" onAction="#Aceptar" prefHeight="44.0" prefWidth="256.0" style="-fx-background-color: lightgreen;" text="Aceptar" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="80.0" />
-      <JFXButton buttonType="RAISED" layoutX="427.0" layoutY="253.0" onAction="#Cancelar" prefHeight="44.0" prefWidth="256.0" style="-fx-background-color: orange;" text="Cancelar" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="80.0" />
       <JFXTextField fx:id="Monto" alignment="CENTER" layoutX="80.0" layoutY="116.0" prefHeight="45.0" prefWidth="256.0" promptText="Monto" AnchorPane.leftAnchor="80.0">
          <font>
             <Font size="24.0" />
          </font>
       </JFXTextField>
+      <JFXComboBox fx:id="CBCajas" layoutX="426.0" layoutY="116.0" prefHeight="45.0" prefWidth="256.0" promptText="¿Caja?" AnchorPane.rightAnchor="80.0" />
       <JFXPasswordField fx:id="VendedorClave" alignment="CENTER" layoutX="80.0" layoutY="260.0" prefHeight="27.0" prefWidth="256.0" promptText="clave" AnchorPane.leftAnchor="80.0" />
       <JFXComboBox fx:id="Supervisor" layoutX="426.0" layoutY="219.0" prefHeight="27.0" prefWidth="256.0" promptText="¿Supervisor?" AnchorPane.rightAnchor="80.0" />
       <JFXPasswordField fx:id="SupervisorClave" alignment="CENTER" layoutX="426.0" layoutY="260.0" prefHeight="27.0" prefWidth="256.0" promptText="clave" AnchorPane.rightAnchor="80.0" />
@@ -26,6 +25,7 @@
          </font>
       </Label>
       <Label fx:id="Vendedor" alignment="CENTER" layoutX="80.0" layoutY="224.0" prefHeight="17.0" prefWidth="256.0" text="Nombre Apellidos" />
-      <JFXComboBox fx:id="CBCajas" layoutX="426.0" layoutY="116.0" prefHeight="45.0" prefWidth="256.0" promptText="¿Caja?" AnchorPane.rightAnchor="80.0" />
+      <JFXButton buttonType="RAISED" layoutX="79.0" layoutY="253.0" onAction="#Aceptar" prefHeight="44.0" prefWidth="256.0" style="-fx-background-color: lightgreen;" text="Aceptar" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="80.0" />
+      <JFXButton buttonType="RAISED" layoutX="427.0" layoutY="253.0" onAction="#Cancelar" prefHeight="44.0" prefWidth="256.0" style="-fx-background-color: orange;" text="Cancelar" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="80.0" />
    </children>
 </AnchorPane>

@@ -18,6 +18,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableColumn.CellEditEvent;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -304,6 +305,23 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
 
+        Pane.getScene().addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
+            KeyCode kc = ke.getCode();
+
+            if (kc == KeyCode.F12) {
+                try {
+                    aceptarVenta(null);
+                    ke.consume();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (PrinterException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        });
+
+
 
     }
 
@@ -421,6 +439,9 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
+
+
 
     }
 

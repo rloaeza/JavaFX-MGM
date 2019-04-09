@@ -62,6 +62,7 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         Parent root = FXMLLoader.load(getClass().getResource("/vista/inicio_sesion.fxml"));
         Stage escenario = (Stage) Pane.getScene().getWindow();
         escenario.setScene(new Scene(root, Funciones.ancho, Funciones.alto));
+        escenario.setMaximized(true);
 
 
 
@@ -398,6 +399,25 @@ public class InicioAdministrador extends  Controlador implements Initializable {
 
 
     private boolean cerrarCaja() throws IOException {
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "CajaCorte: Cerrar");
+        paramsJSON.put("idCaja", Configuraciones.idCaja);
+        Configuraciones.cierreCaja=0;
+
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            String s=rootArray.get(1).getAsJsonObject().get("venta").toString();
+            s=s.replace("\"", "");
+            try {
+                Configuraciones.cierreCaja = Double.valueOf(s);
+            }catch (NumberFormatException ex) {
+                Configuraciones.cierreCaja=0;
+            }
+        }
+
+        Configuraciones.cierreCaja+=Configuraciones.aperturaCaja;
+
+
         Map<String,Object> paramsAlert = new LinkedHashMap<>();
         paramsAlert.put("titulo", "Corte de caja");
 

@@ -69,6 +69,8 @@ public class CorteCaja extends Controlador implements Initializable {
         if(VendedorClave.getText().equals(Configuraciones.clavePersonal) && SupervisorClave.getText().equals(Supervisor.getValue().getClave()))
         {
 
+            Configuraciones.aperturaCaja = Double.valueOf(Monto.getText());
+            Configuraciones.idCaja = CBCajas.getValue().getIdCaja();
             Map<String,Object> paramsJSON = new LinkedHashMap<>();
             paramsJSON.put("Actividad", "CajaCorte: Insertar");
             paramsJSON.put("idCaja", CBCajas.getValue().getIdCaja());
@@ -152,6 +154,19 @@ public class CorteCaja extends Controlador implements Initializable {
 
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        if(!Configuraciones.abriendoCaja) {
+            Monto.setText(Configuraciones.cierreCaja+"");
+            Monto.setDisable(true);
+
+
+            CBCajas.setDisable(true);
+            for(int i=0; i<CBCajas.getItems().size(); i++ ) {
+                if(CBCajas.getItems().get(i).getIdCaja()==Configuraciones.idCaja) {
+                    CBCajas.getSelectionModel().select(i);
+                    break;
+                }
+            }
         }
     }
 
