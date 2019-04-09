@@ -2,6 +2,8 @@ package modelo;
 
 public class Configuraciones {
     public static int idPersonal;
+    public static String nombrePersonal;
+    public static String clavePersonal;
     public static int idClinica;
     public static String clinicaDescripcion;
 
@@ -14,4 +16,8 @@ public class Configuraciones {
 
 
     public static boolean corteCajaValido;
+    public static String corteCajaAbrir = "Abriendo caja";
+    public static String corteCajaCerrar = "Cerrando caja";
+    public static boolean abriendoCaja;
+    public static boolean cajaAbierta;
 }

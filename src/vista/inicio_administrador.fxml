@@ -28,6 +28,8 @@
                   <MenuItem mnemonicParsing="false" onAction="#catalogoPersonal" text="Personal" />
                   <MenuItem mnemonicParsing="false" onAction="#relojChecadorFijarHorarios" text="Especificar Horarios" />
                   <SeparatorMenuItem mnemonicParsing="false" />
+                  <MenuItem mnemonicParsing="false" onAction="#catalogoCajas" text="Cajas" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoPacientes" text="Pacientes" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoServicios" text="Servicios" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoTiposDeProductos" text="Productos" />

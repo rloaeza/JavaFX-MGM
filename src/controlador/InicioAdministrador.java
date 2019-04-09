@@ -51,9 +51,19 @@ public class InicioAdministrador extends  Controlador implements Initializable {
 
     @FXML
     void cerrarSesion(ActionEvent event) throws IOException {
+
+        if(Configuraciones.cajaAbierta)
+            if(!cerrarCaja())
+                return;
+
+
+
+
         Parent root = FXMLLoader.load(getClass().getResource("/vista/inicio_sesion.fxml"));
         Stage escenario = (Stage) Pane.getScene().getWindow();
         escenario.setScene(new Scene(root, Funciones.ancho, Funciones.alto));
+
+
 
     }
 
@@ -200,6 +210,15 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReporte());
     }
 
+    @FXML
+    void catalogoCajas(ActionEvent event) throws IOException {
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", Configuraciones.idClinica);
+        paramsVista.put("vista", "/vista/cajas.fxml" );
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new Cajas());
+    }
+
+
 
     public void setUsuario(Personal p) {
         this.usuario = p;
@@ -211,6 +230,10 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         ((Stage)Pane.getScene().getWindow()).setTitle(parametros.get(0).get("nombre").toString());
 
 
+
+
+
+        /*
         Stage escenario = (Stage) Pane.getScene().getWindow();
 
         escenario.widthProperty().addListener((observable, oldValue, newValue) -> {
@@ -221,6 +244,7 @@ public class InicioAdministrador extends  Controlador implements Initializable {
             }
         });
 
+        */
 
         Pane.getScene().addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             KeyCode kc = ke.getCode();
@@ -369,6 +393,20 @@ public class InicioAdministrador extends  Controlador implements Initializable {
             return true;
         }
         return false;
+    }
+
+
+
+    private boolean cerrarCaja() throws IOException {
+        Map<String,Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("titulo", "Corte de caja");
+
+        paramsAlert.put("vista", "/vista/corte_caja.fxml");
+
+        Configuraciones.corteCajaValido = false;
+        Configuraciones.abriendoCaja = false;
+        Funciones.display(paramsAlert, getClass().getResource("/vista/corte_caja.fxml"), new CorteCaja() ,762, 418);
+        return Configuraciones.corteCajaValido;
     }
 
 }

@@ -15,7 +15,7 @@ import java.io.IOException;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
-public class InicioSesion  {
+public class InicioSesion  extends Controlador{
 
     @FXML
     private AnchorPane Pane;
@@ -52,7 +52,9 @@ public class InicioSesion  {
             Configuraciones.idClinica = usuario.getIdClinica();
             Configuraciones.idPersonal = usuario.getIdPersonal();
             Configuraciones.clinicaDescripcion = usuario.getTitulo();
-
+            Configuraciones.nombrePersonal=usuario.getApellidos()+", "+usuario.getNombre();
+            Configuraciones.clavePersonal = usuario.getClave();
+            Configuraciones.cajaAbierta=false;
             //Usuario de venta
             if(usuario.getTipo()==2) {
                 Map<String,Object> paramsAlert = new LinkedHashMap<>();
@@ -61,9 +63,11 @@ public class InicioSesion  {
                 paramsAlert.put("vista", "/vista/corte_caja.fxml");
 
                 Configuraciones.corteCajaValido = false;
+                Configuraciones.abriendoCaja = true;
                 Funciones.display(paramsAlert, getClass().getResource("/vista/corte_caja.fxml"), new CorteCaja() ,762, 418);
                 if(!Configuraciones.corteCajaValido)
                     return;
+                Configuraciones.cajaAbierta= true;
             }
 
             Funciones.CargarVista(Pane, getClass().getResource("/vista/inicio_administrador.fxml"), params, new InicioAdministrador());
@@ -79,5 +83,8 @@ public class InicioSesion  {
     }
 
 
+    @Override
+    public void init() {
 
+    }
 }
