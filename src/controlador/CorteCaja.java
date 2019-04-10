@@ -5,6 +5,8 @@ import com.google.gson.JsonArray;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -20,7 +22,9 @@ import modelo.Personal;
 
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.util.LinkedHashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -168,6 +172,16 @@ public class CorteCaja extends Controlador implements Initializable {
                 }
             }
         }
+
+
+        Monto.focusedProperty().addListener((observable, oldValue, newValue) -> {
+            if(!newValue) {
+
+                Monto.setText(NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
+                        .format(Double.valueOf(Monto.getText())));
+            }
+        });
+
     }
 
     @Override

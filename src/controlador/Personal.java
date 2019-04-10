@@ -72,6 +72,7 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
+        limpiar(null);
     }
 
     @FXML
@@ -90,6 +91,7 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
+        limpiar(null);
     }
 
     @FXML
@@ -99,6 +101,7 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("idPersonal", ListaDePersonal.getSelectionModel().getSelectedItem().getIdPersonal());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
+        limpiar(null);
     }
 
     @FXML
