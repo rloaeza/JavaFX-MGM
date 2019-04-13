@@ -24,4 +24,14 @@ public class Configuraciones {
     public static double aperturaCaja;
     public static  int idCaja;
 
+    /**
+     * Monto insertado al realizar corte de caja
+     */
+    public static double corteCajaMonto;
+
+    public static String corteCajaErrorNoClaveVendedor = "Falta clave de vendedor";
+    public static String corteCajaErrorNoSupervisorSeleccionado = "Falta seleccionar un supervisor";
+    public static String corteCajaErrorNoClaveSupervisor = "Falta clave de supervisor";
+    public static String corteCajaErrorNoMonto = "Falta monto inicial";
+    public static String corteCajaErrorNoCajaSeleccionada = "Falta seleccionar caja";
 }

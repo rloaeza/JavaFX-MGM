@@ -55,32 +55,44 @@ public class CorteCaja extends Controlador implements Initializable {
     private JFXPasswordField SupervisorClave;
 
     @FXML
+    private Label Error;
+
+    @FXML
     void Aceptar(ActionEvent event) throws IOException {
-        if(VendedorClave.getText().isEmpty())
+        Error.setVisible(true);
+        if(VendedorClave.getText().isEmpty()) {
+            Error.setText(Configuraciones.corteCajaErrorNoClaveVendedor);
             return;
-        if(Supervisor.getSelectionModel().getSelectedIndex()==-1)
+        }
+        if(Supervisor.getSelectionModel().getSelectedIndex()==-1) {
+            Error.setText(Configuraciones.corteCajaErrorNoSupervisorSeleccionado);
             return;
-        if(SupervisorClave.getText().isEmpty())
+        }
+        if(SupervisorClave.getText().isEmpty()) {
+            Error.setText(Configuraciones.corteCajaErrorNoClaveSupervisor);
             return;
-
-        if(Monto.getText().isEmpty())
+        }
+        if(Monto.getText().isEmpty()) {
+            Error.setText(Configuraciones.corteCajaErrorNoMonto);
             return;
-
-        if(CBCajas.getSelectionModel().getSelectedIndex()==-1)
+        }
+        if(CBCajas.getSelectionModel().getSelectedIndex()==-1) {
+            Error.setText(Configuraciones.corteCajaErrorNoCajaSeleccionada);
             return;
+        }
 
 
         if(VendedorClave.getText().equals(Configuraciones.clavePersonal) && SupervisorClave.getText().equals(Supervisor.getValue().getClave()))
         {
 
-            Configuraciones.aperturaCaja = Double.valueOf(Monto.getText());
+            Configuraciones.aperturaCaja = Configuraciones.corteCajaMonto;
             Configuraciones.idCaja = CBCajas.getValue().getIdCaja();
             Map<String,Object> paramsJSON = new LinkedHashMap<>();
             paramsJSON.put("Actividad", "CajaCorte: Insertar");
             paramsJSON.put("idCaja", CBCajas.getValue().getIdCaja());
             paramsJSON.put("idPersonal", Configuraciones.idPersonal);
             paramsJSON.put("idPersonalAut", Supervisor.getValue().getIdPersonal());
-            paramsJSON.put("monto", Monto.getText());
+            paramsJSON.put("monto", Configuraciones.corteCajaMonto);
             if(Configuraciones.abriendoCaja)
                 paramsJSON.put("tipo", 1);
             else
@@ -91,6 +103,7 @@ public class CorteCaja extends Controlador implements Initializable {
 
             cerrar();
         }
+        Error.setVisible(false);
 
     }
 
@@ -176,11 +189,16 @@ public class CorteCaja extends Controlador implements Initializable {
 
         Monto.focusedProperty().addListener((observable, oldValue, newValue) -> {
             if(!newValue) {
-
+                Configuraciones.corteCajaMonto = Double.valueOf(Monto.getText());
                 Monto.setText(NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
-                        .format(Double.valueOf(Monto.getText())));
+                        .format(Configuraciones.corteCajaMonto));
+            }
+            else {
+                Monto.setText(String.valueOf(Configuraciones.corteCajaMonto));
             }
         });
+
+        Error.setVisible(false);
 
     }
 

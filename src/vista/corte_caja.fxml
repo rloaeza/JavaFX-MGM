@@ -25,7 +25,8 @@
          </font>
       </Label>
       <Label fx:id="Vendedor" alignment="CENTER" layoutX="80.0" layoutY="224.0" prefHeight="17.0" prefWidth="256.0" text="Nombre Apellidos" />
-      <JFXButton buttonType="RAISED" layoutX="79.0" layoutY="253.0" onAction="#Aceptar" prefHeight="44.0" prefWidth="256.0" style="-fx-background-color: lightgreen;" text="Aceptar" AnchorPane.bottomAnchor="35.0" AnchorPane.leftAnchor="80.0" />
-      <JFXButton buttonType="RAISED" layoutX="427.0" layoutY="253.0" onAction="#Cancelar" prefHeight="44.0" prefWidth="256.0" style="-fx-background-color: orange;" text="Cancelar" AnchorPane.bottomAnchor="35.0" AnchorPane.rightAnchor="80.0" />
+      <JFXButton buttonType="RAISED" layoutX="79.0" layoutY="253.0" onAction="#Aceptar" prefHeight="44.0" prefWidth="256.0" style="-fx-background-color: lightgreen;" text="Aceptar" AnchorPane.bottomAnchor="45.0" AnchorPane.leftAnchor="80.0" />
+      <JFXButton buttonType="RAISED" layoutX="427.0" layoutY="253.0" onAction="#Cancelar" prefHeight="44.0" prefWidth="256.0" style="-fx-background-color: orange;" text="Cancelar" AnchorPane.bottomAnchor="45.0" AnchorPane.rightAnchor="80.0" />
+      <Label fx:id="Error" alignment="CENTER" layoutY="396.0" prefHeight="27.0" prefWidth="762.0" style="-fx-background-color: #ef5728;" text="Error" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>
