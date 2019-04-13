@@ -174,6 +174,12 @@ public class CorteCaja extends Controlador implements Initializable {
         }
         if(!Configuraciones.abriendoCaja) {
             Monto.setText(Configuraciones.cierreCaja+"");
+
+
+            Monto.setText(NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
+                    .format(Configuraciones.cierreCaja));
+
+
             Monto.setDisable(true);
 
 
