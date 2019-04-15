@@ -1,5 +1,6 @@
 package controlador;
 
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
@@ -36,11 +37,33 @@ public abstract class  Controlador {
 
     @FXML
     void capitalizarEntrada(KeyEvent event) {
-        JFXTextField jft = (JFXTextField) event.getSource();
-        jft.setText(Funciones.capitalize(jft.getText()));
-        jft.positionCaret(jft.getText().length());
+        if(event.getSource() instanceof  JFXTextField) {
+            JFXTextField jft = (JFXTextField) event.getSource();
+            jft.setText(Funciones.capitalize(jft.getText()));
+            jft.positionCaret(jft.getText().length());
+        }
+        else if(event.getSource() instanceof JFXTextArea) {
+            JFXTextArea jft = (JFXTextArea) event.getSource();
+            jft.setText(Funciones.capitalize(jft.getText()));
+            jft.positionCaret(jft.getText().length());
+        }
+
     }
 
+    @FXML
+    void capitalizarEntradaCompleta(KeyEvent event) {
+        if(event.getSource() instanceof  JFXTextField) {
+            JFXTextField jft = (JFXTextField) event.getSource();
+            jft.setText(Funciones.capitalizeAll(jft.getText()));
+            jft.positionCaret(jft.getText().length());
+        }
+        else if(event.getSource() instanceof  JFXTextArea) {
+            JFXTextArea jft = (JFXTextArea) event.getSource();
+            jft.setText(Funciones.capitalizeAll(jft.getText()));
+            jft.positionCaret(jft.getText().length());
+        }
+
+    }
 
     public abstract void init();
 

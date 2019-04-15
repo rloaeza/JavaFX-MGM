@@ -335,6 +335,13 @@ public class Funciones {
     public static String capitalize(String s) {
         if(s.isEmpty())
             return "";
+
+        return s.substring(0,1).toUpperCase() + s.substring(1);
+
+    }
+    public static String capitalizeAll(String s) {
+        if(s.isEmpty())
+            return "";
         String[] array = s.split(" ");
         String newStr=new String();
         for(int i = 0; i < array.length; i++) {
