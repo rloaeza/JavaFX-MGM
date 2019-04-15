@@ -1,5 +1,8 @@
 package controlador;
 
+import com.jfoenix.controls.JFXTextField;
+import javafx.fxml.FXML;
+import javafx.scene.input.KeyEvent;
 import modelo.Funciones;
 
 import java.util.ArrayList;
@@ -28,6 +31,16 @@ public abstract class  Controlador {
             parametros.remove(0);
 
     }
+
+
+
+    @FXML
+    void capitalizarEntrada(KeyEvent event) {
+        JFXTextField jft = (JFXTextField) event.getSource();
+        jft.setText(Funciones.capitalize(jft.getText()));
+        jft.positionCaret(jft.getText().length());
+    }
+
 
     public abstract void init();
 

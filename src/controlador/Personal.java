@@ -11,6 +11,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.input.InputMethodEvent;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import modelo.Configuraciones;
 import modelo.Funciones;
@@ -117,6 +120,8 @@ public class Personal extends Controlador implements Initializable {
         Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new InicioAdministrador());
 
     }
+
+
 
 
     private void cargarDatosPantalla(modelo.Personal p ) {

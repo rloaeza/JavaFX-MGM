@@ -331,4 +331,15 @@ public class Funciones {
         return NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
                 .format(val);
     }
+
+    public static String capitalize(String s) {
+        if(s.isEmpty())
+            return "";
+        String[] array = s.split(" ");
+        String newStr=new String();
+        for(int i = 0; i < array.length; i++) {
+            newStr += array[i].substring(0,1).toUpperCase() + array[i].substring(1) + " ";
+        }
+        return newStr.trim()+(s.charAt(s.length()-1)==' '?" ":"");
+    }
 }
