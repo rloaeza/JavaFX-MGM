@@ -43,4 +43,6 @@ public class Configuraciones {
 
     public static double ventaMostradorSubTotal;
     public static double ventaMostradorTotal;
+
+    public static double ventaMostradorActual;
 }
