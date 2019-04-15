@@ -19,15 +19,15 @@
       <JFXListView fx:id="ListaDeProductos" layoutX="59.0" layoutY="68.0" onKeyReleased="#agregar_quitar" prefHeight="109.0" prefWidth="682.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="158.0" />
       <JFXTextField fx:id="Busqueda" alignment="CENTER" layoutX="59.0" layoutY="29.0" onAction="#insertar" prefHeight="27.0" prefWidth="551.0" promptText="Clave o código de producto" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="289.0" />
       <JFXTextField fx:id="Cantidad" alignment="CENTER" layoutX="628.0" layoutY="29.0" prefHeight="27.0" prefWidth="114.0" promptText="1" AnchorPane.rightAnchor="158.0" />
-      <Label alignment="CENTER_RIGHT" layoutX="676.0" layoutY="590.0" prefHeight="17.0" prefWidth="104.0" text="Total:" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="120.0">
+      <Label alignment="CENTER_RIGHT" layoutX="676.0" layoutY="590.0" prefHeight="17.0" prefWidth="104.0" text="Total:" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="200.0">
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Label>
-      <Label alignment="CENTER_RIGHT" layoutX="492.0" layoutY="538.0" prefHeight="17.0" prefWidth="104.0" text="Productos:" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="300.0" />
-      <Label alignment="CENTER_RIGHT" layoutX="676.0" layoutY="538.0" prefHeight="17.0" prefWidth="104.0" text="Sub Total:" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="120.0" />
-      <Label fx:id="CantidadProductos" layoutX="608.0" layoutY="538.0" prefHeight="17.0" prefWidth="68.0" text="0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="220.0" />
-      <Label fx:id="Subtotal" layoutX="792.0" layoutY="538.0" prefHeight="17.0" prefWidth="68.0" text="0.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="40.0" />
-      <Label fx:id="Total" layoutX="792.0" layoutY="590.0" prefHeight="17.0" prefWidth="68.0" text="0.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="40.0">
+      <Label alignment="CENTER_RIGHT" layoutX="492.0" layoutY="538.0" prefHeight="17.0" prefWidth="104.0" text="Productos:" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="350.0" />
+      <Label alignment="CENTER_RIGHT" layoutX="676.0" layoutY="538.0" prefHeight="17.0" prefWidth="104.0" text="Sub Total:" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="200.0" />
+      <Label fx:id="CantidadProductos" layoutX="608.0" layoutY="538.0" prefHeight="17.0" prefWidth="68.0" text="0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="270.0" />
+      <Label fx:id="Subtotal" layoutX="792.0" layoutY="538.0" prefHeight="17.0" prefWidth="149.0" text="0.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="40.0" />
+      <Label fx:id="Total" layoutX="792.0" layoutY="590.0" prefHeight="29.0" prefWidth="149.0" text="0.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="40.0">
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Label>

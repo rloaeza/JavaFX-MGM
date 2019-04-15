@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ToggleButton?>
+<?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
@@ -14,14 +17,34 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <JFXComboBox fx:id="FormaPago" layoutX="80.0" layoutY="91.0" onAction="#SeleccionarFormaPago" prefHeight="37.0" prefWidth="256.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="482.0" />
       <JFXTextField fx:id="Pago" alignment="CENTER" layoutX="482.0" layoutY="91.0" onKeyTyped="#pagando" prefHeight="44.0" prefWidth="256.0" AnchorPane.rightAnchor="80.0">
          <font>
             <Font size="18.0" />
          </font>
       </JFXTextField>
       <Label fx:id="Cambio" layoutX="482.0" layoutY="167.0" prefHeight="37.0" prefWidth="256.0" text="Cambio:" AnchorPane.rightAnchor="80.0" />
-      <JFXButton buttonType="RAISED" layoutX="80.0" layoutY="163.0" onAction="#Aceptar" prefHeight="44.0" prefWidth="256.0" style="-fx-background-color: lightgreen;" text="Aceptar" AnchorPane.bottomAnchor="104.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="482.0" AnchorPane.topAnchor="163.0" />
-      <JFXButton buttonType="RAISED" layoutX="80.0" layoutY="229.0" onAction="#Cancelar" prefHeight="44.0" prefWidth="256.0" style="-fx-background-color: orange;" text="Cancelar" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="482.0" />
+      <JFXButton buttonType="RAISED" layoutX="80.0" layoutY="231.0" onAction="#Aceptar" prefHeight="44.0" prefWidth="256.0" style="-fx-background-color: lightgreen;" text="Aceptar" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="482.0" AnchorPane.topAnchor="231.0" />
+      <JFXButton buttonType="RAISED" layoutX="482.0" layoutY="231.0" onAction="#Cancelar" prefHeight="44.0" prefWidth="256.0" style="-fx-background-color: orange;" text="Cancelar" AnchorPane.bottomAnchor="36.0" AnchorPane.leftAnchor="482.0" AnchorPane.rightAnchor="80.0" />
+      <ToggleButton fx:id="FormaEfectivo" layoutX="80.0" layoutY="91.0" mnemonicParsing="false" onAction="#SeleccionarFormaPago" prefHeight="45.0" prefWidth="110.0" selected="true">
+         <toggleGroup>
+            <ToggleGroup fx:id="formapago" />
+         </toggleGroup>
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imgs/efectivo.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </ToggleButton>
+      <ToggleButton fx:id="FormaTarjeta" layoutX="224.0" layoutY="91.0" mnemonicParsing="false" onAction="#SeleccionarFormaPago" prefHeight="45.0" prefWidth="110.0" toggleGroup="$formapago">
+         <graphic>
+            <ImageView fitHeight="35.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imgs/tarjeta.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </ToggleButton>
    </children>
 </AnchorPane>

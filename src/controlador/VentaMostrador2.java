@@ -130,6 +130,35 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
 
+
+        //
+
+        columnCantidad.setOnEditCommit((CellEditEvent<modelo.VentaMostrador, String> t) -> {
+
+                    int index = t.getTreeTablePosition().getRow();
+                    double costo = Double.valueOf(listasVentasMostrador.get(nVentaSelect).get(index).getCosto());
+
+                    int cantidad = Integer.valueOf(t.getNewValue());
+                    int idProducto = listasVentasMostrador.get(nVentaSelect).get(index).getIdProducto();
+                    String producto = listasVentasMostrador.get(nVentaSelect).get(index).getProducto();
+
+                    modelo.VentaMostrador vM = new modelo.VentaMostrador(idProducto, cantidad,producto,costo);
+                    listasVentasMostrador.get(nVentaSelect).remove(index);
+                    listasVentasMostrador.get(nVentaSelect).add( vM);
+                    t.getTreeTableView().getSelectionModel().select(listasVentasMostrador.get(nVentaSelect).size()-1);
+
+                    if(cantidad<=0) {
+                        listasVentasMostrador.get(nVentaSelect).remove(listaVentaMostrador.size()-1);
+                    }
+                    calcularTotal();
+
+                }
+        );
+
+
+
+
+
         JFXTreeTableColumn<modelo.VentaMostrador, String> columnProducto = new JFXTreeTableColumn<>("Producto");
         columnProducto.setPrefWidth(380);
         columnProducto.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue().getProducto()));
@@ -305,13 +334,16 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
 
+
         Pane.getScene().addEventFilter(KeyEvent.KEY_PRESSED, ke -> {
             KeyCode kc = ke.getCode();
 
             if (kc == KeyCode.F12) {
+                ke.consume();
+
+
                 try {
                     aceptarVenta(null);
-                    ke.consume();
                 } catch (IOException e) {
                     e.printStackTrace();
                 } catch (PrinterException e) {
@@ -335,7 +367,8 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
         paramsAlert.put("vista", "/vista/forma_pago.fxml");
         Configuraciones.ventaAceptada=false;
-        Configuraciones.ventaPago = Double.valueOf(Total.getText());
+
+        Configuraciones.formaPagoMonto =Double.valueOf(Configuraciones.ventaMostradorTotal);
         Funciones.display(paramsAlert, getClass().getResource("/vista/forma_pago.fxml"), new FormaPago() ,818, 311);
 
         if(!Configuraciones.ventaAceptada)
@@ -351,9 +384,9 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Venta Productos: Agregar");
         paramsJSON.put("cantidadProductos", CantidadProductos.getText());
-        paramsJSON.put("subtotal", Subtotal.getText());
+        paramsJSON.put("subtotal", Configuraciones.ventaMostradorSubTotal);
         paramsJSON.put("iva", "iva");
-        paramsJSON.put("total", Total.getText());
+        paramsJSON.put("total", Configuraciones.ventaMostradorTotal);
         paramsJSON.put("idPersonal", 1);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
 
@@ -363,8 +396,8 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         String strCostoT="";
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
 
-            valoresPDF.add(new PDFvalores("total", Total.getText()));
-            valoresPDF.add(new PDFvalores("subtotal", Subtotal.getText()));
+            valoresPDF.add(new PDFvalores("total", Configuraciones.ventaMostradorTotal+""));
+            valoresPDF.add(new PDFvalores("subtotal", Configuraciones.ventaMostradorSubTotal+""));
 
             int ultimoInsertado = rootArray.get(1).getAsJsonObject().get(Funciones.ultimoInsertado).getAsInt();
 
@@ -477,10 +510,14 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         }
         total = subtotal;
         CantidadProductos.setText(cantidadProductos+"");
-        Subtotal.setText(Funciones.fixN(subtotal, 2)+"");
 
 
-        Total.setText(Funciones.fixN(total,2)+"");
+        Configuraciones.ventaMostradorSubTotal = subtotal;
+        Configuraciones.ventaMostradorTotal = total;
+
+        Subtotal.setText(Funciones.valorAmoneda(Funciones.fixN(Configuraciones.ventaMostradorSubTotal,2)));
+        Total.setText(Funciones.valorAmoneda(Funciones.fixN(Configuraciones.ventaMostradorTotal,2)));
+
     }
 
     private void agregarProducto(ProductosConCosto p) {

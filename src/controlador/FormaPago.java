@@ -7,10 +7,12 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import modelo.Configuraciones;
+import modelo.Funciones;
 
 public class FormaPago extends Controlador {
 
@@ -21,13 +23,16 @@ public class FormaPago extends Controlador {
     private Label Cantidad;
 
     @FXML
-    private JFXComboBox<String> FormaPago;
-
-    @FXML
     private JFXTextField Pago;
 
     @FXML
     private Label Cambio;
+
+    @FXML
+    private ToggleButton FormaEfectivo;
+
+    @FXML
+    private ToggleButton FormaTarjeta;
 
     private boolean pagoValido;
 
@@ -47,14 +52,14 @@ public class FormaPago extends Controlador {
 
     @FXML
     void SeleccionarFormaPago(ActionEvent event) {
-        switch(FormaPago.getSelectionModel().getSelectedIndex()) {
-            case 0:
-                Cambio.setVisible(true);
-                Pago.setPromptText("Cantidad de Efectivo recibida");
-                break;
-            case 1:
-                Cambio.setVisible(false);
-                Pago.setPromptText("ID de Transacción");
+        if(FormaEfectivo.isSelected()) {
+            Cambio.setVisible(true);
+            Pago.setPromptText(Configuraciones.formaPagoEfectivoRecibido);
+        }
+        else {
+            FormaTarjeta.setSelected(true);
+            Cambio.setVisible(false);
+            Pago.setPromptText(Configuraciones.formaPagoIdTransaccion);
         }
     }
 
@@ -63,22 +68,18 @@ public class FormaPago extends Controlador {
         pagoValido = false;
         if(Pago.getText().length()==0)
             return;
-        switch (FormaPago.getSelectionModel().getSelectedIndex()) {
-
-            case 0:
-                if( Double.valueOf(Pago.getText()) >= Configuraciones.ventaPago ) {
-                    Cambio.setVisible(true);
-                    double cambio =   Double.valueOf(Pago.getText()) - Configuraciones.ventaPago;
-                    Cambio.setText("Cambio: "+String.valueOf(cambio));
-                    pagoValido = true;
-                }
-                else {
-                    Cambio.setText("Falta efectivo");
-                    return;
-                }
-                break;
-
-            case 1:
+        if(FormaEfectivo.isSelected()) {
+            if (Double.valueOf(Pago.getText()) >= Configuraciones.formaPagoMonto) {
+                Cambio.setVisible(true);
+                double cambio = Double.valueOf(Pago.getText()) - Configuraciones.formaPagoMonto;
+                Cambio.setText(Configuraciones.formaPagoCambio + String.valueOf(cambio));
+                pagoValido = true;
+            } else {
+                Cambio.setText(Configuraciones.formaPagoFaltaEfectivo);
+                return;
+            }
+        }
+        else {
                 if( !Pago.getText().isEmpty()) {
                     Cambio.setVisible(false);
                     pagoValido = true;
@@ -94,11 +95,10 @@ public class FormaPago extends Controlador {
     @Override
     public void init() {
 
-        Cantidad.setText(String.valueOf(Configuraciones.ventaPago));
-        ObservableList<String> valoresTipoPago;
-        valoresTipoPago = FXCollections.observableArrayList();
-        valoresTipoPago.addAll(Configuraciones.formasPago);
-        FormaPago.setItems(valoresTipoPago);
+        Cantidad.setText(Funciones.valorAmoneda(Configuraciones.formaPagoMonto));
+
+
+
     }
 
     private void cerrar() {

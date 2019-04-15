@@ -41,7 +41,9 @@ import java.math.RoundingMode;
 import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
+import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Locale;
 import java.util.Map;
 
 public class Funciones {
@@ -323,5 +325,10 @@ public class Funciones {
 
 
         return bd.doubleValue();
+    }
+
+    public static String valorAmoneda(double val) {
+        return NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
+                .format(val);
     }
 }
