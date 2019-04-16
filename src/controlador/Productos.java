@@ -3,6 +3,7 @@ package controlador;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.jfoenix.controls.JFXListView;
+import com.jfoenix.controls.JFXProgressBar;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -11,16 +12,26 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 import modelo.Funciones;
+import modelo.SubirFoto;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class Productos extends Controlador implements Initializable {
+
+    File archivoOrigen = null;
+
 
     @FXML
     private AnchorPane Pane;
@@ -43,7 +54,11 @@ public class Productos extends Controlador implements Initializable {
     @FXML
     private JFXTextField CantidadMinima;
 
+    @FXML
+    private JFXProgressBar ImagenScroll;
 
+    @FXML
+    private ImageView ImagenProducto;
 
 
     @FXML
@@ -63,6 +78,26 @@ public class Productos extends Controlador implements Initializable {
         paramsJSON.put("idTipoProducto", ListaDeProductos.getSelectionModel().getSelectedItem().getIdTipoProducto());
         paramsJSON.put("idProducto", ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+
+
+        if(archivoOrigen!=null) {
+            String archivoDestino = "P" + ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto() + ".JPG";
+            SubirFoto subirFoto = new SubirFoto(archivoOrigen.getAbsolutePath(), archivoDestino, "../fotos/productos", "200");
+            subirFoto.setOnRunning(e -> {
+                ImagenScroll.setVisible(true);
+                ImagenProducto.setVisible(false);
+            });
+            subirFoto.setOnSucceeded(e -> {
+                ImagenScroll.setVisible(false);
+                ImagenProducto.setVisible(true);
+            });
+            ExecutorService executorService = Executors.newFixedThreadPool(1);
+            executorService.execute(subirFoto);
+            executorService.shutdown();
+
+        }
+
+
         cargarDatos();
 
     }
@@ -78,6 +113,34 @@ public class Productos extends Controlador implements Initializable {
         paramsJSON.put("barCode", BarCode.getText());
         paramsJSON.put("idTipoProducto", parametros.get(0).get("idTipoProducto"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+
+
+        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            //System.out.println(rootArray.get(1).getAsJsonObject().get(Funciones.ultimoInsertado).getAsInt() );
+
+            if(archivoOrigen!=null) {
+                String archivoDestino = "P" + rootArray.get(1).getAsJsonObject().get(Funciones.ultimoInsertado).getAsInt() + ".JPG";
+                SubirFoto subirFoto = new SubirFoto(archivoOrigen.getAbsolutePath(), archivoDestino, "../fotos/productos", "200");
+                subirFoto.setOnRunning(e -> {
+                    ImagenScroll.setVisible(true);
+                    ImagenProducto.setVisible(false);
+                });
+                subirFoto.setOnSucceeded(e -> {
+                    ImagenScroll.setVisible(false);
+                    ImagenProducto.setVisible(true);
+                });
+                ExecutorService executorService = Executors.newFixedThreadPool(1);
+                executorService.execute(subirFoto);
+                executorService.shutdown();
+
+            }
+
+
+        }
+
+
+
+
         cargarDatos();
     }
 
@@ -103,9 +166,22 @@ public class Productos extends Controlador implements Initializable {
     }
 
 
+    @FXML
+    void cargarFoto(ActionEvent event)  {
+        final FileChooser fileChooser = new FileChooser();
+        archivoOrigen = fileChooser.showOpenDialog(Pane.getScene().getWindow()) ;
+        if (archivoOrigen != null) {
+            Image image = new Image(archivoOrigen.toURI().toString());
+            ImagenProducto.setImage(image);
+        }
+
+    }
+
     @Override
     public void init() {
         Titulo.setText(parametros.get(0).get("TituloTipoProducto").toString());
+        ImagenScroll.setVisible(false);
+        ImagenProducto.setVisible(true);
         try {
             cargarDatos();
         } catch (IOException e) {
@@ -120,6 +196,12 @@ public class Productos extends Controlador implements Initializable {
         Descripcion.setText(p.getDescripcion());
         CantidadMinima.setText(String.valueOf( p.getCantidadMinima() ));
         BarCode.setText(p.getBarCode());
+
+        ImagenProducto.setImage(new Image("imgs/nofotoproducto.png"));
+        archivoOrigen = null;
+        Image image = new Image(Funciones.sitio+"../fotos/productos/P"+p.getIdProducto()+".JPG");
+        ImagenProducto.setImage(image);
+
     }
 
     private void cargarDatos() throws IOException {

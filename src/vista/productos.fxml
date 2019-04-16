@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXProgressBar?>
 <?import com.jfoenix.controls.JFXTextArea?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Button?>
@@ -15,11 +16,11 @@
 <AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Productos">
    <children>
       <JFXListView fx:id="ListaDeProductos" layoutX="7.0" minWidth="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0" />
-      <JFXTextField fx:id="Clave" layoutX="489.0" layoutY="117.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <JFXTextField fx:id="Nombre" layoutX="489.0" layoutY="165.0" onKeyTyped="#capitalizarEntrada" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <JFXTextArea fx:id="Descripcion" layoutX="489.0" layoutY="220.0" onKeyTyped="#capitalizarEntrada" prefHeight="70.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <JFXTextField fx:id="CantidadMinima" layoutX="489.0" layoutY="332.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <JFXTextField fx:id="BarCode" layoutX="489.0" layoutY="379.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <JFXTextField fx:id="Clave" layoutX="489.0" layoutY="117.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="200.0" />
+      <JFXTextField fx:id="Nombre" layoutX="489.0" layoutY="165.0" onKeyTyped="#capitalizarEntrada" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="200.0" />
+      <JFXTextArea fx:id="Descripcion" layoutX="489.0" layoutY="220.0" onKeyTyped="#capitalizarEntrada" prefHeight="70.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="200.0" />
+      <JFXTextField fx:id="CantidadMinima" layoutX="489.0" layoutY="320.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <JFXTextField fx:id="BarCode" layoutX="489.0" layoutY="367.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
       <Label layoutX="394.0" layoutY="131.0" prefHeight="17.0" prefWidth="73.0" text="Clave" AnchorPane.leftAnchor="394.0" />
       <Label layoutX="394.0" layoutY="180.0" prefHeight="17.0" prefWidth="73.0" text="Nombre" AnchorPane.leftAnchor="394.0" />
       <Label layoutX="394.0" layoutY="223.0" text="Descripción" AnchorPane.leftAnchor="394.0" />
@@ -28,8 +29,8 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="394.0" layoutY="388.0" prefHeight="17.0" prefWidth="73.0" text="BarCode" AnchorPane.leftAnchor="394.0" />
-      <Label layoutX="394.0" layoutY="343.0" text="C. Mínima" />
+      <Label layoutX="394.0" layoutY="376.0" prefHeight="17.0" prefWidth="73.0" text="BarCode" AnchorPane.leftAnchor="394.0" />
+      <Label layoutX="394.0" layoutY="331.0" text="C. Mínima" />
       <HBox alignment="CENTER" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0">
          <children>
             <Button mnemonicParsing="false" onAction="#limpiar">
@@ -83,5 +84,11 @@
             </Button>
          </children>
       </HBox>
+      <JFXProgressBar fx:id="ImagenScroll" layoutX="727.0" layoutY="118.0" prefHeight="123.0" prefWidth="143.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="118.0" />
+      <Button layoutX="727.0" layoutY="263.0" mnemonicParsing="false" onAction="#cargarFoto" prefHeight="27.0" prefWidth="143.0" text="Seleccionar foto" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="263.0" />
+      <ImageView fx:id="ImagenProducto" fitHeight="123.0" fitWidth="143.0" layoutX="727.0" layoutY="117.0" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="117.0">
+         <image>
+            <Image url="@../imgs/nofotoproducto.png" />
+         </image></ImageView>
    </children>
 </AnchorPane>

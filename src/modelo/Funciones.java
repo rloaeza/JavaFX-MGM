@@ -48,7 +48,7 @@ import java.util.Map;
 
 public class Funciones {
 
-    static String sitio =  "http://mgm.mas-aplicaciones.com/php/";
+    public static String sitio =  "http://mgm.mas-aplicaciones.com/php/";
 
     //static String sitio =  "http://localhost/php/";
 
@@ -348,5 +348,45 @@ public class Funciones {
             newStr += array[i].substring(0,1).toUpperCase() + array[i].substring(1) + " ";
         }
         return newStr.trim()+(s.charAt(s.length()-1)==' '?" ":"");
+    }
+
+
+
+    public static void CargarArchivo(String archivoOrigen, String archivoDestino, String carpeta, String resolucion) throws IOException {
+
+        CloseableHttpClient httpclient = HttpClients.createDefault();
+        try {
+            HttpPost httppost = new HttpPost(sitio+"upload2.php");
+
+            FileBody userfile = new FileBody(new File(archivoOrigen));
+            StringBody nombreFoto = new StringBody(archivoDestino, ContentType.TEXT_PLAIN);
+            StringBody directorio = new StringBody(carpeta, ContentType.TEXT_PLAIN);
+            StringBody res = new StringBody(resolucion, ContentType.TEXT_PLAIN);
+            HttpEntity reqEntity = MultipartEntityBuilder.create()
+                    .addPart("userfile", userfile)
+                    .addPart("nombreFoto", nombreFoto)
+                    .addPart("directorio", directorio)
+                    .addPart("res", res)
+                    .build();
+
+
+            httppost.setEntity(reqEntity);
+
+            //System.out.println("executing request " + httppost.getRequestLine());
+            CloseableHttpResponse response = httpclient.execute(httppost);
+            try {
+                //System.out.println("----------------------------------------");
+                //System.out.println(response.getStatusLine());
+                HttpEntity resEntity = response.getEntity();
+                if (resEntity != null) {
+                    //System.out.println("Response content length: " + resEntity.getContentLength());
+                }
+                EntityUtils.consume(resEntity);
+            } finally {
+                response.close();
+            }
+        } finally {
+            httpclient.close();
+        }
     }
 }

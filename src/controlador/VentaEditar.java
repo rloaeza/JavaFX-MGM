@@ -17,6 +17,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -117,6 +118,20 @@ public class VentaEditar extends Controlador implements Initializable {
 
     private  JFXTreeTableView<VentaMostrador> cargarTabla(JFXTreeTableView<VentaMostrador> fxTreeTableView) {
 
+
+
+        JFXTreeTableColumn<modelo.VentaMostrador, ImageView> columnImagen = new JFXTreeTableColumn<>("Imágen");
+        columnImagen.setPrefWidth(80);
+        columnImagen.setCellValueFactory(param -> {
+                    ImageView iv = new ImageView(Funciones.sitio + "../fotos/productos/_P" + param.getValue().getValue().getIdProducto() + ".JPG");
+                    iv.setFitWidth(60);
+                    iv.setPreserveRatio(true);
+                    return new ReadOnlyObjectWrapper<>(iv);
+
+                }
+        );
+        columnImagen.setStyle("-fx-alignment: CENTER;");
+
         JFXTreeTableColumn<VentaMostrador, String> columnCantidad = new JFXTreeTableColumn<>("Cant");
         columnCantidad.setPrefWidth(100);
         columnCantidad.setCellValueFactory((TreeTableColumn.CellDataFeatures<VentaMostrador, String> param) ->  {
@@ -140,16 +155,16 @@ public class VentaEditar extends Controlador implements Initializable {
         columnProducto.setPrefWidth(380);
         columnProducto.setCellValueFactory(param -> new SimpleStringProperty(param.getValue().getValue().getProducto()));
 
-        JFXTreeTableColumn<VentaMostrador, Double> columnCosto = new JFXTreeTableColumn<>("Costo");
+        JFXTreeTableColumn<VentaMostrador, String> columnCosto = new JFXTreeTableColumn<>("Costo");
         columnCosto.setPrefWidth(150);
-        columnCosto.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(param.getValue().getValue().getCosto()));
+        columnCosto.setCellValueFactory(param -> new ReadOnlyObjectWrapper<>(Funciones.valorAmoneda(param.getValue().getValue().getCosto())));
         columnCosto.setStyle("-fx-alignment: CENTER;");
 
 
-        JFXTreeTableColumn<VentaMostrador, Double> columnSubTotal = new JFXTreeTableColumn<>("SubTotal");
+        JFXTreeTableColumn<VentaMostrador, String> columnSubTotal = new JFXTreeTableColumn<>("SubTotal");
         columnSubTotal.setPrefWidth(150);
-        columnSubTotal.setCellValueFactory((TreeTableColumn.CellDataFeatures<VentaMostrador, Double> param) ->
-                new ReadOnlyObjectWrapper<>(param.getValue().getValue().getTotal())
+        columnSubTotal.setCellValueFactory((TreeTableColumn.CellDataFeatures<VentaMostrador, String> param) ->
+                new ReadOnlyObjectWrapper<>(Funciones.valorAmoneda(param.getValue().getValue().getTotal()))
 
         );
         columnSubTotal.setStyle("-fx-alignment: CENTER;");
@@ -165,7 +180,7 @@ public class VentaEditar extends Controlador implements Initializable {
 
 
 
-        fxTreeTableView.getColumns().addAll(columnCantidad, columnProducto, columnCosto, columnSubTotal);
+        fxTreeTableView.getColumns().addAll(columnImagen, columnCantidad, columnProducto, columnCosto, columnSubTotal);
         fxTreeTableView.setRoot(root);
         fxTreeTableView.setEditable(true);
         fxTreeTableView.setShowRoot(false);
@@ -339,11 +354,21 @@ public class VentaEditar extends Controlador implements Initializable {
                 cantidadProductos+= producto.getCant();
             }
         total = subtotal;
+
+
         CantidadProductos.setText(cantidadProductos+"");
         Subtotal.setText(Funciones.fixN(subtotal, 2)+"");
 
 
         Total.setText(Funciones.fixN(total,2)+"");
+
+
+
+        Configuraciones.ventaMostradorSubTotal = subtotal;
+        Configuraciones.ventaMostradorTotal = total;
+
+        Subtotal.setText(Funciones.valorAmoneda(Funciones.fixN(Configuraciones.ventaMostradorSubTotal,2)));
+        Total.setText(Funciones.valorAmoneda(Funciones.fixN(Configuraciones.ventaMostradorTotal,2)));
     }
 
     private void agregarProducto(VentaLista p) throws IOException {

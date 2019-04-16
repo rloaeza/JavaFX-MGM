@@ -18,6 +18,7 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableColumn.CellEditEvent;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
@@ -105,6 +106,24 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     private  JFXTreeTableView<VentaMostrador> cargarTabla(JFXTreeTableView<modelo.VentaMostrador> fxTreeTableView) {
 
+
+        JFXTreeTableColumn<modelo.VentaMostrador, ImageView> columnImagen = new JFXTreeTableColumn<>("Imágen");
+        columnImagen.setPrefWidth(80);
+        columnImagen.setCellValueFactory(param -> {
+            ImageView iv = new ImageView(Funciones.sitio + "../fotos/productos/_P" + param.getValue().getValue().getIdProducto() + ".JPG");
+            iv.setFitWidth(60);
+            iv.setPreserveRatio(true);
+            return new ReadOnlyObjectWrapper<>(iv);
+
+        }
+        );
+        columnImagen.setStyle("-fx-alignment: CENTER;");
+
+
+
+
+
+
         JFXTreeTableColumn<modelo.VentaMostrador, String> columnCantidad = new JFXTreeTableColumn<>("Cant");
         columnCantidad.setPrefWidth(100);
         columnCantidad.setCellValueFactory((TreeTableColumn.CellDataFeatures<modelo.VentaMostrador, String> param) ->  {
@@ -181,7 +200,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
 
-        fxTreeTableView.getColumns().addAll(columnCantidad, columnProducto, columnCosto, columnSubTotal);
+        fxTreeTableView.getColumns().addAll(columnImagen, columnCantidad, columnProducto, columnCosto, columnSubTotal);
         fxTreeTableView.setRoot(root);
         fxTreeTableView.setEditable(true);
         fxTreeTableView.setShowRoot(false);
