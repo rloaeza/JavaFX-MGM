@@ -581,7 +581,7 @@ public class Funciones {
 
         Configuraciones.imgbuf = new byte[Configuraciones.fpWidth*Configuraciones.fpHeight];
         Configuraciones.fpActivo = true;
-        System.out.println("Open succ! Finger Image Width:" + Configuraciones.fpWidth + ",Height:" + Configuraciones.fpHeight +"\n");
+        //System.out.println("Open succ! Finger Image Width:" + Configuraciones.fpWidth + ",Height:" + Configuraciones.fpHeight +"\n");
 
 
     }

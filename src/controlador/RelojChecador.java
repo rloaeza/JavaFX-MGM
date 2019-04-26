@@ -112,7 +112,6 @@ public class RelojChecador extends Controlador implements Initializable {
                 b = Base64.getDecoder().decode(p.getHuella());
                 FingerprintSensorEx.DBAdd(Configuraciones.mhDB, fid++, b);
 
-                System.out.println("count="+FingerprintSensorEx.DBCount(Configuraciones.mhDB));
             }
         }
     }
@@ -141,11 +140,9 @@ public class RelojChecador extends Controlador implements Initializable {
             Configuraciones.templateLen[0] = 2048;
 
             if (0 == (Configuraciones.ret = FingerprintSensorEx.AcquireFingerprint(Configuraciones.mhDevice, Configuraciones.imgbuf, Configuraciones.template, Configuraciones.templateLen))) {
-                System.out.println("cargando imagen");
+
                 OnCatpureOK(Configuraciones.imgbuf);
 
-                System.out.println("Tamaño="+Base64.getEncoder().encodeToString(Configuraciones.template).length());
-                System.out.println(Base64.getEncoder().encodeToString(Configuraciones.template));
 
 
                 int[] fid = new int[1];
@@ -153,7 +150,7 @@ public class RelojChecador extends Controlador implements Initializable {
                 int ret = FingerprintSensorEx.DBIdentify(Configuraciones.mhDB, Configuraciones.template, fid, score);
                 if (ret == 0)
                 {
-                    System.out.println("Identify succ, fid=" + fid[0] + ",score=" + score[0] +"\n");
+                    //System.out.println("Identify succ, fid=" + fid[0] + ",score=" + score[0] +"\n");
                     UsuarioEntrada.setText(listaPersonal.get(fid[0]).getIdPersonal()+"");
                     try {
                         entrar(null);
@@ -163,7 +160,7 @@ public class RelojChecador extends Controlador implements Initializable {
                 }
                 else
                 {
-                    System.out.println("Identify fail, errcode=" + ret + "\n");
+                    //System.out.println("Identify fail, errcode=" + ret + "\n");
                 }
             }
 
