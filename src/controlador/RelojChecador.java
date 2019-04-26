@@ -24,10 +24,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 
 public class RelojChecador extends Controlador implements Initializable {
@@ -207,6 +204,9 @@ public class RelojChecador extends Controlador implements Initializable {
             if (0 == (ret = FingerprintSensorEx.AcquireFingerprint(mhDevice, imgbuf, template, templateLen))) {
                 System.out.println("cargando imagen");
                 OnCatpureOK(imgbuf);
+
+                System.out.println("Tamaño="+Base64.getEncoder().encodeToString(template).length());
+                System.out.println(Base64.getEncoder().encodeToString(template));
             }
 
 
