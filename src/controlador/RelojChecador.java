@@ -10,6 +10,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import modelo.Funciones;
@@ -34,6 +35,10 @@ public class RelojChecador extends Controlador implements Initializable {
 
     @FXML
     private JFXPasswordField UsuarioEntrada;
+
+    @FXML
+    private ImageView imagenHuella;
+
 
     @FXML
     void entrar(ActionEvent event) throws IOException {
@@ -94,5 +99,21 @@ public class RelojChecador extends Controlador implements Initializable {
         } ));
         tl.setCycleCount(Animation.INDEFINITE);
         tl.play();
+
+
+
+
+        Timeline t2 = new Timeline(new KeyFrame(Duration.millis(1000), ae -> {
+
+
+
+
+        } ));
+        t2.setCycleCount(Animation.INDEFINITE);
+        t2.play();
+
+
+
+
     }
 }
