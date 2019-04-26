@@ -8,6 +8,8 @@ import com.zkteco.biometric.FingerprintSensorEx;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -32,7 +34,7 @@ import static modelo.Funciones.FreeSensor;
 
 public class RelojChecador extends Controlador implements Initializable {
 
-
+    ObservableList<Personal> listaPersonal;
 
 
 
@@ -78,7 +80,7 @@ public class RelojChecador extends Controlador implements Initializable {
             paramsAlert.put("titulo", "Entrada / Salida");
             paramsAlert.put("texto", "Bienvenido " + persona.getApellidos() + ", " + persona.getNombre());
             paramsAlert.put("vista", "/vista/alert_box.fxml");
-            Funciones.display(paramsAlert, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
+            Funciones.displayFP(paramsAlert, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
 
 
         }
@@ -87,7 +89,7 @@ public class RelojChecador extends Controlador implements Initializable {
             paramsAlert.put("titulo", "Entrada / Salida");
             paramsAlert.put("texto", "Error en código");
             paramsAlert.put("vista", "/vista/alert_box.fxml");
-            Funciones.display(paramsAlert, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
+            Funciones.displayFP(paramsAlert, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
         }
 
         UsuarioEntrada.setText("");
@@ -97,7 +99,22 @@ public class RelojChecador extends Controlador implements Initializable {
     @Override
     public void init() {
         Funciones.inicializarFP();
+        try {
+            cargarDatos();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+        if(Configuraciones.fpActivo) {
+            int fid = 0;
+            for (Personal p : listaPersonal) {
+                byte[] b = new byte[2048];
+                b = Base64.getDecoder().decode(p.getHuella());
+                FingerprintSensorEx.DBAdd(Configuraciones.mhDB, fid++, b);
+
+                System.out.println("count="+FingerprintSensorEx.DBCount(Configuraciones.mhDB));
+            }
+        }
     }
 
 
@@ -129,6 +146,25 @@ public class RelojChecador extends Controlador implements Initializable {
 
                 System.out.println("Tamaño="+Base64.getEncoder().encodeToString(Configuraciones.template).length());
                 System.out.println(Base64.getEncoder().encodeToString(Configuraciones.template));
+
+
+                int[] fid = new int[1];
+                int[] score = new int [1];
+                int ret = FingerprintSensorEx.DBIdentify(Configuraciones.mhDB, Configuraciones.template, fid, score);
+                if (ret == 0)
+                {
+                    System.out.println("Identify succ, fid=" + fid[0] + ",score=" + score[0] +"\n");
+                    UsuarioEntrada.setText(listaPersonal.get(fid[0]).getIdPersonal()+"");
+                    try {
+                        entrar(null);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else
+                {
+                    System.out.println("Identify fail, errcode=" + ret + "\n");
+                }
             }
 
 
@@ -153,4 +189,21 @@ public class RelojChecador extends Controlador implements Initializable {
     }
 
 
+    private void cargarDatos() throws IOException {
+
+        listaPersonal = FXCollections.observableArrayList();
+
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Personal: Lista");
+        paramsJSON.put("idClinica", Configuraciones.idClinica);
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            int t = rootArray.size();
+            for(int i = 1; i< t; i++) {
+                listaPersonal.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), modelo.Personal.class) );
+            }
+        }
+
+
+    }
 }

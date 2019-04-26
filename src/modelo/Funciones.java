@@ -164,6 +164,30 @@ public class Funciones {
         window.showAndWait();
 
     }
+
+    public static void displayFP( Map<String, Object> params,  URL vista,  Controlador c ) throws IOException {
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+
+
+
+        FXMLLoader fxmlLoader = new FXMLLoader(vista);
+        AnchorPane root = null;
+
+        root = fxmlLoader.load();
+
+        c = fxmlLoader.getController();
+        c.setParams(params);
+        c.init();
+        window.setTitle(params.get("titulo").toString());
+        AnchorPane p = new AnchorPane();
+        p.getChildren().setAll(root);
+
+        Scene scene = new Scene(p, 500, 250);
+        window.setScene(scene);
+        window.show();
+
+    }
     public static void displayImage( Map<String, Object> params,  URL vista,  Controlador c ) throws IOException {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
