@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
+import modelo.Configuraciones;
 import modelo.Funciones;
 import modelo.Personal;
 
@@ -26,20 +27,13 @@ import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
+import static modelo.Funciones.FreeSensor;
+
 
 public class RelojChecador extends Controlador implements Initializable {
 
 
-    private long mhDevice = 0;
-    private long mhDB = 0;
-    private byte[] imgbuf = null;
-    private byte[] template = new byte[2048];
-    private int[] templateLen = new int[1];
-    private int ret = 0;
-    //the width of fingerprint image
-    int fpWidth = 0;
-    //the height of fingerprint image
-    int fpHeight = 0;
+
 
 
     @FXML
@@ -53,7 +47,6 @@ public class RelojChecador extends Controlador implements Initializable {
 
     @FXML
     private ImageView imagenHuella;
-    private boolean fpActivo;
 
 
     @FXML
@@ -103,84 +96,13 @@ public class RelojChecador extends Controlador implements Initializable {
 
     @Override
     public void init() {
-        inicializarFP();
+        Funciones.inicializarFP();
 
     }
 
-    private boolean bRegister = false;
-    //Identify
-    private boolean bIdentify = true;
-    //finger id
-    private int iFid = 1;
-
-    private int nFakeFunOn = 1;
-    //must be 3
-    static final int enroll_cnt = 3;
-    //the index of pre-register function
-    private int enroll_idx = 0;
-    //for verify test
-    //the length of lastRegTemp
-    private int cbRegTemp = 0;
-
-    private void inicializarFP() {
-
-        fpActivo = false;
-
-        if (0 != mhDevice)
-        {
-            //already inited
-            System.out.println("Please close device first!\n");
-            return;
-        }
-        int ret = FingerprintSensorErrorCode.ZKFP_ERR_OK;
-        //Initialize
-        cbRegTemp = 0;
-        bRegister = false;
-        bIdentify = false;
-        iFid = 1;
-        enroll_idx = 0;
-        if (FingerprintSensorErrorCode.ZKFP_ERR_OK != FingerprintSensorEx.Init())
-        {
-            System.out.println("Init failed!\n");
-            return;
-        }
-        ret = FingerprintSensorEx.GetDeviceCount();
-        if (ret < 0)
-        {
-            System.out.println("No devices connected!\n");
-            FreeSensor();
-            return;
-        }
-        if (0 == (mhDevice = FingerprintSensorEx.OpenDevice(0)))
-        {
-            System.out.println("Open device fail, ret = " + ret + "!\n");
-            FreeSensor();
-            return;
-        }
-        if (0 == (mhDB = FingerprintSensorEx.DBInit()))
-        {
-            System.out.println("Init DB fail, ret = " + ret + "!\n");
-            FreeSensor();
-            return;
-        }
-
-        FingerprintSensorEx.DBSetParameter(mhDB,  5010, 0);
-        byte[] paramValue = new byte[4];
-        int[] size = new int[1];
-
-        size[0] = 4;
-        FingerprintSensorEx.GetParameters(mhDevice, 1, paramValue, size);
-        fpWidth = Funciones.byteArrayToInt(paramValue);
-        size[0] = 4;
-        FingerprintSensorEx.GetParameters(mhDevice, 2, paramValue, size);
-        fpHeight = Funciones.byteArrayToInt(paramValue);
-
-        imgbuf = new byte[fpWidth*fpHeight];
-        fpActivo = true;
-        System.out.println("Open succ! Finger Image Width:" + fpWidth + ",Height:" + fpHeight +"\n");
 
 
-    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //Hora.setText(new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(new Date()));
@@ -196,17 +118,17 @@ public class RelojChecador extends Controlador implements Initializable {
 
         Timeline t2 = new Timeline(new KeyFrame(Duration.millis(1000), ae -> {
 
-            if(!fpActivo)
+            if(!Configuraciones.fpActivo)
                 return;
 
-            templateLen[0] = 2048;
+            Configuraciones.templateLen[0] = 2048;
 
-            if (0 == (ret = FingerprintSensorEx.AcquireFingerprint(mhDevice, imgbuf, template, templateLen))) {
+            if (0 == (Configuraciones.ret = FingerprintSensorEx.AcquireFingerprint(Configuraciones.mhDevice, Configuraciones.imgbuf, Configuraciones.template, Configuraciones.templateLen))) {
                 System.out.println("cargando imagen");
-                OnCatpureOK(imgbuf);
+                OnCatpureOK(Configuraciones.imgbuf);
 
-                System.out.println("Tamaño="+Base64.getEncoder().encodeToString(template).length());
-                System.out.println(Base64.getEncoder().encodeToString(template));
+                System.out.println("Tamaño="+Base64.getEncoder().encodeToString(Configuraciones.template).length());
+                System.out.println(Base64.getEncoder().encodeToString(Configuraciones.template));
             }
 
 
@@ -221,7 +143,7 @@ public class RelojChecador extends Controlador implements Initializable {
     private void OnCatpureOK(byte[] imgBuf)
     {
         try {
-            Funciones.writeBitmap(imgBuf, fpWidth, fpHeight, "fingerprint.bmp");
+            Funciones.writeBitmap(imgBuf, Configuraciones.fpWidth, Configuraciones.fpHeight, "fingerprint.bmp");
             File f = new File("fingerprint.bmp");
             imagenHuella.setImage(new Image(f.toURI().toString()));
         } catch (IOException e) {
@@ -230,24 +152,5 @@ public class RelojChecador extends Controlador implements Initializable {
         }
     }
 
-    private void FreeSensor()
-    {
-        try {		//wait for thread stopping
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        if (0 != mhDB)
-        {
-            FingerprintSensorEx.DBFree(mhDB);
-            mhDB = 0;
-        }
-        if (0 != mhDevice)
-        {
-            FingerprintSensorEx.CloseDevice(mhDevice);
-            mhDevice = 0;
-        }
-        FingerprintSensorEx.Terminate();
-    }
+
 }

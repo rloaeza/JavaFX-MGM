@@ -3,6 +3,8 @@ package modelo;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
+import com.zkteco.biometric.FingerprintSensorErrorCode;
+import com.zkteco.biometric.FingerprintSensorEx;
 import controlador.Controlador;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -476,5 +478,87 @@ public class Funciones {
         number |= ((bytes[2] << 16) & 0xFF0000);
         number |= ((bytes[3] << 24) & 0xFF000000);
         return number;
+    }
+
+    public static void FreeSensor()
+    {
+        try {		//wait for thread stopping
+            Thread.sleep(1000);
+        } catch (InterruptedException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        if (0 != Configuraciones.mhDB)
+        {
+            FingerprintSensorEx.DBFree(Configuraciones.mhDB);
+            Configuraciones.mhDB = 0;
+        }
+        if (0 != Configuraciones.mhDevice)
+        {
+            FingerprintSensorEx.CloseDevice(Configuraciones.mhDevice);
+            Configuraciones.mhDevice = 0;
+        }
+        FingerprintSensorEx.Terminate();
+    }
+
+
+    public static void inicializarFP() {
+
+        Configuraciones.fpActivo = false;
+
+        if (0 != Configuraciones.mhDevice)
+        {
+            //already inited
+            System.out.println("Please close device first!\n");
+            return;
+        }
+        int ret = FingerprintSensorErrorCode.ZKFP_ERR_OK;
+        //Initialize
+        Configuraciones.cbRegTemp = 0;
+        Configuraciones.bRegister = false;
+        Configuraciones.bIdentify = false;
+        Configuraciones.iFid = 1;
+        Configuraciones.enroll_idx = 0;
+        if (FingerprintSensorErrorCode.ZKFP_ERR_OK != FingerprintSensorEx.Init())
+        {
+            System.out.println("Init failed!\n");
+            return;
+        }
+        ret = FingerprintSensorEx.GetDeviceCount();
+        if (ret < 0)
+        {
+            System.out.println("No devices connected!\n");
+            FreeSensor();
+            return;
+        }
+        if (0 == (Configuraciones.mhDevice = FingerprintSensorEx.OpenDevice(0)))
+        {
+            System.out.println("Open device fail, ret = " + ret + "!\n");
+            FreeSensor();
+            return;
+        }
+        if (0 == (Configuraciones.mhDB = FingerprintSensorEx.DBInit()))
+        {
+            System.out.println("Init DB fail, ret = " + ret + "!\n");
+            FreeSensor();
+            return;
+        }
+
+        FingerprintSensorEx.DBSetParameter(Configuraciones.mhDB,  5010, 0);
+        byte[] paramValue = new byte[4];
+        int[] size = new int[1];
+
+        size[0] = 4;
+        FingerprintSensorEx.GetParameters(Configuraciones.mhDevice, 1, paramValue, size);
+        Configuraciones.fpWidth = Funciones.byteArrayToInt(paramValue);
+        size[0] = 4;
+        FingerprintSensorEx.GetParameters(Configuraciones.mhDevice, 2, paramValue, size);
+        Configuraciones.fpHeight = Funciones.byteArrayToInt(paramValue);
+
+        Configuraciones.imgbuf = new byte[Configuraciones.fpWidth*Configuraciones.fpHeight];
+        Configuraciones.fpActivo = true;
+        System.out.println("Open succ! Finger Image Width:" + Configuraciones.fpWidth + ",Height:" + Configuraciones.fpHeight +"\n");
+
+
     }
 }

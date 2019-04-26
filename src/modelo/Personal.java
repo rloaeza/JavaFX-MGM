@@ -4,12 +4,12 @@ public class Personal {
     private int idPersonal;
     private String nombre;
     private String apellidos;
-
     private String email;
     private String telefono;
     private String movil;
     private String usuario;
     private String clave;
+    private String huella;
     private int idClinica;
     private String titulo;
 
@@ -18,7 +18,7 @@ public class Personal {
     public Personal() {
     }
 
-    public Personal(int idPersonal, String nombre, String apellidos, String email, String telefono, String movil, String usuario, String clave, int idClinica, int tipo) {
+    public Personal(int idPersonal, String nombre, String apellidos, String email, String telefono, String movil, String usuario, String clave, String huella, int idClinica, int tipo) {
         this.idPersonal = idPersonal;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -27,6 +27,7 @@ public class Personal {
         this.movil = movil;
         this.usuario = usuario;
         this.clave = clave;
+        this.huella = huella;
         this.idClinica = idClinica;
         this.tipo = tipo;
     }
@@ -118,7 +119,13 @@ public class Personal {
     public void setTipo(int tipo) {
         this.tipo = tipo;
     }
+    public String getHuella() {
+        return huella;
+    }
 
+    public void setHuella(String huella) {
+        this.huella = huella;
+    }
     @Override
     public String toString() {
         return nombre+ " "+apellidos;

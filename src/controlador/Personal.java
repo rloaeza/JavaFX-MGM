@@ -6,6 +6,10 @@ import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import com.zkteco.biometric.FingerprintSensorEx;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,11 +19,13 @@ import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import modelo.Configuraciones;
 import modelo.Funciones;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Base64;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
@@ -53,6 +59,9 @@ public class Personal extends Controlador implements Initializable {
     @FXML
     private JFXPasswordField Clave;
 
+    @FXML
+    private JFXTextField Huella;
+
 
     @FXML
     private JFXComboBox<String> TipoUsuario;
@@ -71,6 +80,7 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("movil", Celular.getText());
         paramsJSON.put("usuario", Usuario.getText());
         paramsJSON.put("clave", Clave.getText());
+        paramsJSON.put("huella", Huella.getText());
         paramsJSON.put("tipo", TipoUsuario.getSelectionModel().getSelectedIndex());
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
@@ -90,6 +100,7 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("movil", Celular.getText());
         paramsJSON.put("usuario", Usuario.getText());
         paramsJSON.put("clave", Clave.getText());
+        paramsJSON.put("huella", Huella.getText());
         paramsJSON.put("tipo", TipoUsuario.getSelectionModel().getSelectedIndex());
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
@@ -109,7 +120,7 @@ public class Personal extends Controlador implements Initializable {
 
     @FXML
     void limpiar(ActionEvent event) {
-        cargarDatosPantalla(new modelo.Personal(-1, "", "","","","","","",-1,-1 ));
+        cargarDatosPantalla(new modelo.Personal(-1, "", "","","","","","","",-1,-1 ));
         ListaDePersonal.getSelectionModel().clearSelection();
     }
 
@@ -133,6 +144,7 @@ public class Personal extends Controlador implements Initializable {
         Usuario.setText(p.getUsuario());
         Clave.setText(p.getClave());
         TipoUsuario.getSelectionModel().select(p.getTipo());
+        Huella.setText(p.getHuella());
     }
 
     private void cargarDatos() throws IOException {
@@ -161,6 +173,25 @@ public class Personal extends Controlador implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Funciones.inicializarFP();
+
+        Timeline t2 = new Timeline(new KeyFrame(Duration.millis(1000), ae -> {
+
+            if(!Configuraciones.fpActivo)
+                return;
+
+            Configuraciones.templateLen[0] = 2048;
+
+            if (0 == (Configuraciones.ret = FingerprintSensorEx.AcquireFingerprint(Configuraciones.mhDevice, Configuraciones.imgbuf, Configuraciones.template, Configuraciones.templateLen))) {
+
+                Huella.setText(Base64.getEncoder().encodeToString(Configuraciones.template));
+            }
+
+
+        } ));
+        t2.setCycleCount(Animation.INDEFINITE);
+        t2.play();
     }
 
     @Override

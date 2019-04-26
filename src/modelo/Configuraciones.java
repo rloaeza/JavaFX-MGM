@@ -45,4 +45,37 @@ public class Configuraciones {
     public static double ventaMostradorTotal;
 
     public static double ventaMostradorActual;
+
+
+
+
+
+    //Finger print
+    public static  long mhDevice = 0;
+    public static  long mhDB = 0;
+    public static  byte[] imgbuf = null;
+    public static  byte[] template = new byte[2048];
+    public static  int[] templateLen = new int[1];
+    public static  int ret = 0;
+    //the width of fingerprint image
+    public static int fpWidth = 0;
+    //the height of fingerprint image
+    public static int fpHeight = 0;
+    public static boolean bRegister = false;
+    //Identify
+    public static boolean bIdentify = true;
+    //finger id
+    public static int iFid = 1;
+
+    public static int nFakeFunOn = 1;
+    //must be 3
+    public static int enroll_cnt = 3;
+    //the index of pre-register function
+    public static  int enroll_idx = 0;
+    //for verify test
+    //the length of lastRegTemp
+    public static  int cbRegTemp = 0;
+
+    public static boolean fpActivo;
+
 }
