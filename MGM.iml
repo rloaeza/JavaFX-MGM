@@ -11,5 +11,6 @@
     <orderEntry type="library" name="jfoenix-9.0.6" level="project" />
     <orderEntry type="library" name="commons-codec-1.10" level="project" />
     <orderEntry type="library" name="pdfbox-2.0.13" level="project" />
+    <orderEntry type="library" name="libs_mgm" level="project" />
   </component>
 </module>
