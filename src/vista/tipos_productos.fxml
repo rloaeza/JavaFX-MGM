@@ -15,9 +15,9 @@
 <AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.TiposProductos">
    <children>
       <JFXListView fx:id="ListaTiposDeProductos" layoutX="7.0" minWidth="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0" />
-      <JFXTextField fx:id="Clave" layoutX="489.0" layoutY="194.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <JFXTextField fx:id="Nombre" layoutX="489.0" layoutY="274.0" onKeyTyped="#capitalizarEntrada" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <JFXTextArea fx:id="Descripcion" layoutX="489.0" layoutY="352.0" onKeyTyped="#capitalizarEntrada" prefHeight="70.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <JFXTextField fx:id="Clave" layoutX="489.0" layoutY="194.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="194.0" />
+      <JFXTextField fx:id="Nombre" layoutX="489.0" layoutY="274.0" onKeyTyped="#capitalizarEntrada" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="274.0" />
+      <JFXTextArea fx:id="Descripcion" layoutX="489.0" layoutY="352.0" onKeyTyped="#capitalizarEntrada" prefHeight="70.0" prefWidth="381.0" AnchorPane.bottomAnchor="128.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="352.0" />
       <Label layoutX="394.0" layoutY="213.0" prefHeight="17.0" prefWidth="73.0" text="Clave" AnchorPane.leftAnchor="394.0" />
       <Label layoutX="394.0" layoutY="289.0" prefHeight="17.0" prefWidth="73.0" text="Nombre" AnchorPane.leftAnchor="394.0" />
       <Label layoutX="394.0" layoutY="355.0" text="Descripción" AnchorPane.leftAnchor="394.0" />
@@ -26,7 +26,7 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="30.0">
+      <HBox alignment="CENTER_RIGHT" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="450.0" AnchorPane.rightAnchor="30.0">
          <children>
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#regresar" text="Atras">
                <graphic>
@@ -37,7 +37,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Separator prefWidth="200.0" visible="false" />
+            <Separator visible="false" />
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#limpiar" text="Limpiar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -47,8 +47,8 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Separator prefWidth="200.0" visible="false" />
-            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#actualizar" prefWidth="250.0" text="Actualizar" wrapText="true">
+            <Separator visible="false" />
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#actualizar" text="Actualizar" wrapText="true">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -57,7 +57,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Separator prefWidth="200.0" visible="false" />
+            <Separator visible="false" />
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#eliminar" text="Eliminar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -67,7 +67,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Separator prefWidth="200.0" visible="false" />
+            <Separator visible="false" />
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#agregar" text="Guardar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
