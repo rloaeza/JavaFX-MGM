@@ -26,9 +26,19 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0">
+      <HBox alignment="CENTER" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="30.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#limpiar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#regresar" text="Atras">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/regresar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator prefWidth="200.0" visible="false" />
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#limpiar" text="Limpiar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -38,17 +48,7 @@
                </graphic>
             </Button>
             <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#agregar">
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imgs/agregar.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#actualizar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#actualizar" prefWidth="250.0" text="Actualizar" wrapText="true">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -58,7 +58,7 @@
                </graphic>
             </Button>
             <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#eliminar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#eliminar" text="Eliminar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -68,11 +68,11 @@
                </graphic>
             </Button>
             <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#regresar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#agregar" text="Guardar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../imgs/regresar.png" />
+                        <Image url="@../imgs/agregar.png" />
                      </image>
                   </ImageView>
                </graphic>

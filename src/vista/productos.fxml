@@ -21,19 +21,29 @@
       <JFXTextArea fx:id="Descripcion" layoutX="489.0" layoutY="220.0" onKeyTyped="#capitalizarEntrada" prefHeight="70.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="200.0" />
       <JFXTextField fx:id="CantidadMinima" layoutX="489.0" layoutY="320.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
       <JFXTextField fx:id="BarCode" layoutX="489.0" layoutY="367.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <Label layoutX="394.0" layoutY="131.0" prefHeight="17.0" prefWidth="73.0" text="Clave" AnchorPane.leftAnchor="394.0" />
-      <Label layoutX="394.0" layoutY="180.0" prefHeight="17.0" prefWidth="73.0" text="Nombre" AnchorPane.leftAnchor="394.0" />
-      <Label layoutX="394.0" layoutY="223.0" text="Descripción" AnchorPane.leftAnchor="394.0" />
+      <Label layoutX="376.0" layoutY="131.0" prefHeight="17.0" prefWidth="73.0" text="Clave" AnchorPane.leftAnchor="376.0" />
+      <Label layoutX="376.0" layoutY="180.0" prefHeight="17.0" prefWidth="73.0" text="Nombre" AnchorPane.leftAnchor="376.0" />
+      <Label layoutX="376.0" layoutY="223.0" text="Descripción" AnchorPane.leftAnchor="376.0" />
       <Label fx:id="Titulo" alignment="CENTER" layoutX="348.0" layoutY="58.0" prefHeight="44.0" prefWidth="522.0" text="Productos" textAlignment="CENTER" AnchorPane.leftAnchor="348.0" AnchorPane.rightAnchor="30.0">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Label layoutX="394.0" layoutY="376.0" prefHeight="17.0" prefWidth="73.0" text="BarCode" AnchorPane.leftAnchor="394.0" />
-      <Label layoutX="394.0" layoutY="331.0" text="C. Mínima" />
-      <HBox alignment="CENTER" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0">
+      <Label layoutX="376.0" layoutY="376.0" prefHeight="17.0" prefWidth="106.0" text="Código de barra" AnchorPane.leftAnchor="376.0" />
+      <Label layoutX="376.0" layoutY="331.0" text="C. Mínima" />
+      <HBox alignment="CENTER" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="30.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#limpiar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#regresar" text="Atrás">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/regresar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator prefWidth="200.0" visible="false" />
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#limpiar" text="Limpiar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -43,17 +53,7 @@
                </graphic>
             </Button>
             <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#agregar">
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imgs/agregar.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#actualizar">
+            <Button alignment="CENTER" contentDisplay="TOP" mnemonicParsing="false" onAction="#actualizar" prefWidth="250.0" text="Actualizar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -63,7 +63,7 @@
                </graphic>
             </Button>
             <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#eliminar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#eliminar" text="Eliminar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -73,11 +73,11 @@
                </graphic>
             </Button>
             <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#regresar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#agregar" text="Guardar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../imgs/regresar.png" />
+                        <Image url="@../imgs/agregar.png" />
                      </image>
                   </ImageView>
                </graphic>
