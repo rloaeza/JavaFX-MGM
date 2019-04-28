@@ -78,8 +78,8 @@ public class InicioSesion  extends Controlador{
 
 
                 paramsVista.put("idPersonal", Configuraciones.idPersonal);
-                paramsVista.put("vista", "/vista/venta_mostrador2.fxml" );
-                Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new Citas());
+                paramsVista.put("vista", "/vista/inicio_venta.fxml" );
+                Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new InicioAdministrador());
             } else {
 
                 Funciones.CargarVista(Pane, getClass().getResource("/vista/inicio_administrador.fxml"), params, new InicioAdministrador());

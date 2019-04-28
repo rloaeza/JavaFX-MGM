@@ -228,7 +228,7 @@ public class InicioAdministrador extends  Controlador implements Initializable {
     public void init() {
 
         //Estado.setText(usuario.getProducto());
-        ((Stage)Pane.getScene().getWindow()).setTitle(parametros.get(0).get("nombre").toString());
+        ((Stage)Pane.getScene().getWindow()).setTitle(Configuraciones.nombrePersonal);
 
 
 
@@ -272,6 +272,8 @@ public class InicioAdministrador extends  Controlador implements Initializable {
             }
 
         });
+
+
 
 
 
@@ -366,6 +368,26 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         } ));
         tPagos.setCycleCount(Animation.INDEFINITE);
         tPagos.play();
+
+
+
+
+
+
+        Timeline tInicio = new Timeline(new KeyFrame(Duration.millis(100), ae -> {
+            if(Configuraciones.tipoUsuarioActivo ==  Configuraciones.tipoVendedor)
+            {
+
+                try {
+                    VentaMostrador(null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+        } ));
+        tInicio.setCycleCount(1);
+        tInicio.play();
 
 
 
