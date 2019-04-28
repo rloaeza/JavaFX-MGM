@@ -56,7 +56,7 @@ public class InicioSesion  extends Controlador{
             Configuraciones.clavePersonal = usuario.getClave();
             Configuraciones.cajaAbierta=false;
             //Usuario de venta
-            if(usuario.getTipo()==2) {
+            if(usuario.getTipo()==Configuraciones.tipoVendedor) {
                 Map<String,Object> paramsAlert = new LinkedHashMap<>();
                 paramsAlert.put("titulo", "Corte de caja");
 
@@ -68,10 +68,21 @@ public class InicioSesion  extends Controlador{
                 if(!Configuraciones.corteCajaValido)
                     return;
                 Configuraciones.cajaAbierta= true;
+
+
+
+
+                Map<String,Object> paramsVista = new LinkedHashMap<>();
+
+
+
+                paramsVista.put("idPersonal", Configuraciones.idPersonal);
+                paramsVista.put("vista", "/vista/venta_mostrador2.fxml" );
+                Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new Citas());
+            } else {
+
+                Funciones.CargarVista(Pane, getClass().getResource("/vista/inicio_administrador.fxml"), params, new InicioAdministrador());
             }
-
-            Funciones.CargarVista(Pane, getClass().getResource("/vista/inicio_administrador.fxml"), params, new InicioAdministrador());
-
         }
         else {
             Map<String,Object> paramsAlert = new LinkedHashMap<>();

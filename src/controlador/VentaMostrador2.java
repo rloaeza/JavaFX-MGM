@@ -418,7 +418,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Productos: Lista con precio");
-        paramsJSON.put("idClinica", parametros.get(0).get("idClinica").toString());
+        paramsJSON.put("idClinica", Configuraciones.idClinica);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
