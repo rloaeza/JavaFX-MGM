@@ -57,6 +57,7 @@ public class InicioSesion  extends Controlador{
             Configuraciones.cajaAbierta=false;
             //Usuario de venta
             if(usuario.getTipo()==Configuraciones.tipoVendedor) {
+                Configuraciones.tipoUsuarioActivo = Configuraciones.tipoVendedor;
                 Map<String,Object> paramsAlert = new LinkedHashMap<>();
                 paramsAlert.put("titulo", "Corte de caja");
 

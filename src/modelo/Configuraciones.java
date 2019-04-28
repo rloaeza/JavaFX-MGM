@@ -13,6 +13,7 @@ public class Configuraciones {
     public static int tipoSupervisor = 1;
     public static int tipoVendedor = 2;
     public static int tipoCosmeatra = 3;
+    public static int tipoUsuarioActivo = -1;
 
     public static int[] tiposUsuarioInt = new int[]{tipoAdministrador, tipoSupervisor, tipoVendedor, tipoCosmeatra};
     public static String[] tiposUsuarios = new String[] {"Administrador", "Supervisor", "Vendedor", "Cosmeatra"};
