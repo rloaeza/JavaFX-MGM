@@ -6,11 +6,11 @@ public class Productos {
     private String clave;
     private String nombre;
     private String descripcion;
-    private double cantidadMinima;
+    private int cantidadMinima;
     private String barCode;
 
 
-    public Productos(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, double cantidadMinima, String barCode) {
+    public Productos(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, int cantidadMinima, String barCode) {
         this.idProducto = idProducto;
         this.idTipoProducto = idTipoProducto;
         this.clave = clave;
@@ -23,11 +23,11 @@ public class Productos {
     public Productos() {
     }
 
-    public double getCantidadMinima() {
+    public int getCantidadMinima() {
         return cantidadMinima;
     }
 
-    public void setCantidadMinima(double cantidadMinima) {
+    public void setCantidadMinima(int cantidadMinima) {
         this.cantidadMinima = cantidadMinima;
     }
 

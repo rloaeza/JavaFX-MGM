@@ -105,7 +105,7 @@ public class Productos extends Controlador implements Initializable {
             limpiar(null);
             cargarDatos();
         } else {
-            paramsAlert.put("texto",  "Error al actualizar, clave duplicada");
+            paramsAlert.put("texto",  "Error al actualizar, clave o código de barras duplicado");
 
         }
         Funciones.display(paramsAlert, this.getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
@@ -154,7 +154,7 @@ public class Productos extends Controlador implements Initializable {
             cargarDatos();
         }
         else {
-            paramsAlert.put("texto",  "Error al insertar, clave duplicada");
+            paramsAlert.put("texto",  "Error al insertar, clave o código de barras duplicado");
 
         }
         Funciones.display(paramsAlert, this.getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );

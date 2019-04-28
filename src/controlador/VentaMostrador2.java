@@ -228,7 +228,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     }
     @FXML
-    void insertar(ActionEvent event) {
+    void insertar(ActionEvent event) throws IOException {
         for(ProductosConCosto p : ListaDeProductos.getItems()) {
             if(Busqueda.getText().equalsIgnoreCase(p.getClave()) || Busqueda.getText().equalsIgnoreCase(p.getBarCode()))
             {
@@ -237,6 +237,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
                 return;
             }
         }
+        cargarDatos(Busqueda.getText());
     }
 
 
@@ -247,7 +248,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     @Override
     public void init() {
         try {
-            cargarDatos();
+            cargarDatos("");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -412,12 +413,13 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     }
 
-    private void cargarDatos() throws IOException {
+    private void cargarDatos(String patron) throws IOException {
 
         ObservableList<ProductosConCosto> listaDeProductos = FXCollections.observableArrayList();
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Productos: Lista con precio");
+        paramsJSON.put("patron", patron);
         paramsJSON.put("idClinica", Configuraciones.idClinica);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
