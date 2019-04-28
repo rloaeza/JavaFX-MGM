@@ -65,6 +65,11 @@ public class AlmacenEntrada extends Controlador implements Initializable {
     }
 
     @FXML
+    void cargarPatron(ActionEvent event) throws IOException {
+        cargarProductos(Patron.getText());
+    }
+
+    @FXML
     void agregar(ActionEvent event) throws IOException {
         if(!Cantidad.getText().isEmpty())
             if(Double.valueOf(Cantidad.getText())<=0) {
@@ -80,6 +85,7 @@ public class AlmacenEntrada extends Controlador implements Initializable {
         paramsJSON.put("cantidad", Cantidad.getText().isEmpty()?"1":Cantidad.getText());
         paramsJSON.put("idProducto", ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        Cantidad.setText("");
         cargarAlmacenEntradas();
     }
 
@@ -102,18 +108,19 @@ public class AlmacenEntrada extends Controlador implements Initializable {
     @Override
     public void init() {
         try {
-            cargarProductos();
+            cargarProductos("");
             cargarAlmacenEntradas();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private void cargarProductos() throws IOException {
+    private void cargarProductos(String patron) throws IOException {
         ObservableList<Productos> listaProductos = FXCollections.observableArrayList();
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
-        paramsJSON.put("Actividad", "Productos: Lista total");
+        paramsJSON.put("Actividad", "Productos: Lista total con patron");
+        paramsJSON.put("patron", patron);
 
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {

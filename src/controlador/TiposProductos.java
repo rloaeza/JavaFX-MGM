@@ -11,6 +11,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import modelo.Configuraciones;
 import modelo.Funciones;
 
 import java.io.IOException;
@@ -50,7 +51,22 @@ public class TiposProductos extends Controlador implements Initializable {
         paramsJSON.put("idClinica", ListaTiposDeProductos.getSelectionModel().getSelectedItem().getIdClinica());
         paramsJSON.put("idTipoProducto", ListaTiposDeProductos.getSelectionModel().getSelectedItem().getIdTipoProducto());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
-        cargarDatos();
+
+
+        Map<String,Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("titulo", "Actualizar tipo de producto");
+        paramsAlert.put("vista", "/vista/alert_box.fxml");
+        if(insercionCorrectaSQL(rootArray) ) {
+            paramsAlert.put("texto",  "Tipo de producto actualizado, clave: "+Clave.getText());
+            limpiar(null);
+            cargarDatos();
+
+        }
+        else {
+            paramsAlert.put("texto",  "Error al actualizar, clave duplicada");
+
+        }
+        Funciones.display(paramsAlert, this.getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
     }
 
     @FXML
@@ -62,6 +78,21 @@ public class TiposProductos extends Controlador implements Initializable {
         paramsJSON.put("descripcion", Descripcion.getText());
         paramsJSON.put("idClinica", 1);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+
+        Map<String,Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("titulo", "Insertar tipo de producto");
+        paramsAlert.put("vista", "/vista/alert_box.fxml");
+        if(insercionCorrectaSQL(rootArray) ) {
+            paramsAlert.put("texto",  "Tipo de producto insertado, clave: "+Clave.getText());
+            limpiar(null);
+
+        }
+        else {
+            paramsAlert.put("texto",  "Error al insertar, clave duplicada");
+
+        }
+
+        Funciones.display(paramsAlert, this.getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
         cargarDatos();
 
     }
@@ -76,6 +107,20 @@ public class TiposProductos extends Controlador implements Initializable {
 
 
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        Map<String,Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("titulo", "Eliminar tipo de producto");
+        paramsAlert.put("vista", "/vista/alert_box.fxml");
+        if(insercionCorrectaSQL(rootArray) ) {
+            paramsAlert.put("texto",  "Tipo de producto eliminado, clave: "+Clave.getText());
+            limpiar(null);
+
+        }
+        else {
+            paramsAlert.put("texto",  "Error al eliminar, contiene productos");
+
+        }
+
+        Funciones.display(paramsAlert, this.getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
         cargarDatos();
 
 
@@ -90,8 +135,9 @@ public class TiposProductos extends Controlador implements Initializable {
 
     @FXML
     void regresar(ActionEvent event) throws IOException {
-        parametros.remove(0);
-        Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new InicioAdministrador());
+        //parametros.remove(0);
+        //Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new InicioAdministrador());
+        cargarVista(Pane, new InicioAdministrador(), Configuraciones.panelInicial);
     }
 
 
@@ -106,7 +152,9 @@ public class TiposProductos extends Controlador implements Initializable {
         ListaTiposDeProductos.setOnMouseClicked(event -> {
             if(event.getClickCount()==1) {
                 ListaTiposDeProductos.getSelectionModel().getSelectedIndex();
+
                 cargarDatosPantalla(ListaTiposDeProductos.getSelectionModel().getSelectedItem());
+
             }
             else if(event.getClickCount()==2) {
                 try {
@@ -115,6 +163,7 @@ public class TiposProductos extends Controlador implements Initializable {
                     params.put("idTipoProducto", ListaTiposDeProductos.getSelectionModel().getSelectedItem().getIdTipoProducto());
                     params.put("idClinica", ListaTiposDeProductos.getSelectionModel().getSelectedItem().getIdClinica());
                     params.put("vista", "/vista/productos.fxml");
+                    Configuraciones.panelAnterior = "/vista/tipos_productos.fxml";
                     Funciones.CargarVista(Pane, getClass().getResource(params.get("vista").toString()), params, new Productos());
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -151,6 +200,8 @@ public class TiposProductos extends Controlador implements Initializable {
         }
 
         ListaTiposDeProductos.setItems(listaTiposProductos);
+
+
 
     }
 

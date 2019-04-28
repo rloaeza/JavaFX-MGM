@@ -9,14 +9,38 @@ public class Configuraciones {
 
 
     public static String[] formasPago = new String[] {"Efectivo", "Crédito / Débito"};
-    public static int tipoAdministrador = 0;
-    public static int tipoSupervisor = 1;
-    public static int tipoVendedor = 2;
-    public static int tipoCosmeatra = 3;
+    public static final  int  tipoAdministrador = 0;
+    public static final int tipoSupervisor = 1;
+    public static final int tipoVendedor = 2;
+    public static final int tipoCosmeatra = 3;
     public static int tipoUsuarioActivo = -1;
 
     public static int[] tiposUsuarioInt = new int[]{tipoAdministrador, tipoSupervisor, tipoVendedor, tipoCosmeatra};
     public static String[] tiposUsuarios = new String[] {"Administrador", "Supervisor", "Vendedor", "Cosmeatra"};
+
+
+    public static String inicioVendedor = "/vista/inicio_venta.fxml";
+    public static String inicioAdministrador = "/vista/inicio_administrador.fxml";
+
+    public static String panelInicial = "/vista/inicio_resumen.fxml";
+    public static String panelAnterior = "";
+
+
+
+
+    public static String[] motd = new String[]{
+            "Nada es particularmente difícil si lo divides en pequeños trabajos",
+            "La confianza en sí mismo es el primer secreto del éxito",
+            "El triunfo no está en vencer siempre, sino en nunca desanimarse",
+            "El trabajo que nunca se empieza es el que tarda más en finalizarse",
+            "El éxito en la vida consiste en siempre seguir adelante",
+            "Si puedes soñarlo, puedes hacerlo",
+            "El éxito es la suma de pequeños esfuerzos repetidos un día sí y otro también",
+            "Si crees que puedes, ya estás a medio camino"
+    };
+
+
+
 
 
     public static boolean ventaAceptada;

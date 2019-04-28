@@ -71,11 +71,11 @@
                </graphic>
             </Button>
             <Separator orientation="VERTICAL" visible="false" />
-            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#regresar" text="Regresar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#regresar" text="Inicio">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../imgs/regresar.png" />
+                        <Image url="@../imgs/home.png" />
                      </image>
                   </ImageView>
                </graphic>

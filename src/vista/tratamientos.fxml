@@ -15,58 +15,18 @@
 <AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Tratamientos">
    <children>
       <JFXListView fx:id="ListaDeTratamientos" layoutX="7.0" minWidth="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0" />
-      <JFXTextField fx:id="Nombre" layoutX="489.0" layoutY="151.0" onKeyTyped="#capitalizarEntrada" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <JFXTextArea fx:id="Descripcion" layoutX="489.0" layoutY="215.0" onKeyTyped="#capitalizarEntrada" prefHeight="60.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <JFXTextField fx:id="Nombre" layoutX="489.0" layoutY="151.0" onKeyTyped="#capitalizarEntrada" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="151.0" />
+      <JFXTextArea fx:id="Descripcion" layoutX="489.0" layoutY="215.0" onKeyTyped="#capitalizarEntrada" prefHeight="60.0" prefWidth="381.0" AnchorPane.bottomAnchor="275.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
       <Label layoutX="394.0" layoutY="166.0" prefHeight="17.0" prefWidth="73.0" text="Nombre" AnchorPane.leftAnchor="394.0" />
-      <Label layoutX="394.0" layoutY="213.0" text="Descripción" AnchorPane.leftAnchor="394.0" />
+      <Label layoutX="394.0" layoutY="213.0" text="Descripción" AnchorPane.bottomAnchor="320.0" AnchorPane.leftAnchor="394.0" />
       <Label alignment="CENTER" layoutX="357.0" layoutY="58.0" prefHeight="44.0" prefWidth="513.0" text="Tratamientos" textAlignment="CENTER" AnchorPane.leftAnchor="357.0" AnchorPane.rightAnchor="30.0">
          <font>
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0">
+      <HBox alignment="CENTER_RIGHT" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="30.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#limpiar">
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imgs/limpiar.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#agregar">
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imgs/agregar.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#actualizar">
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imgs/actualizar.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#eliminar">
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imgs/eliminar.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#regresar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#regresar" text="Inicio">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -75,11 +35,51 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Separator visible="false" />
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#limpiar" text="Limpiar">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/limpiar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator visible="false" />
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#actualizar" text="Actualizar">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/actualizar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator visible="false" />
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#eliminar" text="Eliminar">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/eliminar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator visible="false" />
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#agregar" text="Guardar">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/agregar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </HBox>
-      <JFXTextField fx:id="Sesiones" layoutX="489.0" layoutY="301.0" prefHeight="27.0" prefWidth="381.0" />
-      <Label layoutX="394.0" layoutY="310.0" prefHeight="17.0" prefWidth="73.0" text="Sesiones" />
-      <JFXTextField fx:id="Caducidad" layoutX="489.0" layoutY="351.0" prefHeight="27.0" prefWidth="381.0" />
-      <Label layoutX="394.0" layoutY="360.0" prefHeight="17.0" prefWidth="73.0" text="Caducidad" />
+      <JFXTextField fx:id="Sesiones" layoutX="489.0" layoutY="301.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.bottomAnchor="222.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <Label layoutX="394.0" layoutY="310.0" prefHeight="17.0" prefWidth="73.0" text="Sesiones" AnchorPane.bottomAnchor="223.0" AnchorPane.leftAnchor="394.0" />
+      <JFXTextField fx:id="Caducidad" layoutX="489.0" layoutY="351.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.bottomAnchor="172.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <Label layoutX="394.0" layoutY="360.0" prefHeight="17.0" prefWidth="73.0" text="Caducidad" AnchorPane.bottomAnchor="173.0" AnchorPane.leftAnchor="394.0" />
    </children>
 </AnchorPane>

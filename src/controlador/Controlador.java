@@ -1,11 +1,16 @@
 package controlador;
 
+import com.google.gson.JsonArray;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import modelo.Configuraciones;
 import modelo.Funciones;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
@@ -33,6 +38,11 @@ public abstract class  Controlador {
 
     }
 
+
+    public void cargarVista(AnchorPane Pane, Controlador controlador, String vista) throws IOException {
+        Pane.getChildren().removeAll();
+        Funciones.CargarVistaAnterior(Pane, getClass().getResource( vista ), controlador );
+    }
 
 
     @FXML
@@ -63,6 +73,14 @@ public abstract class  Controlador {
             jft.positionCaret(jft.getText().length());
         }
 
+    }
+
+    public boolean insercionCorrectaSQL(JsonArray jsonArray) {
+        if(jsonArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            if(jsonArray.get(1).getAsJsonObject().get(Funciones.ultimoInsertado).getAsInt()>0)
+                return true;
+        }
+        return false;
     }
 
     public abstract void init();

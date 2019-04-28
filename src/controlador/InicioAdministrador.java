@@ -26,10 +26,7 @@ import modelo.Personal;
 import java.io.IOException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class InicioAdministrador extends  Controlador implements Initializable {
 
@@ -375,6 +372,32 @@ public class InicioAdministrador extends  Controlador implements Initializable {
 
 
         Timeline tInicio = new Timeline(new KeyFrame(Duration.millis(100), ae -> {
+
+            Calendar c = Calendar.getInstance();
+            int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
+
+            Map<String,Object> paramsAlert = new LinkedHashMap<>();
+            paramsAlert.put("titulo", "Bienvenido");
+            paramsAlert.put("vista", "/vista/alert_box.fxml");
+
+
+            int r = new Random().nextInt(Configuraciones.motd.length);
+            if(timeOfDay >= 0 && timeOfDay < 12){
+                paramsAlert.put("texto", "Buenos dias "+ Configuraciones.nombrePersonal + "\n\n" + Configuraciones.motd[r] );
+            }
+            else if(timeOfDay >= 12 && timeOfDay < 20) {
+                paramsAlert.put("texto", "Buenas tardes " + Configuraciones.nombrePersonal + "\n\n" + Configuraciones.motd[r] );
+            }
+            else if(timeOfDay >= 21 && timeOfDay < 24){
+                paramsAlert.put("texto", "Buenas noches " + Configuraciones.nombrePersonal + "\n\n" + Configuraciones.motd[r] );
+            }
+            try {
+                Funciones.displayFP(paramsAlert, this.getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
+
             if(Configuraciones.tipoUsuarioActivo ==  Configuraciones.tipoVendedor)
             {
 

@@ -24,11 +24,11 @@
       </Label>
       <HBox alignment="CENTER_RIGHT" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="30.0">
          <children>
-            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#regresar" text="Regresar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#regresar" text="Inicio">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../imgs/regresar.png" />
+                        <Image url="@../imgs/home.png" />
                      </image>
                   </ImageView>
                </graphic>

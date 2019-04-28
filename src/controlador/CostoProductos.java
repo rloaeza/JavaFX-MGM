@@ -10,6 +10,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import modelo.Funciones;
 
@@ -39,7 +41,8 @@ public class CostoProductos extends Controlador implements Initializable {
     @FXML
     private JFXListView<modelo.PrecioProductos> ListaDeCostos;
 
-
+    @FXML
+    private ImageView ImagenProducto;
 
     @FXML
     private Label Titulo;
@@ -103,6 +106,11 @@ public class CostoProductos extends Controlador implements Initializable {
     private void cargarDatosPantalla(modelo.Productos p ) {
         Clave.setText(p.getClave());
         Nombre.setText(p.getNombre());
+
+        ImagenProducto.setImage(new Image("imgs/nofotoproducto.png"));
+
+        Image image = new Image(Funciones.sitio+"../fotos/productos/P"+p.getIdProducto()+".JPG");
+        ImagenProducto.setImage(image);
 
         try {
             cargarPrecios(p.getIdProducto());

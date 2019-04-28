@@ -16,6 +16,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
+import modelo.Configuraciones;
 import modelo.Funciones;
 import modelo.SubirFoto;
 
@@ -80,25 +81,36 @@ public class Productos extends Controlador implements Initializable {
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
 
 
-        if(archivoOrigen!=null) {
-            String archivoDestino = "P" + ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto() + ".JPG";
-            SubirFoto subirFoto = new SubirFoto(archivoOrigen.getAbsolutePath(), archivoDestino, "../fotos/productos", "200");
-            subirFoto.setOnRunning(e -> {
-                ImagenScroll.setVisible(true);
-                ImagenProducto.setVisible(false);
-            });
-            subirFoto.setOnSucceeded(e -> {
-                ImagenScroll.setVisible(false);
-                ImagenProducto.setVisible(true);
-            });
-            ExecutorService executorService = Executors.newFixedThreadPool(1);
-            executorService.execute(subirFoto);
-            executorService.shutdown();
+        Map<String,Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("titulo", "Actualizar producto");
+        paramsAlert.put("vista", "/vista/alert_box.fxml");
+
+        if(insercionCorrectaSQL(rootArray) || archivoOrigen!=null) {
+            paramsAlert.put("texto",  "Producto actualizado, clave: "+Clave.getText());
+            if(archivoOrigen!=null) {
+                String archivoDestino = "P" + ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto() + ".JPG";
+                SubirFoto subirFoto = new SubirFoto(archivoOrigen.getAbsolutePath(), archivoDestino, "../fotos/productos", "200");
+                subirFoto.setOnRunning(e -> {
+                    ImagenScroll.setVisible(true);
+                    ImagenProducto.setVisible(false);
+                });
+                subirFoto.setOnSucceeded(e -> {
+                    ImagenScroll.setVisible(false);
+                    ImagenProducto.setVisible(true);
+                });
+                ExecutorService executorService = Executors.newFixedThreadPool(1);
+                executorService.execute(subirFoto);
+                executorService.shutdown();
+            }
+            limpiar(null);
+            cargarDatos();
+        } else {
+            paramsAlert.put("texto",  "Error al actualizar, clave duplicada");
 
         }
+        Funciones.display(paramsAlert, this.getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
 
 
-        cargarDatos();
 
     }
 
@@ -114,10 +126,11 @@ public class Productos extends Controlador implements Initializable {
         paramsJSON.put("idTipoProducto", parametros.get(0).get("idTipoProducto"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
 
+        Map<String,Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("titulo", "Insertar producto");
+        paramsAlert.put("vista", "/vista/alert_box.fxml");
 
-        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
-            //System.out.println(rootArray.get(1).getAsJsonObject().get(Funciones.ultimoInsertado).getAsInt() );
-
+        if(insercionCorrectaSQL(rootArray) ) {
             if(archivoOrigen!=null) {
                 String archivoDestino = "P" + rootArray.get(1).getAsJsonObject().get(Funciones.ultimoInsertado).getAsInt() + ".JPG";
                 SubirFoto subirFoto = new SubirFoto(archivoOrigen.getAbsolutePath(), archivoDestino, "../fotos/productos", "200");
@@ -136,12 +149,16 @@ public class Productos extends Controlador implements Initializable {
             }
 
 
+            paramsAlert.put("texto",  "Producto insertado correctamente, clave: "+Clave.getText());
+            limpiar(null);
+            cargarDatos();
         }
+        else {
+            paramsAlert.put("texto",  "Error al insertar, clave duplicada");
 
+        }
+        Funciones.display(paramsAlert, this.getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
 
-
-
-        cargarDatos();
     }
 
     @FXML
@@ -150,7 +167,21 @@ public class Productos extends Controlador implements Initializable {
         paramsJSON.put("Actividad", "Productos: Eliminar");
         paramsJSON.put("idProducto", ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
-        cargarDatos();
+        Map<String,Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("titulo", "Eliminar producto");
+        paramsAlert.put("vista", "/vista/alert_box.fxml");
+
+        if(insercionCorrectaSQL(rootArray) ) {
+            paramsAlert.put("texto",  "Producto eliminado, clave: "+Clave.getText());
+            limpiar(null);
+            cargarDatos();
+        } else {
+            paramsAlert.put("texto",  "Error al eliminar");
+
+        }
+        Funciones.display(paramsAlert, this.getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
+
+
     }
 
     @FXML
@@ -161,8 +192,9 @@ public class Productos extends Controlador implements Initializable {
 
     @FXML
     void regresar(ActionEvent event) throws IOException {
-        parametros.remove(0);
-        Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new TiposProductos());
+        //parametros.remove(0);
+        //Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new TiposProductos());
+        cargarVista(Pane, new InicioAdministrador(), Configuraciones.panelAnterior);
     }
 
 
@@ -194,7 +226,10 @@ public class Productos extends Controlador implements Initializable {
         Clave.setText(p.getClave());
         Nombre.setText(p.getNombre());
         Descripcion.setText(p.getDescripcion());
-        CantidadMinima.setText(String.valueOf( p.getCantidadMinima() ));
+        if(p.getCantidadMinima()==-1)
+            CantidadMinima.setText("");
+        else
+            CantidadMinima.setText(String.valueOf( p.getCantidadMinima() ));
         BarCode.setText(p.getBarCode());
 
         ImagenProducto.setImage(new Image("imgs/nofotoproducto.png"));

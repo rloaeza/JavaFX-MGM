@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParser;
 import com.zkteco.biometric.FingerprintSensorErrorCode;
 import com.zkteco.biometric.FingerprintSensorEx;
+import controlador.AlertBox;
 import controlador.Controlador;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
@@ -45,6 +46,7 @@ import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Locale;
 import java.util.Map;
 
@@ -583,6 +585,14 @@ public class Funciones {
         Configuraciones.fpActivo = true;
         //System.out.println("Open succ! Finger Image Width:" + Configuraciones.fpWidth + ",Height:" + Configuraciones.fpHeight +"\n");
 
+
+    }
+
+
+
+
+
+    public static void mostrarAlerta(String titulo, String texto ) {
 
     }
 }
