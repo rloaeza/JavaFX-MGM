@@ -2,10 +2,16 @@
 
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+
 <AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.AlmacenEntrada">
    <children>
       <JFXTextField fx:id="Patron" layoutX="103.0" layoutY="81.0" prefHeight="27.0" prefWidth="235.0" />
@@ -22,7 +28,7 @@
       </Label>
       <HBox layoutX="444.0" layoutY="181.0" prefHeight="50.0" prefWidth="426.0" AnchorPane.leftAnchor="444.0" AnchorPane.rightAnchor="30.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#agregar" prefHeight="60.0" prefWidth="1000.0">
+            <Button mnemonicParsing="false" onAction="#agregar" prefHeight="60.0" prefWidth="1000.0" text="Agregar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -33,9 +39,9 @@
             </Button>
          </children>
       </HBox>
-      <VBox layoutX="355.0" layoutY="258.0" prefHeight="272.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="355.0" AnchorPane.rightAnchor="477.0" AnchorPane.topAnchor="258.0">
+      <VBox layoutX="355.0" layoutY="258.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="355.0" AnchorPane.rightAnchor="470.0" AnchorPane.topAnchor="258.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#imprimir">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#imprimir" text="Imprimir">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -45,7 +51,7 @@
                </graphic>
             </Button>
             <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#aceptar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#aceptar" text="Aceptar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -55,17 +61,17 @@
                </graphic>
             </Button>
             <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#eliminar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#eliminar" text="Cancelar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../imgs/eliminar.png" />
+                        <Image url="@../imgs/cancelar.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
             <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#regresar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#regresar" text="Regresar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>

@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import com.jfoenix.controls.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.image.*?>
-<?import javafx.scene.layout.*?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXListView?>
+<?import com.jfoenix.controls.JFXTextField?>
+<?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
-<AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Horarios">
+
+<AnchorPane fx:id="Pane" prefHeight="588.0" prefWidth="903.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Horarios">
    <children>
       <JFXListView fx:id="ListaDeHorarios" layoutX="7.0" minWidth="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0" />
       <Label layoutX="394.0" layoutY="145.0" prefHeight="17.0" prefWidth="73.0" text="Nombre" AnchorPane.leftAnchor="394.0" />
@@ -14,9 +22,19 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <HBox alignment="CENTER" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0">
+      <HBox alignment="CENTER_RIGHT" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="30.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#limpiar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#regresar" text="Regresar">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/regresar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator visible="false" />
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#limpiar" text="Limpiar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -25,18 +43,8 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#agregar">
-               <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imgs/agregar.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#actualizar">
+            <Separator visible="false" />
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#actualizar" text="Actualizar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -45,8 +53,8 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#eliminar">
+            <Separator visible="false" />
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#eliminar" text="Eliminar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -55,12 +63,12 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#regresar">
+            <Separator visible="false" />
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#agregar" text="Guardar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../imgs/regresar.png" />
+                        <Image url="@../imgs/agregar.png" />
                      </image>
                   </ImageView>
                </graphic>
