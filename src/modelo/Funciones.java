@@ -340,7 +340,8 @@ public class Funciones {
         }
     }
     private static void imprimirPDF(PDDocument pdf) throws PrinterException {
-        PDFPrintable printable = new PDFPrintable(pdf, Scaling.SHRINK_TO_FIT);
+        //PDFPrintable printable = new PDFPrintable(pdf, Scaling.SHRINK_TO_FIT);
+        PDFPrintable printable = new PDFPrintable(pdf, Scaling.STRETCH_TO_FIT);
         PrinterJob job = PrinterJob.getPrinterJob();
         job.setPrintable(printable);
         job.print();
