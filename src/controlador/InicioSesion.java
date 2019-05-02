@@ -58,25 +58,41 @@ public class InicioSesion  extends Controlador{
             //Usuario de venta
             if(usuario.getTipo()==Configuraciones.tipoVendedor) {
                 Configuraciones.tipoUsuarioActivo = Configuraciones.tipoVendedor;
-                Map<String,Object> paramsAlert = new LinkedHashMap<>();
-                paramsAlert.put("titulo", "Corte de caja");
+                Configuraciones.cajaAbierta = false;
 
-                paramsAlert.put("vista", "/vista/corte_caja.fxml");
+                params = new LinkedHashMap<>();
+                params.put("Actividad", "CajaCorte: Listar");
+                params.put("idPersonal", Configuraciones.idPersonal);
 
-                Configuraciones.corteCajaValido = false;
-                Configuraciones.abriendoCaja = true;
-                Funciones.display(paramsAlert, getClass().getResource("/vista/corte_caja.fxml"), new CorteCaja() ,762, 418);
-                if(!Configuraciones.corteCajaValido)
-                    return;
-                Configuraciones.cajaAbierta= true;
+                rootArray = Funciones.consultarBD(params);
+                if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+
+                    modelo.CorteCaja corteCaja = new Gson().fromJson(rootArray.get(1).getAsJsonObject(), modelo.CorteCaja.class);
+                    if ( corteCaja.getTipo() == 1) {
+                        Configuraciones.cajaAbierta = true;
+                        Configuraciones.idCaja = corteCaja.getIdCaja();
+                        Configuraciones.aperturaCaja = corteCaja.getMonto();
+                    }
+                }
+                if(Configuraciones.cajaAbierta==false) {
 
 
+                    Map<String, Object> paramsAlert = new LinkedHashMap<>();
+                    paramsAlert.put("titulo", "Corte de caja");
+
+                    paramsAlert.put("vista", "/vista/corte_caja.fxml");
+
+                    Configuraciones.corteCajaValido = false;
+                    Configuraciones.abriendoCaja = true;
+                    Funciones.display(paramsAlert, getClass().getResource("/vista/corte_caja.fxml"), new CorteCaja(), 762, 418);
+                    if (!Configuraciones.corteCajaValido)
+                        return;
+                    Configuraciones.cajaAbierta = true;
+
+                }
 
 
                 Map<String,Object> paramsVista = new LinkedHashMap<>();
-
-
-
                 paramsVista.put("idPersonal", Configuraciones.idPersonal);
                 paramsVista.put("vista", "/vista/inicio_venta.fxml" );
                 Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new InicioAdministrador());
