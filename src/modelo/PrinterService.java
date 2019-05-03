@@ -6,6 +6,7 @@ import java.awt.Graphics2D;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
+import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -79,7 +80,13 @@ public class PrinterService implements Printable {
             Doc doc = new SimpleDoc(bytes, flavor, null);
 
 
+            FileInputStream fin = new FileInputStream("imgs/logo.png");
+            Doc logo = new SimpleDoc(fin, DocFlavor.INPUT_STREAM.PNG, null);
+
+            job.print(logo, null);
+
             job.print(doc, null);
+
 
 
         } catch (Exception e) {
