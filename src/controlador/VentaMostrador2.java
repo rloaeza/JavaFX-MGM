@@ -26,6 +26,7 @@ import javafx.scene.layout.AnchorPane;
 import modelo.*;
 import modelo.VentaMostrador;
 
+import javax.print.DocFlavor;
 import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.lang.reflect.Array;
@@ -390,7 +391,11 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             }
 
             if(existeThermal) {
-                System.out.println(ticketSTR);
+                //System.out.println(ticketSTR);
+
+
+                printerService.printImage(Configuraciones.printerThermal, "/imgs/mgm_t.png", DocFlavor.INPUT_STREAM.PNG);
+
                 printerService.printString(Configuraciones.printerThermal, ticketSTR);
 
                 byte[] cutP = new byte[] { 0x1d, 'V', 1 };

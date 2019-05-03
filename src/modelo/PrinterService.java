@@ -18,6 +18,8 @@ import javax.print.PrintServiceLookup;
 import javax.print.SimpleDoc;
 import javax.print.attribute.HashPrintRequestAttributeSet;
 import javax.print.attribute.PrintRequestAttributeSet;
+import javax.print.event.PrintJobAdapter;
+import javax.print.event.PrintJobEvent;
 
 public class PrinterService implements Printable {
 
@@ -78,16 +80,38 @@ public class PrinterService implements Printable {
             bytes = text.getBytes("CP437");
 
             Doc doc = new SimpleDoc(bytes, flavor, null);
-
-
-            FileInputStream fin = new FileInputStream("imgs/logo.png");
-            Doc logo = new SimpleDoc(fin, DocFlavor.INPUT_STREAM.PNG, null);
-
-            job.print(logo, null);
-
             job.print(doc, null);
 
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
 
+    }
+
+
+    public void printImage(String printerName, String image, DocFlavor.INPUT_STREAM tipo) {
+
+        // find the printService of name printerName
+        DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+        PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
+
+        PrintService printService[] = PrintServiceLookup.lookupPrintServices(
+                flavor, pras);
+        PrintService service = findPrintService(printerName, printService);
+
+        DocPrintJob job = service.createPrintJob();
+
+        try {
+
+            byte[] bytes;
+
+            // important for umlaut chars
+
+            FileInputStream fin = new FileInputStream(getClass().getResource(image).getPath());
+            Doc logo = new SimpleDoc(fin, tipo, null);
+
+            job.print(logo, null);
 
         } catch (Exception e) {
             // TODO Auto-generated catch block
@@ -127,5 +151,47 @@ public class PrinterService implements Printable {
         }
 
         return null;
+    }
+}
+
+class PrintJobWatcher {
+    // true if it is safe to close the print job's input stream
+    boolean done = false;
+
+    public PrintJobWatcher(DocPrintJob job) {
+        // Add a listener to the print job
+        job.addPrintJobListener(new PrintJobAdapter() {
+            public void printJobCanceled(PrintJobEvent pje) {
+                allDone();
+            }
+
+            public void printJobCompleted(PrintJobEvent pje) {
+                allDone();
+            }
+
+            public void printJobFailed(PrintJobEvent pje) {
+                allDone();
+            }
+
+            public void printJobNoMoreEvents(PrintJobEvent pje) {
+                allDone();
+            }
+
+            void allDone() {
+                synchronized (PrintJobWatcher.this) {
+                    done = true;
+                    PrintJobWatcher.this.notify();
+                }
+            }
+        });
+    }
+
+    public synchronized void waitUntilDone() {
+        try {
+            while (!done) {
+                wait();
+            }
+        } catch (InterruptedException e) {
+        }
     }
 }
