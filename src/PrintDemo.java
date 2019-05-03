@@ -8,6 +8,7 @@ import javafx.print.*;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
@@ -27,15 +28,14 @@ public class PrintDemo extends Application {
 
         final TextField urlTextField = new TextField();
         final Button printButton = new Button("Print");
-        final WebView webPage = new WebView();
-        final WebEngine webEngine = webPage.getEngine();
+        final TextArea webPage = new TextArea();
 
         HBox hbox = new HBox();
         hbox.getChildren().addAll(urlTextField, printButton);
         BorderPane borderPane = new BorderPane();
         borderPane.setTop(hbox);
         borderPane.setCenter(webPage);
-        Scene scene = new Scene(borderPane, 300, 250);
+        Scene scene = new Scene(borderPane, 300, 950);
         primaryStage.setTitle("Print Demo");
         primaryStage.setScene(scene);
 
@@ -47,31 +47,20 @@ public class PrintDemo extends Application {
         final BooleanProperty printActionProperty = new SimpleBooleanProperty(false);
         printActionProperty.bind(pageLoadedProperty.and(printButtonClickedProperty));
 
-        // WebEngine updates flag when finished loading web page.
-        webEngine.getLoadWorker()
-                .stateProperty()
-                .addListener( (ChangeListener) (obsValue, oldState, newState) -> {
-                    if (newState == State.SUCCEEDED) {
-                        pageLoadedProperty.set(true);
-                    }
-                });
 
-        // When user enters a url and hits the enter key.
-        urlTextField.setOnAction( aEvent ->  {
-            pageLoadedProperty.set(false);
-            printButtonClickedProperty.set(false);
-            webEngine.load(urlTextField.getText());
-        });
 
         // When the user clicks the print button the webview node is printed
         printButton.setOnAction( aEvent -> {
+            System.out.println("clicando");
             printButtonClickedProperty.set(true);
+            print(webPage);
         });
 
         // Once the print action hears a true go print the WebView node.
         printActionProperty.addListener( (ChangeListener) (obsValue, oldState, newState) -> {
-            if ((boolean)newState) {
-                print(webPage);
+            System.out.println("Imprimiendo");
+            if (((boolean) newState)) {
+                //print(webPage);
             }
         });
 
