@@ -42,6 +42,26 @@ public class Configuraciones {
 
 
 
+    public static String printerThermal = "EC-PM-80360";
+    public static int ticketMaxLinea = 50;
+    public static String ticketTituloClinica =
+                    "MGM \n" +
+                    "RFC: MANL-810923-R37 Calle: Artilleros 1847 #1585 Colonia: Chapultepec Oriente" +
+                    " C.P.: 58260, Tel: 527-25-23";
+
+
+    public static String ticketTituloClinicaThermal =
+            "                    MGM \n" +
+            "         RFC: MANL-810923-R37\n" +
+            "Artilleros 1847 #1585 Col: Chapultepec Oriente\n" +
+            "C.P.: 58260, Tel: 527-25-23\n\n";
+
+    //"12  Crema exfoliante    25   2003";
+    public static int ticketCant = 5;
+    public static int ticketProducto = 20;
+    public static int ticketCU  = 10;
+    public static int ticketTotal = 10;
+
 
     public static boolean ventaAceptada;
 

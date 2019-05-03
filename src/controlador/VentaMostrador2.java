@@ -30,10 +30,8 @@ import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.concurrent.CompletableFuture;
 
 public class VentaMostrador2 extends Controlador implements Initializable {
     private int nVenta=1;
@@ -336,6 +334,9 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
             int ultimoInsertado = rootArray.get(1).getAsJsonObject().get(Funciones.ultimoInsertado).getAsInt();
 
+
+            String ticketSTR=Configuraciones.ticketTituloClinicaThermal+
+                    Funciones.nuevaLinea("Cant", "Producto", "C. U.", "Total");
             for(modelo.VentaMostrador ventaMostrador: listasVentasMostrador.get(nVentaSelect)) {
                 Map<String,Object> paramsJSON2 = new LinkedHashMap<>();
                 paramsJSON2.put("Actividad", "Venta Productos: Agregar detalles");
@@ -352,21 +353,56 @@ public class VentaMostrador2 extends Controlador implements Initializable {
                 strCostosU+=ventaMostrador.getCosto()+"\n";
                 strCostoT+=ventaMostrador.getTotal()+"\n";
 
+                ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" "+ventaMostrador.getCantidad(), ventaMostrador.getProducto(), ventaMostrador.getCosto()+"", ventaMostrador.getTotal()+"");
+
+
+
             }
             valoresPDF.add(new PDFvalores("cantidad", strCantidades));
             valoresPDF.add(new PDFvalores("producto", strProductos));
             valoresPDF.add(new PDFvalores("costounitario", strCostosU));
             valoresPDF.add(new PDFvalores("costo", strCostoT));
 
+            ticketSTR = ticketSTR + "\n\n"+ Funciones.nuevaLinea(CantidadProductos.getText(), "productos", "Total   $", Configuraciones.ventaMostradorTotal+"");
+
+
+            ticketSTR = ticketSTR + "\n\n¡Gracias por su compra!";
+
+
             valoresPDF.add(new PDFvalores("cliente", "Mostrador"));
+            valoresPDF.add(new PDFvalores("clinica", Configuraciones.ticketTituloClinica));
             listasVentasMostrador.get(nVentaSelect).clear();
             calcularTotal();
 
 
             //Funciones.llenarPDF("formatos/venta2.pdf",  valoresPDF, false, "Venta.pdf");
+            //System.out.println(ticketSTR);
 
-            Funciones.llenarPDF("formatos/venta2.pdf",  valoresPDF, true, null);
 
+
+            PrinterService printerService = new PrinterService();
+            List<String> listPrinters = printerService.getPrinters();
+            boolean existeThermal = false;
+            for(String printer : listPrinters) {
+                if( printer.contains(Configuraciones.printerThermal)) {
+                    existeThermal = true;
+                }
+            }
+
+            if(existeThermal) {
+                printerService.printString(Configuraciones.printerThermal, ticketSTR);
+
+                byte[] cutP = new byte[] { 0x1d, 'V', 1 };
+                printerService.printBytes(Configuraciones.printerThermal, cutP);
+
+
+                byte[] openCashDrawer = new byte[] { 27, 112, 48, 55, 121};
+                printerService.printBytes(Configuraciones.printerThermal, openCashDrawer);
+
+            }
+            else {
+                Funciones.llenarPDF("formatos/venta2.pdf", valoresPDF, true, null);
+            }
         }
         pagoValido = false;
 

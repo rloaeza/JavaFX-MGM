@@ -340,8 +340,8 @@ public class Funciones {
         }
     }
     private static void imprimirPDF(PDDocument pdf) throws PrinterException {
-        //PDFPrintable printable = new PDFPrintable(pdf, Scaling.SHRINK_TO_FIT);
-        PDFPrintable printable = new PDFPrintable(pdf, Scaling.STRETCH_TO_FIT);
+        PDFPrintable printable = new PDFPrintable(pdf, Scaling.SHRINK_TO_FIT);
+
 
         PrinterJob job = PrinterJob.getPrinterJob();
         job.setPrintable(printable);
@@ -596,5 +596,22 @@ public class Funciones {
 
     public static void mostrarAlerta(String titulo, String texto ) {
 
+    }
+
+
+
+
+    private static String llenar(String s, int tam) {
+
+        while(s.length()<tam)
+            s = s+ " ";
+        if(s.length()>tam)
+            s = s.substring(0, tam);
+        return s;
+    }
+    public static String nuevaLinea(String cant, String prod, String cu, String tot)  {
+        String nl = "";
+        nl = llenar(cant, Configuraciones.ticketCant)+ llenar(prod, Configuraciones.ticketProducto)+ llenar(cu, Configuraciones.ticketCU)+ llenar(tot, Configuraciones.ticketTotal);
+        return nl;
     }
 }
