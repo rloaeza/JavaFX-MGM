@@ -42,8 +42,8 @@ public class Configuraciones {
 
 
 
-    //public static String printerThermal = "EC-PM-80360";
-    public static String printerThermal = "GP-5890X Series";
+    public static String printerThermal = "EC-PM-80360";
+    //public static String printerThermal = "GP-5890X Series";
     public static int ticketMaxLinea = 50;
     public static String ticketTituloClinica =
                     "MGM \n" +
@@ -51,11 +51,9 @@ public class Configuraciones {
                     " C.P.: 58260, Tel: 527-25-23";
 
 
-    public static String ticketTituloClinicaThermal =
-            "                    MGM \n" +
-            "         RFC: MANL-810923-R37\n" +
-            "Artilleros 1847 #1585 Col: Chapultepec Oriente\n" +
-            "C.P.: 58260, Tel: 527-25-23\n\n";
+    public static String ticketTituloClinicaThermal ="\n"+
+            "                   MGM\n" +
+            "RFC: MANL-810923-R37 Boulevard Adolfo Ruiz Cortines #18 Col. Lomas de Atizapan  CP: 52977 Atizapan Edo de México\n\n";
 
     //"12  Crema exfoliante    25   2003";
     public static int ticketCant = 5;
