@@ -390,6 +390,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             }
 
             if(existeThermal) {
+                System.out.println(ticketSTR);
                 printerService.printString(Configuraciones.printerThermal, ticketSTR);
 
                 byte[] cutP = new byte[] { 0x1d, 'V', 1 };
