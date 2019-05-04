@@ -74,18 +74,13 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     @FXML
     private Label Subtotal;
 
-    @FXML
-    private Label IVA;
+
 
     @FXML
     private Label Total;
 
 
-    @FXML
-    private JFXTextField FormaPagoAuxiliar;
 
-    @FXML
-    private Label FormaPagoRespuesta;
 
     @FXML
     private JFXTabPane Tabs;
@@ -533,6 +528,9 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     void limpiar(ActionEvent event) {
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
         listasVentasMostrador.get(nVentaSelect).clear();
+        ListaDeClientes.getSelectionModel().clearSelection();
+        listasVentaCliente.set(nVentaSelect,-1);
+        actualizarCliente();
         calcularTotal();
     }
 
