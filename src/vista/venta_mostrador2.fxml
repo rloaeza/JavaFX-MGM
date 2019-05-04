@@ -13,12 +13,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="Pane" prefHeight="617.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentaMostrador2">
+<AnchorPane fx:id="Pane" prefHeight="617.0" prefWidth="1163.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentaMostrador2">
    <children>
       <JFXTabPane fx:id="Tabs" layoutX="60.0" layoutY="210.0" onMouseClicked="#TabCambiando" prefHeight="306.0" prefWidth="802.0" AnchorPane.bottomAnchor="120.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="210.0" />
-      <JFXListView fx:id="ListaDeProductos" layoutX="59.0" layoutY="68.0" onKeyReleased="#agregar_quitar" prefHeight="109.0" prefWidth="682.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="158.0" />
-      <JFXTextField fx:id="Busqueda" alignment="CENTER" layoutX="59.0" layoutY="29.0" onAction="#insertar" prefHeight="27.0" prefWidth="551.0" promptText="Clave o código de producto" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="289.0" />
-      <JFXTextField fx:id="Cantidad" alignment="CENTER" layoutX="628.0" layoutY="29.0" prefHeight="27.0" prefWidth="114.0" promptText="1" AnchorPane.rightAnchor="158.0" />
+      <JFXListView fx:id="ListaDeProductos" layoutX="59.0" layoutY="68.0" onKeyReleased="#agregar_quitar" prefHeight="109.0" prefWidth="551.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="552.0" />
+      <JFXTextField fx:id="Busqueda" alignment="CENTER" layoutX="59.0" layoutY="29.0" onAction="#insertar" prefHeight="27.0" prefWidth="418.0" promptText="Clave o código de producto" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="685.0" />
+      <JFXTextField fx:id="Cantidad" alignment="CENTER" layoutX="493.0" layoutY="29.0" prefHeight="27.0" prefWidth="116.0" promptText="1" AnchorPane.rightAnchor="554.0" />
       <Label alignment="CENTER_RIGHT" layoutX="676.0" layoutY="590.0" prefHeight="17.0" prefWidth="104.0" text="Total:" AnchorPane.bottomAnchor="25.0" AnchorPane.rightAnchor="200.0">
          <font>
             <Font name="System Bold" size="24.0" />
@@ -74,7 +74,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#eliminar" text="Limpiar venta" textAlignment="CENTER" wrapText="true">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#eliminar" text="Quitar producto" textAlignment="CENTER" wrapText="true">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -85,5 +85,7 @@
             </Button>
          </children>
       </HBox>
+      <JFXTextField fx:id="BusquedaCliente" alignment="CENTER" layoutX="643.0" layoutY="29.0" onKeyReleased="#seleccionarPersonal" prefHeight="27.0" prefWidth="385.0" promptText="Mostrador" AnchorPane.rightAnchor="135.0" />
+      <JFXListView fx:id="ListaDeClientes" layoutX="643.0" layoutY="72.0" prefHeight="109.0" prefWidth="385.0" AnchorPane.rightAnchor="135.0" />
    </children>
 </AnchorPane>

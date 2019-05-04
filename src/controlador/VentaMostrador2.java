@@ -24,6 +24,8 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import modelo.*;
+import modelo.Pacientes;
+import modelo.Personal;
 import modelo.VentaMostrador;
 
 import javax.print.DocFlavor;
@@ -40,6 +42,8 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     private boolean pagoValido=false;
     private double ventaMostradorActual = -1;
 
+    private ObservableList<Pacientes> listaDeClientes, listaDeClientesFiltrada;
+
     @FXML
     private AnchorPane Pane;
 
@@ -47,11 +51,19 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     private ArrayList<ObservableList<VentaMostrador>> listasVentasMostrador = new ArrayList<>();
 
+    private ArrayList<Integer> listasVentaCliente = new ArrayList<>();
+
     @FXML
     private JFXListView<ProductosConCosto> ListaDeProductos;
 
     @FXML
+    private JFXListView<Pacientes> ListaDeClientes;
+
+    @FXML
     private JFXTextField Busqueda;
+
+    @FXML
+    private JFXTextField BusquedaCliente;
 
     @FXML
     private JFXTextField Cantidad;
@@ -82,8 +94,32 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     void TabCambiando(MouseEvent event) {
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
         calcularTotal();
+        actualizarCliente();
+
+
     }
 
+    private void actualizarCliente() {
+        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+        BusquedaCliente.setText("");
+        ListaDeClientes.setItems(listaDeClientes);
+        ListaDeClientes.getSelectionModel().clearSelection();
+
+        if(listasVentaCliente.get(nVentaSelect)==-1) {
+            BusquedaCliente.setText("");
+            ListaDeClientes.getSelectionModel().clearSelection();
+            return;
+        }else {
+            for(int index=0; index<ListaDeClientes.getItems().size(); index++) {
+                if(listasVentaCliente.get(nVentaSelect)== ListaDeClientes.getItems().get(index).getIdPaciente()) {
+                    ListaDeClientes.getSelectionModel().select(index);
+
+                    return;
+                }
+            }
+        }
+
+    }
 
     @FXML
     void agregarTab(ActionEvent event) {
@@ -94,11 +130,13 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
         TablasVentas.add(cargarTabla(new JFXTreeTableView<>() ));
 
+        listasVentaCliente.add(-1);
         tab.setContent(TablasVentas.get(TablasVentas.size()-1));
 
         Tabs.getTabs().add(tab);
         Tabs.getSelectionModel().select(Tabs.getTabs().size()-1);
         calcularTotal();
+        actualizarCliente();
 
 
     }
@@ -215,12 +253,16 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         int index = Tabs.getSelectionModel().getSelectedIndex();
         Tabs.getTabs().remove(index);
         listasVentasMostrador.remove(index);
+        TablasVentas.remove(index);
+        listasVentaCliente.remove(index);
+
         nVenta--;
         if(nVenta==1) {
             agregarTab(null);
         }
 
         calcularTotal();
+        actualizarCliente();
 
 
 
@@ -242,12 +284,39 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
 
+    @FXML
+    void seleccionarPersonal(KeyEvent event) {
+        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
 
+        listaDeClientesFiltrada = FXCollections.observableArrayList();
+        if(BusquedaCliente.getText().isEmpty()) {
+            ListaDeClientes.setItems(listaDeClientes);
+            ListaDeClientes.getSelectionModel().clearSelection();
+            listasVentaCliente.set(nVentaSelect, -1);
+            return;
+        }
+        String patron = BusquedaCliente.getText().toUpperCase();
+        for(Pacientes p : listaDeClientes) {
+            if(p.getNombre().toUpperCase().contains(patron) || p.getApellidos().toUpperCase().contains(patron) )
+            {
+                listaDeClientesFiltrada.add(p);
+
+
+            }
+        }
+        ListaDeClientes.setItems(listaDeClientesFiltrada);
+        if(listaDeClientesFiltrada.size()>0) {
+            ListaDeClientes.getSelectionModel().select(0);
+            listasVentaCliente.set(nVentaSelect, listaDeClientesFiltrada.get(0).getIdPaciente() );
+        }
+
+    }
 
     @Override
     public void init() {
         try {
             cargarDatos("");
+            cargarClientes("");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -259,6 +328,15 @@ public class VentaMostrador2 extends Controlador implements Initializable {
                 agregarProducto(ListaDeProductos.getSelectionModel().getSelectedItem());
             }
         });
+
+        ListaDeClientes.setOnMouseClicked(event -> {
+            if (event.getClickCount() == 1) {
+                nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+                listasVentaCliente.set(nVentaSelect, ListaDeClientes.getSelectionModel().getSelectedItem().getIdPaciente());
+            }
+        });
+
+
 
 
 
@@ -311,7 +389,14 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
 
+        String cliente="Mostrador";
 
+        if( ListaDeClientes.getSelectionModel().getSelectedIndex()!=1) {
+
+
+            Pacientes p = ListaDeClientes.getSelectionModel().getSelectedItem();
+            cliente = p.getApellidos()+", "+p.getNombre();
+        }
 
 
         ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
@@ -337,6 +422,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
             String ticketSTR=Configuraciones.ticketTituloClinicaThermal+
+                    "Cliente: "+cliente+"\n\n"+
                     Funciones.nuevaLinea("Cant", "Producto", "C. U.", "Total");
             for(modelo.VentaMostrador ventaMostrador: listasVentasMostrador.get(nVentaSelect)) {
                 Map<String,Object> paramsJSON2 = new LinkedHashMap<>();
@@ -370,12 +456,14 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             ticketSTR = ticketSTR + "\n\n¡Gracias por su compra!\n\n\n\n\n\n\n\n\n";
 
 
-            valoresPDF.add(new PDFvalores("cliente", "Mostrador"));
+            valoresPDF.add(new PDFvalores("cliente", cliente));
             valoresPDF.add(new PDFvalores("clinica", Configuraciones.ticketTituloClinica));
             listasVentasMostrador.get(nVentaSelect).clear();
             calcularTotal();
 
 
+            BusquedaCliente.setText("");
+            seleccionarPersonal(null);
             //Funciones.llenarPDF("formatos/venta2.pdf",  valoresPDF, false, "Venta.pdf");
             //System.out.println(ticketSTR);
 
@@ -409,6 +497,9 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             else {
                 Funciones.llenarPDF("formatos/venta2.pdf", valoresPDF, true, null);
             }
+
+
+
         }
         pagoValido = false;
 
@@ -429,10 +520,8 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     @FXML
     void eliminar(ActionEvent event) {
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
-        System.out.println("tab="+nVentaSelect+", fila="+TablasVentas.get(nVentaSelect).getSelectionModel().getSelectedIndex());
+        //System.out.println("tab="+nVentaSelect+", fila="+TablasVentas.get(nVentaSelect).getSelectionModel().getSelectedIndex());
         if(!TablasVentas.get(nVentaSelect).getSelectionModel().isEmpty()) {
-
-
             listasVentasMostrador.get(nVentaSelect).remove(TablasVentas.get(nVentaSelect).getSelectionModel().getSelectedIndex());
             TablasVentas.get(nVentaSelect).getSelectionModel().clearSelection();
             calcularTotal();
@@ -474,6 +563,27 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         ListaDeProductos.setItems(listaDeProductos);
 
     }
+
+    private void cargarClientes(String patron) throws IOException {
+
+        listaDeClientes = FXCollections.observableArrayList();
+
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Pacientes: Lista con patron");
+        paramsJSON.put("patron", patron);
+        paramsJSON.put("idClinica", Configuraciones.idClinica);
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            int t = rootArray.size();
+            for(int i = 1; i< t; i++) {
+                listaDeClientes.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), Pacientes.class) );
+            }
+        }
+
+        ListaDeClientes.setItems(listaDeClientes);
+
+    }
+
 
     private void calcularTotal() {
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
