@@ -61,29 +61,18 @@ public class PrinterService implements Printable {
     }
 
     public void printString(String printerName, String text) {
-
-        // find the printService of name printerName
         DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
         PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-
-        PrintService printService[] = PrintServiceLookup.lookupPrintServices(
-                flavor, pras);
+        PrintService printService[] = PrintServiceLookup.lookupPrintServices(flavor, pras);
         PrintService service = findPrintService(printerName, printService);
-
         DocPrintJob job = service.createPrintJob();
-
         try {
-
             byte[] bytes;
-
-            // important for umlaut chars
             bytes = text.getBytes("CP437");
-
             Doc doc = new SimpleDoc(bytes, flavor, null);
             job.print(doc, null);
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
@@ -91,30 +80,17 @@ public class PrinterService implements Printable {
 
 
     public void printImage(String printerName, String image, DocFlavor.INPUT_STREAM tipo) {
-
-        // find the printService of name printerName
         DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
         PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-
-        PrintService printService[] = PrintServiceLookup.lookupPrintServices(
-                flavor, pras);
+        PrintService printService[] = PrintServiceLookup.lookupPrintServices(flavor, pras);
         PrintService service = findPrintService(printerName, printService);
-
         DocPrintJob job = service.createPrintJob();
 
         try {
-
-            byte[] bytes;
-
-            // important for umlaut chars
-
             FileInputStream fin = new FileInputStream(getClass().getResource(image).getPath());
             Doc logo = new SimpleDoc(fin, tipo, null);
-
             job.print(logo, null);
-
         } catch (Exception e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
 
