@@ -25,16 +25,13 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import modelo.*;
 import modelo.Pacientes;
-import modelo.Personal;
 import modelo.VentaMostrador;
 
 import javax.print.DocFlavor;
 import java.awt.print.PrinterException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.*;
-import java.util.concurrent.CompletableFuture;
 
 public class VentaMostrador2 extends Controlador implements Initializable {
     private int nVenta=1;
@@ -78,8 +75,6 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     @FXML
     private Label Total;
-
-
 
 
     @FXML
@@ -351,9 +346,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
                 try {
                     aceptarVenta(null);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (PrinterException e) {
+                } catch (IOException | PrinterException e) {
                     e.printStackTrace();
                 }
             }
@@ -375,7 +368,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         paramsAlert.put("vista", "/vista/forma_pago.fxml");
         Configuraciones.ventaAceptada=false;
 
-        Configuraciones.formaPagoMonto =Double.valueOf(Configuraciones.ventaMostradorTotal);
+        Configuraciones.formaPagoMonto = Configuraciones.ventaMostradorTotal;
         Funciones.display(paramsAlert, getClass().getResource("/vista/forma_pago.fxml"), new FormaPago() ,818, 311);
 
         if(!Configuraciones.ventaAceptada)
