@@ -42,8 +42,13 @@ public class Configuraciones {
 
 
 
-    public static String printerThermal = "EC-PM-80360";
-    //public static String printerThermal = "GP-5890X Series";
+    //public static String impresoraTicket = "EC-PM-80360";
+    public static String impresoraTicket = "";
+    public static String impresoraReporte= "";
+
+
+
+    //public static String impresoraTicket = "GP-5890X Series";
     public static int ticketMaxLinea = 50;
     public static String ticketTituloClinica =
                     "MGM \n" +

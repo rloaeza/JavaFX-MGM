@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.control.Button?>
@@ -14,9 +15,9 @@
 <AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Cajas">
    <children>
       <JFXListView fx:id="ListaDeCajas" layoutX="7.0" minWidth="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0" />
-      <JFXTextField fx:id="Caja" layoutX="489.0" layoutY="194.0" onKeyTyped="#capitalizarEntrada" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <JFXTextField fx:id="Descripcion" layoutX="489.0" layoutY="274.0" onKeyTyped="#capitalizarEntrada" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
-      <Label layoutX="394.0" layoutY="213.0" prefHeight="17.0" prefWidth="73.0" text="Caja" AnchorPane.leftAnchor="394.0" />
+      <JFXTextField fx:id="Caja" layoutX="489.0" layoutY="117.0" onKeyTyped="#capitalizarEntrada" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="550.0" AnchorPane.rightAnchor="30.0" />
+      <JFXTextField fx:id="Descripcion" layoutX="489.0" layoutY="274.0" onKeyTyped="#capitalizarEntrada" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="550.0" AnchorPane.rightAnchor="30.0" />
+      <Label layoutX="394.0" layoutY="136.0" prefHeight="17.0" prefWidth="73.0" text="Caja" AnchorPane.leftAnchor="394.0" />
       <Label layoutX="394.0" layoutY="289.0" prefHeight="17.0" prefWidth="73.0" text="Descripcion" AnchorPane.leftAnchor="394.0" />
       <Label alignment="CENTER" layoutX="489.0" layoutY="58.0" prefHeight="44.0" prefWidth="381.0" text="Cajas" textAlignment="CENTER" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0">
          <font>
@@ -76,5 +77,9 @@
             </Button>
          </children>
       </HBox>
+      <Label layoutX="394.0" layoutY="181.0" prefHeight="17.0" prefWidth="137.0" text="Impresora Tickets" />
+      <Label layoutX="394.0" layoutY="232.0" prefHeight="17.0" prefWidth="137.0" text="Impresora Reportes" />
+      <JFXComboBox fx:id="Impresora1" layoutX="550.0" layoutY="168.0" prefHeight="27.0" prefWidth="320.0" AnchorPane.leftAnchor="550.0" AnchorPane.rightAnchor="30.0" />
+      <JFXComboBox fx:id="Impresora2" layoutX="550.0" layoutY="219.0" prefHeight="27.0" prefWidth="320.0" AnchorPane.leftAnchor="550.0" AnchorPane.rightAnchor="30.0" />
    </children>
 </AnchorPane>

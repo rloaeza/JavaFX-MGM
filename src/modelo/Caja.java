@@ -6,13 +6,33 @@ public class Caja {
     private String descripcion;
     private double monto;
     private boolean abierto;
+    private String impresoraTicket;
+    private String impresoraReporte;
 
-    public Caja(int idCaja, String nombre, String descripcion, double monto, boolean abierto) {
+    public Caja(int idCaja, String nombre, String descripcion, double monto, boolean abierto, String impresoraTicket, String impresoraReporte) {
         this.idCaja = idCaja;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.monto = monto;
         this.abierto = abierto;
+        this.impresoraTicket = impresoraTicket;
+        this.impresoraReporte = impresoraReporte;
+    }
+
+    public String getImpresoraTicket() {
+        return impresoraTicket;
+    }
+
+    public void setImpresoraTicket(String impresoraTicket) {
+        this.impresoraTicket = impresoraTicket;
+    }
+
+    public String getImpresoraReporte() {
+        return impresoraReporte;
+    }
+
+    public void setImpresoraReporte(String impresoraReporte) {
+        this.impresoraReporte = impresoraReporte;
     }
 
     public int getIdCaja() {

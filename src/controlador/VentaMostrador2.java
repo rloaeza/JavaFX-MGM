@@ -459,9 +459,10 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
             PrinterService printerService = new PrinterService();
             List<String> listPrinters = printerService.getPrinters();
+
             boolean existeThermal = false;
             for(String printer : listPrinters) {
-                if( printer.contains(Configuraciones.printerThermal)) {
+                if( printer.contains(Configuraciones.impresoraTicket)) {
                     existeThermal = true;
                 }
             }
@@ -470,16 +471,16 @@ public class VentaMostrador2 extends Controlador implements Initializable {
                 //System.out.println(ticketSTR);
 
 
-                printerService.printImage(Configuraciones.printerThermal, "/imgs/mgm_t.png", DocFlavor.INPUT_STREAM.PNG);
+                printerService.printImage(Configuraciones.impresoraTicket, "formatos/mgm_t.png", DocFlavor.INPUT_STREAM.PNG);
 
-                printerService.printString(Configuraciones.printerThermal, ticketSTR);
+                printerService.printString(Configuraciones.impresoraTicket, ticketSTR);
 
                 byte[] cutP = new byte[] { 0x1d, 'V', 1 };
-                printerService.printBytes(Configuraciones.printerThermal, cutP);
+                printerService.printBytes(Configuraciones.impresoraTicket, cutP);
 
 
                 byte[] openCashDrawer = new byte[] { 27, 112, 48, 55, 121};
-                printerService.printBytes(Configuraciones.printerThermal, openCashDrawer);
+                printerService.printBytes(Configuraciones.impresoraTicket, openCashDrawer);
 
             }
             else {

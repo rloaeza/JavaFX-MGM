@@ -101,6 +101,9 @@ public class CorteCaja extends Controlador implements Initializable {
 
             Configuraciones.corteCajaValido = true;
 
+            Configuraciones.impresoraTicket = CBCajas.getSelectionModel().getSelectedItem().getImpresoraTicket();
+            Configuraciones.impresoraReporte = CBCajas.getSelectionModel().getSelectedItem().getImpresoraReporte();
+
             cerrar();
         }
         Error.setVisible(false);

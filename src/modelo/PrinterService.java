@@ -87,7 +87,7 @@ public class PrinterService implements Printable {
         DocPrintJob job = service.createPrintJob();
 
         try {
-            FileInputStream fin = new FileInputStream(getClass().getResource(image).getPath());
+            FileInputStream fin = new FileInputStream(image);
             Doc logo = new SimpleDoc(fin, tipo, null);
             job.print(logo, null);
         } catch (Exception e) {
