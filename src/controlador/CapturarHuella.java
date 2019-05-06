@@ -36,7 +36,7 @@ public class CapturarHuella extends Controlador {
     @FXML
     void aceptar(ActionEvent event) {
 
-        Configuraciones.fpSTR="adsfasd213nkl123nkl12mdsamk";
+        Configuraciones.fpSTR=huella;
         cerrar();
     }
 
@@ -51,7 +51,10 @@ public class CapturarHuella extends Controlador {
         if(!Configuraciones.fpActivo)
             Funciones.inicializarFP();
         t.play();
+        Huella.setImage(new Image("imgs/fp0.jpg"));
+        huella = "";
         capturas = 0;
+        Mensaje.setText(Configuraciones.fpColocarDedo);
     }
 
     @FXML
@@ -75,8 +78,10 @@ public class CapturarHuella extends Controlador {
                 huella = Base64.getEncoder().encodeToString(Configuraciones.template);
 
                 capturas++;
-                if(capturas==1)
-                    Huella.setImage(new Image("imgs/fp1.jpg"));
+                if(capturas==1) {
+                    Huella.setImage(new Image("imgs/fp3.jpg"));
+                    Mensaje.setText("");
+                }
                 t.stop();
             }
 

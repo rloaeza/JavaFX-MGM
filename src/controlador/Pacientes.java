@@ -114,6 +114,7 @@ public class Pacientes extends Controlador implements Initializable {
             huellas[id] = "";
         } else if(!Configuraciones.fpSTR.isEmpty()) {
             huellas[id] = Configuraciones.fpSTR;
+            System.out.println(huellas[id]);
         }
 
 

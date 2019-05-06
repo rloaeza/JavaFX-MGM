@@ -135,6 +135,7 @@ public class Configuraciones {
 
     public static String fpSTR;
     public static String fpEliminar = "ELIMINAR";
+    public static String fpColocarDedo = "Coloque el dedo en el sensor";
 
 
 }
