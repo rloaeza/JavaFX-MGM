@@ -95,32 +95,21 @@ public class Pacientes extends Controlador implements Initializable {
         Configuraciones.fpSTR = huellas[id];
 
         //cargar huella
-
-
         Map<String, Object> paramsAlert = new LinkedHashMap<>();
         paramsAlert.put("titulo", "Capturar Huella");
-
         paramsAlert.put("vista", "/vista/capturar_huella.fxml");
-
         try {
             Funciones.display(paramsAlert, getClass().getResource("/vista/capturar_huella.fxml"), new CapturarHuella(), 762, 418);
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-
         // huella cargada
         if(Configuraciones.fpSTR.equalsIgnoreCase(Configuraciones.fpEliminar)) {
             huellas[id] = "";
         } else if(!Configuraciones.fpSTR.isEmpty()) {
             huellas[id] = Configuraciones.fpSTR;
-            System.out.println(huellas[id]);
         }
-
-
-
-
-
         //Fijar imagen
         if(huellas[id].isEmpty()) {
             imageView.setImage(new Image("imgs/fps0.png"));
@@ -151,6 +140,7 @@ public class Pacientes extends Controlador implements Initializable {
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
+        limpiar(null);
     }
 
     @FXML
@@ -173,6 +163,7 @@ public class Pacientes extends Controlador implements Initializable {
         //System.out.println(paramsJSON.toString());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
+        limpiar(null);
     }
 
     @FXML
@@ -182,6 +173,7 @@ public class Pacientes extends Controlador implements Initializable {
         paramsJSON.put("idPaciente", ListaDePacientes.getSelectionModel().getSelectedItem().getIdPaciente());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
+        limpiar(null);
     }
 
     @FXML
@@ -214,9 +206,9 @@ public class Pacientes extends Controlador implements Initializable {
 
     private void cargarImagen(String huella, ImageView imageView) {
         if(huella.isEmpty())
-            imageView.setImage(new Image("imgs/fps0"));
+            imageView.setImage(new Image("imgs/fps0.png"));
         else
-            imageView.setImage(new Image("imgs/fps1"));
+            imageView.setImage(new Image("imgs/fps1.png"));
     }
     private void cargarDatos() throws IOException {
 
