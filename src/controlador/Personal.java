@@ -15,6 +15,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.InputMethodEvent;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -60,12 +62,75 @@ public class Personal extends Controlador implements Initializable {
     private JFXPasswordField Clave;
 
     @FXML
-    private JFXTextField Huella;
+    private ImageView FP0;
+
+    @FXML
+    private ImageView FP1;
+
+    @FXML
+    private ImageView FP2;
+
+    @FXML
+    private ImageView FP3;
+
+    @FXML
+    private ImageView FP4;
 
 
     @FXML
     private JFXComboBox<String> TipoUsuario;
 
+
+    private String[] huellas = new String[]{"","","","",""};
+
+
+    @FXML
+    void capturarHuella0(ActionEvent event) {
+        capturarHuella(0, FP0);
+    }
+    @FXML
+    void capturarHuella1(ActionEvent event) {
+        capturarHuella(1, FP1);
+    }
+    @FXML
+    void capturarHuella2(ActionEvent event) {
+        capturarHuella(2, FP2);
+    }
+    @FXML
+    void capturarHuella3(ActionEvent event) {
+        capturarHuella(3, FP3);
+    }
+    @FXML
+    void capturarHuella4(ActionEvent event) {
+        capturarHuella(4, FP4);
+    }
+    private void capturarHuella(int id, ImageView imageView) {
+
+        Configuraciones.fpSTR = huellas[id];
+
+        //cargar huella
+        Map<String, Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("titulo", "Capturar Huella");
+        paramsAlert.put("vista", "/vista/capturar_huella.fxml");
+        try {
+            Funciones.display(paramsAlert, getClass().getResource("/vista/capturar_huella.fxml"), new CapturarHuella(), 762, 418);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // huella cargada
+        if(Configuraciones.fpSTR.equalsIgnoreCase(Configuraciones.fpEliminar)) {
+            huellas[id] = "";
+        } else if(!Configuraciones.fpSTR.isEmpty()) {
+            huellas[id] = Configuraciones.fpSTR;
+        }
+        //Fijar imagen
+        if(huellas[id].isEmpty()) {
+            imageView.setImage(new Image("imgs/fps0.png"));
+        }else {
+            imageView.setImage(new Image("imgs/fps1.png"));
+        }
+    }
 
     @FXML
     void actualizar(ActionEvent event) throws IOException {
@@ -80,7 +145,11 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("movil", Celular.getText());
         paramsJSON.put("usuario", Usuario.getText());
         paramsJSON.put("clave", Clave.getText());
-        paramsJSON.put("huella", Huella.getText());
+        paramsJSON.put("huella0", huellas[0]);
+        paramsJSON.put("huella1", huellas[1]);
+        paramsJSON.put("huella2", huellas[2]);
+        paramsJSON.put("huella3", huellas[3]);
+        paramsJSON.put("huella4", huellas[4]);
         paramsJSON.put("tipo", TipoUsuario.getSelectionModel().getSelectedIndex());
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
@@ -100,7 +169,11 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("movil", Celular.getText());
         paramsJSON.put("usuario", Usuario.getText());
         paramsJSON.put("clave", Clave.getText());
-        paramsJSON.put("huella", Huella.getText());
+        paramsJSON.put("huella0", huellas[0]);
+        paramsJSON.put("huella1", huellas[1]);
+        paramsJSON.put("huella2", huellas[2]);
+        paramsJSON.put("huella3", huellas[3]);
+        paramsJSON.put("huella4", huellas[4]);
         paramsJSON.put("tipo", TipoUsuario.getSelectionModel().getSelectedIndex());
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
@@ -120,7 +193,7 @@ public class Personal extends Controlador implements Initializable {
 
     @FXML
     void limpiar(ActionEvent event) {
-        cargarDatosPantalla(new modelo.Personal(-1, "", "","","","","","","",-1,-1 ));
+        cargarDatosPantalla(new modelo.Personal(-1, "", "","","","","","","","","","","",-1,-1 ));
         ListaDePersonal.getSelectionModel().clearSelection();
     }
 
@@ -144,9 +217,18 @@ public class Personal extends Controlador implements Initializable {
         Usuario.setText(p.getUsuario());
         Clave.setText(p.getClave());
         TipoUsuario.getSelectionModel().select(p.getTipo());
-        Huella.setText(p.getHuella());
+        cargarImagen(p.getHuella0(), FP0);
+        cargarImagen(p.getHuella1(), FP1);
+        cargarImagen(p.getHuella2(), FP2);
+        cargarImagen(p.getHuella3(), FP3);
+        cargarImagen(p.getHuella4(), FP4);
     }
-
+    private void cargarImagen(String huella, ImageView imageView) {
+        if(huella.isEmpty())
+            imageView.setImage(new Image("imgs/fps0.png"));
+        else
+            imageView.setImage(new Image("imgs/fps1.png"));
+    }
     private void cargarDatos() throws IOException {
 
         ObservableList<modelo.Personal> listaPersonal = FXCollections.observableArrayList();
@@ -173,25 +255,6 @@ public class Personal extends Controlador implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-        Funciones.inicializarFP();
-
-        Timeline t2 = new Timeline(new KeyFrame(Duration.millis(1000), ae -> {
-
-            if(!Configuraciones.fpActivo)
-                return;
-
-            Configuraciones.templateLen[0] = 2048;
-
-            if (0 == (Configuraciones.ret = FingerprintSensorEx.AcquireFingerprint(Configuraciones.mhDevice, Configuraciones.imgbuf, Configuraciones.template, Configuraciones.templateLen))) {
-
-                Huella.setText(Base64.getEncoder().encodeToString(Configuraciones.template));
-            }
-
-
-        } ));
-        t2.setCycleCount(Animation.INDEFINITE);
-        t2.play();
     }
 
     @Override
