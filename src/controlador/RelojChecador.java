@@ -36,6 +36,9 @@ public class RelojChecador extends Controlador implements Initializable {
 
     ObservableList<Personal> listaPersonal;
 
+    ArrayList<Integer> idHuellas = new ArrayList<>();
+    private int fid;
+
 
 
     @FXML
@@ -106,16 +109,36 @@ public class RelojChecador extends Controlador implements Initializable {
         }
 
         if(Configuraciones.fpActivo) {
-            int fid = 0;
+            fid = 0;
+            int idLista=0;
             for (Personal p : listaPersonal) {
+  /*
                 byte[] b = new byte[2048];
-                b = Base64.getDecoder().decode(p.getHuella());
+
+                b = Base64.getDecoder().decode(p.getHuella0());
                 FingerprintSensorEx.DBAdd(Configuraciones.mhDB, fid++, b);
+                idHuellas.add(p.getIdPersonal());
+*/
+                agregarHuella(p.getHuella0(), idLista);
+                agregarHuella(p.getHuella1(), idLista);
+                agregarHuella(p.getHuella2(), idLista);
+                agregarHuella(p.getHuella3(), idLista);
+                agregarHuella(p.getHuella4(), idLista);
+
+                idLista++;
+
+
 
             }
         }
     }
 
+    private void agregarHuella(String huella, int idLista) {
+        if(!huella.isEmpty()) {
+            FingerprintSensorEx.DBAdd(Configuraciones.mhDB, fid++, Base64.getDecoder().decode(huella));
+            idHuellas.add(idLista);
+        }
+    }
 
 
 

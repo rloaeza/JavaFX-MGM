@@ -9,7 +9,7 @@ public class Personal {
     private String movil;
     private String usuario;
     private String clave;
-    private String huella;
+
     private String huella0;
     private String huella1;
     private String huella2;
@@ -128,13 +128,7 @@ public class Personal {
     public void setTipo(int tipo) {
         this.tipo = tipo;
     }
-    public String getHuella() {
-        return huella;
-    }
 
-    public void setHuella(String huella) {
-        this.huella = huella;
-    }
 
     public String getHuella0() {
         return huella0;
