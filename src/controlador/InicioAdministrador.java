@@ -388,7 +388,7 @@ public class InicioAdministrador extends  Controlador implements Initializable {
             else if(timeOfDay >= 12 && timeOfDay < 20) {
                 paramsAlert.put("texto", "Buenas tardes " + Configuraciones.nombrePersonal + "\n\n" + Configuraciones.motd[r] );
             }
-            else if(timeOfDay >= 21 && timeOfDay < 24){
+            else if(timeOfDay >= 20 && timeOfDay < 24){
                 paramsAlert.put("texto", "Buenas noches " + Configuraciones.nombrePersonal + "\n\n" + Configuraciones.motd[r] );
             }
             try {

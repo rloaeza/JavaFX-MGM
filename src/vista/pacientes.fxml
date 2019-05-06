@@ -85,7 +85,59 @@
             </Button>
          </children>
       </HBox>
-      <Label layoutX="397.0" layoutY="390.0" prefHeight="17.0" prefWidth="73.0" text="Huella" AnchorPane.leftAnchor="394.0" />
-      <JFXPasswordField fx:id="Huella" layoutX="492.0" layoutY="379.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="492.0" AnchorPane.rightAnchor="27.0" />
+      <Label layoutX="397.0" layoutY="390.0" prefHeight="17.0" prefWidth="73.0" text="Huellas" AnchorPane.leftAnchor="394.0" />
+      <HBox alignment="CENTER_LEFT" layoutX="489.0" layoutY="382.0" prefHeight="35.0" prefWidth="381.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#capturarHuella0">
+               <graphic>
+                  <ImageView fx:id="FP0" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/fps0.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator visible="false" />
+            <Button mnemonicParsing="false" onAction="#capturarHuella1">
+               <graphic>
+                  <ImageView fx:id="FP1" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/fps0.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator visible="false" />
+            <Button mnemonicParsing="false" onAction="#capturarHuella2">
+               <graphic>
+                  <ImageView fx:id="FP2" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/fps0.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator visible="false" />
+            <Button mnemonicParsing="false" onAction="#capturarHuella3">
+               <graphic>
+                  <ImageView fx:id="FP3" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/fps0.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator visible="false" />
+            <Button mnemonicParsing="false" onAction="#capturarHuella4">
+               <graphic>
+                  <ImageView fx:id="FP4" fitHeight="150.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/fps0.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>

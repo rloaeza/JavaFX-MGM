@@ -10,13 +10,17 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import modelo.Configuraciones;
 import modelo.Funciones;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.ResourceBundle;
 
 public class Pacientes extends Controlador implements Initializable {
@@ -45,6 +49,84 @@ public class Pacientes extends Controlador implements Initializable {
     @FXML
     private JFXPasswordField Clave;
 
+
+    @FXML
+    private ImageView FP0;
+
+    @FXML
+    private ImageView FP1;
+
+    @FXML
+    private ImageView FP2;
+
+    @FXML
+    private ImageView FP3;
+
+    @FXML
+    private ImageView FP4;
+
+
+
+    private String[] huellas = new String[]{"","","","",""};
+
+
+    @FXML
+    void capturarHuella0(ActionEvent event) {
+        capturarHuella(0, FP0);
+    }
+    @FXML
+    void capturarHuella1(ActionEvent event) {
+        capturarHuella(1, FP1);
+    }
+    @FXML
+    void capturarHuella2(ActionEvent event) {
+        capturarHuella(2, FP2);
+    }
+    @FXML
+    void capturarHuella3(ActionEvent event) {
+        capturarHuella(3, FP3);
+    }
+    @FXML
+    void capturarHuella4(ActionEvent event) {
+        capturarHuella(4, FP4);
+    }
+    private void capturarHuella(int id, ImageView imageView) {
+
+        Configuraciones.fpSTR = huellas[id];
+
+        //cargar huella
+
+
+        Map<String, Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("titulo", "Capturar Huella");
+
+        paramsAlert.put("vista", "/vista/capturar_huella.fxml");
+
+        try {
+            Funciones.display(paramsAlert, getClass().getResource("/vista/capturar_huella.fxml"), new CapturarHuella(), 762, 418);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        // huella cargada
+        if(Configuraciones.fpSTR.equalsIgnoreCase(Configuraciones.fpEliminar)) {
+            huellas[id] = "";
+        } else if(!Configuraciones.fpSTR.isEmpty()) {
+            huellas[id] = Configuraciones.fpSTR;
+        }
+
+
+
+
+
+        //Fijar imagen
+        if(huellas[id].isEmpty()) {
+            imageView.setImage(new Image("imgs/fps0.png"));
+        }else {
+            imageView.setImage(new Image("imgs/fps1.png"));
+        }
+    }
 
     @FXML
     void actualizar(ActionEvent event) throws IOException {

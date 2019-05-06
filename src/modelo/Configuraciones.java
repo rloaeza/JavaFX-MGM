@@ -133,4 +133,8 @@ public class Configuraciones {
 
     public static boolean fpActivo;
 
+    public static String fpSTR;
+    public static String fpEliminar = "ELIMINAR";
+
+
 }
