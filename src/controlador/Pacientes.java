@@ -141,6 +141,13 @@ public class Pacientes extends Controlador implements Initializable {
         paramsJSON.put("telefono", Telefono.getText());
         paramsJSON.put("movil", Celular.getText());
         paramsJSON.put("clave", Clave.getText());
+
+        paramsJSON.put("huella0", huellas[0]);
+        paramsJSON.put("huella1", huellas[1]);
+        paramsJSON.put("huella2", huellas[2]);
+        paramsJSON.put("huella3", huellas[3]);
+        paramsJSON.put("huella4", huellas[4]);
+
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarDatos();
@@ -157,6 +164,11 @@ public class Pacientes extends Controlador implements Initializable {
         paramsJSON.put("telefono", Telefono.getText());
         paramsJSON.put("movil", Celular.getText());
         paramsJSON.put("clave", Clave.getText());
+        paramsJSON.put("huella0", huellas[0]);
+        paramsJSON.put("huella1", huellas[1]);
+        paramsJSON.put("huella2", huellas[2]);
+        paramsJSON.put("huella3", huellas[3]);
+        paramsJSON.put("huella4", huellas[4]);
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         //System.out.println(paramsJSON.toString());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
@@ -174,7 +186,7 @@ public class Pacientes extends Controlador implements Initializable {
 
     @FXML
     void limpiar(ActionEvent event) {
-        cargarDatosPantalla(new modelo.Pacientes(-1, "", "","","","","",-1 ));
+        cargarDatosPantalla(new modelo.Pacientes(-1, "", "","","","","",  "","","","","",  -1 ));
         ListaDePacientes.getSelectionModel().clearSelection();
     }
 
@@ -191,8 +203,21 @@ public class Pacientes extends Controlador implements Initializable {
         Telefono.setText(p.getTelefono());
         Celular.setText(p.getMovil());
         Clave.setText(p.getClave());
+        cargarImagen(p.getHuella0(), FP0);
+        cargarImagen(p.getHuella1(), FP1);
+        cargarImagen(p.getHuella2(), FP2);
+        cargarImagen(p.getHuella3(), FP3);
+        cargarImagen(p.getHuella4(), FP4);
+
+
     }
 
+    private void cargarImagen(String huella, ImageView imageView) {
+        if(huella.isEmpty())
+            imageView.setImage(new Image("imgs/fps0"));
+        else
+            imageView.setImage(new Image("imgs/fps1"));
+    }
     private void cargarDatos() throws IOException {
 
         ObservableList<modelo.Pacientes> listaPersonal = FXCollections.observableArrayList();
