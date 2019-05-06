@@ -11,23 +11,23 @@
 
 <AnchorPane fx:id="Pane" prefHeight="418.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.CapturarHuella">
    <children>
-      <ImageView fx:id="Huella" fitHeight="204.0" fitWidth="203.0" layoutX="280.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="279.0" AnchorPane.topAnchor="20.0">
+      <ImageView fx:id="Huella" fitHeight="204.0" fitWidth="203.0" layoutX="280.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="280.0" AnchorPane.rightAnchor="279.0" AnchorPane.topAnchor="30.0">
          <image>
             <Image url="@../imgs/fp0.jpg" />
          </image>
       </ImageView>
-      <HBox alignment="CENTER" layoutX="60.0" layoutY="304.0" prefHeight="100.0" prefWidth="657.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0">
+      <HBox alignment="CENTER" layoutX="60.0" layoutY="304.0" prefHeight="64.0" prefWidth="642.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0">
          <children>
-            <JFXButton onAction="#capturar" prefWidth="150.0" text="Capturar" HBox.hgrow="ALWAYS" />
+            <JFXButton onAction="#capturar" prefHeight="44.0" prefWidth="150.0" style="-fx-background-color: yellow;" text="Capturar" HBox.hgrow="ALWAYS" />
             <Separator visible="false" />
-            <JFXButton onAction="#eliminar" prefWidth="150.0" text="Eliminar" HBox.hgrow="ALWAYS" />
+            <JFXButton onAction="#eliminar" prefHeight="44.0" prefWidth="150.0" style="-fx-background-color: red;" text="Eliminar" HBox.hgrow="ALWAYS" />
             <Separator visible="false" />
-            <JFXButton onAction="#cancelar" prefWidth="150.0" text="Cancelar" HBox.hgrow="ALWAYS" />
+            <JFXButton onAction="#cancelar" prefHeight="44.0" prefWidth="150.0" style="-fx-background-color: orange;" text="Cancelar" HBox.hgrow="ALWAYS" />
             <Separator visible="false" />
-            <JFXButton onAction="#aceptar" prefWidth="150.0" text="Aceptar" HBox.hgrow="ALWAYS" />
+            <JFXButton onAction="#aceptar" prefHeight="44.0" prefWidth="150.0" style="-fx-background-color: lightgreen;" text="Aceptar" HBox.hgrow="ALWAYS" />
          </children>
       </HBox>
-      <Label fx:id="Mensaje" alignment="CENTER" layoutX="60.0" layoutY="242.0" prefHeight="56.0" prefWidth="642.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="242.0">
+      <Label fx:id="Mensaje" alignment="CENTER" layoutX="60.0" layoutY="242.0" prefHeight="56.0" prefWidth="642.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="260.0">
          <font>
             <Font size="36.0" />
          </font>
