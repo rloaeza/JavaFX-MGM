@@ -246,6 +246,7 @@ public class Funciones {
 
         c = fxmlLoader.getController();
         c.setParams(params);
+        c.crearIdVistaActual();
         c.init();
 
     }

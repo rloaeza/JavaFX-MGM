@@ -138,4 +138,6 @@ public class Configuraciones {
     public static String fpColocarDedo = "Coloque el dedo en el sensor";
 
 
+    public static double idVistaActual;
+
 }

@@ -3,6 +3,8 @@ package controlador;
 import com.google.gson.JsonArray;
 import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
+import com.zkteco.biometric.FingerprintSensorEx;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.input.KeyEvent;
@@ -12,11 +14,15 @@ import modelo.Funciones;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.Map;
+import java.util.Random;
 
 public abstract class  Controlador {
 
     public static ArrayList<Map<String, Object> > parametros;
+    protected static double idVistaActual;
+    public static ArrayList<Timeline> timers;
 
     public void setParams(Map<String, Object> params)  {
         if(parametros==null)
@@ -81,6 +87,40 @@ public abstract class  Controlador {
                 return true;
         }
         return false;
+    }
+
+    public void crearIdVistaActual() {
+        Configuraciones.idVistaActual = Math.random();
+    }
+
+    public boolean sigoPresente() {
+        if(Configuraciones.idVistaActual == idVistaActual)
+            return true;
+        else {
+            for(Timeline t : timers) {
+                t.stop();
+            }
+            timers.clear();
+            return false;
+        }
+    }
+
+    public void addTimer(Timeline t) {
+        if(timers == null) {
+            timers = new ArrayList<>();
+        }
+        timers.add(t);
+    }
+
+    int fid = 0;
+    ArrayList<Integer> idHuellas = new ArrayList<>();
+    protected void agregarHuella(String huella, int idLista) {
+        if(!huella.isEmpty()) {
+            FingerprintSensorEx.DBAdd(Configuraciones.mhDB, fid++, Base64.getDecoder().decode(huella));
+            idHuellas.add(idLista);
+        }
+
+
     }
 
     public abstract void init();

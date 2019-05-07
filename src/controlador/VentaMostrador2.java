@@ -6,6 +6,10 @@ import com.jfoenix.controls.*;
 import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
 import com.jfoenix.controls.cells.editors.base.GenericEditableTreeTableCell;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import com.zkteco.biometric.FingerprintSensorEx;
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -23,6 +27,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import modelo.*;
 import modelo.Pacientes;
 import modelo.VentaMostrador;
@@ -170,9 +175,6 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
 
-
-        //
-
         columnCantidad.setOnEditCommit((CellEditEvent<modelo.VentaMostrador, String> t) -> {
 
                     int index = t.getTreeTablePosition().getRow();
@@ -304,11 +306,88 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     @Override
     public void init() {
+        idVistaActual = Configuraciones.idVistaActual;
+        sigoPresente();
+
+        if(Configuraciones.fpActivo) {
+            Funciones.FreeSensor();
+            Funciones.inicializarFP();
+        }
+        else {
+            Funciones.inicializarFP();
+            Configuraciones.fpActivo = true;
+        }
+
+
+
+
+
+        Timeline t2 = new Timeline(new KeyFrame(Duration.millis(1000), ae -> {
+           //System.out.println(idVistaActual);
+
+
+
+            Configuraciones.templateLen[0] = 2048;
+
+            if (0 == (Configuraciones.ret = FingerprintSensorEx.AcquireFingerprint(Configuraciones.mhDevice, Configuraciones.imgbuf, Configuraciones.template, Configuraciones.templateLen))) {
+                int[] fid = new int[1];
+                int[] score = new int [1];
+                int ret = FingerprintSensorEx.DBIdentify(Configuraciones.mhDB, Configuraciones.template, fid, score);
+                if (ret == 0)
+                {
+
+                    Pacientes p =listaDeClientes.get(  idHuellas.get(fid[0])   ) ;
+                    BusquedaCliente.setText("");
+                    ListaDeClientes.setItems(listaDeClientes);
+                    ListaDeClientes.getSelectionModel().clearSelection();
+                    ListaDeClientes.getSelectionModel().select( p );
+
+                    nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+                    Tabs.getTabs().get(nVentaSelect).setText(p.toString());
+                    listasVentaCliente.set(nVentaSelect, p.getIdPaciente());
+
+                }
+                else
+                {
+                    Map<String,Object> paramsAlert = new LinkedHashMap<>();
+                    paramsAlert.put("titulo", "Error");
+                    paramsAlert.put("texto", "Huella no válida");
+                    paramsAlert.put("vista", "/vista/alert_box.fxml");
+                    try {
+                        Funciones.displayFP(paramsAlert, getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    //System.out.println("Identify fail, errcode=" + ret + "\n");
+                }
+            }
+
+
+
+
+        }));
+
+        addTimer(t2);
+        t2.setCycleCount(Animation.INDEFINITE);
+
+        t2.play();
+
+
         try {
             cargarDatos("");
             cargarClientes("");
         } catch (IOException e) {
             e.printStackTrace();
+        }
+        int idLista=0;
+
+        for(Pacientes p : listaDeClientes) {
+            agregarHuella(p.getHuella0(), idLista);
+            agregarHuella(p.getHuella1(), idLista);
+            agregarHuella(p.getHuella2(), idLista);
+            agregarHuella(p.getHuella3(), idLista);
+            agregarHuella(p.getHuella4(), idLista);
+            idLista++;
         }
 
 
@@ -323,6 +402,8 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             if (event.getClickCount() == 1) {
                 nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
                 listasVentaCliente.set(nVentaSelect, ListaDeClientes.getSelectionModel().getSelectedItem().getIdPaciente());
+
+                Tabs.getTabs().get(nVentaSelect).setText(ListaDeClientes.getSelectionModel().getSelectedItem().toString());
             }
         });
 

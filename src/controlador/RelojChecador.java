@@ -36,7 +36,7 @@ public class RelojChecador extends Controlador implements Initializable {
 
     ObservableList<Personal> listaPersonal;
 
-    ArrayList<Integer> idHuellas = new ArrayList<>();
+
     private int fid;
 
 
@@ -133,12 +133,7 @@ public class RelojChecador extends Controlador implements Initializable {
         }
     }
 
-    private void agregarHuella(String huella, int idLista) {
-        if(!huella.isEmpty()) {
-            FingerprintSensorEx.DBAdd(Configuraciones.mhDB, fid++, Base64.getDecoder().decode(huella));
-            idHuellas.add(idLista);
-        }
-    }
+
 
 
 
