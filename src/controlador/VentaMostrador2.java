@@ -321,7 +321,8 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         Timeline t2 = new Timeline(new KeyFrame(Duration.millis(1000), ae -> {
            //System.out.println(idVistaActual);
 
-
+            if(!Configuraciones.fpActivo)
+                return;
 
             Configuraciones.templateLen[0] = 2048;
 
@@ -501,7 +502,8 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
             String ticketSTR=Configuraciones.ticketTituloClinicaThermal+
-                    "Cliente: "+cliente+"\n\n"+
+                    "Cliente: "+cliente+"\n"+
+                    "Venta: "+ ultimoInsertado+ "\n\n"+
                     Funciones.nuevaLinea("Cant", "Producto", "C. U.", "Total");
             for(modelo.VentaMostrador ventaMostrador: listasVentasMostrador.get(nVentaSelect)) {
                 Map<String,Object> paramsJSON2 = new LinkedHashMap<>();
