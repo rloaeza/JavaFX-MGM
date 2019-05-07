@@ -231,6 +231,8 @@ public class Pacientes extends Controlador implements Initializable {
 
     @Override
     public void init() {
+        idVistaActual = Math.random();
+        sigoPresente();
         try {
             cargarDatos();
         } catch (IOException e) {

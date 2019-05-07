@@ -99,7 +99,7 @@ public class Funciones {
 
     }
 
-    public static void display2(String title, String message) {
+    public static void Quitardisplay2(String title, String message) {
         Stage window = new Stage();
         window.initModality(Modality.APPLICATION_MODAL);
         window.setTitle(title);
@@ -590,16 +590,6 @@ public class Funciones {
 
 
     }
-
-
-
-
-
-    public static void mostrarAlerta(String titulo, String texto ) {
-
-    }
-
-
 
 
     private static String llenar(String s, int tam) {

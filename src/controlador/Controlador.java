@@ -20,8 +20,11 @@ import java.util.Random;
 
 public abstract class  Controlador {
 
+
+
     public static ArrayList<Map<String, Object> > parametros;
     protected static double idVistaActual;
+
     public static ArrayList<Timeline> timers;
 
     public void setParams(Map<String, Object> params)  {
@@ -97,10 +100,12 @@ public abstract class  Controlador {
         if(Configuraciones.idVistaActual == idVistaActual)
             return true;
         else {
-            for(Timeline t : timers) {
-                t.stop();
+            if( timers != null) {
+                for (Timeline t : timers) {
+                    t.stop();
+                }
+                timers.clear();
             }
-            timers.clear();
             if(Configuraciones.fpActivo) {
                 Funciones.FreeSensor();
                 Configuraciones.fpActivo = false;

@@ -306,8 +306,9 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     @Override
     public void init() {
-        idVistaActual = Configuraciones.idVistaActual;
+        idVistaActual = Math.random();
         sigoPresente();
+
         if(!Configuraciones.fpActivo) {
             Funciones.inicializarFP();
             Configuraciones.fpActivo = true;
@@ -341,13 +342,26 @@ public class VentaMostrador2 extends Controlador implements Initializable {
                     Tabs.getTabs().get(nVentaSelect).setText(p.toString());
                     listasVentaCliente.set(nVentaSelect, p.getIdPaciente());
 
+
+                    Map<String,Object> paramsAlert = new LinkedHashMap<>();
+                    paramsAlert.put("titulo", "Bienvenido");
+                    paramsAlert.put("texto", "Cliente: "+p.toString());
+                    paramsAlert.put("tiempo", "3");
+                    paramsAlert.put("vista", "/vista/alert_box.fxml");
+                    try {
+                        Funciones.displayFP(paramsAlert, getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
                 }
                 else
                 {
                     Map<String,Object> paramsAlert = new LinkedHashMap<>();
                     paramsAlert.put("titulo", "Error");
                     paramsAlert.put("texto", "Huella no válida");
-                    paramsAlert.put("tiempo", "2");
+                    paramsAlert.put("tiempo", "1");
                     paramsAlert.put("vista", "/vista/alert_box.fxml");
                     try {
                         Funciones.displayFP(paramsAlert, getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );

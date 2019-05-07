@@ -110,6 +110,9 @@ public class Configuraciones {
     public static  long mhDB = 0;
     public static  byte[] imgbuf = null;
     public static  byte[] template = new byte[2048];
+    public static byte[][] regtemparray = new byte[3][2048];
+    public static byte[] lastRegTemp = new byte[2048];
+
     public static  int[] templateLen = new int[1];
     public static  int ret = 0;
     //the width of fingerprint image
@@ -135,9 +138,16 @@ public class Configuraciones {
 
     public static String fpSTR;
     public static String fpEliminar = "ELIMINAR";
-    public static String fpColocarDedo = "Coloque el dedo en el sensor";
+    public static String fpColocarDedo1 = "Presione 3 veces el mismo dedo";
+    public static String fpColocarDedo2 = "Presione 2 veces el mismo dedo";
+    public static String fpColocarDedo3 = "Presione 1 vez el mismo dedo";
+    public static String fpColocarDedoOK = "Huella capturada";
+    public static String fpColocarDedoFail= "Error al capturar huella";
+
+
 
 
     public static double idVistaActual;
+
 
 }

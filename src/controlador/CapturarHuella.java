@@ -54,7 +54,7 @@ public class CapturarHuella extends Controlador {
         Huella.setImage(new Image("imgs/fp0.jpg"));
         huella = "";
         capturas = 0;
-        Mensaje.setText(Configuraciones.fpColocarDedo);
+        Mensaje.setText(Configuraciones.fpColocarDedo1);
     }
 
     @FXML
@@ -65,7 +65,12 @@ public class CapturarHuella extends Controlador {
 
     @Override
     public void init() {
-
+        idVistaActual = Math.random();
+        sigoPresente();
+        if(!Configuraciones.fpActivo) {
+            Funciones.inicializarFP();
+            Configuraciones.fpActivo = true;
+        }
         t = new Timeline(new KeyFrame(Duration.millis(1000), ae -> {
 
             if(!Configuraciones.fpActivo)
@@ -75,19 +80,55 @@ public class CapturarHuella extends Controlador {
 
             if (0 == (Configuraciones.ret = FingerprintSensorEx.AcquireFingerprint(Configuraciones.mhDevice, Configuraciones.imgbuf, Configuraciones.template, Configuraciones.templateLen))) {
 
-                huella = Base64.getEncoder().encodeToString(Configuraciones.template);
 
-                capturas++;
-                if(capturas==1) {
-                    Huella.setImage(new Image("imgs/fp3.jpg"));
-                    Mensaje.setText("");
+
+                if (capturas > 0 && FingerprintSensorEx.DBMatch(Configuraciones.mhDB, Configuraciones.regtemparray[capturas-1], Configuraciones.template) <= 0)
+                {
+                    Mensaje.setText("please press the same finger 3 times for the enrollment\n");
+                    return;
                 }
-                t.stop();
+                System.arraycopy(Configuraciones.template, 0, Configuraciones.regtemparray[capturas], 0, 2048);
+                System.out.println("Guardando huella: " +capturas);
+                capturas++;
+
+                if(capturas==1) {
+                    Huella.setImage(new Image("imgs/fp1.jpg"));
+                    Mensaje.setText(Configuraciones.fpColocarDedo2);
+                }
+                if(capturas==2) {
+                    Huella.setImage(new Image("imgs/fp2.jpg"));
+                    Mensaje.setText(Configuraciones.fpColocarDedo3);
+                }
+                if(capturas==3) {
+
+
+                    Huella.setImage(new Image("imgs/fp3.jpg"));
+
+
+                    int[] _retLen = new int[1];
+                    _retLen[0] = 2048;
+                    byte[] regTemp = new byte[_retLen[0]];
+                    if (0 == ( FingerprintSensorEx.DBMerge(Configuraciones.mhDB, Configuraciones.regtemparray[0], Configuraciones.regtemparray[1], Configuraciones.regtemparray[2], regTemp, _retLen)) &&
+                            0 == ( FingerprintSensorEx.DBAdd(Configuraciones.mhDB, Configuraciones.iFid, regTemp))) {
+
+                        Configuraciones.cbRegTemp = _retLen[0];
+                        System.arraycopy(regTemp, 0, Configuraciones.lastRegTemp, 0, Configuraciones.cbRegTemp);
+                        huella = Base64.getEncoder().encodeToString(regTemp);
+                        Mensaje.setText(Configuraciones.fpColocarDedoOK);
+                    } else {
+                        Mensaje.setText(Configuraciones.fpColocarDedoFail);
+                    }
+
+                    t.stop();
+                }
+
+
+
             }
 
         } ));
         t.setCycleCount(Animation.INDEFINITE);
-
+        addTimer(t);
     }
 
     private void cerrar() {
