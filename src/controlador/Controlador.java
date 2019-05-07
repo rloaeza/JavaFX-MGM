@@ -101,6 +101,10 @@ public abstract class  Controlador {
                 t.stop();
             }
             timers.clear();
+            if(Configuraciones.fpActivo) {
+                Funciones.FreeSensor();
+                Configuraciones.fpActivo = false;
+            }
             return false;
         }
     }

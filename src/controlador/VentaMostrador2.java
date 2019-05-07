@@ -308,12 +308,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     public void init() {
         idVistaActual = Configuraciones.idVistaActual;
         sigoPresente();
-
-        if(Configuraciones.fpActivo) {
-            Funciones.FreeSensor();
-            Funciones.inicializarFP();
-        }
-        else {
+        if(!Configuraciones.fpActivo) {
             Funciones.inicializarFP();
             Configuraciones.fpActivo = true;
         }
@@ -352,6 +347,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
                     Map<String,Object> paramsAlert = new LinkedHashMap<>();
                     paramsAlert.put("titulo", "Error");
                     paramsAlert.put("texto", "Huella no válida");
+                    paramsAlert.put("tiempo", "2");
                     paramsAlert.put("vista", "/vista/alert_box.fxml");
                     try {
                         Funciones.displayFP(paramsAlert, getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );

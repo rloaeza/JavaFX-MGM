@@ -44,8 +44,11 @@ public class AlertBox extends Controlador {
     @Override
     public void init() {
         Texto.setText(parametros.get(0).get("texto").toString());
+        try {
+            tiempo = Integer.valueOf(parametros.get(0).get("tiempo").toString());
+        }catch(Exception e) {
 
-
+        }
         tl = new Timeline(new KeyFrame(Duration.millis(1000), ae -> {
             if(tiempo>0) {
                 BotonAceptar.setText("Aceptar (" + tiempo + ")");
