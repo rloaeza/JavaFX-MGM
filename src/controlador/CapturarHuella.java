@@ -87,7 +87,7 @@ public class CapturarHuella extends Controlador {
 
                 if (capturas > 0 && FingerprintSensorEx.DBMatch(Configuraciones.mhDB, Configuraciones.regtemparray[capturas-1], Configuraciones.template) <= 0)
                 {
-                    Mensaje.setText("please press the same finger 3 times for the enrollment\n");
+                    Mensaje.setText(Configuraciones.fpColocarDedoDiferente);
                     return;
                 }
                 System.arraycopy(Configuraciones.template, 0, Configuraciones.regtemparray[capturas], 0, 2048);

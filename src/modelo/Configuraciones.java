@@ -143,6 +143,7 @@ public class Configuraciones {
     public static String fpColocarDedo3 = "Presione 1 vez el mismo dedo";
     public static String fpColocarDedoOK = "Huella capturada";
     public static String fpColocarDedoFail= "Error al capturar huella";
+    public static String fpColocarDedoDiferente= "Debe ser el mismo dedo";
 
 
 
