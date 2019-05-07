@@ -68,8 +68,11 @@ public class CapturarHuella extends Controlador {
         idVistaActual = Math.random();
         sigoPresente();
         if(!Configuraciones.fpActivo) {
-            Funciones.inicializarFP();
-            Configuraciones.fpActivo = true;
+            try {
+                Funciones.inicializarFP();
+            } catch (UnsatisfiedLinkError e) {
+
+            }
         }
         t = new Timeline(new KeyFrame(Duration.millis(1000), ae -> {
 

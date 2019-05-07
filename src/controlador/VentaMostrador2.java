@@ -310,8 +310,11 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         sigoPresente();
 
         if(!Configuraciones.fpActivo) {
-            Funciones.inicializarFP();
-            Configuraciones.fpActivo = true;
+            try {
+                Funciones.inicializarFP();
+            } catch (UnsatisfiedLinkError e) {
+
+            }
         }
 
 
@@ -319,7 +322,6 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
         Timeline t2 = new Timeline(new KeyFrame(Duration.millis(1000), ae -> {
-           //System.out.println(idVistaActual);
 
             if(!Configuraciones.fpActivo)
                 return;
