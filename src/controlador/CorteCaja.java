@@ -15,18 +15,15 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import modelo.Caja;
-import modelo.Configuraciones;
-import modelo.Funciones;
+import modelo.*;
 import modelo.Personal;
 
+import javax.print.DocFlavor;
 import java.io.IOException;
 import java.net.URL;
 import java.text.NumberFormat;
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class CorteCaja extends Controlador implements Initializable {
 
@@ -99,11 +96,61 @@ public class CorteCaja extends Controlador implements Initializable {
                 paramsJSON.put("tipo", 2);
             JsonArray rootArray = Funciones.consultarBD(paramsJSON);
 
-            Configuraciones.corteCajaValido = true;
 
+            String corteCajaSTR = Configuraciones.ticketCorteCaja;
+            String fecha = new SimpleDateFormat("yyyy/MM/dd HH:mm").format(new Date());
+            corteCajaSTR=corteCajaSTR.replace("$tipo$", Configuraciones.abriendoCaja?Configuraciones.corteCajaAbrir:Configuraciones.corteCajaCerrar );
+            corteCajaSTR=corteCajaSTR.replace("$caja$", CBCajas.getSelectionModel().getSelectedItem().toString() );
+            corteCajaSTR=corteCajaSTR.replace("$fecha$", fecha );
+            corteCajaSTR=corteCajaSTR.replace("$vendedor$", Vendedor.getText());
+            corteCajaSTR=corteCajaSTR.replace("$supervisor$", Supervisor.getSelectionModel().getSelectedItem().toString());
+            corteCajaSTR=corteCajaSTR.replace("$monto$", Monto.getText());
+
+            //System.out.print(corteCajaSTR);
+
+
+
+            PrinterService printerService = new PrinterService();
+            List<String> listPrinters = printerService.getPrinters();
+            boolean impresoraValida = false;
+            for(String printer : listPrinters) {
+                if( printer.contains(Configuraciones.impresoraTicket)) {
+                    impresoraValida = true;
+
+                }
+            }
+
+            Map<String,Object> paramsAlertImpresora = new LinkedHashMap<>();
+            paramsAlertImpresora.put("titulo", "Error");
+            paramsAlertImpresora.put("tiempo", "5");
+            paramsAlertImpresora.put("vista", "/vista/alert_box.fxml");
+            if(!impresoraValida) {
+                paramsAlertImpresora.put("texto", "No existe la impresora: "+Configuraciones.impresoraTicket+ " en el sistema");
+
+                Funciones.displayFP(paramsAlertImpresora, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
+
+                return;
+            }
+
+
+
+            try {
+                printerService.printString(Configuraciones.impresoraTicket, corteCajaSTR);
+                byte[] cutP = new byte[]{0x1d, 'V', 1};
+                printerService.printBytes(Configuraciones.impresoraTicket, cutP);
+
+
+                byte[] openCashDrawer = new byte[]{27, 112, 48, 55, 121};
+                printerService.printBytes(Configuraciones.impresoraTicket, openCashDrawer);
+            } catch (Exception e) {
+                paramsAlertImpresora.put("texto", "Error en la impresora :(, "+Configuraciones.impresoraTicket);
+                Funciones.displayFP(paramsAlertImpresora, getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
+                return;
+            }
+
+            Configuraciones.corteCajaValido = true;
             Configuraciones.impresoraTicket = CBCajas.getSelectionModel().getSelectedItem().getImpresoraTicket();
             Configuraciones.impresoraReporte = CBCajas.getSelectionModel().getSelectedItem().getImpresoraReporte();
-
             cerrar();
         }
         Error.setVisible(false);

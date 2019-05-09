@@ -60,6 +60,17 @@ public class Configuraciones {
             "MGM México: Boulevard Adolfo Ruiz Cortines #18 Col. Lomas de Atizapan  CP: 52977, Atizapan Edo de México\n\n" +
             "MGM Morelia:  Artilleros 1847 #1585 Colonia: Chapultepec Oriente CP: 58260, Morelia Michoacán Tel: 527-25-23\n\n";
 
+
+    public static String ticketCorteCaja=
+            "              MGM \n\n" +
+            "Tipo:       $tipo$\n" +
+            "Caja:       $caja$\n" +
+            "Fecha:      $fecha$\n" +
+            "Vendedor:   $vendedor$\n" +
+            "Supervisor: $supervisor$\n" +
+            "Monto:      $monto$";
+
+
     //"12  Crema exfoliante    25   2003";
     public static int ticketCant = 5;
     public static int ticketProducto = 20;
