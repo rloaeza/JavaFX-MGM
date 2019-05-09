@@ -477,10 +477,6 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             return;
         }
 
-
-        System.out.println("ticket: "+Configuraciones.impresoraTicket);
-
-
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
         Map<String,Object> paramsAlert = new LinkedHashMap<>();
         paramsAlert.put("titulo", "Pago de venta");
@@ -577,9 +573,6 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             //Funciones.llenarPDF("formatos/venta2.pdf",  valoresPDF, false, "Venta.pdf");
 
 
-            System.out.println(ticketSTR);
-
-
             try {
                 printerService.printImage(Configuraciones.impresoraTicket, "formatos/mgm_t.png", DocFlavor.INPUT_STREAM.PNG);
                 printerService.printString(Configuraciones.impresoraTicket, ticketSTR);
@@ -591,7 +584,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
                 byte[] openCashDrawer = new byte[]{27, 112, 48, 55, 121};
                 printerService.printBytes(Configuraciones.impresoraTicket, openCashDrawer);
             } catch (Exception e) {
-                paramsAlertImpresora.put("texto", "Impresora fuera de linea, "+Configuraciones.impresoraTicket);
+                paramsAlertImpresora.put("texto", "Error en la impresora :(, "+Configuraciones.impresoraTicket);
                 Funciones.displayFP(paramsAlertImpresora, getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
                 return;
             }
