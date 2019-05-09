@@ -10,7 +10,12 @@ public class CorteCaja {
     private String hora;
     private int idPersonalAut;
 
-    public CorteCaja(int idCorteCaja, int idCaja, int idPersonal, int tipo, double monto, String fecha, String hora, int idPersonalAut) {
+    private String impresoraTicket;
+    private String impresoraReporte;
+
+
+
+    public CorteCaja(int idCorteCaja, int idCaja, int idPersonal, int tipo, double monto, String fecha, String hora, int idPersonalAut, String impresoraTicket, String impresoraReporte) {
         this.idCorteCaja = idCorteCaja;
         this.idCaja = idCaja;
         this.idPersonal = idPersonal;
@@ -19,6 +24,8 @@ public class CorteCaja {
         this.fecha = fecha;
         this.hora = hora;
         this.idPersonalAut = idPersonalAut;
+        this.impresoraTicket = impresoraTicket;
+        this.impresoraReporte = impresoraReporte;
     }
 
     public int getIdCorteCaja() {
@@ -83,5 +90,21 @@ public class CorteCaja {
 
     public void setIdPersonalAut(int idPersonalAut) {
         this.idPersonalAut = idPersonalAut;
+    }
+
+    public String getImpresoraTicket() {
+        return impresoraTicket;
+    }
+
+    public void setImpresoraTicket(String impresoraTicket) {
+        this.impresoraTicket = impresoraTicket;
+    }
+
+    public String getImpresoraReporte() {
+        return impresoraReporte;
+    }
+
+    public void setImpresoraReporte(String impresoraReporte) {
+        this.impresoraReporte = impresoraReporte;
     }
 }

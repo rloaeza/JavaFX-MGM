@@ -168,7 +168,7 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         paramsVista.put("idPersonal", Configuraciones.idPersonal);
 
         paramsVista.put("vista", "/vista/venta_mostrador2.fxml" );
-        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new Citas());
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VentaMostrador2());
     }
 
     @FXML
@@ -329,7 +329,7 @@ public class InicioAdministrador extends  Controlador implements Initializable {
             }
         } ));
         t2.setCycleCount(Animation.INDEFINITE);
-        t2.play();
+        //t2.play();
 
 /*
 
@@ -364,7 +364,7 @@ public class InicioAdministrador extends  Controlador implements Initializable {
             }
         } ));
         tPagos.setCycleCount(Animation.INDEFINITE);
-        tPagos.play();
+        //tPagos.play();
 
 
 

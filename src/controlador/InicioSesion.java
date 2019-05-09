@@ -68,6 +68,9 @@ public class InicioSesion  extends Controlador{
                 if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
 
                     modelo.CorteCaja corteCaja = new Gson().fromJson(rootArray.get(1).getAsJsonObject(), modelo.CorteCaja.class);
+
+                    Configuraciones.impresoraTicket = corteCaja.getImpresoraTicket();
+                    Configuraciones.impresoraReporte = corteCaja.getImpresoraReporte();
                     if ( corteCaja.getTipo() == 1) {
                         Configuraciones.cajaAbierta = true;
                         Configuraciones.idCaja = corteCaja.getIdCaja();

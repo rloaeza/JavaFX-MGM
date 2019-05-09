@@ -60,61 +60,67 @@ public class PrinterService implements Printable {
         return PAGE_EXISTS;
     }
 
-    public void printString(String printerName, String text) {
-        DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-        PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-        PrintService printService[] = PrintServiceLookup.lookupPrintServices(flavor, pras);
-        PrintService service = findPrintService(printerName, printService);
-        DocPrintJob job = service.createPrintJob();
+    public void printString(String printerName, String text) throws Exception {
         try {
+            DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+            PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
+            PrintService printService[] = PrintServiceLookup.lookupPrintServices(flavor, pras);
+            PrintService service = findPrintService(printerName, printService);
+            DocPrintJob job = service.createPrintJob();
+
             byte[] bytes;
             bytes = text.getBytes("CP437");
             Doc doc = new SimpleDoc(bytes, flavor, null);
             job.print(doc, null);
 
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new Exception(e.toString());
+
         }
 
     }
 
 
-    public void printImage(String printerName, String image, DocFlavor.INPUT_STREAM tipo) {
-        DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-        PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-        PrintService printService[] = PrintServiceLookup.lookupPrintServices(flavor, pras);
-        PrintService service = findPrintService(printerName, printService);
-        DocPrintJob job = service.createPrintJob();
-
+    public void printImage(String printerName, String image, DocFlavor.INPUT_STREAM tipo) throws Exception {
         try {
+            DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+            PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
+            PrintService printService[] = PrintServiceLookup.lookupPrintServices(flavor, pras);
+            PrintService service = findPrintService(printerName, printService);
+            DocPrintJob job = service.createPrintJob();
+
+
             FileInputStream fin = new FileInputStream(image);
             Doc logo = new SimpleDoc(fin, tipo, null);
             job.print(logo, null);
         } catch (Exception e) {
-            e.printStackTrace();
+            throw new Exception(e.toString());
         }
+
 
     }
 
-    public void printBytes(String printerName, byte[] bytes) {
-
-        DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
-        PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
-
-        PrintService printService[] = PrintServiceLookup.lookupPrintServices(
-                flavor, pras);
-        PrintService service = findPrintService(printerName, printService);
-
-        DocPrintJob job = service.createPrintJob();
-
+    public void printBytes(String printerName, byte[] bytes) throws Exception {
         try {
+            DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+            PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
+
+            PrintService printService[] = PrintServiceLookup.lookupPrintServices(
+                    flavor, pras);
+            PrintService service = findPrintService(printerName, printService);
+
+            DocPrintJob job = service.createPrintJob();
+
+
 
             Doc doc = new SimpleDoc(bytes, flavor, null);
 
             job.print(doc, null);
 
         } catch (Exception e) {
-            e.printStackTrace();
+
+            throw new Exception(e.toString());
+
         }
     }
 

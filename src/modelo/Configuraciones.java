@@ -134,7 +134,7 @@ public class Configuraciones {
     //the length of lastRegTemp
     public static  int cbRegTemp = 0;
 
-    public static boolean fpActivo;
+    public static boolean fpActivo=false;
 
     public static String fpSTR;
     public static String fpEliminar = "ELIMINAR";

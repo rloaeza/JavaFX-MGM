@@ -106,7 +106,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             return;
         }else {
             for(int index=0; index<ListaDeClientes.getItems().size(); index++) {
-                if(listasVentaCliente.get(nVentaSelect)== ListaDeClientes.getItems().get(index).getIdPaciente()) {
+                if(listasVentaCliente.get(nVentaSelect) == ListaDeClientes.getItems().get(index).getIdPaciente()) {
                     ListaDeClientes.getSelectionModel().select(index);
 
                     return;
@@ -119,7 +119,8 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     @FXML
     void agregarTab(ActionEvent event) {
         Tab tab = new Tab();
-        tab.setText("Venta "+nVenta++);
+        tab.setText("Mostrador");
+        nVenta++;
 
 
 
@@ -312,7 +313,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         if(!Configuraciones.fpActivo) {
             try {
                 Funciones.inicializarFP();
-            } catch (UnsatisfiedLinkError e) {
+            } catch (Error|Exception e) {
 
             }
         }
@@ -356,8 +357,6 @@ public class VentaMostrador2 extends Controlador implements Initializable {
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-
-
                 }
                 else
                 {
@@ -415,7 +414,6 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             if (event.getClickCount() == 1) {
                 nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
                 listasVentaCliente.set(nVentaSelect, ListaDeClientes.getSelectionModel().getSelectedItem().getIdPaciente());
-
                 Tabs.getTabs().get(nVentaSelect).setText(ListaDeClientes.getSelectionModel().getSelectedItem().toString());
             }
         });
@@ -440,7 +438,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
                 try {
                     aceptarVenta(null);
-                } catch (IOException | PrinterException e) {
+                } catch (IOException  e) {
                     e.printStackTrace();
                 }
             }
@@ -454,7 +452,35 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
     @FXML
-    void aceptarVenta(ActionEvent event) throws IOException, PrinterException {
+    void aceptarVenta(ActionEvent event) throws IOException {
+
+        // Verificar que la impresora este seleccionada
+        PrinterService printerService = new PrinterService();
+        List<String> listPrinters = printerService.getPrinters();
+        boolean impresoraValida = false;
+        for(String printer : listPrinters) {
+            if( printer.contains(Configuraciones.impresoraTicket)) {
+                impresoraValida = true;
+
+            }
+        }
+
+        Map<String,Object> paramsAlertImpresora = new LinkedHashMap<>();
+        paramsAlertImpresora.put("titulo", "Error");
+        paramsAlertImpresora.put("tiempo", "5");
+        paramsAlertImpresora.put("vista", "/vista/alert_box.fxml");
+        if(!impresoraValida) {
+            paramsAlertImpresora.put("texto", "No existe la impresora: "+Configuraciones.impresoraTicket+ " en el sistema");
+
+            Funciones.displayFP(paramsAlertImpresora, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
+
+            return;
+        }
+
+
+        System.out.println("ticket: "+Configuraciones.impresoraTicket);
+
+
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
         Map<String,Object> paramsAlert = new LinkedHashMap<>();
         paramsAlert.put("titulo", "Pago de venta");
@@ -473,7 +499,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
         String cliente="Mostrador";
 
-        if( ListaDeClientes.getSelectionModel().getSelectedIndex()!=1) {
+        if( ListaDeClientes.getSelectionModel().getSelectedIndex()!=-1) {
 
 
             Pacientes p = ListaDeClientes.getSelectionModel().getSelectedItem();
@@ -542,45 +568,39 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             valoresPDF.add(new PDFvalores("cliente", cliente));
             valoresPDF.add(new PDFvalores("clinica", Configuraciones.ticketTituloClinica));
             listasVentasMostrador.get(nVentaSelect).clear();
+            limpiar(null);
             calcularTotal();
 
 
             BusquedaCliente.setText("");
             seleccionarPersonal(null);
             //Funciones.llenarPDF("formatos/venta2.pdf",  valoresPDF, false, "Venta.pdf");
-            //System.out.println(ticketSTR);
 
 
-
-            PrinterService printerService = new PrinterService();
-            List<String> listPrinters = printerService.getPrinters();
-
-            boolean existeThermal = false;
-            for(String printer : listPrinters) {
-                if( printer.contains(Configuraciones.impresoraTicket)) {
-                    existeThermal = true;
-                }
-            }
-
-            if(existeThermal) {
-                //System.out.println(ticketSTR);
+            System.out.println(ticketSTR);
 
 
+            try {
                 printerService.printImage(Configuraciones.impresoraTicket, "formatos/mgm_t.png", DocFlavor.INPUT_STREAM.PNG);
-
                 printerService.printString(Configuraciones.impresoraTicket, ticketSTR);
 
-                byte[] cutP = new byte[] { 0x1d, 'V', 1 };
+                byte[] cutP = new byte[]{0x1d, 'V', 1};
                 printerService.printBytes(Configuraciones.impresoraTicket, cutP);
 
 
-                byte[] openCashDrawer = new byte[] { 27, 112, 48, 55, 121};
+                byte[] openCashDrawer = new byte[]{27, 112, 48, 55, 121};
                 printerService.printBytes(Configuraciones.impresoraTicket, openCashDrawer);
+            } catch (Exception e) {
+                paramsAlertImpresora.put("texto", "Impresora fuera de linea, "+Configuraciones.impresoraTicket);
+                Funciones.displayFP(paramsAlertImpresora, getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
+                return;
+            }
 
-            }
-            else {
-                Funciones.llenarPDF("formatos/venta2.pdf", valoresPDF, true, null);
-            }
+
+
+
+
+            //Funciones.llenarPDF("formatos/venta2.pdf", valoresPDF, true, null);
 
 
 
@@ -619,6 +639,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         listasVentasMostrador.get(nVentaSelect).clear();
         ListaDeClientes.getSelectionModel().clearSelection();
         listasVentaCliente.set(nVentaSelect,-1);
+        Tabs.getTabs().get(nVentaSelect).setText("Mostrador");
         actualizarCliente();
         calcularTotal();
     }
