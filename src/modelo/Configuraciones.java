@@ -98,11 +98,14 @@ public class Configuraciones {
     public static String corteCajaErrorNoClaveSupervisor = "Falta clave de supervisor";
     public static String corteCajaErrorNoMonto = "Falta monto inicial";
     public static String corteCajaErrorNoCajaSeleccionada = "Falta seleccionar caja";
+    public static String corteCajaErrorClavesIncorrectas = "Las claves son incorrectas";
 
 
     public static String formaPagoEfectivoRecibido = "Cantidad de efectivo recibido";
     public static String formaPagoIdTransaccion = "Id de transacción";
     public static String formaPagoFaltaEfectivo = "Falta efectivo";
+    public static String formaPagoFaltaTransaccion = "Falta transacción";
+    public static String formaPagoVerificar = "Verifique los valores";
     public static String formaPagoCambio = "Cambio: ";
     public static double formaPagoMonto;
 

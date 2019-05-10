@@ -156,6 +156,9 @@ public class CorteCaja extends Controlador implements Initializable {
             Configuraciones.corteCajaValido = true;
 
             cerrar();
+        } else {
+            Error.setText(Configuraciones.corteCajaErrorClavesIncorrectas);
+            return;
         }
         Error.setVisible(false);
 

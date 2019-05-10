@@ -34,12 +34,20 @@ public class FormaPago extends Controlador {
     @FXML
     private ToggleButton FormaTarjeta;
 
+    @FXML
+    private Label Error;
+
+
     private boolean pagoValido;
 
     @FXML
     void Aceptar(ActionEvent event) {
-        if(!pagoValido)
+        Error.setVisible(false);
+        if( (!pagoValido) &&  Pago.getText().length()==0 ) {
+            Error.setVisible(true);
+            Error.setText(Configuraciones.formaPagoVerificar);
             return;
+        }
         Configuraciones.ventaAceptada=true;
         cerrar();
     }
@@ -65,26 +73,31 @@ public class FormaPago extends Controlador {
 
     @FXML
     void pagando(KeyEvent event) {
+        Error.setVisible(false);
         pagoValido = false;
-        if(Pago.getText().length()==0)
+        if( (Pago.getText().length()==0)&&FormaEfectivo.isSelected())
             return;
         if(FormaEfectivo.isSelected()) {
             if (Double.valueOf(Pago.getText()) >= Configuraciones.formaPagoMonto) {
                 Cambio.setVisible(true);
                 double cambio = Double.valueOf(Pago.getText()) - Configuraciones.formaPagoMonto;
-                Cambio.setText(Configuraciones.formaPagoCambio + String.valueOf(cambio));
+                Cambio.setText(Configuraciones.formaPagoCambio + String.valueOf(Funciones.fixN(cambio,2)));
                 pagoValido = true;
             } else {
-                Cambio.setText(Configuraciones.formaPagoFaltaEfectivo);
+                Error.setVisible(true);
+                Error.setText(Configuraciones.formaPagoFaltaEfectivo);
                 return;
             }
         }
         else {
-                if( !Pago.getText().isEmpty()) {
-                    Cambio.setVisible(false);
+            Cambio.setVisible(false);
+
+            if( !Pago.getText().isEmpty()) {
                     pagoValido = true;
                 }
                 else {
+                    Error.setVisible(true);
+                    Error.setText(Configuraciones.formaPagoFaltaTransaccion);
                     pagoValido = false;
                 }
         }
@@ -96,6 +109,7 @@ public class FormaPago extends Controlador {
     public void init() {
 
         Cantidad.setText(Funciones.valorAmoneda(Configuraciones.formaPagoMonto));
+        Error.setVisible(false);
 
 
 

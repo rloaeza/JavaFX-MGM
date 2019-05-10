@@ -46,5 +46,6 @@
             </ImageView>
          </graphic>
       </ToggleButton>
+      <Label fx:id="Error" alignment="CENTER" layoutY="289.0" prefHeight="24.0" prefWidth="818.0" style="-fx-background-color: #ef5728;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    </children>
 </AnchorPane>
