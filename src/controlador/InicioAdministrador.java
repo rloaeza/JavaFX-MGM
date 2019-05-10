@@ -58,7 +58,9 @@ public class InicioAdministrador extends  Controlador implements Initializable {
 
         Parent root = FXMLLoader.load(getClass().getResource("/vista/inicio_sesion.fxml"));
         Stage escenario = (Stage) Pane.getScene().getWindow();
-        escenario.setScene(new Scene(root));
+        double h = escenario.getHeight();
+        double w = escenario.getWidth();
+        escenario.setScene(new Scene(root, w, h));
         escenario.setMaximized(true);
 
 
