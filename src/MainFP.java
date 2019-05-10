@@ -18,7 +18,7 @@ import javax.swing.JFrame;
 import javax.swing.JRadioButton;
 import javax.swing.JTextArea;
 
-public class ZKDemo extends JFrame{
+public class MainFP extends JFrame{
     /**
      *
      */
@@ -644,6 +644,6 @@ public class ZKDemo extends JFrame{
     }
 
     public static void main(String[] args) {
-        new ZKDemo().launchFrame();
+        new MainFP().launchFrame();
     }
 }

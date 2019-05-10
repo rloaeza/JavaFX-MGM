@@ -1,6 +1,6 @@
 import modelo.PrinterService;
 
-public class Main3 {
+public class MainPrint {
 
     public static void main(String[] args) throws Exception {
 
