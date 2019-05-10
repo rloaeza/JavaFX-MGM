@@ -55,6 +55,7 @@ public class InicioSesion  extends Controlador{
             Configuraciones.nombrePersonal=usuario.getApellidos()+", "+usuario.getNombre();
             Configuraciones.clavePersonal = usuario.getClave();
             Configuraciones.cajaAbierta=false;
+            Configuraciones.tipoUsuarioActivo = usuario.getTipo();
             //Usuario de venta
             if(usuario.getTipo()==Configuraciones.tipoVendedor) {
                 Configuraciones.tipoUsuarioActivo = Configuraciones.tipoVendedor;
@@ -91,6 +92,7 @@ public class InicioSesion  extends Controlador{
                     if (!Configuraciones.corteCajaValido)
                         return;
                     Configuraciones.cajaAbierta = true;
+
 
                 }
 
