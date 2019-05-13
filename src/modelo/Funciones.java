@@ -45,10 +45,7 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.text.NumberFormat;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 public class Funciones {
 
@@ -314,7 +311,7 @@ public class Funciones {
         document.close();
     }
 
-    public static void llenarPDF(String archivoOrigen,  ArrayList<PDFvalores>  valores, boolean imprimir, String archivoDestino) throws IOException, PrinterException {
+    public static void llenarPDF(String archivoOrigen,  ArrayList<PDFvalores>  valores, boolean imprimir, String archivoDestino) throws Exception {
         File file = new File(archivoOrigen);
         PDDocument document = PDDocument.load(file);
         llenarPDF(document.getDocumentCatalog().getAcroForm(), valores);
@@ -340,13 +337,32 @@ public class Funciones {
             }
         }
     }
-    private static void imprimirPDF(PDDocument pdf) throws PrinterException {
+    private static void imprimirPDF(PDDocument pdf) throws Exception {
         PDFPrintable printable = new PDFPrintable(pdf, Scaling.SHRINK_TO_FIT);
 
-
-        PrinterJob job = PrinterJob.getPrinterJob();
+  /*      PrinterJob job = PrinterJob.getPrinterJob();
         job.setPrintable(printable);
         job.print();
+
+*/
+
+        PrinterService printerService = new PrinterService();
+        List<String> listPrinters = printerService.getPrinters();
+        boolean impresoraValida = false;
+        for(String printer : listPrinters) {
+            if( printer.contains(Configuraciones.impresoraReporte)) {
+                impresoraValida = true;
+
+            }
+        }
+
+        if(impresoraValida)
+            printerService.printPDF(Configuraciones.impresoraReporte, printable);
+
+
+
+
+
     }
 
     public static double fixN(double n, int lugares) {

@@ -494,15 +494,18 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
         String cliente="Mostrador";
+        int idPaciente = -1;
 
         if( ListaDeClientes.getSelectionModel().getSelectedIndex()!=-1) {
 
 
             Pacientes p = ListaDeClientes.getSelectionModel().getSelectedItem();
             cliente = p.getApellidos()+", "+p.getNombre();
+            idPaciente = p.getIdPaciente();
         }
 
 
+        System.out.println("idPaciente="+idPaciente);
         ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Venta Productos: Agregar");
@@ -510,7 +513,8 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         paramsJSON.put("subtotal", Configuraciones.ventaMostradorSubTotal);
         paramsJSON.put("iva", "iva");
         paramsJSON.put("total", Configuraciones.ventaMostradorTotal);
-        paramsJSON.put("idPersonal", 1);
+        paramsJSON.put("idPersonal", Configuraciones.idPersonal);
+        paramsJSON.put("idPaciente", idPaciente);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
 
         String strCantidades="";

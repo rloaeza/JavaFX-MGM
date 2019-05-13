@@ -1,11 +1,16 @@
 package modelo;
 
+
+import org.apache.pdfbox.printing.PDFPrintable;
+import org.apache.pdfbox.printing.Scaling;
+
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.print.PageFormat;
 import java.awt.print.Printable;
 import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
 import java.io.FileInputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -59,6 +64,31 @@ public class PrinterService implements Printable {
 
         return PAGE_EXISTS;
     }
+
+
+
+    public void printPDF(String printerName, PDFPrintable pdfPrintable) throws Exception {
+        try {
+            DocFlavor flavor = DocFlavor.BYTE_ARRAY.AUTOSENSE;
+            PrintRequestAttributeSet pras = new HashPrintRequestAttributeSet();
+            PrintService printService[] = PrintServiceLookup.lookupPrintServices(flavor, pras);
+            PrintService service = findPrintService(printerName, printService);
+
+            PrinterJob job = PrinterJob.getPrinterJob();
+            job.setPrintService(service);
+
+            job.setPrintable(pdfPrintable);
+            job.print();
+
+
+        } catch (Exception e) {
+            throw new Exception(e.toString());
+
+        }
+
+    }
+
+
 
     public void printString(String printerName, String text) throws Exception {
         try {

@@ -103,6 +103,18 @@ public class InicioSesion  extends Controlador{
                 Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new InicioAdministrador());
             } else {
 
+
+                Map<String, Object> paramsAlert = new LinkedHashMap<>();
+                paramsAlert.put("titulo", "Abrir caja");
+
+                paramsAlert.put("vista", "/vista/selec_caja.fxml");
+
+                Configuraciones.corteCajaValido = false;
+                Funciones.display(paramsAlert, getClass().getResource("/vista/selec_caja.fxml"), new SelecCaja(), 762, 300);
+                if (!Configuraciones.corteCajaValido)
+                    return;
+                Configuraciones.cajaAbierta = true;
+
                 Funciones.CargarVista(Pane, getClass().getResource("/vista/inicio_administrador.fxml"), params, new InicioAdministrador());
             }
         }

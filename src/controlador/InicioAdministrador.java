@@ -200,14 +200,42 @@ public class InicioAdministrador extends  Controlador implements Initializable {
 
     @FXML
     void ReporteExistenciaAlmacen(ActionEvent event) throws IOException {
+        /*
         Map<String,Object> paramsVista = new LinkedHashMap<>();
-        paramsVista.put("idClinica", 1);
-        paramsVista.put("vista", "/vista/vista_reporte.fxml" );
+        paramsVista.put("idClinica", Configuraciones.idClinica);
+        paramsVista.put("vista", "/vista/vista_reporte_existencia.fxml" );
         paramsVista.put("clinicaDescripcion", Configuraciones.clinicaDescripcion );
         paramsVista.put("titulos", new String[]{"Producto:70:CENTER-LEFT", "Cantidad Minima:20:CENTER", "Existencia:10:CENTER"});
         paramsVista.put("pdf", "formatos/existencia.pdf");
         paramsVista.put("reporte", "Reportes: Existencia en almacen");
-        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReporte());
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReporteExistencia());
+
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", Configuraciones.idClinica);
+        paramsVista.put("vista", "/vista/vista_reporte_general.fxml" );
+        paramsVista.put("Titulo", Configuraciones.clinicaDescripcion );
+        paramsVista.put("titulos", new String[]{"Id:10:CENTER","Vendedor:70:CENTER-LEFT", "Ventas:20:CENTER"});
+        paramsVista.put("pdf", "formatos/reporte_general.pdf");
+        paramsVista.put("reporte", "Reporte: General");
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReporteExistencia());
+
+
+
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", Configuraciones.idClinica);
+        paramsVista.put("vista", "/vista/vista_reporte_personal.fxml" );
+        paramsVista.put("Titulo", Configuraciones.clinicaDescripcion );
+        paramsVista.put("titulos", new String[]{"Fecha:30:CENTER","Id Venta:20:CENTER","Cliente:70:CENTER-LEFT", "Productos:20:CENTER", "Total:20:CENTER"});
+        paramsVista.put("pdf", "formatos/reporte_personal.pdf");
+        paramsVista.put("reporte", "Reporte: Personal");
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReporteExistencia());
+*/
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", Configuraciones.idClinica);
+        paramsVista.put("vista", "/vista/vista_reportes.fxml" );
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReportes());
+
+
     }
 
     @FXML

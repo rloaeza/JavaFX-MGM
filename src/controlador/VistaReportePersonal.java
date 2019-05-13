@@ -12,28 +12,25 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.TreeTableView;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import javafx.util.Callback;
+import modelo.Configuraciones;
 import modelo.Funciones;
 import modelo.PDFvalores;
-import modelo.ProductosConCosto;
-import modelo.ReporteExistenciaAlmacen;
+import modelo.Personal;
 
-import java.awt.print.PrinterException;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class VistaReporte extends Controlador implements Initializable {
+public class VistaReportePersonal extends Controlador implements Initializable {
+
 
     @FXML
     private AnchorPane Pane;
@@ -41,13 +38,38 @@ public class VistaReporte extends Controlador implements Initializable {
     @FXML
     private JFXTreeTableView<modelo.VistaReporte> TablaReporte;
 
-
+    @FXML
+    private Label Titulo;
 
     @FXML
-    private Label titulo;
+    private Label Descripcion;
 
     @FXML
-    private Label descripcion;
+    private JFXDatePicker FechaInicio;
+
+    @FXML
+    private JFXDatePicker FechaFin;
+
+    @FXML
+    private JFXComboBox<Personal> CBPersonal;
+
+    Map<String,Object> paramsJSONReporte = new LinkedHashMap<>();
+
+    @FXML
+    void generarReporte(ActionEvent event) throws IOException {
+        paramsJSONReporte.clear();
+        paramsJSONReporte.put("fechaInicial", FechaInicio.getValue());
+        paramsJSONReporte.put("fechaFinal", FechaFin.getValue());
+
+        paramsJSONReporte.put("idPersonal", CBPersonal.getValue().getIdPersonal());
+        Descripcion.setText(
+
+        "Vendedor: " +CBPersonal.getValue().toString() +
+        " Periodo "+FechaInicio.getValue()+" a "  + FechaFin.getValue());
+
+        cargarDatos();
+    }
+
 
     @FXML
     void imprimir(ActionEvent event) {
@@ -61,6 +83,7 @@ public class VistaReporte extends Controlador implements Initializable {
 
     @FXML
     void aceptar(ActionEvent event) throws IOException {
+
         quitarVistas();
         Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new InicioAdministrador());
 
@@ -91,8 +114,9 @@ public class VistaReporte extends Controlador implements Initializable {
             valoresPDF.add(new PDFvalores(titulo, valorPDf.get(titulo)));
         }
 
-        System.out.println("titulo="+(String) parametros.get(0).get("clinicaDescripcion"));
-        valoresPDF.add(new PDFvalores("Descripcion", (String) parametros.get(0).get("clinicaDescripcion")));
+
+        valoresPDF.add(new PDFvalores("Titulo", (String) parametros.get(0).get("Titulo")));
+        valoresPDF.add(new PDFvalores("Informacion", Descripcion.getText()));
 
 
         File file = null;
@@ -115,10 +139,10 @@ public class VistaReporte extends Controlador implements Initializable {
 
 
         try {
+
+
             Funciones.llenarPDF((String) parametros.get(0).get("pdf"),  valoresPDF, imprimir, guardar?destino:null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (PrinterException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -132,7 +156,7 @@ public class VistaReporte extends Controlador implements Initializable {
 
         titulos= (String[]) parametros.get(0).get("titulos");
 
-        titulo.setText((String) parametros.get(0).get("clinicaDescripcion"));
+        Titulo.setText((String) parametros.get(0).get("clinicaDescripcion"));
 
         double anchoTabla = TablaReporte.getPrefWidth();
 
@@ -154,12 +178,18 @@ public class VistaReporte extends Controlador implements Initializable {
         TablaReporte.setEditable(true);
         TablaReporte.setShowRoot(false);
         TablaReporte.setColumnResizePolicy(TreeTableView.UNCONSTRAINED_RESIZE_POLICY);
+
+        Titulo.setText("Reporte personal");
+        FechaInicio.setValue(LocalDate.now().minusMonths(1) );
+        FechaFin.setValue(LocalDate.now() );
+
+
         try {
-            cargarDatos();
+            cargarDatosPersonal();
+            generarReporte(null);
         } catch (IOException  e) {
             e.printStackTrace();
         }
-
 
     }
 
@@ -171,11 +201,11 @@ public class VistaReporte extends Controlador implements Initializable {
 
     private void cargarDatos() throws IOException {
         String actividad = (String) parametros.get(0).get("reporte");
+        listaReporte.clear();
+        paramsJSONReporte.put("Actividad", actividad);
+        paramsJSONReporte.put("idClinica", Configuraciones.idClinica);
+        JsonArray rootArray = Funciones.consultarBD(paramsJSONReporte);
 
-        Map<String,Object> paramsJSON = new LinkedHashMap<>();
-        paramsJSON.put("Actividad", actividad);
-        paramsJSON.put("idClinica", parametros.get(0).get("idClinica").toString());
-        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
             for(int i = 1; i< t; i++) {
@@ -184,6 +214,27 @@ public class VistaReporte extends Controlador implements Initializable {
                 listaReporte.add(new modelo.VistaReporte(v));
             }
         }
+    }
+
+
+    private void cargarDatosPersonal() throws IOException {
+
+        ObservableList<modelo.Personal> listaPersonal = FXCollections.observableArrayList();
+
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Personal: Lista");
+        paramsJSON.put("idClinica", Configuraciones.idClinica);
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            int t = rootArray.size();
+            for(int i = 1; i< t; i++) {
+                listaPersonal.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), modelo.Personal.class) );
+            }
+        }
+
+        CBPersonal.setItems(listaPersonal);
+        CBPersonal.getSelectionModel().select(0);
+
     }
 
 }
