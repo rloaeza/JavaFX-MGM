@@ -113,7 +113,7 @@ public class InicioSesion  extends Controlador{
                 Funciones.display(paramsAlert, getClass().getResource("/vista/selec_caja.fxml"), new SelecCaja(), 762, 300);
                 if (!Configuraciones.corteCajaValido)
                     return;
-                Configuraciones.cajaAbierta = true;
+                Configuraciones.cajaAbierta = false;
 
                 Funciones.CargarVista(Pane, getClass().getResource("/vista/inicio_administrador.fxml"), params, new InicioAdministrador());
             }
