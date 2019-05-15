@@ -101,8 +101,9 @@ public class Configuraciones {
     public static String corteCajaErrorClavesIncorrectas = "Las claves son incorrectas";
 
 
-    public static String formaPagoEfectivoRecibido = "Cantidad de efectivo recibido";
+    public static String formaPagoMontoRecibido = "Monto recibido";
     public static String formaPagoIdTransaccion = "Id de transacción";
+
     public static String formaPagoFaltaEfectivo = "Falta efectivo";
     public static String formaPagoFaltaTransaccion = "Falta transacción";
     public static String formaPagoVerificar = "Verifique los valores";

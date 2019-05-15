@@ -24,7 +24,6 @@
             <Font size="18.0" />
          </font>
       </JFXTextField>
-      <Label fx:id="Cambio" layoutX="482.0" layoutY="237.0" prefHeight="37.0" prefWidth="256.0" text="Cambio:" AnchorPane.rightAnchor="80.0" />
       <JFXButton buttonType="RAISED" layoutX="482.0" layoutY="231.0" onAction="#Aceptar" prefHeight="44.0" prefWidth="119.0" style="-fx-background-color: lightgreen;" text="Aceptar" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="217.0" />
       <JFXButton buttonType="RAISED" layoutX="619.0" layoutY="231.0" onAction="#Cancelar" prefHeight="44.0" prefWidth="119.0" style="-fx-background-color: orange;" text="Cancelar" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="80.0" />
       <ToggleButton fx:id="FormaEfectivo" contentDisplay="TOP" layoutX="482.0" layoutY="30.0" mnemonicParsing="false" onAction="#SeleccionarFormaPago" prefHeight="45.0" prefWidth="110.0" selected="true" text="Efectivo">

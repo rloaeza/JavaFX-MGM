@@ -34,8 +34,6 @@ public class FormaPago extends Controlador {
     @FXML
     private JFXTextField Descripcion;
 
-    @FXML
-    private Label Cambio;
 
     @FXML
     private ToggleButton FormaEfectivo;
@@ -70,7 +68,7 @@ public class FormaPago extends Controlador {
             total += c.getMonto();
         }
         if( total < Configuraciones.formaPagoMonto) {
-            Error.setText(Configuraciones.formaPagoFaltaEfectivo);
+            Error.setText(Configuraciones.formaPagoFaltaEfectivo+ ", " + Funciones.fixN(Configuraciones.formaPagoMonto-total,2));
             Error.setVisible(true);
             return (pagoValido=false);
         }
@@ -107,18 +105,17 @@ public class FormaPago extends Controlador {
     void SeleccionarFormaPago(ActionEvent event) {
         Descripcion.setText("");
         Pago.setText("");
+        Pago.setPromptText(Configuraciones.formaPagoMontoRecibido);
         if(FormaEfectivo.isSelected()) {
-            Cambio.setVisible(true);
-            Pago.setPromptText(Configuraciones.formaPagoEfectivoRecibido);
             Descripcion.setPromptText("Efectivo");
             Descripcion.setEditable(false);
+            Descripcion.setVisible(false);
         }
         else {
             FormaTarjeta.setSelected(true);
-            Cambio.setVisible(false);
-            Pago.setPromptText(Configuraciones.formaPagoIdTransaccion);
-            Descripcion.setPromptText("Transaccion");
+            Descripcion.setPromptText(Configuraciones.formaPagoIdTransaccion);
             Descripcion.setEditable(true);
+            Descripcion.setVisible(true);
         }
     }
 
@@ -141,6 +138,7 @@ public class FormaPago extends Controlador {
 
 
         ListaPagos.setItems(cobros);
+        SeleccionarFormaPago(null);
 
 
     }

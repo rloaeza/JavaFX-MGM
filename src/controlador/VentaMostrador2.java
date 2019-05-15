@@ -485,7 +485,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         Configuraciones.ventaAceptada=false;
 
         Configuraciones.formaPagoMonto = Configuraciones.ventaMostradorTotal;
-        Funciones.display(paramsAlert, getClass().getResource("/vista/forma_pago.fxml"), new FormaPago() ,818, 311);
+        Funciones.display(paramsAlert, getClass().getResource("/vista/forma_pago.fxml"), new FormaPago() ,818, 370);
 
         if(!Configuraciones.ventaAceptada)
             return;
