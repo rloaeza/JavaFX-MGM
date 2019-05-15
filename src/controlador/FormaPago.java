@@ -1,6 +1,7 @@
 package controlador;
 
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -11,10 +12,13 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import modelo.Cobro;
 import modelo.Configuraciones;
 import modelo.Funciones;
 
 public class FormaPago extends Controlador {
+
+    ObservableList<Cobro> cobros;
 
     @FXML
     private AnchorPane Pane;
@@ -23,7 +27,12 @@ public class FormaPago extends Controlador {
     private Label Cantidad;
 
     @FXML
+    private JFXListView<Cobro> ListaPagos;
+    @FXML
     private JFXTextField Pago;
+
+    @FXML
+    private JFXTextField Descripcion;
 
     @FXML
     private Label Cambio;
@@ -38,6 +47,42 @@ public class FormaPago extends Controlador {
     private Label Error;
 
 
+    @FXML
+    void agregar(ActionEvent event) {
+        int formaPago = FormaEfectivo.isSelected()?1:2;
+        cobros.add(new Cobro(
+                -1, -1, formaPago, Double.valueOf(Pago.getText()), Descripcion.getText()
+        ));
+        SeleccionarFormaPago(null);
+        calcular();
+    }
+
+    @FXML
+    void eliminar(ActionEvent event) {
+        cobros.remove(ListaPagos.getSelectionModel().getSelectedIndex() );
+        SeleccionarFormaPago(null);
+        calcular();
+    }
+
+    private boolean calcular() {
+        double total = 0;
+        for(Cobro c : cobros) {
+            total += c.getMonto();
+        }
+        if( total < Configuraciones.formaPagoMonto) {
+            Error.setText(Configuraciones.formaPagoFaltaEfectivo);
+            Error.setVisible(true);
+            return (pagoValido=false);
+        }
+
+        if(total > Configuraciones.formaPagoMonto) {
+            Error.setVisible(true);
+            Error.setText(Configuraciones.formaPagoCambio+Funciones.fixN(total-Configuraciones.formaPagoMonto,2));
+            return (pagoValido=true);
+        }
+
+        return (pagoValido=true);
+    }
     private boolean pagoValido;
 
     @FXML
@@ -60,47 +105,28 @@ public class FormaPago extends Controlador {
 
     @FXML
     void SeleccionarFormaPago(ActionEvent event) {
+        Descripcion.setText("");
+        Pago.setText("");
         if(FormaEfectivo.isSelected()) {
             Cambio.setVisible(true);
             Pago.setPromptText(Configuraciones.formaPagoEfectivoRecibido);
+            Descripcion.setPromptText("Efectivo");
+            Descripcion.setEditable(false);
         }
         else {
             FormaTarjeta.setSelected(true);
             Cambio.setVisible(false);
             Pago.setPromptText(Configuraciones.formaPagoIdTransaccion);
+            Descripcion.setPromptText("Transaccion");
+            Descripcion.setEditable(true);
         }
     }
 
     @FXML
     void pagando(KeyEvent event) {
         Error.setVisible(false);
-        pagoValido = false;
-        if( (Pago.getText().length()==0)&&FormaEfectivo.isSelected())
-            return;
-        if(FormaEfectivo.isSelected()) {
-            if (Double.valueOf(Pago.getText()) >= Configuraciones.formaPagoMonto) {
-                Cambio.setVisible(true);
-                double cambio = Double.valueOf(Pago.getText()) - Configuraciones.formaPagoMonto;
-                Cambio.setText(Configuraciones.formaPagoCambio + String.valueOf(Funciones.fixN(cambio,2)));
-                pagoValido = true;
-            } else {
-                Error.setVisible(true);
-                Error.setText(Configuraciones.formaPagoFaltaEfectivo);
-                return;
-            }
-        }
-        else {
-            Cambio.setVisible(false);
+        pagoValido = calcular();
 
-            if( !Pago.getText().isEmpty()) {
-                    pagoValido = true;
-                }
-                else {
-                    Error.setVisible(true);
-                    Error.setText(Configuraciones.formaPagoFaltaTransaccion);
-                    pagoValido = false;
-                }
-        }
 
 
 
@@ -111,6 +137,10 @@ public class FormaPago extends Controlador {
         Cantidad.setText(Funciones.valorAmoneda(Configuraciones.formaPagoMonto));
         Error.setVisible(false);
 
+        cobros = FXCollections.observableArrayList();
+
+
+        ListaPagos.setItems(cobros);
 
 
     }
