@@ -505,7 +505,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         }
 
 
-        System.out.println("idPaciente="+idPaciente);
+       // System.out.println("idPaciente="+idPaciente);
         ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Venta Productos: Agregar");
