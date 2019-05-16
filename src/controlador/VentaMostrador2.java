@@ -485,7 +485,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         Configuraciones.ventaAceptada=false;
 
         Configuraciones.formaPagoMonto = Configuraciones.ventaMostradorTotal;
-        Funciones.display(paramsAlert, getClass().getResource("/vista/forma_pago.fxml"), new FormaPago() ,818, 370);
+        Funciones.display(paramsAlert, getClass().getResource("/vista/forma_pago.fxml"), new FormaPago() ,818, 367);
 
         if(!Configuraciones.ventaAceptada)
             return;
@@ -527,6 +527,24 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             valoresPDF.add(new PDFvalores("subtotal", Configuraciones.ventaMostradorSubTotal+""));
 
             int ultimoInsertado = rootArray.get(1).getAsJsonObject().get(Funciones.ultimoInsertado).getAsInt();
+
+            /**
+             * Agregar cobros a la bd
+             */
+
+            for(Cobro c : Configuraciones.formaPagoCobros) {
+                Map<String,Object> paramsJSON_FPC = new LinkedHashMap<>();
+                paramsJSON_FPC.put("Actividad", "Cobros de venta: Agregar");
+                paramsJSON_FPC.put("idVentaProductos", ultimoInsertado);
+                paramsJSON_FPC.put("formaPago", c.getFormaPago());
+                paramsJSON_FPC.put("monto", c.getMonto());
+                paramsJSON_FPC.put("descripcion", c.getDescripcion());
+                Funciones.consultarBD(paramsJSON_FPC);
+            }
+
+
+
+
 
 
             String ticketSTR=Configuraciones.ticketTituloClinicaThermal+

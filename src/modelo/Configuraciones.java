@@ -1,5 +1,7 @@
 package modelo;
 
+import javafx.collections.ObservableList;
+
 public class Configuraciones {
     public static int idPersonal;
     public static String nombrePersonal;
@@ -109,6 +111,10 @@ public class Configuraciones {
     public static String formaPagoVerificar = "Verifique los valores";
     public static String formaPagoCambio = "Cambio: ";
     public static double formaPagoMonto;
+    public static ObservableList<Cobro> formaPagoCobros;
+
+
+
 
 
     public static double ventaMostradorSubTotal;
@@ -118,6 +124,9 @@ public class Configuraciones {
 
 
 
+
+
+    public static String ventaEditarNoMasProductos = "Error, no se pueden agregar mas productos";
 
 
     //Finger print

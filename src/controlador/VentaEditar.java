@@ -11,6 +11,7 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
@@ -27,10 +28,7 @@ import modelo.*;
 import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class VentaEditar extends Controlador implements Initializable {
     private int nVenta=1;
@@ -45,7 +43,13 @@ public class VentaEditar extends Controlador implements Initializable {
 
     private ArrayList<ObservableList<VentaMostrador>> listasVentasMostrador = new ArrayList<>();
 
+    @FXML
+    private JFXListView<Cobro> ListaCobros;
 
+
+    private ArrayList<ObservableList<Cobro>> listaCobros = new ArrayList<>();
+
+    private ArrayList<List<VentaMostradorQuitar>> productosActualizar = new ArrayList<>();
 
     @FXML
     private JFXTreeTableView<VentaMostrador> TablaVenta;
@@ -95,6 +99,8 @@ public class VentaEditar extends Controlador implements Initializable {
             }
         }
 
+        ListaCobros.setItems(listaCobros.get(nVentaSelect));
+
     }
 
 
@@ -109,10 +115,27 @@ public class VentaEditar extends Controlador implements Initializable {
 
         tab.setContent(TablasVentas.get(TablasVentas.size()-1));
 
+
+
+        List<VentaMostradorQuitar> l = new ArrayList<>();
+        productosActualizar.add(l);
+
         Tabs.getTabs().add(tab);
         Tabs.getSelectionModel().select(Tabs.getTabs().size()-1);
         calcularTotal();
 
+
+    }
+
+    private void quitarProductos(int nv, int idVentaProductosDetalle, int cantidad) {
+        for(VentaMostradorQuitar vmq : productosActualizar.get(nv)) {
+            if(vmq.getIdVentaProductosDetalle() == idVentaProductosDetalle) {
+                vmq.setCantidad(cantidad);
+                return;
+            }
+        }
+        VentaMostradorQuitar vmq = new VentaMostradorQuitar(idVentaProductosDetalle, cantidad);
+        productosActualizar.get(nv).add(vmq);
 
     }
 
@@ -134,7 +157,7 @@ public class VentaEditar extends Controlador implements Initializable {
 
         JFXTreeTableColumn<VentaMostrador, String> columnCantidad = new JFXTreeTableColumn<>("Cant");
         columnCantidad.setPrefWidth(100);
-        columnCantidad.setCellValueFactory((TreeTableColumn.CellDataFeatures<VentaMostrador, String> param) ->  {
+        columnCantidad.setCellValueFactory((TreeTableColumn.CellDataFeatures<modelo.VentaMostrador, String> param) ->  {
             if (columnCantidad.validateValue(param)) {
                 return new ReadOnlyObjectWrapper<String>(param.getValue().getValue().getCantidad());
             }
@@ -144,10 +167,71 @@ public class VentaEditar extends Controlador implements Initializable {
             }
         });
 
-        columnCantidad.setCellFactory((TreeTableColumn<VentaMostrador, String> param) ->
+        columnCantidad.setCellFactory((TreeTableColumn<modelo.VentaMostrador, String> param) ->
                 new GenericEditableTreeTableCell<>(new TextFieldEditorBuilder())
         );
         columnCantidad.setStyle("-fx-alignment: CENTER;");
+
+
+
+        columnCantidad.setOnEditCommit((TreeTableColumn.CellEditEvent<VentaMostrador, String> t) -> {
+
+                    int index = t.getTreeTablePosition().getRow();
+
+                    double costo = listasVentasMostrador.get(nVentaSelect).get(index).getCosto();
+
+                    int cantidadNueva = Integer.valueOf(t.getNewValue());
+                    int cantidadActual = listasVentasMostrador.get(nVentaSelect).get(index).getCant();
+                    int idProducto = listasVentasMostrador.get(nVentaSelect).get(index).getIdProducto();
+                    int idVentaProductosDetalle = listasVentasMostrador.get(nVentaSelect).get(index).getIdVentaProductosDetalle();
+                    String producto = listasVentasMostrador.get(nVentaSelect).get(index).getProducto();
+
+
+                    if(cantidadNueva<cantidadActual) {
+
+
+                        modelo.VentaMostrador vM = new modelo.VentaMostrador(idProducto, cantidadNueva,producto,costo, idVentaProductosDetalle);
+                        listasVentasMostrador.get(nVentaSelect).remove(index);
+                        listasVentasMostrador.get(nVentaSelect).add( vM);
+                        t.getTreeTableView().getSelectionModel().select(listasVentasMostrador.get(nVentaSelect).size()-1);
+
+
+
+                        if(cantidadNueva<=0) {
+                            listasVentasMostrador.get(nVentaSelect).remove(listasVentasMostrador.get(nVentaSelect).size()-1);
+                            cantidadNueva=0;
+                        }
+
+
+                        quitarProductos(nVentaSelect, idVentaProductosDetalle, cantidadNueva);
+
+                    }
+                    else if(cantidadNueva>cantidadActual) {
+
+                        Map<String,Object> paramsAlert = new LinkedHashMap<>();
+                        paramsAlert.put("titulo", "Error");
+                        paramsAlert.put("texto", Configuraciones.ventaEditarNoMasProductos);
+                        paramsAlert.put("tiempo", "3");
+                        paramsAlert.put("vista", "/vista/alert_box.fxml");
+                        try {
+                            Funciones.displayFP(paramsAlert, getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+
+                        modelo.VentaMostrador vM = new modelo.VentaMostrador(idProducto, cantidadActual,producto,costo, idVentaProductosDetalle);
+                        listasVentasMostrador.get(nVentaSelect).remove(index);
+                        listasVentasMostrador.get(nVentaSelect).add( vM);
+                        t.getTreeTableView().getSelectionModel().select(listasVentasMostrador.get(nVentaSelect).size()-1);
+                    }
+
+
+                    calcularTotal();
+
+
+                }
+        );
+
 
 
 
@@ -187,6 +271,9 @@ public class VentaEditar extends Controlador implements Initializable {
 
 
 
+
+
+
         return fxTreeTableView;
     }
 
@@ -196,6 +283,13 @@ public class VentaEditar extends Controlador implements Initializable {
         int index = Tabs.getSelectionModel().getSelectedIndex();
         Tabs.getTabs().remove(index);
         listasVentasMostrador.remove(index);
+        listaCobros.remove(index);
+
+        ListaCobros.getItems().clear();
+
+        productosActualizar.remove(index);
+
+
         nVenta--;
         if(nVenta==1) {
             agregarTab(null);
@@ -243,7 +337,7 @@ public class VentaEditar extends Controlador implements Initializable {
 
 
     @FXML
-    void aceptarVenta(ActionEvent event) throws IOException, PrinterException {
+    void regresar(ActionEvent event) throws IOException, PrinterException {
 
         quitarVistas(1);
         Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new InicioAdministrador());
@@ -253,7 +347,7 @@ public class VentaEditar extends Controlador implements Initializable {
 
     }
 
-
+/**
     @FXML
     void agregar_quitar(KeyEvent event) {
         if(event.getText().contains("+")) {
@@ -264,9 +358,70 @@ public class VentaEditar extends Controlador implements Initializable {
         }
     }
 
+
+ */
+
+
     @FXML
-    void eliminar(ActionEvent event) throws IOException {
+    void imprimir(ActionEvent event) throws IOException {
+
+    }
+
+    @FXML
+    void cerrar(ActionEvent event) throws IOException {
+        eliminarTab(null);
+
+    }
+    @FXML
+    void eliminarVenta(ActionEvent event) throws IOException {
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+        int idVentaProductos = ListaDeProductos.getSelectionModel().getSelectedItem().getIdVentaProductos();
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Venta Productos: Eliminar");
+        paramsJSON.put("idVentaProductos", idVentaProductos);
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+
+        ListaDeProductos.getItems().remove(ListaDeProductos.getSelectionModel().getSelectedIndex());
+        eliminarTab(null);
+
+
+
+
+    }
+
+    @FXML
+    void actualizar(ActionEvent event) throws IOException {
+
+
+        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+        for(VentaMostradorQuitar vmq : productosActualizar.get(nVentaSelect)) {
+
+            Map<String,Object> paramsJSON_actualizar = new LinkedHashMap<>();
+            paramsJSON_actualizar.put("Actividad", "Venta Productos: Editar Venta Detalles");
+            paramsJSON_actualizar.put("idVentaProductosDetalle", vmq.getIdVentaProductosDetalle() );
+            paramsJSON_actualizar.put("cantidad", vmq.getCantidad() );
+            JsonArray rootArray = Funciones.consultarBD(paramsJSON_actualizar);
+
+        }
+
+
+        VentaLista vl = ListaDeProductos.getSelectionModel().getSelectedItem();
+        vl.setTotal(Configuraciones.ventaMostradorTotal);
+        vl.setCantidadProductos(Integer.valueOf(CantidadProductos.getText()));
+
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Venta Productos: Editar Venta");
+        paramsJSON.put("idVentaProductos", vl.getIdVentaProductos());
+        paramsJSON.put("cantidadProductos", vl.getCantidadProductos());
+        paramsJSON.put("total", vl.getTotal());
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+
+
+
+
+
+
+        /*
         System.out.println("tab="+nVentaSelect+", fila="+TablasVentas.get(nVentaSelect).getSelectionModel().getSelectedIndex());
         if(!TablasVentas.get(nVentaSelect).getSelectionModel().isEmpty()) {
 
@@ -300,20 +455,10 @@ public class VentaEditar extends Controlador implements Initializable {
             calcularTotal();
         }
 
-    }
 
-    @FXML
-    void limpiar(ActionEvent event) throws IOException {
-        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
-        int idVentaProductos = ListaDeProductos.getSelectionModel().getSelectedItem().getIdVentaProductos();
-        ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
-        Map<String,Object> paramsJSON = new LinkedHashMap<>();
-        paramsJSON.put("Actividad", "Venta Productos: Eliminar");
-        paramsJSON.put("idVentaProductos", idVentaProductos);
-        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+         */
 
-        ListaDeProductos.getItems().remove(ListaDeProductos.getSelectionModel().getSelectedIndex());
-        eliminarTab(null);
+
     }
 
     @Override
@@ -386,6 +531,38 @@ public class VentaEditar extends Controlador implements Initializable {
 
 
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+
+
+        List<VentaMostradorQuitar> l = new ArrayList<>();
+        productosActualizar.add(l);
+
+
+        /**
+         * Cargar cobros
+         */
+
+        Map<String,Object> paramsJSON_Cobros = new LinkedHashMap<>();
+        paramsJSON_Cobros.put("Actividad", "Cobros de venta: listar");
+        paramsJSON_Cobros.put("idVentaProductos", p.getIdVentaProductos());
+        JsonArray rootArrayCobros = Funciones.consultarBD(paramsJSON_Cobros);
+        ObservableList<Cobro> lc = FXCollections.observableArrayList();
+        listaCobros.add(lc);
+        ListaCobros.setItems(lc);
+        if(rootArrayCobros.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+
+            int t = rootArrayCobros.size();
+            for(int i = 1; i< t; i++) {
+                Cobro cobro = new Gson().fromJson(rootArrayCobros.get(i).getAsJsonObject(), Cobro.class);
+                lc.add(cobro);
+            }
+            ListaCobros.setItems(lc);
+
+        }
+
+
+
+
+
 
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();

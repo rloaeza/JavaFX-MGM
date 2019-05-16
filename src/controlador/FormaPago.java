@@ -18,7 +18,7 @@ import modelo.Funciones;
 
 public class FormaPago extends Controlador {
 
-    ObservableList<Cobro> cobros;
+
 
     @FXML
     private AnchorPane Pane;
@@ -48,7 +48,7 @@ public class FormaPago extends Controlador {
     @FXML
     void agregar(ActionEvent event) {
         int formaPago = FormaEfectivo.isSelected()?1:2;
-        cobros.add(new Cobro(
+        Configuraciones.formaPagoCobros.add(new Cobro(
                 -1, -1, formaPago, Double.valueOf(Pago.getText()), Descripcion.getText()
         ));
         SeleccionarFormaPago(null);
@@ -57,26 +57,34 @@ public class FormaPago extends Controlador {
 
     @FXML
     void eliminar(ActionEvent event) {
-        cobros.remove(ListaPagos.getSelectionModel().getSelectedIndex() );
+        Configuraciones.formaPagoCobros.remove(ListaPagos.getSelectionModel().getSelectedIndex() );
         SeleccionarFormaPago(null);
         calcular();
     }
 
     private boolean calcular() {
         double total = 0;
-        for(Cobro c : cobros) {
+        for(Cobro c : Configuraciones.formaPagoCobros) {
             total += c.getMonto();
         }
         if( total < Configuraciones.formaPagoMonto) {
             Error.setText(Configuraciones.formaPagoFaltaEfectivo+ ", " + Funciones.fixN(Configuraciones.formaPagoMonto-total,2));
             Error.setVisible(true);
+            Error.setStyle("-fx-background-color: #ef5728;");
+
             return (pagoValido=false);
         }
+
 
         if(total > Configuraciones.formaPagoMonto) {
             Error.setVisible(true);
             Error.setText(Configuraciones.formaPagoCambio+Funciones.fixN(total-Configuraciones.formaPagoMonto,2));
+            Error.setStyle("-fx-background-color: green;");
             return (pagoValido=true);
+        }
+
+        if(total == Configuraciones.formaPagoMonto) {
+            Error.setVisible(false);
         }
 
         return (pagoValido=true);
@@ -134,10 +142,14 @@ public class FormaPago extends Controlador {
         Cantidad.setText(Funciones.valorAmoneda(Configuraciones.formaPagoMonto));
         Error.setVisible(false);
 
-        cobros = FXCollections.observableArrayList();
+        if(Configuraciones.formaPagoCobros==null) {
+            Configuraciones.formaPagoCobros = FXCollections.observableArrayList();
+        }
+        else {
+            Configuraciones.formaPagoCobros.clear();
+        }
 
-
-        ListaPagos.setItems(cobros);
+        ListaPagos.setItems(Configuraciones.formaPagoCobros);
         SeleccionarFormaPago(null);
 
 

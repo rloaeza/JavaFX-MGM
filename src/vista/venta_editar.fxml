@@ -15,7 +15,7 @@
 <AnchorPane fx:id="Pane" prefHeight="617.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentaEditar">
    <children>
       <JFXTabPane fx:id="Tabs" layoutX="60.0" layoutY="210.0" onMouseClicked="#TabCambiando" prefHeight="306.0" prefWidth="802.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="210.0" />
-      <JFXListView fx:id="ListaDeProductos" layoutX="59.0" layoutY="27.0" onKeyReleased="#agregar_quitar" prefHeight="150.0" prefWidth="682.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="158.0" />
+      <JFXListView fx:id="ListaDeProductos" layoutX="59.0" layoutY="27.0" prefHeight="150.0" prefWidth="442.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="398.0" />
       <Label alignment="CENTER_RIGHT" layoutX="676.0" layoutY="590.0" prefHeight="17.0" prefWidth="104.0" text="Total:" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="200.0">
          <font>
             <Font name="System Bold" size="24.0" />
@@ -28,32 +28,41 @@
          <font>
             <Font name="System Bold" size="24.0" />
          </font></Label>
-      <VBox layoutX="761.0" layoutY="21.0" prefHeight="150.0" prefWidth="50.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="20.0">
+      <VBox layoutX="761.0" layoutY="27.0" prefHeight="150.0" prefWidth="68.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="27.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#aceptarVenta">
+            <Button mnemonicParsing="false" onAction="#regresar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
+         </children>
+      </VBox>
+      <HBox layoutX="60.0" layoutY="549.0" prefHeight="61.0" prefWidth="385.0" spacing="10.0" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="60.0">
+         <children>
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#actualizar" text="Guardar">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imgs/aceptar.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-            <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#limpiar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#imprimir" text="Imprimir">
                <graphic>
-                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../imgs/eliminar.png" />
+                        <Image url="@../imgs/imprimir.png" />
                      </image>
                   </ImageView>
                </graphic>
             </Button>
-         </children>
-      </VBox>
-      <HBox layoutX="60.0" layoutY="549.0" prefWidth="200.0" spacing="10.0" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="60.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#eliminar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#cerrar" text="Cerrar">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -62,7 +71,17 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#eliminarVenta" text="Eliminar">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/eliminar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </HBox>
+      <JFXListView fx:id="ListaCobros" layoutX="517.0" layoutY="27.0" prefHeight="150.0" prefWidth="258.0" AnchorPane.rightAnchor="125.0" AnchorPane.topAnchor="27.0" />
    </children>
 </AnchorPane>
