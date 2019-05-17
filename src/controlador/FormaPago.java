@@ -44,6 +44,8 @@ public class FormaPago extends Controlador {
     @FXML
     private Label Error;
 
+    private double cambio=0;
+
 
     @FXML
     void agregar(ActionEvent event) {
@@ -64,6 +66,7 @@ public class FormaPago extends Controlador {
 
     private boolean calcular() {
         double total = 0;
+        cambio = 0;
         for(Cobro c : Configuraciones.formaPagoCobros) {
             total += c.getMonto();
         }
@@ -71,34 +74,45 @@ public class FormaPago extends Controlador {
             Error.setText(Configuraciones.formaPagoFaltaEfectivo+ ", " + Funciones.fixN(Configuraciones.formaPagoMonto-total,2));
             Error.setVisible(true);
             Error.setStyle("-fx-background-color: #ef5728;");
-
-            return (pagoValido=false);
+            pagoValido=false;
+            return pagoValido;
         }
 
 
         if(total > Configuraciones.formaPagoMonto) {
             Error.setVisible(true);
-            Error.setText(Configuraciones.formaPagoCambio+Funciones.fixN(total-Configuraciones.formaPagoMonto,2));
+            cambio = total- Configuraciones.formaPagoMonto;
+            Error.setText(Configuraciones.formaPagoCambio+Funciones.fixN(cambio, 2));
             Error.setStyle("-fx-background-color: green;");
-            return (pagoValido=true);
+            pagoValido=true;
+            return pagoValido;
         }
 
         if(total == Configuraciones.formaPagoMonto) {
             Error.setVisible(false);
-        }
+            pagoValido=true;
+            return pagoValido;
 
-        return (pagoValido=true);
+        }
+        pagoValido=false;
+        return pagoValido;
+
+
     }
     private boolean pagoValido;
 
     @FXML
     void Aceptar(ActionEvent event) {
         Error.setVisible(false);
-        if( (!pagoValido) &&  Pago.getText().length()==0 ) {
+        if( !pagoValido ) {
             Error.setVisible(true);
             Error.setText(Configuraciones.formaPagoVerificar);
             return;
         }
+        if(cambio!=0)
+            Configuraciones.formaPagoCobros.add(new Cobro(
+                    -1, -1, 3, cambio, "Cambio"
+            ));
         Configuraciones.ventaAceptada=true;
         cerrar();
     }

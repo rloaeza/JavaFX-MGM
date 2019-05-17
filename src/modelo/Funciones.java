@@ -621,4 +621,46 @@ public class Funciones {
         nl = llenar(cant, Configuraciones.ticketCant)+ llenar(prod, Configuraciones.ticketProducto)+ llenar(cu, Configuraciones.ticketCU)+ llenar(tot, Configuraciones.ticketTotal);
         return nl;
     }
+
+    public static String formaPago() {
+        int fp = 0;
+        double efectivo = 0;
+        double tarjeta = 0;
+        double cambio = 0;
+        for(Cobro c : Configuraciones.formaPagoCobros) {
+            if(c.getFormaPago()==1)
+                efectivo+=c.getMonto();
+            else if(c.getFormaPago()==2)
+                tarjeta+=c.getMonto();
+            else if(c.getFormaPago()==3)
+                cambio+=c.getMonto();
+            if(fp == 0 && c.getFormaPago()==1) {
+                fp = 1;
+                continue;
+            }
+            if(fp == 0 && c.getFormaPago()==2) {
+                fp = 2;
+                continue;
+            }
+
+            if( fp==1 && c.getFormaPago()==2) {
+                fp=3;
+                continue;
+            }
+
+            if(fp==2 && c.getFormaPago()==1) {
+                fp=3;
+                continue;
+            }
+
+
+        }
+        switch (fp) {
+            case 1: return "Efectivo: $"+fixN(efectivo,2)+ (cambio!=0?"\nCambio: $ "+fixN(cambio,2):"");
+            case 2: return "Tarjeta: $"+fixN(tarjeta,2)+ (cambio!=0?"\nCambio: $ "+fixN(cambio,2):"");
+            case 3: return "Efectivo: $"+fixN(efectivo,2)+ "\nTarjeta: $"+fixN(tarjeta,2)+ (cambio!=0?"\nCambio: $ "+fixN(cambio,2):"");
+
+        }
+        return "Sin Pago";
+    }
 }
