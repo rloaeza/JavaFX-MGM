@@ -59,13 +59,13 @@ public class Configuraciones {
 
 
     public static String ticketTituloClinicaThermal =
-            "          MGM PLUS SA de CV\n" +
+            "                MGM PLUS SA de CV\n" +
             "RFC: MPL940701T9A\n"+
             "Calle: Boulevard Adolfo Ruiz Cortines #18\n" +
             "Colonia: Lomas de Atizapan  CP: 52977\n" +
             "Atizapan Edo de México\n\n" +
 
-            "             MGM Morelia\n" +
+            "                   MGM Morelia\n" +
             "Calle: Artilleros 1847 #1585 " +
             "Colonia: Chapultepec Oriente CP: 58260\n" +
             "Morelia Michoacán Tel: 527-25-23\n\n";

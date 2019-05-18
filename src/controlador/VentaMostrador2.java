@@ -575,7 +575,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             valoresPDF.add(new PDFvalores("costounitario", strCostosU));
             valoresPDF.add(new PDFvalores("costo", strCostoT));
 
-            ticketSTR = ticketSTR + "\n\n"+ Funciones.nuevaLinea(" "+CantidadProductos.getText(), "productos", "Total   $", Configuraciones.ventaMostradorTotal+"");
+            ticketSTR = ticketSTR + "\n\n"+ Funciones.nuevaLinea(" "+CantidadProductos.getText(), "producto(s)", "Total   $", Configuraciones.ventaMostradorTotal+"");
 
 
             ticketSTR = ticketSTR + "\n\nMovimientos:\n"+Funciones.formaPago();
