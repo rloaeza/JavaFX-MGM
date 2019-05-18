@@ -59,8 +59,16 @@ public class Configuraciones {
 
 
     public static String ticketTituloClinicaThermal =
-            "MGM México: Boulevard Adolfo Ruiz Cortines #18 Col. Lomas de Atizapan  CP: 52977, Atizapan Edo de México\n\n" +
-            "MGM Morelia:  Artilleros 1847 #1585 Colonia: Chapultepec Oriente CP: 58260, Morelia Michoacán Tel: 527-25-23\n\n";
+            "          MGM PLUS SA de CV\n" +
+            "RFC: MPL940701T9A\n"+
+            "Calle: Boulevard Adolfo Ruiz Cortines #18\n" +
+            "Colonia: Lomas de Atizapan  CP: 52977\n" +
+            "Atizapan Edo de México\n\n" +
+
+            "             MGM Morelia\n" +
+            "Calle: Artilleros 1847 #1585 " +
+            "Colonia: Chapultepec Oriente CP: 58260\n" +
+            "Morelia Michoacán Tel: 527-25-23\n\n";
 
 
     public static String ticketCorteCaja=
@@ -75,7 +83,7 @@ public class Configuraciones {
 
     //"12  Crema exfoliante    25   2003";
     public static int ticketCant = 5;
-    public static int ticketProducto = 20;
+    public static int ticketProducto = 23;
     public static int ticketCU  = 10;
     public static int ticketTotal = 10;
 
