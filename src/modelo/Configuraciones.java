@@ -66,7 +66,8 @@ public class Configuraciones {
             "Atizapan Edo de México\n\n" +
 
             "                   MGM Morelia\n" +
-            "Calle: Artilleros 1847 #1585 " +
+            "RFC: MPL940701T9A\n"+
+            "Calle: Artilleros 1847 #1585 \n" +
             "Colonia: Chapultepec Oriente CP: 58260\n" +
             "Morelia Michoacán Tel: 527-25-23\n\n";
 

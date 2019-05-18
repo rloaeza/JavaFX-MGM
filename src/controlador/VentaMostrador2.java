@@ -36,6 +36,8 @@ import javax.print.DocFlavor;
 import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.*;
 
 public class VentaMostrador2 extends Controlador implements Initializable {
@@ -543,9 +545,11 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
 
+            String timeStamp = new SimpleDateFormat("dd/MM/YY HH:mm").format(Calendar.getInstance().getTime());
 
 
             String ticketSTR=Configuraciones.ticketTituloClinicaThermal+
+                    "Fecha: "+ timeStamp +"\n"+
                     "Cliente: "+cliente+"\n"+
                     "Venta: "+ ultimoInsertado+ "\n\n"+
                     Funciones.nuevaLinea("Cant", "Producto", "C. U.", "Total");
@@ -580,7 +584,8 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
             ticketSTR = ticketSTR + "\n\nMovimientos:\n"+Funciones.formaPago();
 
-            ticketSTR = ticketSTR + "\n\n¡Gracias por su compra!\n\n\n\n\n\n\n\n\n";
+            ticketSTR = ticketSTR + "\n\nNo se hacen cambios ni devoluciones\n" +
+                                    "¡Gracias por su compra!\n\n\n\n\n\n\n\n\n";
 
 
             valoresPDF.add(new PDFvalores("cliente", cliente));

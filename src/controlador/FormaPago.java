@@ -46,10 +46,20 @@ public class FormaPago extends Controlador {
 
     private double cambio=0;
 
+    @FXML
+    void agregarTeclado(ActionEvent event) {
+        if(Pago.getText().isEmpty()) {
+            Aceptar(null);
+        } else {
+            agregar(null);
+        }
+    }
 
     @FXML
     void agregar(ActionEvent event) {
         int formaPago = FormaEfectivo.isSelected()?1:2;
+
+
         Configuraciones.formaPagoCobros.add(new Cobro(
                 -1, -1, formaPago, Double.valueOf(Pago.getText()), Descripcion.getText()
         ));

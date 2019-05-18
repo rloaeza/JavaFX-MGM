@@ -19,13 +19,16 @@
             <Font name="System Bold" size="36.0" />
          </font>
       </Label>
-      <JFXTextField fx:id="Pago" alignment="CENTER" layoutX="482.0" layoutY="113.0" onKeyTyped="#pagando" prefHeight="44.0" prefWidth="256.0" AnchorPane.rightAnchor="80.0">
+      <JFXTextField fx:id="Pago" alignment="CENTER" layoutX="482.0" layoutY="113.0" onAction="#agregarTeclado" onKeyTyped="#pagando" prefHeight="44.0" prefWidth="256.0" AnchorPane.rightAnchor="80.0">
          <font>
             <Font size="18.0" />
          </font>
       </JFXTextField>
-      <JFXButton buttonType="RAISED" layoutX="482.0" layoutY="231.0" onAction="#Aceptar" prefHeight="44.0" prefWidth="119.0" style="-fx-background-color: lightgreen;" text="Aceptar" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="217.0" />
-      <JFXButton buttonType="RAISED" layoutX="619.0" layoutY="231.0" onAction="#Cancelar" prefHeight="44.0" prefWidth="119.0" style="-fx-background-color: orange;" text="Cancelar" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="80.0" />
+      <JFXTextField fx:id="Descripcion" alignment="CENTER" layoutX="482.0" layoutY="172.0" onKeyTyped="#pagando" prefHeight="44.0" prefWidth="256.0" AnchorPane.rightAnchor="80.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXTextField>
       <ToggleButton fx:id="FormaEfectivo" contentDisplay="TOP" layoutX="482.0" layoutY="30.0" mnemonicParsing="false" onAction="#SeleccionarFormaPago" prefHeight="45.0" prefWidth="110.0" selected="true" text="Efectivo">
          <toggleGroup>
             <ToggleGroup fx:id="formapago" />
@@ -47,17 +50,6 @@
             </ImageView>
          </graphic>
       </ToggleButton>
-      <Label fx:id="Error" alignment="CENTER" layoutY="289.0" prefHeight="24.0" prefWidth="818.0" style="-fx-background-color: #ef5728;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-      <JFXListView fx:id="ListaPagos" layoutX="80.0" layoutY="96.0" prefHeight="183.0" prefWidth="256.0" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="96.0" />
-      <Button contentDisplay="TOP" layoutX="343.0" layoutY="228.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="343.0">
-         <graphic>
-            <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imgs/eliminar.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
       <Button contentDisplay="TOP" layoutX="343.0" layoutY="96.0" mnemonicParsing="false" onAction="#agregar" text="Agregar" AnchorPane.leftAnchor="343.0" AnchorPane.topAnchor="96.0">
          <graphic>
             <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
@@ -67,10 +59,18 @@
             </ImageView>
          </graphic>
       </Button>
-      <JFXTextField fx:id="Descripcion" alignment="CENTER" layoutX="482.0" layoutY="172.0" onKeyTyped="#pagando" prefHeight="44.0" prefWidth="256.0" AnchorPane.rightAnchor="80.0">
-         <font>
-            <Font size="18.0" />
-         </font>
-      </JFXTextField>
+      <Button contentDisplay="TOP" layoutX="343.0" layoutY="228.0" mnemonicParsing="false" onAction="#eliminar" text="Eliminar" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="343.0">
+         <graphic>
+            <ImageView fitHeight="150.0" fitWidth="20.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../imgs/eliminar.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <JFXButton buttonType="RAISED" layoutX="482.0" layoutY="231.0" onAction="#Aceptar" prefHeight="44.0" prefWidth="119.0" style="-fx-background-color: lightgreen;" text="Aceptar" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="217.0" />
+      <JFXButton buttonType="RAISED" layoutX="619.0" layoutY="231.0" onAction="#Cancelar" prefHeight="44.0" prefWidth="119.0" style="-fx-background-color: orange;" text="Cancelar" AnchorPane.bottomAnchor="36.0" AnchorPane.rightAnchor="80.0" />
+      <Label fx:id="Error" alignment="CENTER" layoutY="289.0" prefHeight="24.0" prefWidth="818.0" style="-fx-background-color: #ef5728;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
+      <JFXListView fx:id="ListaPagos" layoutX="80.0" layoutY="96.0" prefHeight="183.0" prefWidth="256.0" AnchorPane.bottomAnchor="32.0" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="96.0" />
    </children>
 </AnchorPane>

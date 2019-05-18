@@ -29,6 +29,7 @@ import javax.print.DocFlavor;
 import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class VentaEditar extends Controlador implements Initializable {
@@ -407,10 +408,18 @@ public class VentaEditar extends Controlador implements Initializable {
         }
 
 
+        int ultimoInsertado = ListaDeProductos.getSelectionModel().getSelectedItem().getIdVentaProductos();
+        String timeStamp = new SimpleDateFormat("dd/MM/YY HH:mm").format(Calendar.getInstance().getTime());
+
+
+
         String ticketSTR=Configuraciones.ticketTituloClinicaThermal+
-                "Cliente: \n"+
-                "Venta: \n\n"+
+                "Fecha: "+ timeStamp +"\n"+
+                //"Cliente:\n"+
+                "Venta: "+ ultimoInsertado+ "\n\n"+
                 Funciones.nuevaLinea("Cant", "Producto", "C. U.", "Total");
+
+
         for(modelo.VentaMostrador ventaMostrador: listasVentasMostrador.get(nVentaSelect)) {
             ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" "+ventaMostrador.getCantidad(), ventaMostrador.getProducto(), ventaMostrador.getCosto()+"", ventaMostrador.getTotal()+"");
         }
@@ -445,6 +454,18 @@ public class VentaEditar extends Controlador implements Initializable {
     @FXML
     void cerrar(ActionEvent event) throws IOException {
         eliminarTab(null);
+
+    }
+    @FXML
+    void eliminarFila(ActionEvent event) throws IOException {
+        int index = Tabs.getSelectionModel().getSelectedIndex();
+        int fila = TablasVentas.get(index).getSelectionModel().getSelectedIndex();
+        int idVentaProductosDetalle= listasVentasMostrador.get(index).get(fila).getIdVentaProductosDetalle();
+
+        quitarProductos(index, idVentaProductosDetalle, 0);
+        listasVentasMostrador.get(index).remove(fila);
+        calcularTotal();
+
 
     }
     @FXML

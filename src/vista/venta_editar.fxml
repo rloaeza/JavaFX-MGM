@@ -71,6 +71,15 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#eliminarFila" text="Quitar fila">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/b_catalogos.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#eliminarVenta" text="Eliminar">
                <graphic>
                   <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
