@@ -183,4 +183,7 @@ public class Configuraciones {
     public static double idVistaActual;
 
 
+
+    public static boolean supervisorOK;
+
 }

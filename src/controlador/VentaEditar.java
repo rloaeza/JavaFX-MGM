@@ -36,6 +36,7 @@ public class VentaEditar extends Controlador implements Initializable {
     private int nVentaSelect = 1;
     private boolean pagoValido=false;
 
+
     @FXML
     private AnchorPane Pane;
 
@@ -366,6 +367,23 @@ public class VentaEditar extends Controlador implements Initializable {
     @FXML
     void imprimir(ActionEvent event) throws IOException {
 
+
+        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+
+        if(productosActualizar.get(nVentaSelect).size()>0)
+        {
+            Map<String,Object> paramsAlerta = new LinkedHashMap<>();
+            paramsAlerta.put("titulo", "Error");
+            paramsAlerta.put("tiempo", "5");
+            paramsAlerta.put("vista", "/vista/alert_box.fxml");
+
+            paramsAlerta.put("texto", "Se debe guardar primero");
+
+            Funciones.displayFP(paramsAlerta, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
+
+            return;
+        }
+
         PrinterService printerService = new PrinterService();
         List<String> listPrinters = printerService.getPrinters();
         boolean impresoraValida = false;
@@ -431,6 +449,15 @@ public class VentaEditar extends Controlador implements Initializable {
     }
     @FXML
     void eliminarVenta(ActionEvent event) throws IOException {
+        Map<String, Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("titulo", "¿Eliminar venta?");
+        paramsAlert.put("vista", "/vista/acepta_administrador.fxml");
+        Configuraciones.supervisorOK = false;
+        Funciones.display(paramsAlert, getClass().getResource("/vista/acepta_administrador.fxml"), new AceptaAdministrador(), 762, 324);
+        if (!Configuraciones.supervisorOK)
+            return;
+
+
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
         int idVentaProductos = ListaDeProductos.getSelectionModel().getSelectedItem().getIdVentaProductos();
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
@@ -448,6 +475,21 @@ public class VentaEditar extends Controlador implements Initializable {
 
     @FXML
     void actualizar(ActionEvent event) throws IOException {
+
+
+
+        Map<String, Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("titulo", "¿Actualizar venta?");
+        paramsAlert.put("vista", "/vista/acepta_administrador.fxml");
+        Configuraciones.supervisorOK = false;
+        Funciones.display(paramsAlert, getClass().getResource("/vista/acepta_administrador.fxml"), new AceptaAdministrador(), 762, 324);
+        if (!Configuraciones.supervisorOK)
+            return;
+
+
+
+
+
 
 
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
@@ -474,7 +516,7 @@ public class VentaEditar extends Controlador implements Initializable {
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
 
 
-
+        productosActualizar.get(nVentaSelect).clear();
 
 
 

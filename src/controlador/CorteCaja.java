@@ -82,6 +82,32 @@ public class CorteCaja extends Controlador implements Initializable {
         if(VendedorClave.getText().equals(Configuraciones.clavePersonal) && SupervisorClave.getText().equals(Supervisor.getValue().getClave()))
         {
 
+
+            PrinterService printerService = new PrinterService();
+            List<String> listPrinters = printerService.getPrinters();
+            boolean impresoraValida = false;
+            for(String printer : listPrinters) {
+                if( printer.contains(Configuraciones.impresoraTicket)) {
+                    impresoraValida = true;
+
+                }
+            }
+
+            Map<String,Object> paramsAlertImpresora = new LinkedHashMap<>();
+            paramsAlertImpresora.put("titulo", "Error");
+            paramsAlertImpresora.put("tiempo", "5");
+            paramsAlertImpresora.put("vista", "/vista/alert_box.fxml");
+            if(!impresoraValida) {
+                paramsAlertImpresora.put("texto", "No existe la impresora: "+Configuraciones.impresoraTicket+ " en el sistema");
+
+                Funciones.displayFP(paramsAlertImpresora, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
+
+                return;
+            }
+
+
+
+
             Configuraciones.aperturaCaja = Configuraciones.corteCajaMonto;
             Configuraciones.idCaja = CBCajas.getValue().getIdCaja();
             Map<String,Object> paramsJSON = new LinkedHashMap<>();
@@ -115,27 +141,7 @@ public class CorteCaja extends Controlador implements Initializable {
 
 
 
-            PrinterService printerService = new PrinterService();
-            List<String> listPrinters = printerService.getPrinters();
-            boolean impresoraValida = false;
-            for(String printer : listPrinters) {
-                if( printer.contains(Configuraciones.impresoraTicket)) {
-                    impresoraValida = true;
 
-                }
-            }
-
-            Map<String,Object> paramsAlertImpresora = new LinkedHashMap<>();
-            paramsAlertImpresora.put("titulo", "Error");
-            paramsAlertImpresora.put("tiempo", "5");
-            paramsAlertImpresora.put("vista", "/vista/alert_box.fxml");
-            if(!impresoraValida) {
-                paramsAlertImpresora.put("texto", "No existe la impresora: "+Configuraciones.impresoraTicket+ " en el sistema");
-
-                Funciones.displayFP(paramsAlertImpresora, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
-
-                return;
-            }
 
 
 
