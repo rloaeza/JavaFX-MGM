@@ -60,6 +60,14 @@ public class CostoProductos extends Controlador implements Initializable {
 
     }
 
+
+    @FXML
+    void agregarCosto(ActionEvent event) throws IOException {
+        if(!Costo.getText().isEmpty()) {
+            agregar(null);
+        }
+    }
+
     @FXML
     void agregar(ActionEvent event) throws IOException {
         Map<String,Object> paramsJSON = new LinkedHashMap<>();

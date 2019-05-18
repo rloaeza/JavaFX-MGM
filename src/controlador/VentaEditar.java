@@ -435,7 +435,7 @@ public class VentaEditar extends Controlador implements Initializable {
 
 
         try {
-            printerService.printImage(Configuraciones.impresoraTicket, "formatos/mgm_t.png", DocFlavor.INPUT_STREAM.PNG);
+            //printerService.printImage(Configuraciones.impresoraTicket, "formatos/mgm_t.png", DocFlavor.INPUT_STREAM.PNG);
             printerService.printString(Configuraciones.impresoraTicket, ticketSTR);
 
             byte[] cutP = new byte[]{0x1d, 'V', 1};

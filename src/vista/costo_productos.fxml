@@ -77,7 +77,7 @@
          </children>
       </HBox>
       <JFXListView fx:id="ListaDeCostos" layoutX="489.0" layoutY="270.0" prefHeight="162.0" prefWidth="381.0" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="489.0" AnchorPane.topAnchor="260.0" />
-      <JFXTextField fx:id="Costo" layoutX="489.0" layoutY="207.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" />
+      <JFXTextField fx:id="Costo" layoutX="489.0" layoutY="207.0" onAction="#agregarCosto" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" />
       <Label layoutX="394.0" layoutY="222.0" prefHeight="17.0" prefWidth="73.0" text="Costo" AnchorPane.leftAnchor="394.0" />
       <ImageView fx:id="ImagenProducto" fitHeight="300.0" fitWidth="438.0" layoutX="930.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="930.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="260.0" />
    </children>

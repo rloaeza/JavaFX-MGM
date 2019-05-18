@@ -79,7 +79,7 @@ public class Configuraciones {
             "Fecha:      $fecha$\n" +
             "Vendedor:   $vendedor$\n" +
             "Supervisor: $supervisor$\n" +
-            "Monto:      $monto$";
+            "Monto:      $monto$\n\n\n";
 
 
     //"12  Crema exfoliante    25   2003";
