@@ -22,7 +22,7 @@
       <Label fx:id="Descripcion" alignment="TOP_CENTER" contentDisplay="TOP" layoutX="121.0" layoutY="70.0" prefHeight="70.0" prefWidth="356.0" text="Descripción del reporte" wrapText="true" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="70.0" />
       <HBox alignment="TOP_RIGHT" layoutX="40.0" layoutY="466.0" prefHeight="70.0" prefWidth="820.0" spacing="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#aceptar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#aceptar" text="Regresar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -31,7 +31,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button mnemonicParsing="false" onAction="#imprimir">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#imprimir" text="Imprimir">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -40,11 +40,11 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button mnemonicParsing="false" onAction="#descargar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#descargar" text="Descargar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../imgs/bajar.png" />
+                        <Image url="@../imgs/guardar.png" />
                      </image>
                   </ImageView>
                </graphic>

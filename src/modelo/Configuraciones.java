@@ -188,4 +188,9 @@ public class Configuraciones {
     public static boolean supervisorOK;
     public static String MAC;
 
+
+    public static String reporteEncabezado =
+            "MGM PLUS SA de CV\n" +
+            "\n";
+
 }
