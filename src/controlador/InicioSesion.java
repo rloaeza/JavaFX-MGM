@@ -34,6 +34,7 @@ public class InicioSesion  extends Controlador{
         params.put("idClinica", "1");
         params.put("usuario", textUsuario.getText());
         params.put("clave", textClave.getText());
+        params.put("mac", Configuraciones.MAC);
 
         JsonArray rootArray = Funciones.consultarBD(params);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {

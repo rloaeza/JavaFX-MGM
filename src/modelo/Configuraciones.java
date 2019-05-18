@@ -185,5 +185,6 @@ public class Configuraciones {
 
 
     public static boolean supervisorOK;
+    public static String MAC;
 
 }
