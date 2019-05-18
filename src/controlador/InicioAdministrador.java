@@ -406,6 +406,18 @@ public class InicioAdministrador extends  Controlador implements Initializable {
             Calendar c = Calendar.getInstance();
             int timeOfDay = c.get(Calendar.HOUR_OF_DAY);
 
+
+            if(Configuraciones.tipoUsuarioActivo ==  Configuraciones.tipoVendedor)
+            {
+
+                try {
+                    VentaMostrador(null);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+
+
             Map<String,Object> paramsAlert = new LinkedHashMap<>();
             paramsAlert.put("titulo", "Bienvenido");
             paramsAlert.put("vista", "/vista/alert_box.fxml");
@@ -428,15 +440,7 @@ public class InicioAdministrador extends  Controlador implements Initializable {
             }
 
 
-            if(Configuraciones.tipoUsuarioActivo ==  Configuraciones.tipoVendedor)
-            {
 
-                try {
-                    VentaMostrador(null);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
 
         } ));
         tInicio.setCycleCount(1);

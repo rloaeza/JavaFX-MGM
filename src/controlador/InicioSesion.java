@@ -35,6 +35,7 @@ public class InicioSesion  extends Controlador{
         params.put("usuario", textUsuario.getText());
         params.put("clave", textClave.getText());
         params.put("mac", Configuraciones.MAC);
+        System.out.println(Configuraciones.MAC);
 
         JsonArray rootArray = Funciones.consultarBD(params);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
@@ -57,6 +58,7 @@ public class InicioSesion  extends Controlador{
             Configuraciones.clavePersonal = usuario.getClave();
             Configuraciones.cajaAbierta=false;
             Configuraciones.tipoUsuarioActivo = usuario.getTipo();
+            System.out.println(usuario.getTipo());
             //Usuario de venta
             if(usuario.getTipo()==Configuraciones.tipoVendedor) {
                 Configuraciones.tipoUsuarioActivo = Configuraciones.tipoVendedor;

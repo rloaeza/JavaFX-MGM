@@ -342,10 +342,12 @@ public class VentaEditar extends Controlador implements Initializable {
     @FXML
     void regresar(ActionEvent event) throws IOException, PrinterException {
 
-        quitarVistas(1);
+        //quitarVistas(1);
+        //quitarVistas();
+        //Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new InicioAdministrador());
+
+        parametros.remove(0);
         Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new InicioAdministrador());
-
-
 
 
     }
