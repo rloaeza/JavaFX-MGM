@@ -16,6 +16,7 @@
       <JFXListView fx:id="ListaDeProductos" layoutX="7.0" minWidth="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0" />
       <JFXTextField fx:id="Clave" layoutX="489.0" layoutY="117.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
       <JFXTextField fx:id="Nombre" layoutX="489.0" layoutY="165.0" onKeyTyped="#capitalizarEntrada" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <JFXTextField fx:id="Costo" layoutX="489.0" layoutY="207.0" onAction="#agregarCosto" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" />
       <Label layoutX="394.0" layoutY="131.0" prefHeight="17.0" prefWidth="73.0" text="Clave" AnchorPane.leftAnchor="394.0" />
       <Label layoutX="394.0" layoutY="180.0" prefHeight="17.0" prefWidth="73.0" text="Nombre" AnchorPane.leftAnchor="394.0" />
       <Label fx:id="Titulo" alignment="CENTER" layoutX="348.0" layoutY="58.0" prefHeight="44.0" prefWidth="522.0" text="Costo de productos" textAlignment="CENTER" AnchorPane.leftAnchor="348.0" AnchorPane.rightAnchor="30.0">
@@ -77,7 +78,6 @@
          </children>
       </HBox>
       <JFXListView fx:id="ListaDeCostos" layoutX="489.0" layoutY="270.0" prefHeight="162.0" prefWidth="381.0" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="489.0" AnchorPane.topAnchor="260.0" />
-      <JFXTextField fx:id="Costo" layoutX="489.0" layoutY="207.0" onAction="#agregarCosto" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" />
       <Label layoutX="394.0" layoutY="222.0" prefHeight="17.0" prefWidth="73.0" text="Costo" AnchorPane.leftAnchor="394.0" />
       <ImageView fx:id="ImagenProducto" fitHeight="300.0" fitWidth="438.0" layoutX="930.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="140.0" AnchorPane.leftAnchor="930.0" AnchorPane.rightAnchor="33.0" AnchorPane.topAnchor="260.0" />
    </children>

@@ -55,6 +55,11 @@ public class CorteCaja extends Controlador implements Initializable {
     private Label Error;
 
     @FXML
+    void AceptarSupervisor(ActionEvent event) throws IOException {
+        Aceptar(null);
+    }
+
+    @FXML
     void Aceptar(ActionEvent event) throws IOException {
         Error.setVisible(true);
         if(VendedorClave.getText().isEmpty()) {
