@@ -102,7 +102,24 @@ public class InicioSesion  extends Controlador{
                 paramsVista.put("idPersonal", Configuraciones.idPersonal);
                 paramsVista.put("vista", "/vista/inicio_venta.fxml" );
                 Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new InicioAdministrador());
-            } else {
+            }
+            else if(usuario.getTipo()==Configuraciones.tipoSupervisor){
+
+
+                Map<String, Object> paramsAlert = new LinkedHashMap<>();
+                paramsAlert.put("titulo", "Abrir caja");
+
+                paramsAlert.put("vista", "/vista/selec_caja.fxml");
+
+                Configuraciones.corteCajaValido = false;
+                Funciones.display(paramsAlert, getClass().getResource("/vista/selec_caja.fxml"), new SelecCaja(), 762, 300);
+                if (!Configuraciones.corteCajaValido)
+                    return;
+                Configuraciones.cajaAbierta = false;
+
+                Funciones.CargarVista(Pane, getClass().getResource("/vista/inicio_supervisor.fxml"), params, new InicioAdministrador());
+            }
+            else if(usuario.getTipo()==Configuraciones.tipoAdministrador){
 
 
                 Map<String, Object> paramsAlert = new LinkedHashMap<>();

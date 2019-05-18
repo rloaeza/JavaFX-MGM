@@ -25,15 +25,9 @@
           </Menu>
             <Menu mnemonicParsing="false" text="Catálogos">
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#catalogoPersonal" text="Personal" />
-                  <MenuItem mnemonicParsing="false" onAction="#relojChecadorFijarHorarios" text="Especificar Horarios" />
-                  <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoCajas" text="Cajas" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoPacientes" text="Pacientes" />
-                  <MenuItem mnemonicParsing="false" onAction="#catalogoServicios" text="Servicios" />
-                  <MenuItem mnemonicParsing="false" onAction="#catalogoTiposDeProductos" text="Productos" />
-                  <MenuItem mnemonicParsing="false" onAction="#catalogoTratamientos" text="Tratamientos" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Movimientos">
@@ -50,13 +44,6 @@
                         <MenuItem mnemonicParsing="false" onAction="#costoTratamientos" text="Costos de tratamientos" />
                      </items>
                   </Menu>
-              </items>
-            </Menu>
-            <Menu mnemonicParsing="false" text="Vistas">
-              <items>
-                <MenuItem mnemonicParsing="false" onAction="#relojChecadorEntradaSalida" text="Reloj Checador" />
-                  <MenuItem mnemonicParsing="false" onAction="#AgendarCitas" text="Agendar Citas" />
-                  <MenuItem mnemonicParsing="false" onAction="#VentaMostrador" text="Venta Mostrador" />
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Reportes">
@@ -95,38 +82,11 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button mnemonicParsing="false" onAction="#f6" text="F6 Reloj Checador">
-               <graphic>
-                  <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imgs/b_reloj.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
             <Button mnemonicParsing="false" onAction="#f5" text="F5 Reportes">
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../imgs/b_reportes.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#f2" text="F2 Citas">
-               <graphic>
-                  <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imgs/b_citas.png" />
-                     </image>
-                  </ImageView>
-               </graphic>
-            </Button>
-            <Button mnemonicParsing="false" onAction="#f1" text="F1 Ventas">
-               <graphic>
-                  <ImageView fitHeight="150.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
-                     <image>
-                        <Image url="@../imgs/b_ventas.png" />
                      </image>
                   </ImageView>
                </graphic>
