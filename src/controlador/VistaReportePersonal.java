@@ -54,6 +54,7 @@ public class VistaReportePersonal extends Controlador implements Initializable {
     private JFXComboBox<Personal> CBPersonal;
 
     Map<String,Object> paramsJSONReporte = new LinkedHashMap<>();
+    private double gTotal;
 
     @FXML
     void generarReporte(ActionEvent event) throws IOException {
@@ -117,6 +118,9 @@ public class VistaReportePersonal extends Controlador implements Initializable {
 
         valoresPDF.add(new PDFvalores("Titulo", (String) parametros.get(0).get("Titulo")));
         valoresPDF.add(new PDFvalores("Informacion", Descripcion.getText()));
+        valoresPDF.add(new PDFvalores("GTotal", gTotal+""));
+
+
 
 
         File file = null;
@@ -206,11 +210,13 @@ public class VistaReportePersonal extends Controlador implements Initializable {
         paramsJSONReporte.put("idClinica", Configuraciones.idClinica);
         JsonArray rootArray = Funciones.consultarBD(paramsJSONReporte);
 
+        gTotal = 0;
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
             for(int i = 1; i< t; i++) {
                 Map<String, Object> v = new LinkedHashMap<>();
                 v= new Gson().fromJson(rootArray.get(i).getAsJsonObject(), v.getClass());
+                gTotal += Double.valueOf(v.get("Total").toString());
                 listaReporte.add(new modelo.VistaReporte(v));
             }
         }
