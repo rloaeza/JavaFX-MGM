@@ -83,9 +83,9 @@ public class Configuraciones {
 
 
     //"12  Crema exfoliante    25   2003";
-    public static int ticketCant = 4;
+    public static int ticketCant = 5;
     public static int ticketProducto = 23;
-    public static int ticketCU  = 8;
+    public static int ticketCU  = 7;
     public static int ticketTotal = 13;
 
 

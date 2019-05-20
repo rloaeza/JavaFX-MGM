@@ -552,7 +552,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
                     "Fecha: "+ timeStamp +"\n"+
                     "Cliente: "+cliente+"\n"+
                     "Venta: "+ ultimoInsertado+ "\n\n"+
-                    Funciones.nuevaLinea("Cant", "Producto", "C. U.", "Total");
+                    Funciones.nuevaLinea("Cant", "Producto", " C. U.", "Total");
             for(modelo.VentaMostrador ventaMostrador: listasVentasMostrador.get(nVentaSelect)) {
                 Map<String,Object> paramsJSON2 = new LinkedHashMap<>();
                 paramsJSON2.put("Actividad", "Venta Productos: Agregar detalles");
@@ -569,7 +569,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
                 strCostosU+=ventaMostrador.getCosto()+"\n";
                 strCostoT+=ventaMostrador.getTotal()+"\n";
 
-                ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" "+ventaMostrador.getCantidad(), ventaMostrador.getProducto(), ventaMostrador.getCosto()+"", Funciones.valorAmoneda(ventaMostrador.getTotal()));
+                ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" "+ventaMostrador.getCantidad(), ventaMostrador.getProducto(), " "+ventaMostrador.getCosto()+"", Funciones.valorAmoneda(ventaMostrador.getTotal()));
 
 
 
