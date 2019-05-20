@@ -38,12 +38,6 @@
                         <MenuItem mnemonicParsing="false" onAction="#almacenSalidas" text="Salidas" />
                     </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Costos">
-                     <items>
-                        <MenuItem mnemonicParsing="false" onAction="#costoProductos" text="Costos de productos" />
-                        <MenuItem mnemonicParsing="false" onAction="#costoTratamientos" text="Costos de tratamientos" />
-                     </items>
-                  </Menu>
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Reportes">
