@@ -424,10 +424,10 @@ public class VentaEditar extends Controlador implements Initializable {
 
 
         for(modelo.VentaMostrador ventaMostrador: listasVentasMostrador.get(nVentaSelect)) {
-            ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" "+ventaMostrador.getCantidad(), ventaMostrador.getProducto(), ventaMostrador.getCosto()+"", ventaMostrador.getTotal()+"");
+            ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" "+ventaMostrador.getCantidad(), ventaMostrador.getProducto(), ventaMostrador.getCosto()+"", Funciones.valorAmoneda(ventaMostrador.getTotal()));
         }
 
-        ticketSTR = ticketSTR + "\n\n"+ Funciones.nuevaLinea(" "+CantidadProductos.getText(), "productos", "Total   $", Configuraciones.ventaMostradorTotal+"");
+        ticketSTR = ticketSTR + "\n\n"+ Funciones.nuevaLinea(" "+CantidadProductos.getText(), "productos", "Total", Funciones.valorAmoneda(Configuraciones.ventaMostradorTotal));
 
         Configuraciones.formaPagoCobros = ListaCobros.getItems();
         ticketSTR = ticketSTR + "\n\nMovimientos:\n"+Funciones.formaPago();

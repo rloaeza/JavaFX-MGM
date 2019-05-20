@@ -10,7 +10,7 @@
 <AnchorPane fx:id="Pane" prefHeight="324.0" prefWidth="762.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.AceptaAdministrador">
    <children>
       <JFXComboBox fx:id="Supervisor" layoutX="426.0" layoutY="141.0" prefHeight="27.0" prefWidth="602.0" promptText="¿Supervisor?" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" />
-      <JFXPasswordField fx:id="SupervisorClave" alignment="CENTER" layoutX="426.0" layoutY="182.0" prefHeight="27.0" prefWidth="602.0" promptText="clave" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" />
+      <JFXPasswordField fx:id="SupervisorClave" alignment="CENTER" layoutX="426.0" layoutY="182.0" onAction="#AceptarEnter" prefHeight="27.0" prefWidth="602.0" promptText="clave" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" />
       <Label fx:id="TituloCaja" alignment="CENTER" layoutX="72.0" layoutY="34.0" prefHeight="17.0" prefWidth="602.0" text="¿Continuar?" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0">
          <font>
             <Font size="36.0" />

@@ -24,7 +24,7 @@
             <Font size="18.0" />
          </font>
       </JFXTextField>
-      <JFXTextField fx:id="Descripcion" alignment="CENTER" layoutX="482.0" layoutY="172.0" onKeyTyped="#pagando" prefHeight="44.0" prefWidth="256.0" AnchorPane.rightAnchor="80.0">
+      <JFXTextField fx:id="Descripcion" alignment="CENTER" layoutX="482.0" layoutY="172.0" onAction="#agregarTeclado" onKeyTyped="#pagando" prefHeight="44.0" prefWidth="256.0" AnchorPane.rightAnchor="80.0">
          <font>
             <Font size="18.0" />
          </font>

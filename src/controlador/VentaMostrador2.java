@@ -569,7 +569,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
                 strCostosU+=ventaMostrador.getCosto()+"\n";
                 strCostoT+=ventaMostrador.getTotal()+"\n";
 
-                ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" "+ventaMostrador.getCantidad(), ventaMostrador.getProducto(), ventaMostrador.getCosto()+"", ventaMostrador.getTotal()+"");
+                ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" "+ventaMostrador.getCantidad(), ventaMostrador.getProducto(), ventaMostrador.getCosto()+"", Funciones.valorAmoneda(ventaMostrador.getTotal()));
 
 
 
@@ -579,7 +579,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             valoresPDF.add(new PDFvalores("costounitario", strCostosU));
             valoresPDF.add(new PDFvalores("costo", strCostoT));
 
-            ticketSTR = ticketSTR + "\n\n"+ Funciones.nuevaLinea(" "+CantidadProductos.getText(), "producto(s)", "Total   $", Configuraciones.ventaMostradorTotal+"");
+            ticketSTR = ticketSTR + "\n\n"+ Funciones.nuevaLinea(" "+CantidadProductos.getText(), "producto(s)", "Total", Funciones.valorAmoneda(Configuraciones.ventaMostradorTotal));
 
 
             ticketSTR = ticketSTR + "\n\nMovimientos:\n"+Funciones.formaPago();
@@ -639,6 +639,13 @@ public class VentaMostrador2 extends Controlador implements Initializable {
                 agregarProducto(ListaDeProductos.getSelectionModel().getSelectedItem());
 
         }
+    }
+
+    @FXML
+    void seleccionarCliente(ActionEvent event) {
+        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+        listasVentaCliente.set(nVentaSelect, ListaDeClientes.getSelectionModel().getSelectedItem().getIdPaciente());
+        Tabs.getTabs().get(nVentaSelect).setText(ListaDeClientes.getSelectionModel().getSelectedItem().toString());
     }
 
     @FXML

@@ -69,7 +69,7 @@ public class Configuraciones {
             "RFC: MPL940701T9A\n"+
             "Calle: Artilleros 1847 #1585 \n" +
             "Colonia: Chapultepec Oriente CP: 58260\n" +
-            "Morelia Michoacán Tel: 527-25-23\n\n";
+            "Morelia Michoacán Tel: 4436887322\n\n";
 
 
     public static String ticketCorteCaja=
@@ -83,10 +83,10 @@ public class Configuraciones {
 
 
     //"12  Crema exfoliante    25   2003";
-    public static int ticketCant = 5;
+    public static int ticketCant = 4;
     public static int ticketProducto = 23;
-    public static int ticketCU  = 10;
-    public static int ticketTotal = 10;
+    public static int ticketCU  = 8;
+    public static int ticketTotal = 13;
 
 
     public static boolean ventaAceptada;

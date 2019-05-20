@@ -85,7 +85,7 @@
             </Button>
          </children>
       </HBox>
-      <JFXTextField fx:id="BusquedaCliente" alignment="CENTER" layoutX="643.0" layoutY="29.0" onKeyReleased="#seleccionarPersonal" prefHeight="27.0" prefWidth="385.0" promptText="Mostrador" AnchorPane.rightAnchor="135.0" />
+      <JFXTextField fx:id="BusquedaCliente" alignment="CENTER" layoutX="643.0" layoutY="29.0" onAction="#seleccionarCliente" onKeyReleased="#seleccionarPersonal" prefHeight="27.0" prefWidth="385.0" promptText="Mostrador" AnchorPane.rightAnchor="135.0" />
       <JFXListView fx:id="ListaDeClientes" layoutX="643.0" layoutY="72.0" prefHeight="109.0" prefWidth="385.0" AnchorPane.rightAnchor="135.0" />
    </children>
 </AnchorPane>

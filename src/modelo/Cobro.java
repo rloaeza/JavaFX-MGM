@@ -58,13 +58,13 @@ public class Cobro {
     @Override
     public String toString() {
         if(getFormaPago()==1) {
-            return  "Efectivo: $" + Funciones.fixN(getMonto(), 2);
+            return  "Efectivo: " + Funciones.valorAmoneda(Funciones.fixN(getMonto(), 2) );
         }
         else if(getFormaPago()==2) {
-            return "Transaccion (" + getDescripcion() + "): $"+ Funciones.fixN(getMonto(), 2);
+            return "Transaccion (" + getDescripcion() + "): "+ Funciones.valorAmoneda(Funciones.fixN(getMonto(), 2) );
         }
         else {
-            return "Cambio: $"+ Funciones.fixN(getMonto(), 2);
+            return "Cambio: "+ Funciones.valorAmoneda(Funciones.fixN(getMonto(), 2) );
         }
     }
 }

@@ -656,9 +656,9 @@ public class Funciones {
 
         }
         switch (fp) {
-            case 1: return "Efectivo: $"+fixN(efectivo,2)+ (cambio!=0?"\nCambio: $ "+fixN(cambio,2):"");
-            case 2: return "Tarjeta: $"+fixN(tarjeta,2)+ (cambio!=0?"\nCambio: $ "+fixN(cambio,2):"");
-            case 3: return "Efectivo: $"+fixN(efectivo,2)+ "\nTarjeta: $"+fixN(tarjeta,2)+ (cambio!=0?"\nCambio: $ "+fixN(cambio,2):"");
+            case 1: return "Efectivo: "+Funciones.valorAmoneda(fixN(efectivo,2))+ (cambio!=0?"\nCambio: "+Funciones.valorAmoneda(fixN(cambio,2)):"");
+            case 2: return "Tarjeta: "+Funciones.valorAmoneda(fixN(tarjeta,2))+ (cambio!=0?"\nCambio: "+Funciones.valorAmoneda(fixN(cambio,2)):"");
+            case 3: return "Efectivo: "+Funciones.valorAmoneda(fixN(efectivo,2))+ "\nTarjeta: "+Funciones.valorAmoneda(fixN(tarjeta,2))+ (cambio!=0?"\nCambio: "+Funciones.valorAmoneda(fixN(cambio,2)):"");
 
         }
         return "Sin Pago";

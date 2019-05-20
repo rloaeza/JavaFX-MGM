@@ -45,6 +45,11 @@ public class AceptaAdministrador extends Controlador implements Initializable {
     private Label Error;
 
     @FXML
+    void AceptarEnter(ActionEvent event) throws IOException {
+
+    }
+
+    @FXML
     void Aceptar(ActionEvent event) throws IOException {
         Error.setVisible(true);
 
