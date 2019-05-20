@@ -98,6 +98,8 @@ public class Configuraciones {
     public static boolean abriendoCaja;
     public static boolean cajaAbierta;
     public static double cierreCaja;
+    public static double cierreCajaE;
+    public static double cierreCajaT;
     public static double aperturaCaja;
     public static  int idCaja;
 

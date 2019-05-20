@@ -478,6 +478,8 @@ public class InicioAdministrador extends  Controlador implements Initializable {
 
 
     private boolean cerrarCaja() throws IOException {
+
+  /*
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "CajaCorte: Cerrar");
         paramsJSON.put("idCaja", Configuraciones.idCaja);
@@ -494,7 +496,46 @@ public class InicioAdministrador extends  Controlador implements Initializable {
             }
         }
 
+
+
         Configuraciones.cierreCaja+=Configuraciones.aperturaCaja;
+*/
+
+
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "CajaCorte: Cerrar");
+        paramsJSON.put("idCaja", Configuraciones.idCaja);
+        paramsJSON.put("idPersonal", Configuraciones.idPersonal);
+        Configuraciones.cierreCaja=0;
+        Configuraciones.cierreCajaE=0;
+        Configuraciones.cierreCajaT=0;
+
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+
+        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            String vE=rootArray.get(1).getAsJsonObject().get("vTotal").toString();
+            String vT=rootArray.get(1).getAsJsonObject().get("vTarjeta").toString();
+            vE=vE.replace("\"", "");
+            vT=vT.replace("\"", "");
+            try {
+                Configuraciones.cierreCajaE = Double.valueOf(vE);
+            }catch (NumberFormatException ex) {
+                Configuraciones.cierreCajaE=0;
+            }
+            try {
+                Configuraciones.cierreCajaT = Double.valueOf(vT);
+            }catch (NumberFormatException ex) {
+                Configuraciones.cierreCajaT=0;
+            }
+            Configuraciones.cierreCajaE -=Configuraciones.cierreCajaT;
+        }
+
+
+
+        Configuraciones.cierreCaja=Configuraciones.cierreCajaE+Configuraciones.cierreCajaT+Configuraciones.aperturaCaja;
+
+
+
 
 
         Map<String,Object> paramsAlert = new LinkedHashMap<>();

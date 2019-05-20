@@ -622,6 +622,41 @@ public class Funciones {
         return nl;
     }
 
+    public static int getFormaPago() {
+        int fp = 0;
+        double efectivo = 0;
+        double tarjeta = 0;
+        double cambio = 0;
+        for(Cobro c : Configuraciones.formaPagoCobros) {
+            if (c.getFormaPago() == 1)
+                efectivo += c.getMonto();
+            else if (c.getFormaPago() == 2)
+                tarjeta += c.getMonto();
+            else if (c.getFormaPago() == 3)
+                cambio += c.getMonto();
+
+            if (fp == 0 && c.getFormaPago() == 1) {
+                fp = 1;
+                continue;
+            }
+            if (fp == 0 && c.getFormaPago() == 2) {
+                fp = 2;
+                continue;
+            }
+
+            if (fp == 1 && c.getFormaPago() == 2) {
+                fp = 3;
+                continue;
+            }
+
+            if (fp == 2 && c.getFormaPago() == 1) {
+                fp = 3;
+                continue;
+            }
+        }
+
+        return fp;
+        }
     public static String formaPago() {
         int fp = 0;
         double efectivo = 0;

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -32,6 +33,8 @@ public class CorteCaja extends Controlador implements Initializable {
 
     @FXML
     private JFXTextField Monto;
+    @FXML
+    private JFXTextArea Monto2;
 
     @FXML
     private Label TituloCaja;
@@ -74,7 +77,7 @@ public class CorteCaja extends Controlador implements Initializable {
             Error.setText(Configuraciones.corteCajaErrorNoClaveSupervisor);
             return;
         }
-        if(Monto.getText().isEmpty()) {
+        if(Monto.getText().isEmpty()&&Configuraciones.abriendoCaja) {
             Error.setText(Configuraciones.corteCajaErrorNoMonto);
             return;
         }
@@ -140,7 +143,19 @@ public class CorteCaja extends Controlador implements Initializable {
             corteCajaSTR=corteCajaSTR.replace("$fecha$", fecha );
             corteCajaSTR=corteCajaSTR.replace("$vendedor$", Vendedor.getText());
             corteCajaSTR=corteCajaSTR.replace("$supervisor$", Supervisor.getSelectionModel().getSelectedItem().toString());
-            corteCajaSTR=corteCajaSTR.replace("$monto$", Monto.getText());
+            if(Configuraciones.abriendoCaja) {
+                corteCajaSTR = corteCajaSTR.replace("$monto$", Monto.getText());
+            }
+            else {
+                corteCajaSTR = corteCajaSTR.replace("$monto$",
+                        "Efectivo: "+
+                                NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
+                                        .format(Configuraciones.aperturaCaja+ Configuraciones.cierreCajaT) + ", "+
+                                "Tarjeta: "+
+                                NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
+                                        .format(Configuraciones.cierreCajaE)
+                        );
+            }
 
             //System.out.print(corteCajaSTR);
 
@@ -240,15 +255,25 @@ public class CorteCaja extends Controlador implements Initializable {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        Monto2.setVisible(false);
         if(!Configuraciones.abriendoCaja) {
-            Monto.setText(Configuraciones.cierreCaja+"");
+            Monto.setVisible(false);
+            Monto2.setVisible(true);
 
 
-            Monto.setText(NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
-                    .format(Configuraciones.cierreCaja));
+
+            Monto2.setText(
+                    "Efectivo: "+
+                    NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
+                    .format(Configuraciones.aperturaCaja+ Configuraciones.cierreCajaT) + "\n"+
+                    "Tarjeta: "+
+                    NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
+                            .format(Configuraciones.cierreCajaE)
+
+            );
 
 
-            Monto.setDisable(true);
+            Monto2.setDisable(true);
 
 
             CBCajas.setDisable(true);

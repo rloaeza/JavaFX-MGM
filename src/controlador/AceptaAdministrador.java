@@ -46,11 +46,11 @@ public class AceptaAdministrador extends Controlador implements Initializable {
 
     @FXML
     void AceptarEnter(ActionEvent event) throws IOException {
-
+        Aceptar(null);
     }
 
     @FXML
-    void Aceptar(ActionEvent event) throws IOException {
+    void Aceptar(ActionEvent event)  {
         Error.setVisible(true);
 
         if(Supervisor.getSelectionModel().getSelectedIndex()==-1) {

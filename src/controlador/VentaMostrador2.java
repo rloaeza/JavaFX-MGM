@@ -515,6 +515,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         paramsJSON.put("total", Configuraciones.ventaMostradorTotal);
         paramsJSON.put("idPersonal", Configuraciones.idPersonal);
         paramsJSON.put("idPaciente", idPaciente);
+        paramsJSON.put("tipoPago", Funciones.getFormaPago());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
 
         String strCantidades="";
