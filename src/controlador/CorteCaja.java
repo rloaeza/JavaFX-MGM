@@ -148,10 +148,12 @@ public class CorteCaja extends Controlador implements Initializable {
             }
             else {
                 corteCajaSTR = corteCajaSTR.replace("$monto$",
-                        "Efectivo: "+
+                        "Total: " +NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
+                                .format(Configuraciones.aperturaCaja+ Configuraciones.cierreCajaT+Configuraciones.cierreCajaE) +
+                                "\n            Efectivo: "+
                                 NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
-                                        .format(Configuraciones.aperturaCaja+ Configuraciones.cierreCajaT) + ", "+
-                                "Tarjeta: "+
+                                        .format(Configuraciones.aperturaCaja+ Configuraciones.cierreCajaT) +
+                                "\n            Tarjeta: "+
                                 NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
                                         .format(Configuraciones.cierreCajaE)
                         );

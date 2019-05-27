@@ -57,6 +57,7 @@ public class CostoProductos extends Controlador implements Initializable {
         paramsJSON.put("idPrecioProducto", ListaDeCostos.getSelectionModel().getSelectedItem().getIdPrecioProducto());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarPrecios(ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
+        limpiar(null);
 
     }
 
@@ -65,6 +66,7 @@ public class CostoProductos extends Controlador implements Initializable {
     void agregarCosto(ActionEvent event) throws IOException {
         if(!Costo.getText().isEmpty()) {
             agregar(null);
+
         }
     }
 
@@ -76,6 +78,7 @@ public class CostoProductos extends Controlador implements Initializable {
         paramsJSON.put("idProducto", ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarPrecios(ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
+        limpiar(null);
     }
 
     @FXML
@@ -85,6 +88,7 @@ public class CostoProductos extends Controlador implements Initializable {
         paramsJSON.put("idPrecioProducto", ListaDeCostos.getSelectionModel().getSelectedItem().getIdPrecioProducto());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         cargarPrecios(ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
+        limpiar(null);
     }
 
     @FXML
@@ -115,6 +119,7 @@ public class CostoProductos extends Controlador implements Initializable {
         Clave.setText(p.getClave());
         Nombre.setText(p.getNombre());
 
+        Costo.setText("");
         ImagenProducto.setImage(new Image("imgs/nofotoproducto.png"));
 
         Image image = new Image(Funciones.sitio+"../fotos/productos/P"+p.getIdProducto()+".JPG");

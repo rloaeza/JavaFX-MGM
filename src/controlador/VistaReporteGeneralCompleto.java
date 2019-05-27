@@ -25,11 +25,9 @@ import modelo.PDFvalores;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.NumberFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class VistaReporteGeneralCompleto extends Controlador implements Initializable {
 
@@ -95,12 +93,21 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
 
             for(String t: titulos) {
                 String titulo = (t.split(":")[0]).replace(" ","");
-                String valor = (valorPDf.get(titulo)==null?"":valorPDf.get(titulo)+"\n")+(elemento.getDato(titulo)==null?"":elemento.getDato(titulo));
+                if((titulo.contains("IdVenta")||titulo.contains("Paciente"))) {
+                    String valor = (valorPDf.get(titulo) == null ? "" : valorPDf.get(titulo) + "\n") + (elemento.getDato(titulo) == null ? "" : elemento.getDato(titulo));
+                    valorPDf.put(titulo, valor);
+                }else {
 
 
-
-                valorPDf.put(titulo, valor);
-
+                    String valor = (valorPDf.get(titulo) == null ? "" : valorPDf.get(titulo) + "\n") + (elemento.getDato(titulo) == null ? "" :
+                            NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
+                                    .format(Double.valueOf(
+                            elemento.getDato(titulo)
+                                            )
+                                    )
+                    );
+                    valorPDf.put(titulo, valor);
+                }
 
                 if(!(titulo.contains("IdVenta")||titulo.contains("Paciente"))) {
                     double val =0;
@@ -109,8 +116,9 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
                     } catch (Exception e){
 
                     }
-                    System.out.println(titulo+"->"+valorPDf.get("total"+titulo));
+                    //System.out.println(titulo+"->"+valorPDf.get("total"+titulo));
                     String valor2 = ""+(valorPDf.get("total" + titulo) == null ? val : Double.valueOf(valorPDf.get("total"+titulo))+val );
+
                     valorPDf.put("total"+titulo, valor2);
                 }
 
@@ -127,8 +135,14 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
             valoresPDF.add(new PDFvalores(titulo, valorPDf.get(titulo)));
 
             if(!(titulo.contains("IdVenta")||titulo.contains("Paciente"))) {
-                if(Double.valueOf(valorPDf.get("total"+titulo))>0)
-                    valoresPDF.add(new PDFvalores("total"+titulo, valorPDf.get("total"+titulo)));
+                double val=Double.valueOf(valorPDf.get("total"+titulo));
+                if(val>0) {
+
+
+                    valoresPDF.add(new PDFvalores("total" + titulo,
+                            NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
+                            .format(val )));
+                }
             }
 
         }

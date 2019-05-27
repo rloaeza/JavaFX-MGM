@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import modelo.*;
@@ -249,6 +250,16 @@ public class Citas extends  Controlador implements Initializable {
             }
 
 
+        });
+
+        ListaDePacientes.setOnKeyPressed(event -> {
+            if(event.getCode()== KeyCode.ENTER) {
+                try {
+                    cargarDatosPantalla(ListaDePacientes.getSelectionModel().getSelectedItem());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
         });
         ListaDeCitas.setOnMouseClicked(event -> {
             if(event.getClickCount() == 2) {
