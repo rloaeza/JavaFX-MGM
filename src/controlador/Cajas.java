@@ -12,6 +12,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import modelo.Datos;
 import modelo.Funciones;
 import modelo.PrinterService;
 
@@ -54,6 +55,7 @@ public class Cajas extends Controlador implements Initializable {
         paramsJSON.put("impresoraTicket", Impresora1.getValue());
         paramsJSON.put("impresoraReporte", Impresora2.getValue());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        Datos.cargarCajas();
         cargarDatos();
         limpiar(null);
     }
@@ -67,6 +69,7 @@ public class Cajas extends Controlador implements Initializable {
         paramsJSON.put("impresoraTicket", Impresora1.getValue());
         paramsJSON.put("impresoraReporte", Impresora2.getValue());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        Datos.cargarCajas();
         cargarDatos();
         limpiar(null);
 
@@ -82,6 +85,7 @@ public class Cajas extends Controlador implements Initializable {
 
 
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        Datos.cargarCajas();
         cargarDatos();
 
         limpiar(null        );
@@ -138,7 +142,7 @@ public class Cajas extends Controlador implements Initializable {
 
 
     private void cargarDatos() throws IOException {
-
+/*
         ObservableList<modelo.Caja> listaDeCajas = FXCollections.observableArrayList();
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
@@ -151,8 +155,8 @@ public class Cajas extends Controlador implements Initializable {
                 listaDeCajas.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), modelo.Caja.class) );
             }
         }
-
-        ListaDeCajas.setItems(listaDeCajas);
+*/
+        ListaDeCajas.setItems(Datos.cajas);
 
     }
 

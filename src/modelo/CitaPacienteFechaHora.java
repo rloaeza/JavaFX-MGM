@@ -4,7 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class CitaPaciente {
+public class CitaPacienteFechaHora {
     private int idCita;
     private String fecha;
     private boolean efectuada;
@@ -12,10 +12,9 @@ public class CitaPaciente {
     private String nombre;
     private String apellidos;
 
-    public CitaPaciente() {
-    }
 
-    public CitaPaciente(int idCita, String fecha, boolean efectuada, int idPaciente, String nombre, String apellidos) {
+
+    public CitaPacienteFechaHora(int idCita, String fecha, boolean efectuada, int idPaciente, String nombre, String apellidos) {
         this.idCita = idCita;
         this.fecha = fecha;
         this.efectuada = efectuada;
@@ -77,10 +76,10 @@ public class CitaPaciente {
         String f="";
         try {
             Date d = new SimpleDateFormat("yyyy-mm-dd HH:mm:ss").parse(fecha);
-            f=new SimpleDateFormat("hh:mm a").format(d);
+            f=new SimpleDateFormat("dd/mm/yyyy  hh:mm a").format(d);
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        return f+ "  "+nombre + " "+apellidos;
+        return f;
     }
 }

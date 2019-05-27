@@ -23,6 +23,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import modelo.Configuraciones;
+import modelo.Datos;
 import modelo.Funciones;
 
 import java.io.IOException;
@@ -153,6 +154,7 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("tipo", TipoUsuario.getSelectionModel().getSelectedIndex());
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        Datos.cargarPersonal();
         cargarDatos();
         limpiar(null);
     }
@@ -177,6 +179,7 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("tipo", TipoUsuario.getSelectionModel().getSelectedIndex());
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        Datos.cargarPersonal();
         cargarDatos();
         limpiar(null);
     }
@@ -187,6 +190,7 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("Actividad", "Personal: Eliminar");
         paramsJSON.put("idPersonal", ListaDePersonal.getSelectionModel().getSelectedItem().getIdPersonal());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        Datos.cargarPersonal();
         cargarDatos();
         limpiar(null);
     }
@@ -232,7 +236,8 @@ public class Personal extends Controlador implements Initializable {
     private void cargarDatos() throws IOException {
 
         ObservableList<modelo.Personal> listaPersonal = FXCollections.observableArrayList();
-
+        listaPersonal = Datos.buscarPersonal(-1);
+/*
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Personal: Lista");
         paramsJSON.put("idClinica", Configuraciones.idClinica);
@@ -243,7 +248,7 @@ public class Personal extends Controlador implements Initializable {
                 listaPersonal.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), modelo.Personal.class) );
             }
         }
-
+*/
         ListaDePersonal.setItems(listaPersonal);
 
     }

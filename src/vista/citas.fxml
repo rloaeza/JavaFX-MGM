@@ -4,36 +4,28 @@
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import com.jfoenix.controls.JFXTimePicker?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 
-<AnchorPane fx:id="Pane" prefHeight="523.0" prefWidth="1181.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Citas">
+<AnchorPane fx:id="Pane" prefHeight="668.0" prefWidth="1181.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Citas">
    <children>
-      <JFXListView fx:id="ListaDeCitas" layoutX="761.0" layoutY="81.0" prefHeight="342.0" prefWidth="400.0" AnchorPane.rightAnchor="30.0" />
-      <JFXListView fx:id="ListaDePacientes" layoutX="40.0" layoutY="98.0" prefHeight="120.0" prefWidth="530.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="98.0" />
-      <JFXTextField fx:id="Nombre" layoutX="40.0" layoutY="268.0" onKeyTyped="#buscarPaciente" prefHeight="27.0" prefWidth="257.0" promptText="Nombre" AnchorPane.leftAnchor="40.0" />
-      <JFXTextField fx:id="Apellidos" layoutX="313.0" layoutY="268.0" prefHeight="27.0" prefWidth="257.0" promptText="Apellidos" AnchorPane.leftAnchor="313.0" />
-      <JFXTextField fx:id="Telefono" layoutX="40.0" layoutY="313.0" prefHeight="27.0" prefWidth="257.0" promptText="Télefono" AnchorPane.leftAnchor="40.0" />
-      <JFXTextField fx:id="Celular" layoutX="313.0" layoutY="313.0" prefHeight="27.0" prefWidth="257.0" promptText="Celular" AnchorPane.leftAnchor="313.0" />
-      <JFXTextField fx:id="Email" layoutX="40.0" layoutY="354.0" prefHeight="27.0" prefWidth="257.0" promptText="E-Mail" AnchorPane.leftAnchor="40.0" />
-      <JFXDatePicker fx:id="Fecha" layoutX="761.0" layoutY="34.0" prefWidth="400.0" promptText="Fecha para cita" AnchorPane.rightAnchor="30.0" />
-      <JFXTimePicker fx:id="Hora" layoutX="313.0" layoutY="354.0" prefWidth="257.0" />
-      <Button fx:id="Tratamientos" alignment="TOP_LEFT" layoutX="40.0" layoutY="483.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="257.0" text="Tratamientos">
-         <graphic>
-            <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../imgs/tratamiento.png" />
-               </image>
-            </ImageView>
-         </graphic>
-      </Button>
-      <HBox layoutX="40.0" layoutY="460.0" prefHeight="50.0" prefWidth="530.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="330.0">
+      <JFXTextField fx:id="Nombre" layoutX="40.0" layoutY="268.0" onKeyTyped="#buscarPaciente" prefHeight="27.0" prefWidth="257.0" promptText="Nombre" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="884.0" AnchorPane.topAnchor="270.0" />
+      <JFXTextField fx:id="Apellidos" layoutX="40.0" layoutY="313.0" prefHeight="27.0" prefWidth="257.0" promptText="Apellidos" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="884.0" AnchorPane.topAnchor="310.0" />
+      <JFXTextField fx:id="Email" layoutX="40.0" layoutY="360.0" prefHeight="27.0" prefWidth="257.0" promptText="E-Mail" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="884.0" AnchorPane.topAnchor="350.0" />
+      <JFXTextField fx:id="Telefono" layoutX="40.0" layoutY="406.0" prefHeight="27.0" prefWidth="257.0" promptText="Télefono" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="884.0" AnchorPane.topAnchor="390.0" />
+      <JFXTextField fx:id="Celular" layoutX="40.0" layoutY="458.0" prefHeight="27.0" prefWidth="257.0" promptText="Celular" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="884.0" AnchorPane.topAnchor="430.0" />
+      <JFXTimePicker fx:id="Hora" layoutX="40.0" layoutY="507.0" prefWidth="257.0" AnchorPane.leftAnchor="40.0" AnchorPane.topAnchor="470.0" />
+      <JFXDatePicker fx:id="Fecha" layoutX="761.0" layoutY="34.0" onAction="#cambiarFecha" prefWidth="480.0" promptText="Fecha para cita" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0" />
+      <JFXListView fx:id="ListaDeCitas" layoutX="761.0" layoutY="81.0" prefHeight="480.0" prefWidth="480.0" AnchorPane.bottomAnchor="110.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="80.0" />
+      <JFXListView fx:id="ListaDePacientes" layoutX="40.0" layoutY="98.0" prefHeight="215.0" prefWidth="531.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="610.0" AnchorPane.topAnchor="30.0" />
+      <HBox layoutX="40.0" layoutY="565.0" prefHeight="60.0" prefWidth="530.0" spacing="10.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="611.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#limpiar" prefWidth="280.0" text="Limpiar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#limpiar" text="Limpiar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -42,8 +34,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Separator prefWidth="200.0" visible="false" />
-            <Button mnemonicParsing="false" onAction="#agregar" prefWidth="280.0" text="Agendar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#agregar" text="Agendar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -53,8 +44,11 @@
                </graphic>
             </Button>
          </children>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
       </HBox>
-      <Button layoutX="894.0" layoutY="433.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="60.0" prefWidth="257.0" text="Cancelar">
+      <Button contentDisplay="TOP" layoutX="688.0" layoutY="567.0" mnemonicParsing="false" onAction="#cancelar" prefHeight="60.0" text="Cancelar" AnchorPane.bottomAnchor="20.0" AnchorPane.rightAnchor="30.0">
          <graphic>
             <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                <image>
@@ -63,5 +57,7 @@
             </ImageView>
          </graphic>
       </Button>
+      <JFXListView fx:id="ListaHistorial" layoutX="326.0" layoutY="285.0" prefHeight="285.0" prefWidth="245.0" AnchorPane.bottomAnchor="110.0" AnchorPane.rightAnchor="610.0" AnchorPane.topAnchor="297.0" />
+      <Label layoutX="326.0" layoutY="275.0" prefHeight="17.0" prefWidth="245.0" text="Historial:" AnchorPane.rightAnchor="610.0" AnchorPane.topAnchor="270.0" />
    </children>
 </AnchorPane>

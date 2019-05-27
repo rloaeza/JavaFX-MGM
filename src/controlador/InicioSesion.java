@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
 import modelo.Configuraciones;
+import modelo.Datos;
 import modelo.Funciones;
 import modelo.Personal;
 
@@ -40,6 +41,8 @@ public class InicioSesion  extends Controlador{
         JsonArray rootArray = Funciones.consultarBD(params);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
 
+
+
             Personal usuario = new Gson().fromJson(rootArray.get(1).getAsJsonObject(), Personal.class);
             params = new LinkedHashMap<>();
             params.put("idPersonal", usuario.getIdPersonal());
@@ -58,6 +61,15 @@ public class InicioSesion  extends Controlador{
             Configuraciones.clavePersonal = usuario.getClave();
             Configuraciones.cajaAbierta=false;
             Configuraciones.tipoUsuarioActivo = usuario.getTipo();
+
+
+
+            // cargando...
+            Datos.cargarPacientes();
+            Datos.cargarPersonal();
+            Datos.cargarCajas();
+            Datos.cargarProductosConCosto();
+
 
             //Usuario de venta
             if(usuario.getTipo()==Configuraciones.tipoVendedor) {

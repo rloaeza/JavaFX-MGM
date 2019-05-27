@@ -159,12 +159,6 @@ public class CorteCaja extends Controlador implements Initializable {
 
             //System.out.print(corteCajaSTR);
 
-
-
-
-
-
-
             try {
                 printerService.printString(Configuraciones.impresoraTicket, corteCajaSTR);
                 byte[] cutP = new byte[]{0x1d, 'V', 1};
@@ -200,9 +194,9 @@ public class CorteCaja extends Controlador implements Initializable {
 
         Vendedor.setText(Configuraciones.nombrePersonal);
 
-        ObservableList<Personal> listaPersonalSupervisor = FXCollections.observableArrayList();
+        ObservableList<Personal> listaPersonalSupervisor;
 
-        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        /*Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Personal: Lista con tipo");
         paramsJSON.put("idClinica", Configuraciones.idClinica);
         paramsJSON.put("tipo", 1);
@@ -213,13 +207,16 @@ public class CorteCaja extends Controlador implements Initializable {
                 listaPersonalSupervisor.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), modelo.Personal.class) );
             }
         }
+        */
+        listaPersonalSupervisor = Datos.buscarPersonal(1);
+
         Supervisor.setItems(listaPersonalSupervisor);
 
 
 
 
         ObservableList<modelo.Caja> listaCajas = FXCollections.observableArrayList();
-
+/*
         paramsJSON.clear();
         paramsJSON.put("Actividad", "Caja: Lista");
         paramsJSON.put("idClinica", Configuraciones.idClinica);
@@ -230,6 +227,8 @@ public class CorteCaja extends Controlador implements Initializable {
                 listaCajas.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), modelo.Caja.class) );
             }
         }
+*/
+        listaCajas = Datos.cajas;
         CBCajas.setItems(listaCajas);
 
 

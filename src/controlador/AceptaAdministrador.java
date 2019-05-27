@@ -79,7 +79,7 @@ public class AceptaAdministrador extends Controlador implements Initializable {
     private void cargarDatos() throws IOException {
 
 
-
+/*
         ObservableList<Personal> listaPersonalSupervisor = FXCollections.observableArrayList();
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
@@ -94,6 +94,8 @@ public class AceptaAdministrador extends Controlador implements Initializable {
             }
         }
         Supervisor.setItems(listaPersonalSupervisor);
+*/
+        Supervisor.setItems(Datos.buscarPersonal(1));
 
     }
     private void cerrar() {

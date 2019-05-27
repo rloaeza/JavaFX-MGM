@@ -682,7 +682,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     private void cargarDatos(String patron) throws IOException {
 
-        ObservableList<ProductosConCosto> listaDeProductos = FXCollections.observableArrayList();
+/*        ObservableList<ProductosConCosto> listaDeProductos = FXCollections.observableArrayList();
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Productos: Lista con precio");
@@ -697,13 +697,14 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         }
 
         ListaDeProductos.setItems(listaDeProductos);
-
+*/
+        ListaDeProductos.setItems(Datos.buscarProductosConCosto(patron));
     }
 
     private void cargarClientes(String patron) throws IOException {
 
         listaDeClientes = FXCollections.observableArrayList();
-
+/*
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Pacientes: Lista con patron");
         paramsJSON.put("patron", patron);
@@ -715,8 +716,9 @@ public class VentaMostrador2 extends Controlador implements Initializable {
                 listaDeClientes.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), Pacientes.class) );
             }
         }
-
-        ListaDeClientes.setItems(listaDeClientes);
+*/
+        listaDeClientes = Datos.buscarPacientes(patron);
+        //ListaDeClientes.setItems(listaDeClientes);
 
     }
 
