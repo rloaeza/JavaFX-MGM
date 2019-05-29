@@ -2,6 +2,8 @@ package modelo;
 
 import javafx.collections.ObservableList;
 
+import java.net.URL;
+
 public class Configuraciones {
     public static int idPersonal;
     public static String nombrePersonal;
@@ -195,4 +197,8 @@ public class Configuraciones {
             "MGM PLUS SA de CV\n" +
             "\n";
 
+
+
+
+    public static URL urlAlertBox;
 }

@@ -56,8 +56,17 @@ public class CostoProductos extends Controlador implements Initializable {
         paramsJSON.put("precio", Costo.getText());
         paramsJSON.put("idPrecioProducto", ListaDeCostos.getSelectionModel().getSelectedItem().getIdPrecioProducto());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
-        cargarPrecios(ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
-        limpiar(null);
+
+        if(insercionCorrectaSQL(rootArray) ) {
+            Funciones.mostrarMSG("Costos", "Costo actualizado satisfactoriamente", 5);
+            cargarPrecios(ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
+            limpiar(null);
+        }
+        else {
+            Funciones.mostrarMSG("Costos", "Error al actualizar costo", 5);
+        }
+
+
 
     }
 
@@ -77,8 +86,16 @@ public class CostoProductos extends Controlador implements Initializable {
         paramsJSON.put("precio", Costo.getText());
         paramsJSON.put("idProducto", ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
-        cargarPrecios(ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
-        limpiar(null);
+
+        if(insercionCorrectaSQL(rootArray) ) {
+            Funciones.mostrarMSG("Costos", "Costo agregado satisfactoriamente", 5);
+            cargarPrecios(ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
+            limpiar(null);
+        }
+        else {
+            Funciones.mostrarMSG("Costos", "Error al agregar costo", 5);
+        }
+
     }
 
     @FXML
@@ -87,8 +104,16 @@ public class CostoProductos extends Controlador implements Initializable {
         paramsJSON.put("Actividad", "Precio Productos: Eliminar");
         paramsJSON.put("idPrecioProducto", ListaDeCostos.getSelectionModel().getSelectedItem().getIdPrecioProducto());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
-        cargarPrecios(ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
-        limpiar(null);
+
+        if(insercionCorrectaSQL(rootArray) ) {
+            Funciones.mostrarMSG("Costos", "Costo de producto eliminado", 5);
+            cargarPrecios(ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
+            limpiar(null);
+        }
+        else {
+            Funciones.mostrarMSG("Costos", "Error al eliminar costo", 5);
+        }
+
     }
 
     @FXML

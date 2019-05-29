@@ -699,4 +699,34 @@ public class Funciones {
         }
         return "Sin Pago";
     }
+
+
+
+    public static void mostrarMSG(String titulo, String mensaje, int tiempo) throws IOException {
+
+        Map<String,Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("texto", mensaje);
+        paramsAlert.put("tiempo", tiempo);
+
+        Stage window = new Stage();
+        window.initModality(Modality.APPLICATION_MODAL);
+
+
+
+        FXMLLoader fxmlLoader = new FXMLLoader(Configuraciones.urlAlertBox);
+        AnchorPane root = null;
+
+        root = fxmlLoader.load();
+
+        Controlador c = fxmlLoader.getController();
+        c.setParams(paramsAlert);
+        c.init();
+        window.setTitle(titulo);
+        AnchorPane p = new AnchorPane();
+        p.getChildren().setAll(root);
+
+        Scene scene = new Scene(p, 500, 250);
+        window.setScene(scene);
+        window.showAndWait();
+    }
 }
