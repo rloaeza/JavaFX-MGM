@@ -4,15 +4,27 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.AnchorPane;
+import javafx.util.Duration;
 import modelo.Configuraciones;
 import modelo.Datos;
 import modelo.Funciones;
 import modelo.Personal;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.lang.management.ManagementFactory;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -162,6 +174,40 @@ public class InicioSesion  extends Controlador{
 
     @Override
     public void init() {
+
+    }
+
+
+    @FXML
+    void actualizar(ActionEvent event)  {
+        //Platform.exit();
+
+
+        Platform.runLater(() -> {
+            try {
+
+                InputStream in = new URL("http://mgm.mas-aplicaciones.com/versiones/MGM_1.jar").openStream();
+                Files.copy(in, Paths.get("mgm.jar"), StandardCopyOption.REPLACE_EXISTING);
+
+                StringBuilder cmd = new StringBuilder();
+                cmd.append(System.getProperty("java.home") + File.separator + "bin" + File.separator + "java ");
+                for (String jvmArg : ManagementFactory.getRuntimeMXBean().getInputArguments()) {
+                    cmd.append(jvmArg + " ");
+                }
+                cmd.append("-cp ").append(ManagementFactory.getRuntimeMXBean().getClassPath()).append(" ");
+                cmd.append("MainPrincipal ");
+                //Thread.currentThread().sleep(1000); // 10 seconds delay before restart
+                System.out.println(cmd.toString());
+                Runtime.getRuntime().exec(cmd.toString());
+                System.exit(0);
+            }catch (IOException ex) {
+
+            }
+        });
+
+
+
+
 
     }
 }

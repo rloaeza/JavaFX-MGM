@@ -10,7 +10,7 @@ import java.net.NetworkInterface;
 import java.util.Arrays;
 import java.util.Enumeration;
 
-public class Main extends Application {
+public class MainPrincipal extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
