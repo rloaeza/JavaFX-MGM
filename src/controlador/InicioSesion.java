@@ -2,6 +2,7 @@ package controlador;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.KeyFrame;
@@ -38,6 +39,10 @@ public class InicioSesion  extends Controlador{
 
     @FXML
     private JFXPasswordField textClave;
+
+    @FXML
+    private JFXButton BotonActualizar;
+
 
     @FXML
     void entrarSistema(ActionEvent event) throws IOException {
@@ -174,6 +179,33 @@ public class InicioSesion  extends Controlador{
 
     @Override
     public void init() {
+        Timeline tInicio = new Timeline(new KeyFrame(Duration.millis(100), ae -> {
+            try {
+                Map<String, Object> params = new LinkedHashMap<>();
+                params.put("Actividad", "Version: listar");
+                System.out.println("Intentando");
+                JsonArray rootArray = Funciones.consultarBD(params);
+                if (rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt() > 0) {
+                    String id=rootArray.get(1).getAsJsonObject().get("idVersion").toString();
+                    String actualizar=rootArray.get(1).getAsJsonObject().get("actualizar").toString();
+                    System.out.println(actualizar);
+                    id=id.replace("\"", "");
+                    actualizar=actualizar.replace("\"", "");
+
+                    Configuraciones.versionIdActualizar = Integer.valueOf(id);
+                    Configuraciones.versionActualizar = actualizar;
+                    if(Configuraciones.versionId < Configuraciones.versionIdActualizar) {
+                        BotonActualizar.setVisible(true);
+                    }
+                    else {
+                        BotonActualizar.setVisible(false);
+                    }
+
+                }
+            }catch (IOException ex) {}
+        }));
+        tInicio.setCycleCount(1);
+        tInicio.play();
 
     }
 
@@ -186,8 +218,8 @@ public class InicioSesion  extends Controlador{
         Platform.runLater(() -> {
             try {
 
-                InputStream in = new URL("http://mgm.mas-aplicaciones.com/versiones/MGM_1.jar").openStream();
-                Files.copy(in, Paths.get("mgm.jar"), StandardCopyOption.REPLACE_EXISTING);
+                InputStream in = new URL("http://mgm.mas-aplicaciones.com/versiones/"+Configuraciones.versionIdActualizar+"/"+Configuraciones.versionActualizar).openStream();
+                Files.copy(in, Paths.get(Configuraciones.versionActualizar), StandardCopyOption.REPLACE_EXISTING);
 
                 StringBuilder cmd = new StringBuilder();
                 cmd.append(System.getProperty("java.home") + File.separator + "bin" + File.separator + "java ");
