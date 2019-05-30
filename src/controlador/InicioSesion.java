@@ -197,7 +197,7 @@ public class InicioSesion  extends Controlador{
                 cmd.append("-cp ").append(ManagementFactory.getRuntimeMXBean().getClassPath()).append(" ");
                 cmd.append("MainPrincipal ");
                 //Thread.currentThread().sleep(1000); // 10 seconds delay before restart
-                System.out.println(cmd.toString());
+                //System.out.println(cmd.toString());
                 Runtime.getRuntime().exec(cmd.toString());
                 System.exit(0);
             }catch (IOException ex) {
