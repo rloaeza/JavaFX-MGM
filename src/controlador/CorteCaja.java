@@ -116,7 +116,8 @@ public class CorteCaja extends Controlador implements Initializable {
 
 
 
-            Configuraciones.aperturaCaja = Configuraciones.corteCajaMonto;
+            if(Configuraciones.abriendoCaja)
+                Configuraciones.aperturaCaja = Configuraciones.corteCajaMonto;
             Configuraciones.idCaja = CBCajas.getValue().getIdCaja();
             Map<String,Object> paramsJSON = new LinkedHashMap<>();
             paramsJSON.put("Actividad", "CajaCorte: Insertar");
@@ -148,14 +149,18 @@ public class CorteCaja extends Controlador implements Initializable {
             }
             else {
                 corteCajaSTR = corteCajaSTR.replace("$monto$",
-                        "Total: " +NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
-                                .format(Configuraciones.aperturaCaja+ Configuraciones.cierreCajaT+Configuraciones.cierreCajaE) +
-                                "\n            Efectivo: "+
+                        "Caja inicial: " +NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
+                                .format(Configuraciones.aperturaCaja) +
+                                "\n\n            Venta en efectivo: "+
                                 NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
-                                        .format(Configuraciones.aperturaCaja+ Configuraciones.cierreCajaT) +
-                                "\n            Tarjeta: "+
+                                        .format(Configuraciones.cierreCajaE) +
+                                "\n            Venta en tarjeta: "+
                                 NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
-                                        .format(Configuraciones.cierreCajaE)
+                                        .format(Configuraciones.cierreCajaT)+
+                                "\n            Venta total: " +NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
+                                .format( Configuraciones.cierreCajaT+Configuraciones.cierreCajaE) +
+                                "\n\n            Caja final: " +NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
+                                .format(Configuraciones.aperturaCaja+ Configuraciones.cierreCajaE)
                         );
             }
 
@@ -266,10 +271,10 @@ public class CorteCaja extends Controlador implements Initializable {
             Monto2.setText(
                     "Efectivo: "+
                     NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
-                    .format(Configuraciones.aperturaCaja+ Configuraciones.cierreCajaT) + "\n"+
+                    .format(Configuraciones.aperturaCaja+ Configuraciones.cierreCajaE) + "\n"+
                     "Tarjeta: "+
                     NumberFormat.getCurrencyInstance(new Locale("es", "MX"))
-                            .format(Configuraciones.cierreCajaE)
+                            .format(Configuraciones.cierreCajaT)
 
             );
 

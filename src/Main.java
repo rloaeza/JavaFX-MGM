@@ -40,6 +40,9 @@ public class Main extends Application {
         Configuraciones.urlAlertBox=getClass().getResource("/vista/alert_box.fxml");
         //System.out.println(Configuraciones.MAC);
 
+
+
+
     }
 
 
