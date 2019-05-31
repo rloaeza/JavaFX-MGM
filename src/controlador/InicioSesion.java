@@ -7,10 +7,13 @@ import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.util.Duration;
 import modelo.Configuraciones;
 import modelo.Datos;
@@ -28,8 +31,9 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.LinkedHashMap;
 import java.util.Map;
+import java.util.ResourceBundle;
 
-public class InicioSesion  extends Controlador{
+public class InicioSesion  extends Controlador implements Initializable {
 
     @FXML
     private AnchorPane Pane;
@@ -179,33 +183,7 @@ public class InicioSesion  extends Controlador{
 
     @Override
     public void init() {
-        Timeline tInicio = new Timeline(new KeyFrame(Duration.millis(100), ae -> {
-            try {
-                Map<String, Object> params = new LinkedHashMap<>();
-                params.put("Actividad", "Version: listar");
-                System.out.println("Intentando");
-                JsonArray rootArray = Funciones.consultarBD(params);
-                if (rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt() > 0) {
-                    String id=rootArray.get(1).getAsJsonObject().get("idVersion").toString();
-                    String actualizar=rootArray.get(1).getAsJsonObject().get("actualizar").toString();
-                    System.out.println(actualizar);
-                    id=id.replace("\"", "");
-                    actualizar=actualizar.replace("\"", "");
 
-                    Configuraciones.versionIdActualizar = Integer.valueOf(id);
-                    Configuraciones.versionActualizar = actualizar;
-                    if(Configuraciones.versionId < Configuraciones.versionIdActualizar) {
-                        BotonActualizar.setVisible(true);
-                    }
-                    else {
-                        BotonActualizar.setVisible(false);
-                    }
-
-                }
-            }catch (IOException ex) {}
-        }));
-        tInicio.setCycleCount(1);
-        tInicio.play();
 
     }
 
@@ -233,6 +211,7 @@ public class InicioSesion  extends Controlador{
                 Runtime.getRuntime().exec(cmd.toString());
                 System.exit(0);
             }catch (IOException ex) {
+                ex.printStackTrace();
 
             }
         });
@@ -241,5 +220,36 @@ public class InicioSesion  extends Controlador{
 
 
 
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        Timeline tInicio = new Timeline(new KeyFrame(Duration.millis(100), ae -> {
+            try {
+                Map<String, Object> params = new LinkedHashMap<>();
+                params.put("Actividad", "Version: listar");
+
+                JsonArray rootArray = Funciones.consultarBD(params);
+                if (rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt() > 0) {
+                    String id=rootArray.get(1).getAsJsonObject().get("idVersion").toString();
+                    String actualizar=rootArray.get(1).getAsJsonObject().get("actualizar").toString();
+
+                    id=id.replace("\"", "");
+                    actualizar=actualizar.replace("\"", "");
+
+                    Configuraciones.versionIdActualizar = Integer.valueOf(id);
+                    Configuraciones.versionActualizar = actualizar;
+                    if(Configuraciones.versionId < Configuraciones.versionIdActualizar) {
+                        BotonActualizar.setVisible(true);
+                    }
+                    else {
+                        BotonActualizar.setVisible(false);
+                    }
+
+                }
+            }catch (IOException ex) {}
+        }));
+        tInicio.setCycleCount(1);
+        tInicio.play();
     }
 }
