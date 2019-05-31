@@ -205,7 +205,7 @@ public class InicioSesion  extends Controlador implements Initializable {
                     cmd.append(jvmArg + " ");
                 }
                 cmd.append("-cp ").append(ManagementFactory.getRuntimeMXBean().getClassPath()).append(" ");
-                cmd.append("MainPrincipal ");
+                cmd.append("MainPrincipal  ");
                 //Thread.currentThread().sleep(1000); // 10 seconds delay before restart
                 //System.out.println(cmd.toString());
                 Runtime.getRuntime().exec(cmd.toString());
