@@ -19,7 +19,8 @@
           <Menu mnemonicParsing="false" text="Archivo">
             <items>
               <MenuItem mnemonicParsing="false" onAction="#cerrarSesion" text="Cerrar Sesión" />
-                  <MenuItem mnemonicParsing="false" onAction="#salir" text="Salir" />
+               <MenuItem mnemonicParsing="false" onAction="#cambiarUsuario" text="Cambiar Usuario" />
+               <MenuItem mnemonicParsing="false" onAction="#salir" text="Salir" />
             </items>
           </Menu>
            <Menu mnemonicParsing="false" text="Catálogos">

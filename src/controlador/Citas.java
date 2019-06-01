@@ -100,8 +100,26 @@ public class Citas extends  Controlador implements Initializable {
         String f = Fecha.getValue().toString()+" " + Hora.getValue().toString();
         paramsJSON.put("fecha", f);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
-        cargarCitas();
-        limpiar(null);
+        if(insercionCorrectaSQL(rootArray) ) {
+            new Thread() {
+                @Override
+                public void run() {
+                    super.run();
+                    try {
+                        cargarCitas();
+                    } catch (IOException e) {
+
+                    }
+                }
+            }.start();
+            Funciones.mostrarMSG("Citas", "Cita agregada satisfactoriamente", 2);
+
+            limpiar(null);
+        }
+        else {
+            Funciones.mostrarMSG("Citas", "Error al agregar", 5);
+        }
+
     }
 
     @FXML

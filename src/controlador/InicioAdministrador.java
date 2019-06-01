@@ -48,6 +48,22 @@ public class InicioAdministrador extends  Controlador implements Initializable {
     private JFXButton BarraPagosTratamientos;
 
     @FXML
+    void cambiarUsuario(ActionEvent event) throws IOException {
+
+
+
+        Parent root = FXMLLoader.load(getClass().getResource("/vista/inicio_sesion.fxml"));
+        Stage escenario = (Stage) Pane.getScene().getWindow();
+        double h = escenario.getHeight();
+        double w = escenario.getWidth();
+        escenario.setScene(new Scene(root, w, h));
+        escenario.setMaximized(true);
+
+
+
+    }
+
+    @FXML
     void cerrarSesion(ActionEvent event) throws IOException {
 
         if(Configuraciones.cajaAbierta)
