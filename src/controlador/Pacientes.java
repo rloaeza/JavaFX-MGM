@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import modelo.Configuraciones;
+import modelo.Datos;
 import modelo.Funciones;
 
 import java.io.IOException;
@@ -139,6 +140,7 @@ public class Pacientes extends Controlador implements Initializable {
 
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        Datos.cargarPacientes();
         cargarDatos();
         limpiar(null);
     }
@@ -162,6 +164,7 @@ public class Pacientes extends Controlador implements Initializable {
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         //System.out.println(paramsJSON.toString());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        Datos.cargarPacientes();
         cargarDatos();
         limpiar(null);
     }
@@ -172,6 +175,7 @@ public class Pacientes extends Controlador implements Initializable {
         paramsJSON.put("Actividad", "Pacientes: Eliminar");
         paramsJSON.put("idPaciente", ListaDePacientes.getSelectionModel().getSelectedItem().getIdPaciente());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        Datos.cargarPacientes();
         cargarDatos();
         limpiar(null);
     }
@@ -211,7 +215,7 @@ public class Pacientes extends Controlador implements Initializable {
             imageView.setImage(new Image("imgs/fps1.png"));
     }
     private void cargarDatos() throws IOException {
-
+/*
         ObservableList<modelo.Pacientes> listaPersonal = FXCollections.observableArrayList();
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
@@ -225,7 +229,8 @@ public class Pacientes extends Controlador implements Initializable {
             }
         }
 
-        ListaDePacientes.setItems(listaPersonal);
+        */
+        ListaDePacientes.setItems(Datos.pacientes);
 
     }
 

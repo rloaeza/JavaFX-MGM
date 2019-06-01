@@ -26,6 +26,5 @@
             </ImageView>
          </children>
       </StackPane>
-      <JFXButton fx:id="BotonActualizar" layoutX="535.0" layoutY="393.0" onAction="#actualizar" prefHeight="27.0" prefWidth="157.0" style="-fx-background-color: GREEN;" text="Actualizar" visible="false" AnchorPane.bottomAnchor="50.0" AnchorPane.rightAnchor="128.0" />
    </children>
 </AnchorPane>

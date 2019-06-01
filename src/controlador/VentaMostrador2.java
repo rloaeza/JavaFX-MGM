@@ -274,6 +274,9 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             }
         }
         cargarDatos(Busqueda.getText());
+        if(ListaDeProductos.getItems().size()==0) {
+            Funciones.mostrarMSG("Error", "No existen productos con esa búsqueda", 2);
+        }
     }
 
 

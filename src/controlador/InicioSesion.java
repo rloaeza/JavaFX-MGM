@@ -33,7 +33,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class InicioSesion  extends Controlador implements Initializable {
+public class InicioSesion  extends Controlador  {
 
     @FXML
     private AnchorPane Pane;
@@ -43,9 +43,6 @@ public class InicioSesion  extends Controlador implements Initializable {
 
     @FXML
     private JFXPasswordField textClave;
-
-    @FXML
-    private JFXButton BotonActualizar;
 
 
     @FXML
@@ -188,68 +185,5 @@ public class InicioSesion  extends Controlador implements Initializable {
     }
 
 
-    @FXML
-    void actualizar(ActionEvent event)  {
-        //Platform.exit();
 
-
-        Platform.runLater(() -> {
-            try {
-
-                InputStream in = new URL("http://mgm.mas-aplicaciones.com/versiones/"+Configuraciones.versionIdActualizar+"/"+Configuraciones.versionActualizar).openStream();
-                Files.copy(in, Paths.get(Configuraciones.versionActualizar), StandardCopyOption.REPLACE_EXISTING);
-
-                StringBuilder cmd = new StringBuilder();
-                cmd.append(System.getProperty("java.home") + File.separator + "bin" + File.separator + "java ");
-                for (String jvmArg : ManagementFactory.getRuntimeMXBean().getInputArguments()) {
-                    cmd.append(jvmArg + " ");
-                }
-                cmd.append("-cp ").append(ManagementFactory.getRuntimeMXBean().getClassPath()).append(" ");
-                cmd.append("MainPrincipal  ");
-                //Thread.currentThread().sleep(1000); // 10 seconds delay before restart
-                //System.out.println(cmd.toString());
-                Runtime.getRuntime().exec(cmd.toString());
-                System.exit(0);
-            }catch (IOException ex) {
-                ex.printStackTrace();
-
-            }
-        });
-
-
-
-
-
-    }
-
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        Timeline tInicio = new Timeline(new KeyFrame(Duration.millis(100), ae -> {
-            try {
-                Map<String, Object> params = new LinkedHashMap<>();
-                params.put("Actividad", "Version: listar");
-
-                JsonArray rootArray = Funciones.consultarBD(params);
-                if (rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt() > 0) {
-                    String id=rootArray.get(1).getAsJsonObject().get("idVersion").toString();
-                    String actualizar=rootArray.get(1).getAsJsonObject().get("actualizar").toString();
-
-                    id=id.replace("\"", "");
-                    actualizar=actualizar.replace("\"", "");
-
-                    Configuraciones.versionIdActualizar = Integer.valueOf(id);
-                    Configuraciones.versionActualizar = actualizar;
-                    if(Configuraciones.versionId < Configuraciones.versionIdActualizar) {
-                        BotonActualizar.setVisible(true);
-                    }
-                    else {
-                        BotonActualizar.setVisible(false);
-                    }
-
-                }
-            }catch (IOException ex) {}
-        }));
-        tInicio.setCycleCount(1);
-        tInicio.play();
-    }
 }
