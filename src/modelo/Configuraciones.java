@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import java.net.URL;
 
 public class Configuraciones {
-    public static int versionId=0;
+    public static int versionId=2;
     public static int versionIdActualizar=-1;
     public static String versionActualizar;
     public static int idPersonal;
@@ -117,6 +117,9 @@ public class Configuraciones {
     public static String corteCajaErrorNoMonto = "Falta monto inicial";
     public static String corteCajaErrorNoCajaSeleccionada = "Falta seleccionar caja";
     public static String corteCajaErrorClavesIncorrectas = "Las claves son incorrectas";
+
+    public static String corteCajaErrorClaveIncorrectaVenta = "Clave de vendedor errónea.";
+    public static String corteCajaErrorClaveIncorrectaSupervisor = "Clave de supervisor errómea";
 
 
     public static String formaPagoMontoRecibido = "Monto recibido";

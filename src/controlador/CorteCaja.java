@@ -85,7 +85,7 @@ public class CorteCaja extends Controlador implements Initializable {
             Error.setText(Configuraciones.corteCajaErrorNoCajaSeleccionada);
             return;
         }
-
+        boolean claveVendedor=false;
 
         if(VendedorClave.getText().equals(Configuraciones.clavePersonal) && SupervisorClave.getText().equals(Supervisor.getValue().getClave()))
         {
@@ -184,7 +184,12 @@ public class CorteCaja extends Controlador implements Initializable {
 
             cerrar();
         } else {
-            Error.setText(Configuraciones.corteCajaErrorClavesIncorrectas);
+            if(!VendedorClave.getText().equals(Configuraciones.clavePersonal)) {
+                Error.setText(Configuraciones.corteCajaErrorNoClaveVendedor);
+            }else {
+                Error.setText(Configuraciones.corteCajaErrorNoClaveSupervisor);
+            }
+
             return;
         }
         Error.setVisible(false);
