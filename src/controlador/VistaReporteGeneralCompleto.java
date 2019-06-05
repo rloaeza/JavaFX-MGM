@@ -88,6 +88,7 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
         ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
         Map<String, String> valorPDf = new LinkedHashMap<>();
 
+        int index=0;
         for(modelo.VistaReporte elemento : listaReporte) {
 
 
@@ -95,6 +96,8 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
                 String titulo = (t.split(":")[0]).replace(" ","");
                 if((titulo.contains("IdVenta")||titulo.contains("Paciente"))) {
                     String valor = (valorPDf.get(titulo) == null ? "" : valorPDf.get(titulo) + "\n") + (elemento.getDato(titulo) == null ? "" : elemento.getDato(titulo));
+                    if((index+1)%Configuraciones.lineasPorReporte==0)
+                        valor += "@";
                     valorPDf.put(titulo, valor);
                 }else {
 
@@ -106,6 +109,8 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
                                             )
                                     )
                     );
+                    if((index+1)%Configuraciones.lineasPorReporte==0)
+                        valor += "@";
                     valorPDf.put(titulo, valor);
                 }
 
@@ -117,13 +122,14 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
 
                     }
                     //System.out.println(titulo+"->"+valorPDf.get("total"+titulo));
-                    String valor2 = ""+(valorPDf.get("total" + titulo) == null ? val : Double.valueOf(valorPDf.get("total"+titulo))+val );
-
+                    String valor2 = ""+(valorPDf.get("total" + titulo) == null ? val : Double.valueOf(valorPDf.get("total"+titulo).replace("@",""))+val );
+                    if((index+1)%Configuraciones.lineasPorReporte==0)
+                        valor2 += "@";
                     valorPDf.put("total"+titulo, valor2);
                 }
 
             }
-
+            index++;
 
 
 
@@ -135,7 +141,7 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
             valoresPDF.add(new PDFvalores(titulo, valorPDf.get(titulo)));
 
             if(!(titulo.contains("IdVenta")||titulo.contains("Paciente"))) {
-                double val=Double.valueOf(valorPDf.get("total"+titulo));
+                double val=Double.valueOf(valorPDf.get("total"+titulo).replace("@", ""));
                 if(val>0) {
 
 

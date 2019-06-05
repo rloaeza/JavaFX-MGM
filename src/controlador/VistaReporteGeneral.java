@@ -89,15 +89,18 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
     private void prepararPDF(boolean imprimir, boolean guardar) {
         ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
         Map<String, String> valorPDf = new LinkedHashMap<>();
-
+        int index =0;
         for(modelo.VistaReporte elemento : listaReporte) {
 
 
             for(String t: titulos) {
                 String titulo = (t.split(":")[0]).replace(" ","");
                 String valor = (valorPDf.get(titulo)==null?"":valorPDf.get(titulo)+"\n")+elemento.getDato(titulo);
+                if((index+1)%Configuraciones.lineasPorReporte==0)
+                    valor += "@";
                 valorPDf.put(titulo, valor);
             }
+            index++;
 
 
 

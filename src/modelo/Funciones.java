@@ -27,6 +27,7 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.util.EntityUtils;
 import org.apache.pdfbox.cos.COSName;
+import org.apache.pdfbox.multipdf.PDFMergerUtility;
 import org.apache.pdfbox.pdmodel.PDDocument;
 import org.apache.pdfbox.pdmodel.PDDocumentInformation;
 import org.apache.pdfbox.pdmodel.PDPage;
@@ -313,14 +314,56 @@ public class Funciones {
 
     public static void llenarPDF(String archivoOrigen,  ArrayList<PDFvalores>  valores, boolean imprimir, String archivoDestino) throws Exception {
         File file = new File(archivoOrigen);
+
+        /*
         PDDocument document = PDDocument.load(file);
         llenarPDF(document.getDocumentCatalog().getAcroForm(), valores);
+        */
+
+
+
+        PDDocument doc = new PDDocument();
+
+        ArrayList<PDFvalores> valoresParciales = new ArrayList<>();
+
+        int index = 0;
+        int lineas = valores.get(0).getValor().split("\\@").length;
+        while(index<lineas) {
+           // System.out.println("Tam: "+valores.size());
+            for(PDFvalores v : valores) {
+                //System.out.print(v.getCampo()+"["+index+"]: ");
+
+                try {
+                    valoresParciales.add(new PDFvalores(v.getCampo(), v.getValor().split("\\@")[index]));
+                  //  System.out.println(v.getValor().split("\\@")[index] );
+                }catch (ArrayIndexOutOfBoundsException ex) {
+                    valoresParciales.add(new PDFvalores(v.getCampo(), v.getValor()) );
+                }
+            }
+
+            PDDocument d2 = PDDocument.load(file);
+            llenarPDF(d2.getDocumentCatalog().getAcroForm(), valoresParciales);
+            PDFMergerUtility pdfMergerUtility = new PDFMergerUtility();
+            pdfMergerUtility.appendDocument(doc, d2);
+
+            d2.close();
+            valoresParciales.clear();
+            index++;
+        }
+
+
+
+        //PDDocument document = PDDocument.load(file);
+        //llenarPDF(document.getDocumentCatalog().getAcroForm(), valores);
+
+        PDDocument document = doc;
         if(imprimir)
             imprimirPDF(document);
         if(archivoDestino!=null)
             document.save(archivoDestino);
         document.close();
     }
+
 
 
     private static void llenarPDF(PDAcroForm acroForm, ArrayList<PDFvalores>  valores) throws IOException {
@@ -339,7 +382,9 @@ public class Funciones {
         }
     }
     private static void imprimirPDF(PDDocument pdf) throws Exception {
+
         PDFPrintable printable = new PDFPrintable(pdf, Scaling.SHRINK_TO_FIT);
+
 
   /*      PrinterJob job = PrinterJob.getPrinterJob();
         job.setPrintable(printable);

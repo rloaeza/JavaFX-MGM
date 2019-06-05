@@ -18,10 +18,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import javafx.util.Callback;
-import modelo.Funciones;
-import modelo.PDFvalores;
-import modelo.ProductosConCosto;
-import modelo.ReporteExistenciaAlmacen;
+import modelo.*;
 
 import java.awt.print.PrinterException;
 import java.io.File;
@@ -71,14 +68,19 @@ public class VistaReporteExistencia extends Controlador implements Initializable
         ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
         Map<String, String> valorPDf = new LinkedHashMap<>();
 
+        int index=0;
         for(modelo.VistaReporte elemento : listaReporte) {
 
 
             for(String t: titulos) {
                 String titulo = (t.split(":")[0]).replace(" ","");
                 String valor = (valorPDf.get(titulo)==null?"":valorPDf.get(titulo)+"\n")+elemento.getDato(titulo);
+                if((index+1)%Configuraciones.lineasPorReporte==0)
+                    valor += "@";
+
                 valorPDf.put(titulo, valor);
             }
+            index++;
 
 
 
@@ -91,8 +93,8 @@ public class VistaReporteExistencia extends Controlador implements Initializable
             valoresPDF.add(new PDFvalores(titulo, valorPDf.get(titulo)));
         }
 
-        System.out.println("titulo="+(String) parametros.get(0).get("clinicaDescripcion"));
-        valoresPDF.add(new PDFvalores("Descripcion", (String) parametros.get(0).get("clinicaDescripcion")));
+        //System.out.println("titulo="+(String) parametros.get(0).get("clinicaDescripcion"));
+       valoresPDF.add(new PDFvalores("Descripcion", Configuraciones.clinicaDescripcion));
 
 
         File file = null;
