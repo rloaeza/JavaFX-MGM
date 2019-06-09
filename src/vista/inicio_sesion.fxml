@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.scene.image.Image?>
@@ -8,13 +9,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<AnchorPane fx:id="Pane" prefHeight="436.0" prefWidth="741.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.InicioSesion">
+<AnchorPane fx:id="Pane" prefHeight="562.0" prefWidth="820.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.InicioSesion">
    <children>
       <AnchorPane layoutX="342.0" layoutY="61.0" prefHeight="345.0" prefWidth="353.0" style="-fx-background-color: #e0f9db;" AnchorPane.bottomAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
          <children>
             <JFXTextField fx:id="textUsuario" alignment="CENTER" layoutX="30.0" layoutY="106.0" prefHeight="27.0" prefWidth="279.0" promptText="Usuario" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" />
             <JFXPasswordField fx:id="textClave" alignment="CENTER" layoutX="30.0" layoutY="175.0" onAction="#entrarSistema" promptText="Clave" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" />
-            <JFXButton layoutX="98.0" layoutY="255.0" onAction="#entrarSistema" prefHeight="27.0" prefWidth="157.0" style="-fx-background-color: lightblue;" text="Entrar" />
+            <JFXComboBox fx:id="comboClinica" layoutX="30.0" layoutY="238.0" onAction="#cambiarClinica" promptText="                           Selecciona clínica" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" />
+            <JFXButton layoutX="98.0" layoutY="308.0" onAction="#entrarSistema" prefHeight="27.0" prefWidth="157.0" style="-fx-background-color: lightblue;" text="Entrar" />
          </children>
       </AnchorPane>
       <StackPane layoutX="28.0" layoutY="30.0" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="390.0" AnchorPane.topAnchor="30.0">

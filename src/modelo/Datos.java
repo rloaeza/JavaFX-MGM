@@ -15,6 +15,22 @@ public class Datos {
     public static ObservableList<Personal> personal;
     public static ObservableList<Caja> cajas;
     public static ObservableList<ProductosConCosto> productosConCostos;
+    public static ObservableList<Productos> productosTotales;
+    public static ObservableList<Clinica> clinicas;
+
+
+    public static void cargarClinicas() throws IOException {
+        clinicas = FXCollections.observableArrayList();
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Clinicas: Lista");
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            int t = rootArray.size();
+            for(int i = 1; i< t; i++) {
+                clinicas.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), Clinica.class) );
+            }
+        }
+    }
 
 
     public static void cargarPacientes() throws IOException {
@@ -78,7 +94,6 @@ public class Datos {
         cajas = FXCollections.observableArrayList();
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Caja: Lista");
-        paramsJSON.put("idClinica", Configuraciones.idClinica);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
@@ -116,6 +131,36 @@ public class Datos {
             if(     producto.getNombre().toUpperCase().contains(patron) ||
                     producto.getClave().toUpperCase().contains(patron)
                 )
+                p.add(producto);
+        }
+        return p;
+    }
+
+
+
+    public static void cargarProductos() throws IOException {
+
+        productosTotales = FXCollections.observableArrayList();
+
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Productos: Lista total");
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            int t = rootArray.size();
+            for(int i = 1; i< t; i++) {
+                productosTotales.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), Productos.class) );
+            }
+        }
+    }
+    public static ObservableList<Productos> buscarProductosTotales(String patron) {
+        ObservableList<Productos> p = FXCollections.observableArrayList();
+        if(patron.isEmpty())
+            return productosTotales;
+        patron = patron.toUpperCase();
+        for(Productos producto : productosTotales) {
+            if(     producto.getNombre().toUpperCase().contains(patron) ||
+                    producto.getClave().toUpperCase().contains(patron)
+            )
                 p.add(producto);
         }
         return p;

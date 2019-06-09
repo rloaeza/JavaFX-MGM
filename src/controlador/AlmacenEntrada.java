@@ -12,7 +12,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import modelo.Datos;
 import modelo.Funciones;
 import modelo.Productos;
 
@@ -65,7 +67,7 @@ public class AlmacenEntrada extends Controlador implements Initializable {
     }
 
     @FXML
-    void cargarPatron(ActionEvent event) throws IOException {
+    void cargarPatron(KeyEvent event)  {
         cargarProductos(Patron.getText());
     }
 
@@ -115,22 +117,9 @@ public class AlmacenEntrada extends Controlador implements Initializable {
         }
     }
 
-    private void cargarProductos(String patron) throws IOException {
-        ObservableList<Productos> listaProductos = FXCollections.observableArrayList();
+    private void cargarProductos(String patron) {
 
-        Map<String,Object> paramsJSON = new LinkedHashMap<>();
-        paramsJSON.put("Actividad", "Productos: Lista total con patron");
-        paramsJSON.put("patron", patron);
-
-        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
-        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
-            int t = rootArray.size();
-            for(int i = 1; i< t; i++) {
-                listaProductos.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), modelo.Productos.class) );
-            }
-        }
-
-        ListaDeProductos.setItems(listaProductos);
+        ListaDeProductos.setItems(Datos.buscarProductosTotales(patron));
     }
 
 

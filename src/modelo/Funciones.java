@@ -84,6 +84,8 @@ public class Funciones {
 
         request.setDoOutput(true);
 
+
+        params.put("idClinica", Configuraciones.idClinica);
         request.getOutputStream().write(Funciones.prepareVars(params));
         request.connect();
 

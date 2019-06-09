@@ -3,6 +3,7 @@ package controlador;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.jfoenix.controls.JFXButton;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
 import javafx.animation.KeyFrame;
@@ -15,9 +16,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
-import modelo.Configuraciones;
-import modelo.Datos;
-import modelo.Funciones;
+import modelo.*;
 import modelo.Personal;
 
 import java.io.File;
@@ -33,7 +32,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.ResourceBundle;
 
-public class InicioSesion  extends Controlador  {
+public class InicioSesion  extends Controlador  implements  Initializable {
 
     @FXML
     private AnchorPane Pane;
@@ -44,6 +43,14 @@ public class InicioSesion  extends Controlador  {
     @FXML
     private JFXPasswordField textClave;
 
+    @FXML
+    private JFXComboBox<Clinica> comboClinica;
+
+
+    @FXML
+    void cambiarClinica(ActionEvent event) {
+        Configuraciones.idClinica = comboClinica.getSelectionModel().getSelectedItem().getIdClinica();
+    }
 
     @FXML
     void entrarSistema(ActionEvent event) throws IOException {
@@ -72,7 +79,6 @@ public class InicioSesion  extends Controlador  {
             params.put("vista", "/vista/inicio_resumen.fxml");
 
 
-            Configuraciones.idClinica = usuario.getIdClinica();
             Configuraciones.idPersonal = usuario.getIdPersonal();
             Configuraciones.clinicaDescripcion = usuario.getTitulo();
             Configuraciones.nombrePersonal=usuario.getApellidos()+", "+usuario.getNombre();
@@ -87,6 +93,7 @@ public class InicioSesion  extends Controlador  {
             Datos.cargarPersonal();
             Datos.cargarCajas();
             Datos.cargarProductosConCosto();
+            Datos.cargarProductos();
 
 
             //Usuario de venta
@@ -185,5 +192,16 @@ public class InicioSesion  extends Controlador  {
     }
 
 
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        try {
+            Datos.cargarClinicas();
+            comboClinica.setItems(Datos.clinicas);
+            comboClinica.getSelectionModel().select(0);
+            cambiarClinica(null);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
+    }
 }

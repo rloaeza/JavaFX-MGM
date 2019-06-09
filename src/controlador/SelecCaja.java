@@ -11,6 +11,8 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import modelo.Personal;
@@ -39,7 +41,12 @@ public class SelecCaja extends Controlador implements Initializable {
     private Label Error;
 
     @FXML
-    void Aceptar(ActionEvent event) throws IOException {
+    void Aceptar2(KeyEvent event) {
+        if(event.getCode() == KeyCode.ENTER)
+            Aceptar(null);
+    }
+    @FXML
+    void Aceptar(ActionEvent event) {
         Error.setVisible(true);
         if(CBCajas.getSelectionModel().getSelectedIndex()==-1) {
             Error.setText(Configuraciones.corteCajaErrorNoCajaSeleccionada);
