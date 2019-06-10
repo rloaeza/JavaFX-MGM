@@ -223,7 +223,8 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
         TablaReporte.setColumnResizePolicy(TreeTableView.UNCONSTRAINED_RESIZE_POLICY);
 
         Titulo.setText("Reporte general");
-        FechaInicio.setValue(LocalDate.now().minusMonths(1) );
+        //FechaInicio.setValue(LocalDate.now().minusMonths(1) );
+        FechaInicio.setValue(LocalDate.now() );
         FechaFin.setValue(LocalDate.now() );
 
 

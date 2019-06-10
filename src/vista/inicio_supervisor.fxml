@@ -29,6 +29,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#catalogoCajas" text="Cajas" />
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoPacientes" text="Pacientes" />
+                  <MenuItem mnemonicParsing="false" onAction="#catalogoTiposDeProductos" text="Productos" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Movimientos">

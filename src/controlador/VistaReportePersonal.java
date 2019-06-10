@@ -187,7 +187,8 @@ public class VistaReportePersonal extends Controlador implements Initializable {
         TablaReporte.setColumnResizePolicy(TreeTableView.UNCONSTRAINED_RESIZE_POLICY);
 
         Titulo.setText("Reporte personal");
-        FechaInicio.setValue(LocalDate.now().minusMonths(1) );
+        //FechaInicio.setValue(LocalDate.now().minusMonths(1) );
+        FechaInicio.setValue(LocalDate.now() );
         FechaFin.setValue(LocalDate.now() );
 
 

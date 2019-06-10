@@ -274,7 +274,7 @@ public class InicioAdministrador extends  Controlador implements Initializable {
     public void init() {
 
         //Estado.setText(usuario.getProducto());
-        ((Stage)Pane.getScene().getWindow()).setTitle(Configuraciones.nombrePersonal);
+        ((Stage)Pane.getScene().getWindow()).setTitle(Configuraciones.nombrePersonal + " / " + Configuraciones.nombreClinica);
 
 
 

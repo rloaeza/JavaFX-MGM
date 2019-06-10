@@ -5,13 +5,14 @@ import javafx.collections.ObservableList;
 import java.net.URL;
 
 public class Configuraciones {
-    public static int versionId=3;
+    public static int versionId=5;
     public static int versionIdActualizar=-1;
     public static String versionActualizar;
     public static int idPersonal;
     public static String nombrePersonal;
     public static String clavePersonal;
     public static int idClinica;
+    public static String nombreClinica;
     public static String clinicaDescripcion;
 
 
