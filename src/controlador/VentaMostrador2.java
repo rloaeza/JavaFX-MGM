@@ -30,6 +30,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.util.Duration;
 import modelo.*;
 import modelo.Pacientes;
+import modelo.Personal;
 import modelo.VentaMostrador;
 
 import javax.print.DocFlavor;
@@ -56,6 +57,12 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     private ArrayList<ObservableList<VentaMostrador>> listasVentasMostrador = new ArrayList<>();
 
     private ArrayList<Integer> listasVentaCliente = new ArrayList<>();
+
+    private ArrayList<Integer> listasVentaVendedor = new ArrayList<>();
+
+
+    @FXML
+    private JFXComboBox<Personal> ListaDeVendedores;
 
     @FXML
     private JFXListView<ProductosConCosto> ListaDeProductos;
@@ -92,6 +99,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
         calcularTotal();
         actualizarCliente();
+        seleccionarVendedor(listasVentaVendedor.get(nVentaSelect));
 
 
     }
@@ -130,9 +138,12 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
         listasVentaCliente.add(-1);
         tab.setContent(TablasVentas.get(TablasVentas.size()-1));
-
         Tabs.getTabs().add(tab);
         Tabs.getSelectionModel().select(Tabs.getTabs().size()-1);
+
+
+        listasVentaVendedor.add(Configuraciones.idPersonal);
+        seleccionarVendedor(Configuraciones.idPersonal);
         calcularTotal();
         actualizarCliente();
 
@@ -249,7 +260,9 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         Tabs.getTabs().remove(index);
         listasVentasMostrador.remove(index);
         TablasVentas.remove(index);
+
         listasVentaCliente.remove(index);
+        listasVentaVendedor.remove(index);
 
         nVenta--;
         if(nVenta==1) {
@@ -258,6 +271,8 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
         calcularTotal();
         actualizarCliente();
+        index = Tabs.getSelectionModel().getSelectedIndex();
+        seleccionarVendedor(listasVentaVendedor.get(index));
 
 
 
@@ -391,6 +406,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
 
         try {
+            cargarVendedores();
             cargarDatos("");
             cargarClientes("");
         } catch (IOException e) {
@@ -424,6 +440,12 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         });
 
 
+        ListaDeVendedores.setOnAction(event -> {
+                nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+                listasVentaVendedor.set(nVentaSelect, ListaDeVendedores.getSelectionModel().getSelectedItem().getIdPersonal());
+        });
+
+
 
 
 
@@ -454,7 +476,21 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     }
 
+    private void cargarVendedores() {
+        ListaDeVendedores.setItems(Datos.personal);
+        seleccionarVendedor(Configuraciones.idPersonal);
 
+    }
+
+    private void seleccionarVendedor(int id) {
+        ObservableList<Personal> p = ListaDeVendedores.getItems();
+        for(Personal persona : p) {
+            if(persona.getIdPersonal()==id) {
+                ListaDeVendedores.getSelectionModel().select(persona);
+                break;
+            }
+        }
+    }
 
     @FXML
     void aceptarVenta(ActionEvent event) throws IOException {
@@ -517,6 +553,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         paramsJSON.put("iva", "iva");
         paramsJSON.put("total", Configuraciones.ventaMostradorTotal);
         paramsJSON.put("idPersonal", Configuraciones.idPersonal);
+        paramsJSON.put("idPersonalComision", listasVentaVendedor.get(nVentaSelect));
         paramsJSON.put("idPaciente", idPaciente);
         paramsJSON.put("tipoPago", Funciones.getFormaPago());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
@@ -670,6 +707,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         listasVentasMostrador.get(nVentaSelect).clear();
         ListaDeClientes.getSelectionModel().clearSelection();
         listasVentaCliente.set(nVentaSelect,-1);
+        listasVentaVendedor.set(nVentaSelect, Configuraciones.idPersonal);
         Tabs.getTabs().get(nVentaSelect).setText("Mostrador");
         actualizarCliente();
         calcularTotal();
@@ -685,43 +723,13 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
     private void cargarDatos(String patron) throws IOException {
 
-/*        ObservableList<ProductosConCosto> listaDeProductos = FXCollections.observableArrayList();
-
-        Map<String,Object> paramsJSON = new LinkedHashMap<>();
-        paramsJSON.put("Actividad", "Productos: Lista con precio");
-        paramsJSON.put("patron", patron);
-        paramsJSON.put("idClinica", Configuraciones.idClinica);
-        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
-        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
-            int t = rootArray.size();
-            for(int i = 1; i< t; i++) {
-                listaDeProductos.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), ProductosConCosto.class) );
-            }
-        }
-
-        ListaDeProductos.setItems(listaDeProductos);
-*/
         ListaDeProductos.setItems(Datos.buscarProductosConCosto(patron));
     }
 
     private void cargarClientes(String patron) throws IOException {
 
         listaDeClientes = FXCollections.observableArrayList();
-/*
-        Map<String,Object> paramsJSON = new LinkedHashMap<>();
-        paramsJSON.put("Actividad", "Pacientes: Lista con patron");
-        paramsJSON.put("patron", patron);
-        paramsJSON.put("idClinica", Configuraciones.idClinica);
-        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
-        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
-            int t = rootArray.size();
-            for(int i = 1; i< t; i++) {
-                listaDeClientes.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), Pacientes.class) );
-            }
-        }
-*/
         listaDeClientes = Datos.buscarPacientes(patron);
-        //ListaDeClientes.setItems(listaDeClientes);
 
     }
 
