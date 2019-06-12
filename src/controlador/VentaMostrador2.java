@@ -552,7 +552,8 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         paramsJSON.put("subtotal", Configuraciones.ventaMostradorSubTotal);
         paramsJSON.put("iva", "iva");
         paramsJSON.put("total", Configuraciones.ventaMostradorTotal);
-        paramsJSON.put("idPersonal", Configuraciones.idPersonal);
+        //paramsJSON.put("idPersonal", Configuraciones.idPersonal);
+        paramsJSON.put("idPersonal", listasVentaVendedor.get(nVentaSelect));
         paramsJSON.put("idPersonalComision", listasVentaVendedor.get(nVentaSelect));
         paramsJSON.put("idPaciente", idPaciente);
         paramsJSON.put("tipoPago", Funciones.getFormaPago());
