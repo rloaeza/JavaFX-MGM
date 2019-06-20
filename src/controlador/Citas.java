@@ -2,10 +2,7 @@ package controlador;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.jfoenix.controls.JFXDatePicker;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXTextField;
-import com.jfoenix.controls.JFXTimePicker;
+import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -63,6 +60,9 @@ public class Citas extends  Controlador implements Initializable {
     @FXML
     private Button Tratamientos;
 
+    @FXML
+    private JFXComboBox<Clinica> Clinica;
+
     private int agregarPaciente() throws IOException {
         int idPaciente=-1;
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
@@ -97,6 +97,7 @@ public class Citas extends  Controlador implements Initializable {
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Citas: Agregar");
         paramsJSON.put("idPaciente", idPaciente);
+        paramsJSON.put("idClinicaDestino", Clinica.getSelectionModel().getSelectedItem().getIdClinica());
         String f = Fecha.getValue().toString()+" " + Hora.getValue().toString();
         paramsJSON.put("fecha", f);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
@@ -138,6 +139,7 @@ public class Citas extends  Controlador implements Initializable {
     void limpiar(ActionEvent event) throws IOException {
         cargarDatosPantalla(new Pacientes());
         cargarPacientes();
+        cargarClinicas();
     }
 
     @FXML
@@ -201,6 +203,16 @@ public class Citas extends  Controlador implements Initializable {
 
     }
 
+    private void cargarClinicas() {
+        Clinica.setItems(Datos.clinicas);
+        for(Clinica c: Datos.clinicas) {
+            if( c.getIdClinica() == Configuraciones.idClinica ) {
+                Clinica.getSelectionModel().select(c);
+                break;
+            }
+        }
+    }
+
     private void cargarCitasFechaHora(int idPaciente) throws IOException {
 
         ObservableList<CitaPacienteFechaHora> listaCitas = FXCollections.observableArrayList();
@@ -226,8 +238,9 @@ public class Citas extends  Controlador implements Initializable {
         ObservableList<CitaPaciente> listaCitas = FXCollections.observableArrayList();
 
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
-        paramsJSON.put("Actividad", "Citas: Lista");
+        paramsJSON.put("Actividad", "Citas: Listar");
         paramsJSON.put("idClinica", Configuraciones.idClinica);
+        paramsJSON.put("idClinicaDestino", Clinica.getSelectionModel().getSelectedItem().getIdClinica());
         paramsJSON.put("fecha", Fecha.getValue().toString());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
@@ -246,11 +259,20 @@ public class Citas extends  Controlador implements Initializable {
         try {
             cargarPacientes();
             Fecha.setValue(LocalDate.now() );
+            cargarClinicas();
             cargarCitas();
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
+        Clinica.setOnAction(e->{
+            try {
+                cargarCitas();
+            } catch (IOException ex) {
+
+            }
+        });
 
     }
 

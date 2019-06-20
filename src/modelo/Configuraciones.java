@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import java.net.URL;
 
 public class Configuraciones {
-    public static int versionId=7;
+    public static int versionId=8;
     public static int versionIdActualizar=-1;
     public static String versionActualizar;
     public static int idPersonal;
