@@ -44,6 +44,15 @@
                   </ImageView>
                </graphic>
             </Button>
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#reporteExistenciasVerificar" text="Existencias para verificar">
+               <graphic>
+                  <ImageView fitHeight="150.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/b_reportes.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#reporteVentasGenerales" text="Ventas Generales">
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
