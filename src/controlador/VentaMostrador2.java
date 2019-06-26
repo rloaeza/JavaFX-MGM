@@ -557,6 +557,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
         paramsJSON.put("idPersonalComision", listasVentaVendedor.get(nVentaSelect));
         paramsJSON.put("idPaciente", idPaciente);
         paramsJSON.put("tipoPago", Funciones.getFormaPago());
+        paramsJSON.put("descuento", Configuraciones.descuento*100);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
 
         String strCantidades="";
@@ -621,7 +622,17 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             valoresPDF.add(new PDFvalores("costounitario", strCostosU));
             valoresPDF.add(new PDFvalores("costo", strCostoT));
 
-            ticketSTR = ticketSTR + "\n\n"+ Funciones.nuevaLinea(" "+CantidadProductos.getText(), "producto(s)", "Total", Funciones.valorAmoneda(Configuraciones.ventaMostradorTotal));
+
+
+            if(Configuraciones.descuento>0) {
+                ticketSTR = ticketSTR + "\n\n"+ Funciones.nuevaLinea(" "+CantidadProductos.getText(), "producto(s)", "Total", Funciones.valorAmoneda(Configuraciones.ventaMostradorTotal));
+                ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" ", " ", "Desc", Configuraciones.descuento*100+"%");
+                ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" ", " ", "Total", Funciones.valorAmoneda(Configuraciones.ventaMostradorTotal - Configuraciones.ventaMostradorTotal*Configuraciones.descuento));
+            } else  {
+                ticketSTR = ticketSTR + "\n\n"+ Funciones.nuevaLinea(" "+CantidadProductos.getText(), "producto(s)", "Total", Funciones.valorAmoneda(Configuraciones.ventaMostradorTotal));
+            }
+
+
 
 
             ticketSTR = ticketSTR + "\n\nMovimientos:\n"+Funciones.formaPago();

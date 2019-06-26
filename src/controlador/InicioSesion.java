@@ -95,6 +95,7 @@ public class InicioSesion  extends Controlador  implements  Initializable {
             Datos.cargarCajas();
             Datos.cargarProductosConCosto();
             Datos.cargarProductos();
+            Datos.cargarDecuentos();
 
 
             //Usuario de venta

@@ -35,6 +35,7 @@
                   <MenuItem mnemonicParsing="false" onAction="#catalogoServicios" text="Servicios" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoTiposDeProductos" text="Productos" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoTratamientos" text="Tratamientos" />
+                   <MenuItem mnemonicParsing="false" onAction="#catalogoDescuentos" text="Descuentos" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Movimientos">

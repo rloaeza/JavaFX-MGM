@@ -18,6 +18,8 @@ public class Datos {
     public static ObservableList<Productos> productosTotales;
     public static ObservableList<Clinica> clinicas;
 
+    public static ObservableList<Descuento> descuentos;
+
 
     public static void cargarClinicas() throws IOException {
         clinicas = FXCollections.observableArrayList();
@@ -164,5 +166,21 @@ public class Datos {
                 p.add(producto);
         }
         return p;
+    }
+
+
+    public static void cargarDecuentos() throws IOException {
+
+        descuentos = FXCollections.observableArrayList();
+
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Descuentos: Listar");
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            int t = rootArray.size();
+            for(int i = 1; i< t; i++) {
+                descuentos.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), Descuento.class) );
+            }
+        }
     }
 }

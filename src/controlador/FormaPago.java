@@ -12,9 +12,7 @@ import javafx.scene.control.ToggleButton;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
-import modelo.Cobro;
-import modelo.Configuraciones;
-import modelo.Funciones;
+import modelo.*;
 
 public class FormaPago extends Controlador {
 
@@ -42,9 +40,22 @@ public class FormaPago extends Controlador {
     private ToggleButton FormaTarjeta;
 
     @FXML
+    private JFXComboBox<modelo.Descuento> Descuento;
+    @FXML
     private Label Error;
 
     private double cambio=0;
+
+    private  double montoInicial;
+
+    @FXML
+    void fijarDescuento(ActionEvent event) {
+        Configuraciones.descuento = ((double) Descuento.getValue().getCantidad())/100;
+        Configuraciones.formaPagoMonto = montoInicial - montoInicial*(Configuraciones.descuento);
+        Cantidad.setText(Funciones.valorAmoneda(Configuraciones.formaPagoMonto));
+        if(!ListaPagos.getItems().isEmpty())
+            calcular();
+    }
 
     @FXML
     void agregarTeclado(ActionEvent event) {
@@ -176,6 +187,11 @@ public class FormaPago extends Controlador {
         ListaPagos.setItems(Configuraciones.formaPagoCobros);
         SeleccionarFormaPago(null);
 
+        Descuento.setItems(Datos.descuentos);
+        Descuento.getSelectionModel().select(0);
+
+        montoInicial = Configuraciones.formaPagoMonto;
+        Configuraciones.descuento=0;
 
     }
 
