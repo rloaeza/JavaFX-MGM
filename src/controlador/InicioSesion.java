@@ -58,10 +58,9 @@ public class InicioSesion  extends Controlador  implements  Initializable {
 
         Map<String,Object> params = new LinkedHashMap<>();
         params.put("Actividad", "InicioSesion");
-        params.put("idClinica", "1");
         params.put("usuario", textUsuario.getText());
         params.put("clave", textClave.getText());
-        params.put("mac", Configuraciones.MAC);
+        //params.put("mac", Configuraciones.MAC);
 
 
         JsonArray rootArray = Funciones.consultarBD(params);
@@ -189,7 +188,6 @@ public class InicioSesion  extends Controlador  implements  Initializable {
 
     @Override
     public void init() {
-
 
     }
 

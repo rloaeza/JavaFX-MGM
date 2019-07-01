@@ -84,11 +84,12 @@ public class Funciones {
 
         request.setDoOutput(true);
 
-
         params.put("idClinica", Configuraciones.idClinica);
+        params.put("mac", Configuraciones.MAC);
+        params.put("idPersonalLogIn", Configuraciones.idPersonal);
+
         request.getOutputStream().write(Funciones.prepareVars(params));
         request.connect();
-
         JsonParser jp = new JsonParser();
         JsonElement root = jp.parse(new InputStreamReader((InputStream) request.getContent())); //Convert the input stream to a json element
 
@@ -669,6 +670,13 @@ public class Funciones {
         nl = llenar(cant, Configuraciones.ticketCant)+ llenar(prod, Configuraciones.ticketProducto)+ llenar(cu, Configuraciones.ticketCU)+ llenar(tot, Configuraciones.ticketTotal);
         return nl;
     }
+
+    public static String nuevaLinea(String cant, String prod)  {
+        String nl = "";
+        nl = llenar(cant, Configuraciones.ticketCant+Configuraciones.ticketCU)+ llenar(prod, Configuraciones.ticketProducto+Configuraciones.ticketTotal);
+        return nl;
+    }
+
 
     public static int getFormaPago() {
         int fp = 0;

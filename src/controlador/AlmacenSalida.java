@@ -14,11 +14,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import modelo.AlmacenProductos;
+import modelo.Configuraciones;
 import modelo.Funciones;
+import modelo.PrinterService;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.ResourceBundle;
 
@@ -54,6 +57,58 @@ public class AlmacenSalida extends Controlador implements Initializable {
     @FXML
     void imprimir(ActionEvent event) throws IOException {
 
+        String ticketSTR= Configuraciones.ticketTituloClinicaThermal;
+        ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea("Cantidad", "Producto");
+        int tot=0;
+        for(modelo.AlmacenEntrada elemento : ListaDeEntradas.getItems()) {
+            int cant =(int)(elemento.getCantidad()*(-1));
+            tot += cant;
+            ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" "+cant, elemento.getNombre());
+        }
+        ticketSTR = ticketSTR + "\n\n "+tot+" productos. ";
+        ticketSTR = ticketSTR + "\n\n\nTrabajador:"+ Configuraciones.nombrePersonal+"\n";
+        ticketSTR = ticketSTR + "\n           ______________________________\n\n\n\n\n\n\n\n\n";
+
+        // Verificar que la impresora este seleccionada
+        PrinterService printerService = new PrinterService();
+        List<String> listPrinters = printerService.getPrinters();
+        boolean impresoraValida = false;
+        for(String printer : listPrinters) {
+            if( printer.contains(Configuraciones.impresoraTicket)) {
+                impresoraValida = true;
+
+            }
+        }
+
+        Map<String,Object> paramsAlertImpresora = new LinkedHashMap<>();
+        paramsAlertImpresora.put("titulo", "Error");
+        paramsAlertImpresora.put("tiempo", "5");
+        paramsAlertImpresora.put("vista", "/vista/alert_box.fxml");
+        if(!impresoraValida) {
+            paramsAlertImpresora.put("texto", "No existe la impresora: "+Configuraciones.impresoraTicket+ " en el sistema");
+
+            Funciones.displayFP(paramsAlertImpresora, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
+
+            return;
+        }
+
+
+
+        try {
+            //printerService.printImage(Configuraciones.impresoraTicket, "formatos/mgm_t.png", DocFlavor.INPUT_STREAM.PNG);
+            printerService.printString(Configuraciones.impresoraTicket, ticketSTR);
+
+            byte[] cutP = new byte[]{0x1d, 'V', 1};
+            printerService.printBytes(Configuraciones.impresoraTicket, cutP);
+
+
+            byte[] openCashDrawer = new byte[]{27, 112, 48, 55, 121};
+            printerService.printBytes(Configuraciones.impresoraTicket, openCashDrawer);
+        } catch (Exception e) {
+            paramsAlertImpresora.put("texto", "Error en la impresora :(, "+Configuraciones.impresoraTicket);
+            Funciones.displayFP(paramsAlertImpresora, getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
+            return;
+        }
     }
 
     @FXML

@@ -626,7 +626,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
             if(Configuraciones.descuento>0) {
                 ticketSTR = ticketSTR + "\n\n"+ Funciones.nuevaLinea(" "+CantidadProductos.getText(), "producto(s)", "Total", Funciones.valorAmoneda(Configuraciones.ventaMostradorTotal));
-                ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" ", " ", "Desc", Configuraciones.descuento*100+"%");
+                ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" ", " ", "Desc", Funciones.valorAmoneda(Configuraciones.ventaMostradorTotal*Configuraciones.descuento));
                 ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" ", " ", "Total", Funciones.valorAmoneda(Configuraciones.ventaMostradorTotal - Configuraciones.ventaMostradorTotal*Configuraciones.descuento));
             } else  {
                 ticketSTR = ticketSTR + "\n\n"+ Funciones.nuevaLinea(" "+CantidadProductos.getText(), "producto(s)", "Total", Funciones.valorAmoneda(Configuraciones.ventaMostradorTotal));
