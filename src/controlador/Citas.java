@@ -58,6 +58,9 @@ public class Citas extends  Controlador implements Initializable {
     private JFXTimePicker Hora;
 
     @FXML
+    private JFXTextArea Motivo;
+
+    @FXML
     private Button Tratamientos;
 
     @FXML
@@ -100,6 +103,7 @@ public class Citas extends  Controlador implements Initializable {
         paramsJSON.put("idClinicaDestino", Clinica.getSelectionModel().getSelectedItem().getIdClinica());
         String f = Fecha.getValue().toString()+" " + Hora.getValue().toString();
         paramsJSON.put("fecha", f);
+        paramsJSON.put("motivo", Motivo.getText());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(insercionCorrectaSQL(rootArray) ) {
             new Thread() {
@@ -140,6 +144,7 @@ public class Citas extends  Controlador implements Initializable {
         cargarDatosPantalla(new Pacientes());
         cargarPacientes();
         cargarClinicas();
+        Motivo.setText("");
     }
 
     @FXML

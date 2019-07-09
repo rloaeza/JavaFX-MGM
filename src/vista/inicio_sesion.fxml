@@ -4,6 +4,7 @@
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXPasswordField?>
 <?import com.jfoenix.controls.JFXTextField?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -17,6 +18,7 @@
             <JFXPasswordField fx:id="textClave" alignment="CENTER" layoutX="30.0" layoutY="175.0" onAction="#entrarSistema" promptText="Clave" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" />
             <JFXComboBox fx:id="comboClinica" layoutX="30.0" layoutY="238.0" onAction="#cambiarClinica" promptText="                           Selecciona clínica" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" />
             <JFXButton layoutX="98.0" layoutY="308.0" onAction="#entrarSistema" prefHeight="27.0" prefWidth="157.0" style="-fx-background-color: lightblue;" text="Entrar" />
+            <Label fx:id="Version" layoutX="160.0" layoutY="471.0" text="Código: 2019.1" AnchorPane.bottomAnchor="10.0" />
          </children>
       </AnchorPane>
       <StackPane layoutX="28.0" layoutY="30.0" prefHeight="150.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="390.0" AnchorPane.topAnchor="30.0">

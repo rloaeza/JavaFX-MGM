@@ -430,7 +430,7 @@ public class VentaEditar extends Controlador implements Initializable {
         ticketSTR = ticketSTR + "\n\n"+ Funciones.nuevaLinea(" "+CantidadProductos.getText(), "productos", "Total", Funciones.valorAmoneda(Configuraciones.ventaMostradorTotal));
 
         Configuraciones.formaPagoCobros = ListaCobros.getItems();
-        ticketSTR = ticketSTR + "\n\nMovimientos:\n"+Funciones.formaPago();
+        //ticketSTR = ticketSTR + "\n\nMovimientos:\n"+Funciones.formaPago();
 
         ticketSTR = ticketSTR + "\n\n¡Gracias por su compra!\n\n\n\n\n\n\n\n\n";
 

@@ -12,6 +12,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import modelo.Configuraciones;
 import modelo.Datos;
@@ -28,6 +29,9 @@ public class Pacientes extends Controlador implements Initializable {
 
     @FXML
     private AnchorPane Pane;
+
+    @FXML
+    private JFXTextField Busqueda;
 
     @FXML
     private JFXListView<modelo.Pacientes> ListaDePacientes;
@@ -70,6 +74,15 @@ public class Pacientes extends Controlador implements Initializable {
 
     private String[] huellas = new String[]{"","","","",""};
 
+
+    @FXML
+    void busqueda(KeyEvent event) {
+        if(Busqueda.getText().length()>0)
+            ListaDePacientes.setItems( Datos.buscarPacientes(Busqueda.getText()) );
+        else
+            ListaDePacientes.setItems( Datos.pacientes );
+
+    }
 
     @FXML
     void capturarHuella0(ActionEvent event) {

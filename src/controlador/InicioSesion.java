@@ -13,6 +13,7 @@ import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -42,6 +43,9 @@ public class InicioSesion  extends Controlador  implements  Initializable {
 
     @FXML
     private JFXPasswordField textClave;
+
+    @FXML
+    private Label Version;
 
     @FXML
     private JFXComboBox<Clinica> comboClinica;
@@ -199,6 +203,7 @@ public class InicioSesion  extends Controlador  implements  Initializable {
             comboClinica.setItems(Datos.clinicas);
             comboClinica.getSelectionModel().select(0);
             cambiarClinica(null);
+            Version.setText(Configuraciones.versionText+Configuraciones.versionId);
         } catch (IOException e) {
             e.printStackTrace();
         }

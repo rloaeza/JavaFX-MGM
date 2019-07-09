@@ -2,6 +2,7 @@ package controlador;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
@@ -55,9 +56,20 @@ public class AlmacenSalida extends Controlador implements Initializable {
     private ImageView Eliminar;
 
     @FXML
+    private JFXCheckBox Cortesia;
+
+    @FXML
     void imprimir(ActionEvent event) throws IOException {
 
         String ticketSTR= Configuraciones.ticketTituloClinicaThermal;
+
+        if(Cortesia.isSelected())
+            ticketSTR = ticketSTR + "\nCortesía\n";
+        else
+            ticketSTR = ticketSTR + "\nCosmeatra: "+Configuraciones.nombrePersonal+"\n";
+
+
+
         ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea("Cantidad", "Producto");
         int tot=0;
         for(modelo.AlmacenEntrada elemento : ListaDeEntradas.getItems()) {
@@ -66,8 +78,12 @@ public class AlmacenSalida extends Controlador implements Initializable {
             ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" "+cant, elemento.getNombre());
         }
         ticketSTR = ticketSTR + "\n\n "+tot+" productos. ";
-        ticketSTR = ticketSTR + "\n\n\nTrabajador:"+ Configuraciones.nombrePersonal+"\n";
-        ticketSTR = ticketSTR + "\n           ______________________________\n\n\n\n\n\n\n\n\n";
+
+        ticketSTR = ticketSTR + "\n\n\n  ____________   ______________\n";
+        ticketSTR = ticketSTR +       "    Recibido       Autorizado\n";
+
+
+        ticketSTR = ticketSTR + "\n\n\n\n\n\n\n\n\n";
 
         // Verificar que la impresora este seleccionada
         PrinterService printerService = new PrinterService();
