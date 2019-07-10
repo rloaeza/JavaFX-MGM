@@ -149,12 +149,18 @@ public class FormaPago extends Controlador {
         Descripcion.setText("");
         Pago.setText("");
         Pago.setPromptText(Configuraciones.formaPagoMontoRecibido);
+        if(event!=null)
+            if( event.getSource().equals(FormaEfectivo) )
+                FormaEfectivo.setSelected(true);
+            else
+                FormaTarjeta.setSelected(true);
+
         if(FormaEfectivo.isSelected()) {
             Descripcion.setPromptText("Efectivo");
             Descripcion.setEditable(false);
             Descripcion.setVisible(false);
         }
-        else {
+        if (FormaTarjeta.isSelected() ){
             FormaTarjeta.setSelected(true);
             Descripcion.setPromptText(Configuraciones.formaPagoIdTransaccion);
             Descripcion.setEditable(true);
