@@ -11,9 +11,12 @@ import javafx.animation.Timeline;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -204,6 +207,15 @@ public class InicioSesion  extends Controlador  implements  Initializable {
             comboClinica.getSelectionModel().select(0);
             cambiarClinica(null);
             Version.setText(Configuraciones.versionText+Configuraciones.versionId);
+            comboClinica.setOnKeyPressed(event -> {
+                if ( event.getCode() == KeyCode.ENTER) {
+                    try {
+                        entrarSistema(null);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         }

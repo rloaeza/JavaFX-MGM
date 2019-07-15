@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import modelo.AlmacenProductos;
 import modelo.Configuraciones;
@@ -36,6 +37,8 @@ public class AlmacenSalida extends Controlador implements Initializable {
 
     @FXML
     private JFXListView<AlmacenProductos> ListaDeProductos;
+    ObservableList<AlmacenProductos> listaProductosTotales = FXCollections.observableArrayList();
+
 
     @FXML
     private JFXListView<modelo.AlmacenEntrada> ListaDeEntradas;
@@ -57,6 +60,26 @@ public class AlmacenSalida extends Controlador implements Initializable {
 
     @FXML
     private JFXCheckBox Cortesia;
+
+    @FXML
+    void cargarPatron(KeyEvent event)  {
+
+        if(Patron.getText().length()>0) {
+            ObservableList<AlmacenProductos> listaProductosPatron = FXCollections.observableArrayList();
+            for(AlmacenProductos p : listaProductosTotales) {
+                if(p.getNombre().toUpperCase().contains(Patron.getText().toUpperCase())) {
+                    listaProductosPatron.add(p);
+                }
+
+            }
+            ListaDeProductos.setItems(listaProductosPatron);
+        }
+        else {
+            if(listaProductosTotales != null)
+                ListaDeProductos.setItems(listaProductosTotales);
+        }
+
+    }
 
     @FXML
     void imprimir(ActionEvent event) throws IOException {
@@ -210,6 +233,7 @@ public class AlmacenSalida extends Controlador implements Initializable {
         }
 
         ListaDeProductos.setItems(listaProductos);
+        listaProductosTotales = ListaDeProductos.getItems();
     }
 
 

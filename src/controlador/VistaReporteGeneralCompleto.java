@@ -21,6 +21,7 @@ import javafx.stage.FileChooser;
 import modelo.Configuraciones;
 import modelo.Funciones;
 import modelo.PDFvalores;
+import modelo.VistaReporte;
 
 import java.io.File;
 import java.io.IOException;
@@ -67,12 +68,18 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
 
     @FXML
     void imprimir(ActionEvent event) {
+
+        VistaReporte vr = listaReporte.remove(listaReporte.size()-1);
         prepararPDF(true, false);
+        listaReporte.add(vr);
     }
 
     @FXML
     void descargar(ActionEvent event) {
+        VistaReporte vr = listaReporte.remove(listaReporte.size()-1);
         prepararPDF(false, true);
+        listaReporte.add(vr);
+
     }
 
     @FXML
@@ -242,20 +249,41 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
 
     }
 
+
     private void cargarDatos() throws IOException {
+        modelo.VistaReporte vrTotal=null;
         String actividad = (String) parametros.get(0).get("reporte");
         listaReporte.clear();
         paramsJSONReporte.put("Actividad", actividad);
         paramsJSONReporte.put("idClinica", Configuraciones.idClinica);
         JsonArray rootArray = Funciones.consultarBD(paramsJSONReporte);
 
+        double tratamiento=0;
+        double producto = 0;
+        double efectivo = 0;
+        double tarjeta = 0;
+        double total  =0;
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
             for(int i = 1; i< t; i++) {
                 Map<String, Object> v = new LinkedHashMap<>();
                 v= new Gson().fromJson(rootArray.get(i).getAsJsonObject(), v.getClass());
                 listaReporte.add(new modelo.VistaReporte(v));
+                tratamiento += v.get("Tratamiento")==null?0:Double.valueOf(v.get("Tratamiento").toString());
+                producto += v.get("Producto")==null?0:Double.valueOf(v.get("Producto").toString());
+                efectivo += v.get("Efectivo")==null?0:Double.valueOf(v.get("Efectivo").toString());
+                tarjeta += v.get("Tarjeta")==null?0:Double.valueOf(v.get("Tarjeta").toString());
+                total += v.get("Total")==null?0:Double.valueOf(v.get("Total").toString());
             }
+            vrTotal = new VistaReporte(new LinkedHashMap<>());
+            vrTotal.setDato("IdVenta", "");
+            vrTotal.setDato("Paciente", "Total");
+            vrTotal.setDato("Tratamiento", tratamiento+"");
+            vrTotal.setDato("Producto", producto+"");
+            vrTotal.setDato("Efectivo", efectivo+"");
+            vrTotal.setDato("Tarjeta", tarjeta+"");
+            vrTotal.setDato("Total", total+"");
+            listaReporte.add(vrTotal);
         }
     }
 

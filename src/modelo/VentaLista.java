@@ -9,7 +9,17 @@ public class VentaLista {
     private double total;
     private int idPersonal;
 
-    public VentaLista(int idVentaProductos, String fecha, int cantidadProductos, double subtotoal, double iva, double total, int idPersonal) {
+    public String getPaciente() {
+        return paciente;
+    }
+
+    public void setPaciente(String paciente) {
+        this.paciente = paciente;
+    }
+
+    private String paciente;
+
+    public VentaLista(int idVentaProductos, String fecha, int cantidadProductos, double subtotoal, double iva, double total, int idPersonal, String paciente) {
         this.idVentaProductos = idVentaProductos;
         this.fecha = fecha;
         this.cantidadProductos = cantidadProductos;
@@ -17,6 +27,7 @@ public class VentaLista {
         this.iva = iva;
         this.total = total;
         this.idPersonal = idPersonal;
+        this.paciente = paciente;
     }
 
     public int getIdVentaProductos() {
@@ -77,6 +88,6 @@ public class VentaLista {
 
     @Override
     public String toString() {
-        return idVentaProductos+ ": " + cantidadProductos + "  productos el   " + fecha + "  con un total de: $" + total;
+        return idVentaProductos+ ": " + cantidadProductos + "  productos el   " + fecha + "  con un total de: $" + total+" de "+paciente;
     }
 }
