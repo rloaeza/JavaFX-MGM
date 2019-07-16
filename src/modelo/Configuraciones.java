@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import java.net.URL;
 
 public class Configuraciones {
-    public static int versionId=15;
+    public static int versionId=16;
     public static String versionText = "Código: 2019.";
     public static int versionIdActualizar=-1;
     public static String versionActualizar;
@@ -133,6 +133,7 @@ public class Configuraciones {
     public static String formaPagoCambio = "Cambio: ";
     public static double formaPagoMonto;
     public static ObservableList<Cobro> formaPagoCobros;
+    public static double formaPagoMontoCambio;
 
 
 

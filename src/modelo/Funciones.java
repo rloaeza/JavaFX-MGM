@@ -715,16 +715,15 @@ public class Funciones {
         }
     public static String formaPago() {
         int fp = 0;
-        double efectivo = 0;
+        double efectivo = Configuraciones.formaPagoMontoCambio;
         double tarjeta = 0;
-        double cambio = 0;
+        double cambio = Configuraciones.formaPagoMontoCambio;
         for(Cobro c : Configuraciones.formaPagoCobros) {
             if(c.getFormaPago()==1)
                 efectivo+=c.getMonto();
             else if(c.getFormaPago()==2)
                 tarjeta+=c.getMonto();
-            else if(c.getFormaPago()==3)
-                cambio+=c.getMonto();
+
             if(fp == 0 && c.getFormaPago()==1) {
                 fp = 1;
                 continue;

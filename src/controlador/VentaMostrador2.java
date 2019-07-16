@@ -575,6 +575,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
              * Agregar cobros a la bd
              */
 
+
             for(Cobro c : Configuraciones.formaPagoCobros) {
                 Map<String,Object> paramsJSON_FPC = new LinkedHashMap<>();
                 paramsJSON_FPC.put("Actividad", "Cobros de venta: Agregar");

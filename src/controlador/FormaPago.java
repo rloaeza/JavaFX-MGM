@@ -130,10 +130,13 @@ public class FormaPago extends Controlador {
             Error.setText(Configuraciones.formaPagoVerificar);
             return;
         }
-        if(cambio!=0)
+        Configuraciones.formaPagoMontoCambio=0;
+        if(cambio!=0) {
             Configuraciones.formaPagoCobros.add(new Cobro(
                     -1, -1, 1, -cambio, "Cambio"
             ));
+            Configuraciones.formaPagoMontoCambio = cambio;
+        }
 
         Configuraciones.ventaAceptada=true;
         cerrar();
