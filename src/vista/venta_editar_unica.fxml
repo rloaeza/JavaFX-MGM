@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTabPane?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="Pane" prefHeight="617.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VentaEditarUnica">
+   <children>
+      <JFXTabPane fx:id="Tabs" layoutX="60.0" layoutY="98.0" onMouseClicked="#TabCambiando" prefHeight="419.0" prefWidth="800.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="60.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="98.0" />
+      <Label alignment="CENTER_RIGHT" layoutX="676.0" layoutY="590.0" prefHeight="17.0" prefWidth="104.0" text="Total:" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="200.0">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Label>
+      <Label alignment="CENTER_RIGHT" layoutX="492.0" layoutY="538.0" prefHeight="17.0" prefWidth="104.0" text="Productos:" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="300.0" />
+      <Label alignment="CENTER_RIGHT" layoutX="676.0" layoutY="538.0" prefHeight="17.0" prefWidth="104.0" text="Sub Total:" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="200.0" />
+      <Label fx:id="CantidadProductos" layoutX="608.0" layoutY="538.0" prefHeight="17.0" prefWidth="68.0" text="0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="220.0" />
+      <Label fx:id="Subtotal" layoutX="792.0" layoutY="538.0" prefHeight="17.0" prefWidth="152.0" text="0.0" AnchorPane.bottomAnchor="60.0" AnchorPane.rightAnchor="40.0" />
+      <Label fx:id="Total" layoutX="792.0" layoutY="590.0" prefHeight="29.0" prefWidth="152.0" text="0.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="40.0">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font></Label>
+      <VBox layoutX="761.0" layoutY="27.0" prefHeight="150.0" prefWidth="68.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="27.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#regresar">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/home.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator orientation="VERTICAL" prefHeight="200.0" visible="false" />
+         </children>
+      </VBox>
+      <HBox layoutX="60.0" layoutY="549.0" prefHeight="61.0" prefWidth="385.0" spacing="10.0" visible="false" AnchorPane.bottomAnchor="28.0" AnchorPane.leftAnchor="60.0">
+         <children>
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#actualizar" text="Guardar">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/aceptar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#imprimir" text="Imprimir">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/imprimir.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#cerrar" text="Cerrar">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/limpiar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#eliminarFila" text="Quitar fila">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/b_catalogos.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#eliminarVenta" text="Eliminar">
+               <graphic>
+                  <ImageView fitHeight="30.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/eliminar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </HBox>
+   </children>
+</AnchorPane>
