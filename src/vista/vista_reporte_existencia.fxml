@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXDatePicker?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -12,7 +13,7 @@
 
 <AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VistaReporteExistencia">
    <children>
-      <JFXTreeTableView fx:id="TablaReporte" layoutX="59.0" layoutY="151.0" prefHeight="304.0" prefWidth="820.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="150.0" />
+      <JFXTreeTableView fx:id="TablaReporte" layoutX="59.0" layoutY="216.0" prefHeight="234.0" prefWidth="820.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="216.0" />
       <Label fx:id="titulo" alignment="CENTER" contentDisplay="CENTER" layoutX="59.0" layoutY="14.0" text="Título de reporte" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <font>
             <Font size="24.0" />
@@ -53,5 +54,10 @@
             <Insets />
          </opaqueInsets>
       </HBox>
+      <Label layoutX="40.0" layoutY="132.0" text="Inicio" />
+      <Label layoutX="40.0" layoutY="178.0" text="Fin" />
+      <JFXDatePicker fx:id="FechaInicio" layoutX="84.0" layoutY="118.0" />
+      <JFXDatePicker fx:id="FechaFin" layoutX="84.0" layoutY="164.0" />
+      <Button layoutX="290.0" layoutY="118.0" mnemonicParsing="false" onAction="#generar" prefHeight="81.0" prefWidth="94.0" text="Generar" />
    </children>
 </AnchorPane>

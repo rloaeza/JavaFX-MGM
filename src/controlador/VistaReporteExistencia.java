@@ -25,6 +25,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -38,6 +39,12 @@ public class VistaReporteExistencia extends Controlador implements Initializable
     @FXML
     private JFXTreeTableView<modelo.VistaReporte> TablaReporte;
 
+
+    @FXML
+    private JFXDatePicker FechaInicio;
+
+    @FXML
+    private JFXDatePicker FechaFin;
 
 
     @FXML
@@ -62,6 +69,12 @@ public class VistaReporteExistencia extends Controlador implements Initializable
         Funciones.CargarVistaAnterior(Pane, getClass().getResource( parametros.get(0).get("vista").toString() ), new InicioAdministrador());
 
     }
+    @FXML
+    void generar(ActionEvent event) throws IOException {
+        cargarDatos();
+    }
+
+
     private ObservableList<modelo.VistaReporte> listaReporte;
     private String[] titulos;
     private void prepararPDF(boolean imprimir, boolean guardar) {
@@ -94,7 +107,7 @@ public class VistaReporteExistencia extends Controlador implements Initializable
         }
 
         //System.out.println("titulo="+(String) parametros.get(0).get("clinicaDescripcion"));
-       valoresPDF.add(new PDFvalores("Descripcion", Configuraciones.clinicaDescripcion));
+       valoresPDF.add(new PDFvalores("Descripcion", "Periodo de "+FechaInicio.getValue() + " a "+FechaFin.getValue()));
 
 
         File file = null;
@@ -154,6 +167,10 @@ public class VistaReporteExistencia extends Controlador implements Initializable
         TablaReporte.setEditable(true);
         TablaReporte.setShowRoot(false);
         TablaReporte.setColumnResizePolicy(TreeTableView.UNCONSTRAINED_RESIZE_POLICY);
+
+        FechaInicio.setValue(LocalDate.now().minusDays(1) );
+        FechaFin.setValue(LocalDate.now() );
+
         try {
             cargarDatos();
         } catch (IOException  e) {
@@ -172,9 +189,14 @@ public class VistaReporteExistencia extends Controlador implements Initializable
     private void cargarDatos() throws IOException {
         String actividad = (String) parametros.get(0).get("reporte");
 
+        listaReporte.clear();
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", actividad);
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica").toString());
+
+        paramsJSON.put("fechaInicial", FechaInicio.getValue());
+        paramsJSON.put("fechaFinal", FechaFin.getValue());
+
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
