@@ -326,18 +326,13 @@ public class Funciones {
         int index= 0;
 
         int f = 0;
-        String titulo = "";
-        String descripcion = "";
+        String[] predeterminados=null;
         for(PDFvalores v : valores) {
 
             index = Integer.valueOf(v.getCampo());
 
-            if( index<0) {
-                if( index==-1)
-                    titulo = v.getValor();
-
-                if( index==-2)
-                    descripcion = v.getValor();
+            if( index==-1) {
+                predeterminados = v.getValor().split("@");
 
 
             }else {
@@ -346,14 +341,18 @@ public class Funciones {
 
                     String vals[] = cols[c].split("=");
                     if(vals.length==2) {
-                       // System.out.print("celda" + (index%elementos) + "_" + c + "=" + vals[1] + "\n");
+                       //System.out.print("celda" + (index%elementos) + "_" + c + "=" + vals[1] + "\n");
                         valoresParciales.add(new PDFvalores("celda" + (index%elementos) + "_" + c, vals[1]));
                     }
                 }
                 if( (index%elementos)== (elementos-1) ) {
                     //System.out.println("Siguiente hoja\n\n\n");
-                    valoresParciales.add(new PDFvalores("celdaTitulo", titulo));
-                    valoresParciales.add(new PDFvalores("celdaDescripcion", descripcion));
+                    //valoresParciales.add(new PDFvalores("celdaTitulo", titulo));
+                    //valoresParciales.add(new PDFvalores("celdaDescripcion", descripcion));
+
+                    for(String t : predeterminados) {
+                        valoresParciales.add(new PDFvalores(t.split("=")[0], t.split("=")[1]));
+                    }
 
                     PDDocument d2 = PDDocument.load(file);
                     llenarPDF(d2.getDocumentCatalog().getAcroForm(), valoresParciales);
@@ -370,8 +369,11 @@ public class Funciones {
 
         if (index>0) {
             //System.out.println("Siguiente hoja unica\n\n\n");
-            valoresParciales.add(new PDFvalores("celdaTitulo", titulo));
-            valoresParciales.add(new PDFvalores("celdaDescripcion", descripcion));
+            //valoresParciales.add(new PDFvalores("celdaTitulo", titulo));
+            //valoresParciales.add(new PDFvalores("celdaDescripcion", descripcion));
+            for(String t : predeterminados) {
+                valoresParciales.add(new PDFvalores(t.split("=")[0], t.split("=")[1]));
+            }
 
             PDDocument d2 = PDDocument.load(file);
             llenarPDF(d2.getDocumentCatalog().getAcroForm(), valoresParciales);

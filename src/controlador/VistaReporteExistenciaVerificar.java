@@ -71,8 +71,10 @@ public class VistaReporteExistenciaVerificar extends Controlador implements Init
         Map<String, String> valorPDf = new LinkedHashMap<>();
 
 
-        valoresPDF.add(new PDFvalores("-2", LocalDate.now()+""));
-        valoresPDF.add(new PDFvalores("-1", (String) parametros.get(0).get("Titulo") ) );
+        String predeterminados = "celdaTitulo="+(String) parametros.get(0).get("Titulo") +
+                "@celdaDescripcion="+LocalDate.now();
+        valoresPDF.add(new PDFvalores("-1", predeterminados) );
+
 
         int row = 0;
         for(VistaReporte fila: listaReporte) {
@@ -80,7 +82,7 @@ public class VistaReporteExistenciaVerificar extends Controlador implements Init
             // Agrega titulo de categorias
             if( !tituloAnterior.equalsIgnoreCase(fila.getDato("Clase")) ) {
                 tituloAnterior = fila.getDato("Clase");
-                valoresPDF.add(new PDFvalores(row+"","Clave:====@Producto:" + tituloAnterior ));
+                valoresPDF.add(new PDFvalores(row+"","Clave=*****@Producto=" + tituloAnterior ));
                 row++;
             }
 
@@ -90,7 +92,7 @@ public class VistaReporteExistenciaVerificar extends Controlador implements Init
 
                 String t = titulos[col].split(":")[0].replace(" ", "");
                 String v = fila.getDato(t)==null?"":fila.getDato(t);
-                valor += t+":"+v+"@";
+                valor += t+"="+v+"@";
                // System.out.print(row+", "+col+"="+valor+"\t");
 
             }

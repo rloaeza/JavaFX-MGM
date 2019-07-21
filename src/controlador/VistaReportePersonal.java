@@ -97,9 +97,14 @@ public class VistaReportePersonal extends Controlador implements Initializable {
         Map<String, String> valorPDf = new LinkedHashMap<>();
 
 
-        valoresPDF.add(new PDFvalores("-2", LocalDate.now()+""));
-        valoresPDF.add(new PDFvalores("-1", (String) parametros.get(0).get("Titulo") ) );
-        valoresPDF.add(new PDFvalores("-3", "celdaTotal="+Funciones.valorAmoneda(gTotal)));
+
+        String predeterminados = "celdaTitulo="+(String) parametros.get(0).get("Titulo") +
+                "@celdaDescripcion="+LocalDate.now()+
+                "@celdaTotal="+Funciones.valorAmoneda(gTotal);
+
+        valoresPDF.add(new PDFvalores("-1", predeterminados) );
+
+
         int row = 0;
         for(VistaReporte fila: listaReporte) {
 

@@ -55,6 +55,8 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
 
     Map<String,Object> paramsJSONReporte = new LinkedHashMap<>();
 
+    VistaReporte vr=null;
+
     @FXML
     void generarReporte(ActionEvent event) throws IOException {
         paramsJSONReporte.clear();
@@ -71,14 +73,14 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
     @FXML
     void imprimir(ActionEvent event) {
 
-        VistaReporte vr = listaReporte.remove(listaReporte.size()-1);
+        vr = listaReporte.remove(listaReporte.size()-1);
         prepararPDF(true, false);
         listaReporte.add(vr);
     }
 
     @FXML
     void descargar(ActionEvent event) {
-        VistaReporte vr = listaReporte.remove(listaReporte.size()-1);
+        vr = listaReporte.remove(listaReporte.size()-1);
         prepararPDF(false, true);
         listaReporte.add(vr);
 
@@ -98,9 +100,15 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
         ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
         Map<String, String> valorPDf = new LinkedHashMap<>();
 
+        String predeterminados = "celdaTitulo="+(String) parametros.get(0).get("Titulo") +
+                "@celdaDescripcion="+LocalDate.now()+
+                "@celdaTratamiento="+vr.getDato("Tratamiento")+
+                "@celdaProducto="+vr.getDato("Producto")+
+                "@celdaEfectivo="+vr.getDato("Efectivo")+
+                "@celdaTarjeta="+vr.getDato("Tarjeta")+
+                "@celdaTotal="+vr.getDato("Total");
 
-        valoresPDF.add(new PDFvalores("-2", LocalDate.now()+""));
-        valoresPDF.add(new PDFvalores("-1", (String) parametros.get(0).get("Titulo") ) );
+        valoresPDF.add(new PDFvalores("-1", predeterminados) );
 
         int row = 0;
         for(VistaReporte fila: listaReporte) {
@@ -358,11 +366,11 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
             vrTotal = new VistaReporte(new LinkedHashMap<>());
             vrTotal.setDato("IdVenta", "");
             vrTotal.setDato("Paciente", "Total");
-            vrTotal.setDato("Tratamiento", tratamiento+"");
-            vrTotal.setDato("Producto", producto+"");
-            vrTotal.setDato("Efectivo", efectivo+"");
-            vrTotal.setDato("Tarjeta", tarjeta+"");
-            vrTotal.setDato("Total", total+"");
+            vrTotal.setDato("Tratamiento", Funciones.valorAmoneda(tratamiento));
+            vrTotal.setDato("Producto", Funciones.valorAmoneda(producto));
+            vrTotal.setDato("Efectivo", Funciones.valorAmoneda(efectivo));
+            vrTotal.setDato("Tarjeta", Funciones.valorAmoneda(tarjeta));
+            vrTotal.setDato("Total", Funciones.valorAmoneda(total));
             listaReporte.add(vrTotal);
         }
     }

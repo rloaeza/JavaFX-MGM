@@ -89,8 +89,11 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
         Map<String, String> valorPDf = new LinkedHashMap<>();
 
 
-        valoresPDF.add(new PDFvalores("-2", LocalDate.now()+""));
-        valoresPDF.add(new PDFvalores("-1", (String) parametros.get(0).get("Titulo") ) );
+
+        String predeterminados = "celdaTitulo="+(String) parametros.get(0).get("Titulo") +
+                "@celdaDescripcion="+LocalDate.now();
+        valoresPDF.add(new PDFvalores("-1", predeterminados) );
+
 
         int row = 0;
         for(VistaReporte fila: listaReporte) {
@@ -101,8 +104,8 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
 
                 String t = titulos[col].split(":")[0].replace(" ", "");
                 String v = fila.getDato(t)==null?"":fila.getDato(t);
-                valor += t+":"+v+"@";
-                //System.out.print(row+", "+col+"="+valor+"\t");
+                valor += t+"="+v+"@";
+               // System.out.print(row+", "+col+"="+valor+"\t");
 
             }
             valoresPDF.add(new PDFvalores(row+"" ,valor));
