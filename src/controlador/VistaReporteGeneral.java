@@ -18,10 +18,7 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
-import modelo.Configuraciones;
-import modelo.Funciones;
-import modelo.PDFvalores;
-import modelo.PrinterService;
+import modelo.*;
 
 import java.awt.print.PrinterException;
 import java.io.File;
@@ -87,6 +84,55 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
     private ObservableList<modelo.VistaReporte> listaReporte;
     private String[] titulos;
     private void prepararPDF(boolean imprimir, boolean guardar) {
+        String tituloAnterior = "";
+        ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
+        Map<String, String> valorPDf = new LinkedHashMap<>();
+
+
+        valoresPDF.add(new PDFvalores("-2", LocalDate.now()+""));
+        valoresPDF.add(new PDFvalores("-1", (String) parametros.get(0).get("Titulo") ) );
+
+        int row = 0;
+        for(VistaReporte fila: listaReporte) {
+
+
+            String valor="";
+            for(int col=0; col<titulos.length; col++) {
+
+                String t = titulos[col].split(":")[0].replace(" ", "");
+                String v = fila.getDato(t)==null?"":fila.getDato(t);
+                valor += t+":"+v+"@";
+                //System.out.print(row+", "+col+"="+valor+"\t");
+
+            }
+            valoresPDF.add(new PDFvalores(row+"" ,valor));
+            row++;
+        }
+
+
+        File file = null;
+        String destino=null;
+        if(guardar) {
+            final FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Portable Document Format(*.pdf)", "*.pdf"));
+            file = fileChooser.showSaveDialog(Pane.getScene().getWindow());
+            if(file == null)
+                return;
+
+            destino = file.getAbsolutePath();
+        }
+        try {
+            Funciones.llenarPDF2((String) parametros.get(0).get("pdf"),  valoresPDF, imprimir, guardar?destino:null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+        /*
         ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
         Map<String, String> valorPDf = new LinkedHashMap<>();
         int index =0;
@@ -101,9 +147,6 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
                 valorPDf.put(titulo, valor);
             }
             index++;
-
-
-
 
         }
 
@@ -144,7 +187,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+*/
     }
 
     @Override
@@ -210,6 +253,8 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
             for(int i = 1; i< t; i++) {
                 Map<String, Object> v = new LinkedHashMap<>();
                 v= new Gson().fromJson(rootArray.get(i).getAsJsonObject(), v.getClass());
+                String valor = Funciones.valorAmoneda(Double.valueOf(v.get("Ventas").toString()));
+                v.put("Ventas", valor);
                 listaReporte.add(new modelo.VistaReporte(v));
             }
         }

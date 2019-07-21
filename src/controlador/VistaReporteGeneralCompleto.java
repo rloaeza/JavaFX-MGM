@@ -94,6 +94,52 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
     private ObservableList<modelo.VistaReporte> listaReporte;
     private String[] titulos;
     private void prepararPDF(boolean imprimir, boolean guardar) {
+        String tituloAnterior = "";
+        ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
+        Map<String, String> valorPDf = new LinkedHashMap<>();
+
+
+        valoresPDF.add(new PDFvalores("-2", LocalDate.now()+""));
+        valoresPDF.add(new PDFvalores("-1", (String) parametros.get(0).get("Titulo") ) );
+
+        int row = 0;
+        for(VistaReporte fila: listaReporte) {
+
+
+            String valor="";
+            for(int col=0; col<titulos.length; col++) {
+
+                String t = titulos[col].split(":")[0].replace(" ", "");
+                String v = fila.getDato(t)==null?"":fila.getDato(t);
+                valor += t+"="+v+"@";
+                // System.out.print(row+", "+col+"="+valor+"\t");
+
+            }
+            valoresPDF.add(new PDFvalores(row+"" ,valor));
+            row++;
+        }
+
+
+        File file = null;
+        String destino=null;
+        if(guardar) {
+            final FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Portable Document Format(*.pdf)", "*.pdf"));
+            file = fileChooser.showSaveDialog(Pane.getScene().getWindow());
+            if(file == null)
+                return;
+
+            destino = file.getAbsolutePath();
+        }
+        try {
+            Funciones.llenarPDF2((String) parametros.get(0).get("pdf"),  valoresPDF, imprimir, guardar?destino:null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+       /*
         ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
         Map<String, String> valorPDf = new LinkedHashMap<>();
 
@@ -198,6 +244,9 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
             e.printStackTrace();
         }
 
+
+        */
+
     }
 
     @Override
@@ -289,13 +338,22 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
             int t = rootArray.size();
             for(int i = 1; i< t; i++) {
                 Map<String, Object> v = new LinkedHashMap<>();
+
                 v= new Gson().fromJson(rootArray.get(i).getAsJsonObject(), v.getClass());
-                listaReporte.add(new modelo.VistaReporte(v));
+
                 tratamiento += v.get("Tratamiento")==null?0:Double.valueOf(v.get("Tratamiento").toString());
                 producto += v.get("Producto")==null?0:Double.valueOf(v.get("Producto").toString());
                 efectivo += v.get("Efectivo")==null?0:Double.valueOf(v.get("Efectivo").toString());
                 tarjeta += v.get("Tarjeta")==null?0:Double.valueOf(v.get("Tarjeta").toString());
                 total += v.get("Total")==null?0:Double.valueOf(v.get("Total").toString());
+
+                if(v.get("Tratamiento")!=null) v.put("Tratamiento", Funciones.valorAmoneda(Double.valueOf(v.get("Tratamiento").toString())));
+                if(v.get("Producto")!=null) v.put("Producto", Funciones.valorAmoneda(Double.valueOf(v.get("Producto").toString())));
+                if(v.get("Efectivo")!=null) v.put("Efectivo", Funciones.valorAmoneda(Double.valueOf(v.get("Efectivo").toString())));
+                if(v.get("Tarjeta")!=null) v.put("Tarjeta", Funciones.valorAmoneda(Double.valueOf(v.get("Tarjeta").toString())));
+                if(v.get("Total")!=null) v.put("Total", Funciones.valorAmoneda(Double.valueOf(v.get("Total").toString())));
+
+                listaReporte.add(new modelo.VistaReporte(v));
             }
             vrTotal = new VistaReporte(new LinkedHashMap<>());
             vrTotal.setDato("IdVenta", "");

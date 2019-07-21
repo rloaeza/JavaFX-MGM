@@ -80,6 +80,62 @@ public class VistaReporteExistencia extends Controlador implements Initializable
     private ObservableList<modelo.VistaReporte> listaReporte;
     private String[] titulos;
     private void prepararPDF(boolean imprimir, boolean guardar) {
+        String tituloAnterior = "";
+        ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
+        Map<String, String> valorPDf = new LinkedHashMap<>();
+
+
+        valoresPDF.add(new PDFvalores("-2", LocalDate.now()+""));
+        valoresPDF.add(new PDFvalores("-1", (String) parametros.get(0).get("Titulo") ) );
+
+        int row = 0;
+        for(VistaReporte fila: listaReporte) {
+/*
+            // Agrega titulo de categorias
+            if( !tituloAnterior.equalsIgnoreCase(fila.getDato("Clase")) ) {
+                tituloAnterior = fila.getDato("Clase");
+                valoresPDF.add(new PDFvalores(row+"","Clave:====@Producto:" + tituloAnterior ));
+                row++;
+            }
+*/
+
+            String valor="";
+            for(int col=0; col<titulos.length; col++) {
+
+                String t = titulos[col].split(":")[0].replace(" ", "");
+                String v = fila.getDato(t)==null?"":fila.getDato(t);
+                valor += t+":"+v+"@";
+                // System.out.print(row+", "+col+"="+valor+"\t");
+
+            }
+            valoresPDF.add(new PDFvalores(row+"" ,valor));
+            row++;
+        }
+
+
+        File file = null;
+        String destino=null;
+        if(guardar) {
+            final FileChooser fileChooser = new FileChooser();
+            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Portable Document Format(*.pdf)", "*.pdf"));
+            file = fileChooser.showSaveDialog(Pane.getScene().getWindow());
+            if(file == null)
+                return;
+
+            destino = file.getAbsolutePath();
+        }
+        try {
+            Funciones.llenarPDF2((String) parametros.get(0).get("pdf"),  valoresPDF, imprimir, guardar?destino:null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+
+
+
+
+        /*
         ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
         Map<String, String> valorPDf = new LinkedHashMap<>();
 
@@ -136,6 +192,9 @@ public class VistaReporteExistencia extends Controlador implements Initializable
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+         */
 
     }
 

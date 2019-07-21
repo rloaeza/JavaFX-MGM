@@ -344,9 +344,9 @@ public class Funciones {
                 String cols[] = v.getValor().split("@");
                 for(int c=0; c<cols.length; c++) {
 
-                    String vals[] = cols[c].split(":");
+                    String vals[] = cols[c].split("=");
                     if(vals.length==2) {
-                        //System.out.print("celda" + (index%elementos) + "_" + c + "=" + vals[1] + "\n");
+                       // System.out.print("celda" + (index%elementos) + "_" + c + "=" + vals[1] + "\n");
                         valoresParciales.add(new PDFvalores("celda" + (index%elementos) + "_" + c, vals[1]));
                     }
                 }
@@ -368,6 +368,18 @@ public class Funciones {
 
         }
 
+        if (index>0) {
+            //System.out.println("Siguiente hoja unica\n\n\n");
+            valoresParciales.add(new PDFvalores("celdaTitulo", titulo));
+            valoresParciales.add(new PDFvalores("celdaDescripcion", descripcion));
+
+            PDDocument d2 = PDDocument.load(file);
+            llenarPDF(d2.getDocumentCatalog().getAcroForm(), valoresParciales);
+            PDFMergerUtility pdfMergerUtility = new PDFMergerUtility();
+            pdfMergerUtility.appendDocument(doc, d2);
+            d2.close();
+            valoresParciales.clear();
+        }
 
         PDDocument document = doc;
         if(imprimir)
