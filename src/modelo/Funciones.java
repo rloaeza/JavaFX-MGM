@@ -37,6 +37,7 @@ import org.apache.pdfbox.pdmodel.interactive.form.PDAcroForm;
 import org.apache.pdfbox.printing.PDFPrintable;
 import org.apache.pdfbox.printing.Scaling;
 
+import javax.sound.midi.SysexMessage;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
 import java.io.*;
@@ -314,6 +315,114 @@ public class Funciones {
         document.save(archivo);
         document.close();
     }
+    public static void llenarPDF2(String archivoOrigen,  ArrayList<PDFvalores>  valores, boolean imprimir, String archivoDestino) throws Exception {
+        File file = new File(archivoOrigen);
+
+        PDDocument doc = new PDDocument();
+
+        ArrayList<PDFvalores> valoresParciales = new ArrayList<>();
+
+        int elementos = 12;
+        int index= 0;
+
+        int f = 0;
+        String titulo = "";
+        String descripcion = "";
+        for(PDFvalores v : valores) {
+
+            index = Integer.valueOf(v.getCampo());
+
+            if( index<0) {
+                if( index==-1)
+                    titulo = v.getValor();
+
+                if( index==-2)
+                    descripcion = v.getValor();
+
+
+            }else {
+                String cols[] = v.getValor().split("@");
+                for(int c=0; c<cols.length; c++) {
+
+                    String vals[] = cols[c].split(":");
+                    if(vals.length==2) {
+                        //System.out.print("celda" + (index%elementos) + "_" + c + "=" + vals[1] + "\n");
+                        valoresParciales.add(new PDFvalores("celda" + (index%elementos) + "_" + c, vals[1]));
+                    }
+                }
+                if( (index%elementos)== (elementos-1) ) {
+                    //System.out.println("Siguiente hoja\n\n\n");
+                    valoresParciales.add(new PDFvalores("celdaTitulo", titulo));
+                    valoresParciales.add(new PDFvalores("celdaDescripcion", descripcion));
+
+                    PDDocument d2 = PDDocument.load(file);
+                    llenarPDF(d2.getDocumentCatalog().getAcroForm(), valoresParciales);
+                    PDFMergerUtility pdfMergerUtility = new PDFMergerUtility();
+                    pdfMergerUtility.appendDocument(doc, d2);
+                    d2.close();
+                    valoresParciales.clear();
+
+                }
+
+            }
+
+        }
+
+
+        PDDocument document = doc;
+        if(imprimir)
+            imprimirPDF(document);
+        if(archivoDestino!=null)
+            document.save(archivoDestino);
+        document.close();
+
+
+
+        /*
+
+
+        int index = 0;
+        int lineas = valores.get(0).getValor().split("\\@").length;
+        while(index<lineas) {
+            // System.out.println("Tam: "+valores.size());
+            for(PDFvalores v : valores) {
+                //System.out.print(v.getCampo()+"["+index+"]: ");
+
+                try {
+                    valoresParciales.add(new PDFvalores(v.getCampo(), v.getValor().split("\\@")[index]));
+                    //  System.out.println(v.getValor().split("\\@")[index] );
+                }catch (ArrayIndexOutOfBoundsException ex) {
+                    valoresParciales.add(new PDFvalores(v.getCampo(), v.getValor()) );
+                }
+            }
+
+            PDDocument d2 = PDDocument.load(file);
+            llenarPDF(d2.getDocumentCatalog().getAcroForm(), valoresParciales);
+            PDFMergerUtility pdfMergerUtility = new PDFMergerUtility();
+            pdfMergerUtility.appendDocument(doc, d2);
+
+            d2.close();
+            valoresParciales.clear();
+            index++;
+        }
+
+
+
+        //PDDocument document = PDDocument.load(file);
+        //llenarPDF(document.getDocumentCatalog().getAcroForm(), valores);
+
+        PDDocument document = doc;
+        if(imprimir)
+            imprimirPDF(document);
+        if(archivoDestino!=null)
+            document.save(archivoDestino);
+        document.close();
+
+         */
+    }
+
+
+
 
     public static void llenarPDF(String archivoOrigen,  ArrayList<PDFvalores>  valores, boolean imprimir, String archivoDestino) throws Exception {
         File file = new File(archivoOrigen);

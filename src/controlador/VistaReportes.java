@@ -58,7 +58,7 @@ public class VistaReportes extends Controlador implements Initializable {
         paramsVista.put("Descripcion", "Reportes: Existencia en almacen verificar");
 
         paramsVista.put("titulos", new String[]{"Clave:20:CENTER", "Producto:70:CENTER-LEFT", "Existencia:20:CENTER", "Fisico:10:CENTER", "Diferencias:10:CENTER"});
-        paramsVista.put("pdf", "formatos/reporte_existencias_verificar.pdf");
+        paramsVista.put("pdf", "formatos/reporte_existencias_verificar_2.pdf");
         paramsVista.put("reporte", "Reportes: Existencia en almacen verificar");
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReporteExistencia());
     }
