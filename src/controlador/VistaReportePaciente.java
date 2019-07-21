@@ -26,6 +26,7 @@ import modelo.Pacientes;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -53,13 +54,14 @@ public class VistaReportePaciente extends Controlador implements Initializable {
     @FXML
     void imprimir(ActionEvent event) {
 
-        //prepararPDF(true, false);
+        prepararPDF(true, false);
     }
 
+    double total = 0;
     @FXML
     void descargar(ActionEvent event) {
 
-        //prepararPDF(false, true);
+        prepararPDF(false, true);
     }
 
     @FXML
@@ -78,62 +80,60 @@ public class VistaReportePaciente extends Controlador implements Initializable {
     private ObservableList<VistaReporte> listaReporte;
     private String[] titulos;
     private void prepararPDF(boolean imprimir, boolean guardar) {
+
+
+        String tituloAnterior = "";
         ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
         Map<String, String> valorPDf = new LinkedHashMap<>();
+        String pacienteSelec = "Mostrador";
+        if( Paciente.getSelectionModel().getSelectedIndex() != -1) {
+            pacienteSelec = Paciente.getValue().getApellidos() + " " + Paciente.getValue().getNombre();
+        }
 
-        int index=0;
-        for(VistaReporte elemento : listaReporte) {
+        String predeterminados = "celdaTitulo="+(String) parametros.get(0).get("Titulo") +
+                "@celdaDescripcion= Paciente: "+pacienteSelec +
+                "@celdaTotal="+Funciones.valorAmoneda(total);
+
+        valoresPDF.add(new PDFvalores("-1", predeterminados) );
 
 
-            for(String t: titulos) {
-                String titulo = (t.split(":")[0]).replace(" ","");
-                String valor = (valorPDf.get(titulo)==null?"":valorPDf.get(titulo)+"\n")+elemento.getDato(titulo);
-                if((index+1)%Configuraciones.lineasPorReporte==0)
-                    valor += "@";
+        int row = 0;
+        for(VistaReporte fila: listaReporte) {
 
-                valorPDf.put(titulo, valor);
+
+            String valor="";
+            for(int col=0; col<titulos.length; col++) {
+
+                String t = titulos[col].split(":")[0].replace(" ", "");
+                String v = fila.getDato(t)==null?"":fila.getDato(t);
+                valor += t+"="+v+"@";
+                // System.out.print(row+", "+col+"="+valor+"\t");
+
             }
-            index++;
-
-
-
-
+            valoresPDF.add(new PDFvalores(row+"" ,valor));
+            row++;
         }
-
-
-        for(String t: titulos) {
-            String titulo = (t.split(":")[0]).replace(" ","");
-            valoresPDF.add(new PDFvalores(titulo, valorPDf.get(titulo)));
-        }
-
-        //System.out.println("titulo="+(String) parametros.get(0).get("clinicaDescripcion"));
-       valoresPDF.add(new PDFvalores("Descripcion", Configuraciones.clinicaDescripcion));
 
 
         File file = null;
         String destino=null;
         if(guardar) {
             final FileChooser fileChooser = new FileChooser();
-
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Portable Document Format(*.pdf)", "*.pdf"));
-
-
-
             file = fileChooser.showSaveDialog(Pane.getScene().getWindow());
             if(file == null)
                 return;
 
             destino = file.getAbsolutePath();
-
-
         }
-
-
         try {
-            Funciones.llenarPDF((String) parametros.get(0).get("pdf"),  valoresPDF, imprimir, guardar?destino:null);
+            Funciones.llenarPDF2((String) parametros.get(0).get("pdf"),  valoresPDF, imprimir, guardar?destino:null);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+
+
 
     }
 
@@ -170,6 +170,7 @@ public class VistaReportePaciente extends Controlador implements Initializable {
         try {
             cargarDatos();
             Paciente.setItems(Datos.pacientes);
+            Paciente.setPromptText("Mostrador");
         } catch (IOException  e) {
             e.printStackTrace();
         }
@@ -210,14 +211,22 @@ public class VistaReportePaciente extends Controlador implements Initializable {
         paramsJSON.put("idPaciente", idPaciente);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         listaReporte.clear();
+        total=0;
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
             for(int i = 1; i< t; i++) {
                 Map<String, Object> v = new LinkedHashMap<>();
-                v= new Gson().fromJson(rootArray.get(i).getAsJsonObject(), v.getClass());
 
+                v= new Gson().fromJson(rootArray.get(i).getAsJsonObject(), v.getClass());
+                total += Double.valueOf(v.get("Importe").toString());
+                v.put("Importe", Funciones.valorAmoneda(Double.valueOf((v.get("Importe").toString()) )));
                 listaReporte.add(new VistaReporte(v));
             }
+            Map<String, Object> v = new LinkedHashMap<>();
+            v.put("Importe", Funciones.valorAmoneda(total) );
+            v.put("Paciente", "Total");
+            listaReporte.add(new VistaReporte(v));
+
         }
     }
 

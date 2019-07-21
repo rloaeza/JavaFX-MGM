@@ -35,7 +35,7 @@
       </HBox>
       <FlowPane columnHalignment="CENTER" hgap="10.0" layoutX="40.0" layoutY="112.0" prefHeight="329.0" prefWidth="820.0" vgap="10.0" AnchorPane.bottomAnchor="110.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="110.0">
          <children>
-            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#reportePacientes" text="Pacientes">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#reportePacientes" text="Historial de clientes">
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -53,7 +53,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#reporteExistenciasVerificar" text="Existencias para verificar">
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#reporteExistenciasVerificar" text="Inventario para verificar">
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
                      <image>
