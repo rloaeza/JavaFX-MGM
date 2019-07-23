@@ -244,6 +244,11 @@ public class Funciones {
         AnchorPane root = fxmlLoader.load();
         root.setPrefHeight(Pane.getHeight());
         root.setPrefWidth(Pane.getWidth());
+
+        root.getStylesheets().add("/modelo/style.css");
+
+
+
         Pane.getChildren().setAll(root);
 
         c = fxmlLoader.getController();

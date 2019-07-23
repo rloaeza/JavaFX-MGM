@@ -58,6 +58,8 @@ public class InicioSesion  extends Controlador  implements  Initializable {
     void cambiarClinica(ActionEvent event) {
         Configuraciones.idClinica = comboClinica.getSelectionModel().getSelectedItem().getIdClinica();
         Configuraciones.nombreClinica = comboClinica.getSelectionModel().getSelectedItem().getNombre();
+
+        Configuraciones.ticketTituloClinicaThermal = comboClinica.getValue().getDescripcion();
     }
 
     @FXML

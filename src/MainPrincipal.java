@@ -16,9 +16,13 @@ public class MainPrincipal extends Application {
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("/vista/inicio_sesion.fxml"));
         primaryStage.setTitle("MGM");
-        primaryStage.setScene(new Scene(root, Funciones.ancho, Funciones.alto));
+        Scene scene = new Scene(root, Funciones.ancho, Funciones.alto);
+        scene.getStylesheets().add("/modelo/style.css");
+        primaryStage.setScene(scene);
         primaryStage.setMaximized(true);
+
         primaryStage.show();
+
 
         Enumeration<NetworkInterface> n = NetworkInterface.getNetworkInterfaces();
         while (n.hasMoreElements()) {

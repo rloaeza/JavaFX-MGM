@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXTreeTableRow?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
@@ -14,6 +15,7 @@
 <AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VistaReportePaciente">
    <children>
       <JFXTreeTableView fx:id="TablaReporte" layoutX="59.0" layoutY="210.0" prefHeight="240.0" prefWidth="820.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="210.0" />
+
       <Label fx:id="titulo" alignment="CENTER" contentDisplay="CENTER" layoutX="59.0" layoutY="14.0" text="Título de reporte" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
          <font>
             <Font size="24.0" />
