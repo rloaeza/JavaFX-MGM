@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="Pane" prefHeight="250.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.AlertBox2">
+   <children>
+      <ImageView fitHeight="100.0" fitWidth="200.0" layoutX="29.0" layoutY="42.0" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="25.0">
+         <image>
+            <Image url="@../imgs/alerta.png" />
+         </image>
+      </ImageView>
+      <Label fx:id="Texto" alignment="CENTER" layoutX="146.0" layoutY="21.0" prefHeight="141.0" prefWidth="329.0" text="Mensaje" textAlignment="JUSTIFY" wrapText="true" AnchorPane.leftAnchor="150.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="21.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <JFXButton fx:id="BotonAceptar" alignment="CENTER" layoutX="331.0" layoutY="185.0" onAction="#aceptar" prefHeight="45.0" prefWidth="139.0" style="-fx-background-color: lightgreen;" text="Continuar" AnchorPane.leftAnchor="331.0" AnchorPane.rightAnchor="30.0">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+      <JFXButton fx:id="BotonCancelar" alignment="CENTER" layoutX="171.0" layoutY="185.0" onAction="#cancelar" prefHeight="45.0" prefWidth="139.0" style="-fx-background-color: red;" text="Cancelar">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </JFXButton>
+   </children>
+</AnchorPane>

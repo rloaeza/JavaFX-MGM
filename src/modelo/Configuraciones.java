@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import java.net.URL;
 
 public class Configuraciones {
-    public static int versionId=20;
+    public static int versionId=21;
     public static String versionText = "Código: 2019.";
     public static int versionIdActualizar=-1;
     public static String versionActualizar;
@@ -16,6 +16,8 @@ public class Configuraciones {
     public static String nombreClinica;
     public static String clinicaDescripcion;
 
+
+    public static boolean clinicaOK = false;
 
     public static String[] formasPago = new String[] {"Efectivo", "Crédito / Débito"};
     public static final  int  tipoAdministrador = 0;

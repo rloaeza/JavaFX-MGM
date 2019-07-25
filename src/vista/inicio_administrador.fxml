@@ -62,9 +62,18 @@
               </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Reportes">
-               <items>
-                  <MenuItem mnemonicParsing="false" onAction="#ReporteExistenciaAlmacen" text="Reportes" />
-               </items></Menu>
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#ReporteExistenciaAlmacen" text="Reportes" />
+                </items>
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#ReporteHistorialDeCompras" text="Historial de compras" />
+                </items>
+
+                <items>
+                    <MenuItem mnemonicParsing="false" onAction="#ReporteVentaGeneral" text="Venta general" />
+                </items>
+
+            </Menu>
         </menus>
       </MenuBar>
       <AnchorPane fx:id="Pane" layoutY="29.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="80.0">

@@ -65,6 +65,18 @@ public class InicioSesion  extends Controlador  implements  Initializable {
     @FXML
     void entrarSistema(ActionEvent event) throws IOException {
 
+
+
+        Map<String,Object> paramsAlertClinica = new LinkedHashMap<>();
+        paramsAlertClinica.put("titulo", "Información");
+        paramsAlertClinica.put("texto", "Esta por entrar a la clinica: "+comboClinica.getValue().getNombre());
+        paramsAlertClinica.put("vista", "/vista/alert_box2.fxml");
+        Funciones.display(paramsAlertClinica, getClass().getResource("/vista/alert_box2.fxml"), new AlertBox2() );
+
+
+        if(!Configuraciones.clinicaOK)
+            return;
+
         Map<String,Object> params = new LinkedHashMap<>();
         params.put("Actividad", "InicioSesion");
         params.put("usuario", textUsuario.getText());
