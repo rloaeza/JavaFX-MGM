@@ -497,6 +497,33 @@ public class VentaEditar extends Controlador implements Initializable {
 
     }
 
+
+    @FXML
+    void cancelarVenta(ActionEvent event) throws IOException {
+        Map<String, Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("titulo", "¿Cancelar venta?");
+        paramsAlert.put("vista", "/vista/acepta_administrador.fxml");
+        Configuraciones.supervisorOK = false;
+        Funciones.display(paramsAlert, getClass().getResource("/vista/acepta_administrador.fxml"), new AceptaAdministrador(), 762, 324);
+        if (!Configuraciones.supervisorOK)
+            return;
+
+
+        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+        int idVentaProductos = ListaDeProductos.getSelectionModel().getSelectedItem().getIdVentaProductos();
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Venta Productos: Cancelar");
+        paramsJSON.put("idVentaProductos", idVentaProductos);
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+
+        ListaDeProductos.getItems().remove(ListaDeProductos.getSelectionModel().getSelectedIndex());
+        eliminarTab(null);
+
+
+
+
+    }
+
     @FXML
     void actualizar(ActionEvent event) throws IOException {
 
