@@ -507,7 +507,7 @@ public class Funciones {
             acroForm.setDefaultResources(resources);
 
             for (PDFvalores valor : valores) {
-                //System.out.println("Agregando valor: "+valor.getCampo());
+                System.out.println("Agregando valor: "+valor.getCampo());
                 acroForm.getField(valor.getCampo()).setValue(valor.getValor());
             }
         }
