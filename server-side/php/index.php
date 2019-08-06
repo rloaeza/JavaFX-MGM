@@ -337,19 +337,41 @@
         break;
       case "Venta Productos: Agregar detalles":
         $bdO->consultar("INSERT INTO `ventasProductosDetalles`(cantidad, costo, total, idProducto, idVentasProductos) VALUES ({$_POST['cantidad']}, {$_POST['costo']}, {$_POST['total']}, {$_POST['idProducto']}, {$_POST['idVentasProductos']})");
-        echo $bdO->consultar("INSERT INTO `almacen` (cantidad, fecha, autorizado, idProducto) VALUES (-{$_POST['cantidad']}, {$now}, TRUE, {$_POST['idProducto']})");
+        echo $bdO->consultar("INSERT INTO `almacen` (cantidad, fecha, autorizado, idProducto, idClinica) VALUES (-{$_POST['cantidad']}, {$now}, TRUE, {$_POST['idProducto']}, {$_POST['idClinica']})");
         break;
       case "Venta Productos: Listar":
-        echo $bdO->consultar("SELECT * FROM ventasProductos WHERE ventasProductos.idClinica={$_POST['idClinica']} AND fecha >= DATE({$now}) - INTERVAL 7 DAY ORDER BY fecha DESC");
+        echo $bdO->consultar("SELECT *, CONCAT(pacientes.apellidos, ' ', pacientes.nombre) AS paciente FROM ventasProductos, pacientes WHERE ventasProductos.idPaciente = pacientes.idPaciente AND ventasProductos.idClinica={$_POST['idClinica']} AND fecha >= DATE({$now}) - INTERVAL 7 DAY ORDER BY fecha DESC");
         break;
       case "Venta Productos: Listar detalles":
         echo $bdO->consultar("SELECT productos.idProducto, ventasProductosDetalles.idVentaProductosDetalle, ventasProductosDetalles.cantidad, productos.nombre, ventasProductosDetalles.costo, ventasProductosDetalles.total FROM productos, ventasProductosDetalles, ventasProductos WHERE productos.idProducto = ventasProductosDetalles.idProducto AND ventasProductosDetalles.idVentasProductos = ventasProductos.idVentaProductos AND ventasProductos.idVentaProductos={$_POST['idVentaProductos']}");
         break;
+
+      case "Venta Productos Cancelada: Listar detalles":
+        echo $bdO->consultar("SELECT productos.idProducto, ventasCanceladasProductosDetalles.idVentaProductosDetalle, ventasCanceladasProductosDetalles.cantidad, productos.nombre, ventasCanceladasProductosDetalles.costo, ventasCanceladasProductosDetalles.total FROM productos, ventasCanceladasProductosDetalles, ventasCanceladasProductos WHERE productos.idProducto = ventasCanceladasProductosDetalles.idProducto AND ventasCanceladasProductosDetalles.idVentasProductos = ventasCanceladasProductos.idVentaProductos AND ventasCanceladasProductos.idVentaProductos={$_POST['idVentaProductos']}");
+        break;
+
       case "Venta Productos: Eliminar":
+
+        $bdO->consultar("INSERT INTO almacen(cantidad, idProducto, fecha, autorizado, idClinica) SELECT cantidad, idProducto, {$now}, 1, {$_POST['idClinica']} FROM ventasProductosDetalles WHERE idVentasProductos={$_POST['idVentaProductos']}");
         $bdO->consultar("DELETE FROM ventasProductosDetalles WHERE idVentasProductos={$_POST['idVentaProductos']}");
         $bdO->consultar("DELETE FROM ventasCobros WHERE idVentaProductos={$_POST['idVentaProductos']}");
         echo $bdO->consultar("DELETE FROM ventasProductos WHERE idVentaProductos={$_POST['idVentaProductos']}");
         break;
+
+        case "Venta Productos: Cancelar":
+
+          $bdO->consultar("INSERT INTO almacen(cantidad, idProducto, fecha, autorizado, idClinica) SELECT cantidad, idProducto, {$now}, 1, {$_POST['idClinica']} FROM ventasProductosDetalles WHERE idVentasProductos={$_POST['idVentaProductos']}");
+
+          $bdO->consultar("INSERT INTO ventasCanceladasProductos() SELECT * FROM ventasProductos WHERE idVentaProductos={$_POST['idVentaProductos']}");
+          $bdO->consultar("INSERT INTO ventasCanceladasProductosDetalles(idVentaProductosDetalle, cantidad, costo, total, idProducto, idVentasProductos) SELECT idVentaProductosDetalle, cantidad, costo, total, idProducto, idVentasProductos FROM ventasProductosDetalles WHERE idVentasProductos={$_POST['idVentaProductos']}");
+
+          $bdO->consultar("DELETE FROM ventasProductosDetalles WHERE idVentasProductos={$_POST['idVentaProductos']}");
+          $bdO->consultar("DELETE FROM ventasCobros WHERE idVentaProductos={$_POST['idVentaProductos']}");
+          echo $bdO->consultar("DELETE FROM ventasProductos WHERE idVentaProductos={$_POST['idVentaProductos']}");
+          break;
+
+
+
       case "Venta Productos: Eliminar fila":
         $bdO->consultar("UPDATE ventasProductos set cantidadProductos={$_POST['cantidadProductos']}, subtotal={$_POST['subtotal']}, total={$_POST['total']} WHERE idVentaProductos={$_POST['idVentaProductos']}");
         echo $bdO->consultar("DELETE FROM ventasProductosDetalles WHERE idVentaProductosDetalle={$_POST['idVentaProductosDetalle']}");
@@ -360,12 +382,13 @@
         echo $bdO->consultar("UPDATE ventasProductos set cantidadProductos={$_POST['cantidadProductos']}, total={$_POST['total']} WHERE idVentaProductos={$_POST['idVentaProductos']}");
         break;
       case "Venta Productos: Editar Venta Detalles":
+        $bdO->consultar("INSERT INTO almacen(cantidad, idProducto, fecha, autorizado, idClinica) SELECT cantidad-{$_POST['cantidad']}, idProducto, {$now}, 1, {$_POST['idClinica']} FROM ventasProductosDetalles WHERE idVentaProductosDetalle={$_POST['idVentaProductosDetalle']}" );
         echo $bdO->consultar("UPDATE ventasProductosDetalles set cantidad={$_POST['cantidad']} WHERE idVentaProductosDetalle={$_POST['idVentaProductosDetalle']}");
         break;
 
       case "Reportes: Existencia en almacen":
-      //echo $bdO->consultar("SELECT productos.nombre AS Producto, productos.cantidadMinima as CantidadMinima, vistaAlmacen.existencia as Existencia FROM tiposProductos, productos, (SELECT SUM(cantidad) AS existencia, idProducto FROM almacen GROUP BY idProductod WHERE idClinica={$_POST['idClinica']}) AS vistaAlmacen WHERE productos.idProducto =vistaAlmacen.idProducto AND productos.idTipoProducto=tiposProductos.idTipoProducto AND tiposProductos.idClinica={$_POST['idClinica']} ORDER BY vistaAlmacen.existencia ASC");
-        echo $bdO->consultar("SELECT productos.nombre AS Producto, productos.cantidadMinima as CantidadMinima, vistaAlmacen.existencia as Existencia FROM tiposProductos, productos, (SELECT SUM(cantidad) AS existencia, idProducto FROM almacen WHERE idClinica={$_POST['idClinica']} GROUP BY idProducto ) AS vistaAlmacen WHERE productos.idProducto =vistaAlmacen.idProducto AND productos.idTipoProducto=tiposProductos.idTipoProducto ORDER BY vistaAlmacen.existencia ASC");
+        //echo $bdO->consultar("SELECT productos.nombre AS Producto, productos.cantidadMinima as CantidadMinima, vistaAlmacen.existencia as Existencia FROM tiposProductos, productos, (SELECT SUM(cantidad) AS existencia, idProducto FROM almacen WHERE idClinica={$_POST['idClinica']} GROUP BY idProducto ) AS vistaAlmacen WHERE productos.idProducto =vistaAlmacen.idProducto AND productos.idTipoProducto=tiposProductos.idTipoProducto ORDER BY vistaAlmacen.existencia ASC");
+        echo $bdO->consultar("SELECT productos.nombre AS Producto, productos.cantidadMinima as CantidadMinima, vistaAlmacen.existencia as Existencia FROM tiposProductos, productos, (SELECT SUM(cantidad) AS existencia, idProducto FROM almacen WHERE idClinica={$_POST['idClinica']}  AND almacen.fecha BETWEEN '{$_POST['fechaInicial']}' AND  '{$_POST['fechaFinal']} 23:59' GROUP BY idProducto ) AS vistaAlmacen WHERE productos.idProducto =vistaAlmacen.idProducto AND productos.idTipoProducto=tiposProductos.idTipoProducto ORDER BY vistaAlmacen.existencia ASC");
         break;
 
 
@@ -414,10 +437,25 @@
       case "Reporte: General completo":
         echo $bdO->consultar("SELECT * FROM (SELECT ventasProductos.fecha, ventasProductos.idVentaProductos as IdVenta, CONCAT(pacientes.nombre,' ', pacientes.apellidos) AS Paciente, ventasProductos.total AS Total FROM ventasProductos, pacientes WHERE ventasProductos.idClinica={$_POST['idClinica']}  AND  pacientes.idPaciente = ventasProductos.idPaciente GROUP BY idVentaProductos) AS p  LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Efectivo FROM ventasCobros WHERE formaPago=1 GROUP BY idVentaProductos) Efectivo ON Efectivo.idVentaProductos = p.IdVenta LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Tarjeta FROM ventasCobros WHERE formaPago=2 GROUP BY idVentaProductos) Tarjeta ON Tarjeta.idVentaProductos = p.idVenta LEFT JOIN (SELECT ventasProductosDetalles.idVentasProductos, SUM(total) AS Producto FROM ventasProductosDetalles, productos WHERE ventasProductosDetalles.idProducto = productos.idProducto AND productos.cantidadMinima>-1 GROUP BY ventasProductosDetalles.idVentasProductos) Producto ON Producto.idVentasProductos = p.idVenta LEFT JOIN (SELECT ventasProductosDetalles.idVentasProductos, SUM(total) AS Tratamiento FROM ventasProductosDetalles, productos WHERE ventasProductosDetalles.idProducto = productos.idProducto AND productos.cantidadMinima=-1 GROUP BY ventasProductosDetalles.idVentasProductos) Tratamiento ON Tratamiento.idVentasProductos = p.idVenta WHERE  fecha BETWEEN '{$_POST['fechaInicial']}' AND  '{$_POST['fechaFinal']} 23:59' ");
         break;
+
+
+
+      case "Reporte: General completo canceladas":
+        echo $bdO->consultar("SELECT * FROM (SELECT ventasCanceladasProductos.fecha, ventasCanceladasProductos.idVentaProductos as IdVenta, CONCAT(pacientes.nombre,' ', pacientes.apellidos) AS Paciente, ventasCanceladasProductos.total AS Total FROM ventasCanceladasProductos, pacientes WHERE ventasCanceladasProductos.idClinica={$_POST['idClinica']}  AND  pacientes.idPaciente = ventasCanceladasProductos.idPaciente GROUP BY idVentaProductos) AS p  LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Efectivo FROM ventasCobros WHERE formaPago=1 GROUP BY idVentaProductos) Efectivo ON Efectivo.idVentaProductos = p.IdVenta LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Tarjeta FROM ventasCobros WHERE formaPago=2 GROUP BY idVentaProductos) Tarjeta ON Tarjeta.idVentaProductos = p.idVenta LEFT JOIN (SELECT ventasCanceladasProductosDetalles.idVentasProductos, SUM(total) AS Producto FROM ventasCanceladasProductosDetalles, productos WHERE ventasCanceladasProductosDetalles.idProducto = productos.idProducto AND productos.cantidadMinima>-1 GROUP BY ventasCanceladasProductosDetalles.idVentasProductos) Producto ON Producto.idVentasProductos = p.idVenta LEFT JOIN (SELECT ventasCanceladasProductosDetalles.idVentasProductos, SUM(total) AS Tratamiento FROM ventasCanceladasProductosDetalles, productos WHERE ventasCanceladasProductosDetalles.idProducto = productos.idProducto AND productos.cantidadMinima=-1 GROUP BY ventasCanceladasProductosDetalles.idVentasProductos) Tratamiento ON Tratamiento.idVentasProductos = p.idVenta WHERE  fecha BETWEEN '{$_POST['fechaInicial']}' AND  '{$_POST['fechaFinal']} 23:59' ");
+        break;
+
+
+
       case "Reportes: Existencia en almacen verificar":
       //echo $bdO->consultar("SELECT productos.nombre AS Producto, productos.cantidadMinima as CantidadMinima, vistaAlmacen.existencia as Existencia FROM tiposProductos, productos, (SELECT SUM(cantidad) AS existencia, idProducto FROM almacen GROUP BY idProductod WHERE idClinica={$_POST['idClinica']}) AS vistaAlmacen WHERE productos.idProducto =vistaAlmacen.idProducto AND productos.idTipoProducto=tiposProductos.idTipoProducto AND tiposProductos.idClinica={$_POST['idClinica']} ORDER BY vistaAlmacen.existencia ASC");
         echo $bdO->consultar("SELECT * FROM (SELECT productos.idProducto, productos.nombre AS Producto, productos.clave AS Clave, tiposProductos.nombre AS Clase from productos, tiposProductos WHERE productos.idTipoProducto= tiposProductos.idTipoProducto ) Prod LEFT JOIN (SELECT almacen.idProducto, SUM(almacen.cantidad) AS Existencia FROM almacen WHERE almacen.idClinica={$_POST['idClinica']} GROUP BY almacen.idProducto) Alma ON Prod.idProducto = Alma.idProducto ORDER BY clave ASC");
         break;
+
+      case "Reporte: Paciente":
+        echo $bdO->consultar("SELECT ventasProductos.idVentaProductos, ventasProductos.fecha AS Fecha, CONCAT(pacientes.apellidos, ' ', pacientes.nombre) AS Paciente, ventasProductosDetalles.total AS Importe, clinicas.nombre AS Clinica, productos.clave, productos.nombre AS Producto FROM pacientes, ventasProductos, ventasProductosDetalles, productos, clinicas WHERE pacientes.idPaciente = ventasProductos.idPaciente AND ventasProductos.idVentaProductos = ventasProductosDetalles.idVentasProductos AND ventasProductosDetalles.idProducto = productos.idProducto AND clinicas.idClinica = ventasProductos.idClinica AND pacientes.idPaciente={$_POST['idPaciente']}");
+        break;
+
+
 
       case "Cobros de venta: Agregar":
         echo $bdO->consultar("INSERT INTO ventasCobros (idVentaProductos, formaPago, monto, descripcion) VALUES ({$_POST['idVentaProductos']}, {$_POST['formaPago']}, {$_POST['monto']}, '{$_POST['descripcion']}' )");
