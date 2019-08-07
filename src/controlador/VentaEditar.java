@@ -488,10 +488,10 @@ public class VentaEditar extends Controlador implements Initializable {
         paramsJSON.put("Actividad", "Venta Productos: Eliminar");
         paramsJSON.put("idVentaProductos", idVentaProductos);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        Datos.cargarProductosConCosto();
 
         ListaDeProductos.getItems().remove(ListaDeProductos.getSelectionModel().getSelectedIndex());
         eliminarTab(null);
-
 
 
 
@@ -515,6 +515,7 @@ public class VentaEditar extends Controlador implements Initializable {
         paramsJSON.put("Actividad", "Venta Productos: Cancelar");
         paramsJSON.put("idVentaProductos", idVentaProductos);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        Datos.cargarProductosConCosto();
 
         ListaDeProductos.getItems().remove(ListaDeProductos.getSelectionModel().getSelectedIndex());
         eliminarTab(null);
@@ -565,7 +566,7 @@ public class VentaEditar extends Controlador implements Initializable {
         paramsJSON.put("cantidadProductos", vl.getCantidadProductos());
         paramsJSON.put("total", vl.getTotal());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
-
+        Datos.cargarProductosConCosto();
 
         productosActualizar.get(nVentaSelect).clear();
 

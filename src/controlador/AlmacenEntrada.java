@@ -88,6 +88,7 @@ public class AlmacenEntrada extends Controlador implements Initializable {
         paramsJSON.put("idProducto", ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         Cantidad.setText("");
+        Datos.cargarProductosConCosto();
         cargarAlmacenEntradas();
     }
 

@@ -12,7 +12,11 @@ public class ProductosConCosto {
     private double precio;
     private int idPrecioProducto;
 
-    public ProductosConCosto(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, double cantidadMinima, String barCode, double precio, int idPrecioProducto) {
+
+
+    private int existencia;
+
+    public ProductosConCosto(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, double cantidadMinima, String barCode, double precio, int idPrecioProducto, int existencia) {
         this.idProducto = idProducto;
         this.idTipoProducto = idTipoProducto;
         this.clave = clave;
@@ -22,6 +26,7 @@ public class ProductosConCosto {
         this.barCode = barCode;
         this.precio = precio;
         this.idPrecioProducto = idPrecioProducto;
+        this.existencia = existencia;
     }
 
     public ProductosConCosto() {
@@ -97,6 +102,14 @@ public class ProductosConCosto {
 
     public void setIdPrecioProducto(int idPrecioProducto) {
         this.idPrecioProducto = idPrecioProducto;
+    }
+
+    public int getExistencia() {
+        return existencia;
+    }
+
+    public void setExistencia(int existencia) {
+        this.existencia = existencia;
     }
 
     @Override

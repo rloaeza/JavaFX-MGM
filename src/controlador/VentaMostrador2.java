@@ -676,9 +676,11 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
             //Funciones.llenarPDF("formatos/venta2.pdf", valoresPDF, true, null);
 
-
+            Datos.cargarProductosConCosto();
+            cargarDatos("");
 
         }
+
         pagoValido = false;
 
 
@@ -771,17 +773,64 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     }
 
     private void agregarProducto(ProductosConCosto p) {
+
+
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
         int cantidad=0;
+        int cantidad2 =Cantidad.getText().isEmpty()?1:Integer.valueOf(Cantidad.getText());
         for(modelo.VentaMostrador producto : listasVentasMostrador.get(nVentaSelect)) {
             if(producto.getIdProducto()==p.getIdProducto()) {
                 cantidad = producto.getCant();
+
+                if( p.getExistencia()< (cantidad+cantidad2))
+                {
+                    Map<String,Object> paramsAlert = new LinkedHashMap<>();
+                    paramsAlert.put("titulo", "Almacen");
+                    paramsAlert.put("vista", "/vista/alert_box.fxml");
+
+
+
+                    paramsAlert.put("texto", "Falta producto: " + p.getNombre()+ ", en almacen se cuenta con: "+ p.getExistencia() +" piezas" );
+
+                    try {
+                        Funciones.displayFP(paramsAlert, this.getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    return;
+                }
+
+
+
+
+
+
                 listasVentasMostrador.get(nVentaSelect).remove(producto);
                 break;
             }
         }
 
-        int cantidad2 =Cantidad.getText().isEmpty()?1:Integer.valueOf(Cantidad.getText());
+        if( p.getExistencia()< (cantidad+cantidad2))
+        {
+            Map<String,Object> paramsAlert = new LinkedHashMap<>();
+            paramsAlert.put("titulo", "Almacen");
+            paramsAlert.put("vista", "/vista/alert_box.fxml");
+
+
+
+            paramsAlert.put("texto", "Falta producto: " + p.getNombre()+ ", en almacen se cuenta con: "+ p.getExistencia() +" piezas" );
+
+            try {
+                Funciones.displayFP(paramsAlert, this.getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return;
+        }
+
+
+
+
         listasVentasMostrador.get(nVentaSelect).add(new modelo.VentaMostrador(
                 p.getIdProducto(),
                 cantidad+cantidad2,
