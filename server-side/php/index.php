@@ -46,10 +46,16 @@
 
         break;
 
+      case "IdClinica de Mac":
+        echo $bdO->consultar("SELECT * FROM `macs` WHERE mac='{$_POST['mac']}'");
+        break;
+      case "Fijar idClinica de Mac":
+        echo $bdO->actualizar("UPDATE `macs` SET idClinica = {$_POST['idClinica']} WHERE mac='{$_POST['mac']}'");
+        break;
 
-        case "Clinicas: Lista":
-          echo $bdO->consultar("SELECT * FROM `clinicas` ORDER BY nombre ASC");
-          break;
+      case "Clinicas: Lista":
+        echo $bdO->consultar("SELECT * FROM `clinicas` ORDER BY nombre ASC");
+        break;
       case "TiposProductos: Lista":
         echo $bdO->consultar("SELECT * FROM `tiposProductos`  ORDER BY clave");
         break;
@@ -69,7 +75,11 @@
         break;
 
       case "Productos: Lista con precios":
-        echo $bdO->consultar("SELECT precioProductos.precio, precioProductos.idPrecioProducto, productos.* FROM productos, precioProductos, (SELECT max(idPrecioProducto) AS idPrecioProducto FROM precioProductos GROUP BY idProducto) AS pP WHERE pP.idPrecioProducto = precioProductos.idPrecioProducto AND productos.idProducto = precioProductos.idProducto ORDER BY productos.clave ");
+        // consulta sin existencia
+        //echo $bdO->consultar("SELECT precioProductos.precio, precioProductos.idPrecioProducto, productos.* FROM productos, precioProductos, (SELECT max(idPrecioProducto) AS idPrecioProducto FROM precioProductos GROUP BY idProducto) AS pP WHERE pP.idPrecioProducto = precioProductos.idPrecioProducto AND productos.idProducto = precioProductos.idProducto ORDER BY productos.clave ");
+
+        // consulta con existencia
+        echo $bdO->consultar("SELECT sql_1.*, sql_2.existencia FROM (SELECT precioProductos.precio, precioProductos.idPrecioProducto, productos.* FROM productos, precioProductos, (SELECT max(idPrecioProducto) AS idPrecioProducto FROM precioProductos GROUP BY idProducto) AS pP WHERE pP.idPrecioProducto = precioProductos.idPrecioProducto AND productos.idProducto = precioProductos.idProducto ORDER BY productos.clave) sql_1 LEFT JOIN (SELECT productos.idProducto, vistaAlmacen.existencia FROM productos, (SELECT SUM(cantidad) AS existencia, idProducto FROM almacen WHERE idClinica={$_POST['idClinica']} GROUP BY idProducto ) AS vistaAlmacen WHERE productos.idProducto =vistaAlmacen.idProducto) sql_2 ON sql_1.idProducto = sql_2.idProducto ORDER BY sql_1.clave");
         break;
       case "Productos: Lista con precio":
         echo $bdO->consultar("SELECT precioProductos.precio, precioProductos.idPrecioProducto, productos.* FROM productos, precioProductos, (SELECT max(idPrecioProducto) AS idPrecioProducto FROM precioProductos GROUP BY idProducto) AS pP WHERE pP.idPrecioProducto = precioProductos.idPrecioProducto AND productos.idProducto = precioProductos.idProducto AND (productos.clave LIKE '%{$_POST['patron']}%' OR productos.nombre LIKE '%{$_POST['patron']}%') ORDER BY productos.clave ");
