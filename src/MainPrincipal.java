@@ -14,16 +14,6 @@ public class MainPrincipal extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("/vista/inicio_sesion.fxml"));
-        primaryStage.setTitle("MGM");
-        Scene scene = new Scene(root, Funciones.ancho, Funciones.alto);
-        scene.getStylesheets().add("/modelo/style.css");
-        primaryStage.setScene(scene);
-        primaryStage.setMaximized(true);
-
-        primaryStage.show();
-
-
         Enumeration<NetworkInterface> n = NetworkInterface.getNetworkInterfaces();
         while (n.hasMoreElements()) {
             NetworkInterface ni = n.nextElement();
@@ -37,6 +27,7 @@ public class MainPrincipal extends Application {
                 sb.append(String.format("%02X%s", mac[i], (i < mac.length - 1) ? "-" : ""));
             }
             Configuraciones.MAC = sb.toString();
+
             break;
         }
 
@@ -44,6 +35,20 @@ public class MainPrincipal extends Application {
         Configuraciones.urlAlertBox=getClass().getResource("/vista/alert_box.fxml");
         //System.out.println(Configuraciones.MAC);
 
+
+
+
+        Parent root = FXMLLoader.load(getClass().getResource("/vista/inicio_sesion.fxml"));
+        primaryStage.setTitle("MGM");
+        Scene scene = new Scene(root, Funciones.ancho, Funciones.alto);
+        scene.getStylesheets().add("/modelo/style.css");
+        primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
+
+
+
+
+        primaryStage.show();
 
 
 

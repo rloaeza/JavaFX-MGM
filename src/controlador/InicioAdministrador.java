@@ -64,6 +64,30 @@ public class InicioAdministrador extends  Controlador implements Initializable {
     }
 
     @FXML
+    void cambiarClinica(ActionEvent event) throws IOException {
+        int idClinicaAnt = Configuraciones.idClinica;
+        Map<String, Object> paramsAlert = new LinkedHashMap<>();
+        paramsAlert.put("titulo", "Seleccionar clínica");
+
+        paramsAlert.put("vista", "/vista/selec_clinica.fxml");
+
+        Funciones.display(paramsAlert, getClass().getResource("/vista/selec_clinica.fxml"), new SelecClinica(), 762, 300);
+
+
+        if(Configuraciones.idClinica!= idClinicaAnt) {
+            Map<String,Object> paramsFijarClinica = new LinkedHashMap<>();
+            paramsFijarClinica.put("Actividad", "Fijar idClinica de Mac");
+            Funciones.consultarBD(paramsFijarClinica);
+
+            ((Stage)Pane.getScene().getWindow()).setTitle(Configuraciones.nombrePersonal + " / " + Configuraciones.nombreClinica);
+
+
+            cerrarSesion(null);
+        }
+
+
+    }
+    @FXML
     void cerrarSesion(ActionEvent event) throws IOException {
 
         if(Configuraciones.cajaAbierta)

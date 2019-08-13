@@ -57,6 +57,7 @@ public class Funciones {
 
     public static String res = "Resultados";
     public static String ultimoInsertado = "ultimoInsertado";
+    public static String idClinicaMac = "idClinica";
     public static int alto = 700;
     public static int ancho = 900;
 

@@ -58,7 +58,6 @@ public class InicioSesion  extends Controlador  implements  Initializable {
     void cambiarClinica(ActionEvent event) {
         Configuraciones.idClinica = comboClinica.getSelectionModel().getSelectedItem().getIdClinica();
         Configuraciones.nombreClinica = comboClinica.getSelectionModel().getSelectedItem().getNombre();
-
         Configuraciones.ticketTituloClinicaThermal = comboClinica.getValue().getDescripcion();
     }
 
@@ -66,16 +65,18 @@ public class InicioSesion  extends Controlador  implements  Initializable {
     void entrarSistema(ActionEvent event) throws IOException {
 
 
+        if( comboClinica.isVisible()) {
 
-        Map<String,Object> paramsAlertClinica = new LinkedHashMap<>();
-        paramsAlertClinica.put("titulo", "Información");
-        paramsAlertClinica.put("texto", "Esta por entrar a la clinica: "+comboClinica.getValue().getNombre());
-        paramsAlertClinica.put("vista", "/vista/alert_box2.fxml");
-        Funciones.display(paramsAlertClinica, getClass().getResource("/vista/alert_box2.fxml"), new AlertBox2() );
+            Map<String, Object> paramsAlertClinica = new LinkedHashMap<>();
+            paramsAlertClinica.put("titulo", "Información");
+            paramsAlertClinica.put("texto", "Esta por entrar a la clinica: " + comboClinica.getValue().getNombre());
+            paramsAlertClinica.put("vista", "/vista/alert_box2.fxml");
+            Funciones.display(paramsAlertClinica, getClass().getResource("/vista/alert_box2.fxml"), new AlertBox2());
 
 
-        if(!Configuraciones.clinicaOK)
-            return;
+            if (!Configuraciones.clinicaOK)
+                return;
+        }
 
         Map<String,Object> params = new LinkedHashMap<>();
         params.put("Actividad", "InicioSesion");
@@ -86,6 +87,13 @@ public class InicioSesion  extends Controlador  implements  Initializable {
 
         JsonArray rootArray = Funciones.consultarBD(params);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+
+            if( comboClinica.isVisible()) {
+                Map<String,Object> paramsFijarClinica = new LinkedHashMap<>();
+                paramsFijarClinica.put("Actividad", "Fijar idClinica de Mac");
+                Funciones.consultarBD(paramsFijarClinica);
+            }
+
 
 
 
@@ -216,11 +224,27 @@ public class InicioSesion  extends Controlador  implements  Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         try {
+
             Datos.cargarClinicas();
+            Version.setText(Configuraciones.versionText+Configuraciones.versionId);
+
+            Configuraciones.idClinica = cargarIdClinica();
+            if( Configuraciones.idClinica > 0) {
+                comboClinica.setVisible(false);
+                for(Clinica c : Datos.clinicas) {
+                    if(c.getIdClinica() == Configuraciones.idClinica) {
+                        Configuraciones.nombreClinica = c.getNombre();
+                        Configuraciones.ticketTituloClinicaThermal = c.getDescripcion();
+                        break;
+                    }
+                }
+                return;
+            }
+
+
             comboClinica.setItems(Datos.clinicas);
             comboClinica.getSelectionModel().select(0);
             cambiarClinica(null);
-            Version.setText(Configuraciones.versionText+Configuraciones.versionId);
             comboClinica.setOnKeyPressed(event -> {
                 if ( event.getCode() == KeyCode.ENTER) {
                     try {
@@ -234,5 +258,20 @@ public class InicioSesion  extends Controlador  implements  Initializable {
             e.printStackTrace();
         }
 
+    }
+
+
+
+    private int cargarIdClinica() throws IOException {
+        Map<String,Object> params = new LinkedHashMap<>();
+
+        params.put("Actividad", "IdClinica de Mac");
+        JsonArray rootArray = Funciones.consultarBD(params);
+        if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            int idClinica = rootArray.get(1).getAsJsonObject().get(Funciones.idClinicaMac).getAsInt();
+            return idClinica;
+
+        }
+        return 0;
     }
 }
