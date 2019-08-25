@@ -2,10 +2,7 @@ package controlador;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.jfoenix.controls.JFXListView;
-import com.jfoenix.controls.JFXProgressBar;
-import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTextField;
+import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -55,6 +52,10 @@ public class Productos extends Controlador implements Initializable {
     @FXML
     private JFXTextField CantidadMinima;
 
+
+    @FXML
+    private JFXCheckBox Tratamiento;
+
     @FXML
     private JFXProgressBar ImagenScroll;
 
@@ -75,6 +76,7 @@ public class Productos extends Controlador implements Initializable {
         paramsJSON.put("nombre", Nombre.getText());
         paramsJSON.put("descripcion", Descripcion.getText());
         paramsJSON.put("cantidadMinima", CantidadMinima.getText());
+        paramsJSON.put("tratamiento", Tratamiento.isSelected()?1:0);
         paramsJSON.put("barCode", BarCode.getText());
         paramsJSON.put("idTipoProducto", ListaDeProductos.getSelectionModel().getSelectedItem().getIdTipoProducto());
         paramsJSON.put("idProducto", ListaDeProductos.getSelectionModel().getSelectedItem().getIdProducto());
@@ -122,6 +124,7 @@ public class Productos extends Controlador implements Initializable {
         paramsJSON.put("nombre", Nombre.getText());
         paramsJSON.put("descripcion", Descripcion.getText());
         paramsJSON.put("cantidadMinima", CantidadMinima.getText());
+        paramsJSON.put("tratamiento", Tratamiento.isSelected()?1:0);
         paramsJSON.put("barCode", BarCode.getText());
         paramsJSON.put("idTipoProducto", parametros.get(0).get("idTipoProducto"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
@@ -186,7 +189,7 @@ public class Productos extends Controlador implements Initializable {
 
     @FXML
     void limpiar(ActionEvent event) {
-        cargarDatosPantalla(new modelo.Productos(-1, -1,"", "","",-1, ""));
+        cargarDatosPantalla(new modelo.Productos(-1, -1,"", "","",-1,0, ""));
         ListaDeProductos.getSelectionModel().clearSelection();
     }
 
@@ -231,6 +234,12 @@ public class Productos extends Controlador implements Initializable {
         else
             CantidadMinima.setText(String.valueOf( p.getCantidadMinima() ));
         BarCode.setText(p.getBarCode());
+
+
+        if(p.getTratamiento()==0)
+            Tratamiento.setSelected(false);
+        else
+            Tratamiento.setSelected(true);
 
         ImagenProducto.setImage(new Image("imgs/nofotoproducto.png"));
         archivoOrigen = null;

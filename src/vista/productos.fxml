@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXCheckBox?>
 <?import com.jfoenix.controls.JFXListView?>
 <?import com.jfoenix.controls.JFXProgressBar?>
 <?import com.jfoenix.controls.JFXTextArea?>
@@ -13,13 +14,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Productos">
+<AnchorPane fx:id="Pane" prefHeight="636.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Productos">
    <children>
       <JFXListView fx:id="ListaDeProductos" layoutX="7.0" minWidth="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0" />
       <JFXTextField fx:id="Clave" layoutX="489.0" layoutY="117.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="117.0" />
       <JFXTextField fx:id="Nombre" layoutX="489.0" layoutY="165.0" onKeyTyped="#capitalizarEntrada" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="165.0" />
-      <JFXTextArea fx:id="Descripcion" layoutX="489.0" layoutY="220.0" onKeyTyped="#capitalizarEntrada" prefHeight="70.0" prefWidth="381.0" AnchorPane.bottomAnchor="260.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="220.0" />
-      <JFXTextField fx:id="CantidadMinima" layoutX="489.0" layoutY="320.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.bottomAnchor="202.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
+      <JFXTextArea fx:id="Descripcion" layoutX="489.0" layoutY="220.0" onKeyTyped="#capitalizarEntrada" prefHeight="103.0" prefWidth="211.0" AnchorPane.bottomAnchor="313.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="220.0" />
+      <JFXTextField fx:id="CantidadMinima" layoutX="489.0" layoutY="357.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.bottomAnchor="252.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
       <JFXTextField fx:id="BarCode" layoutX="489.0" layoutY="367.0" prefHeight="27.0" prefWidth="381.0" AnchorPane.bottomAnchor="156.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
       <Label layoutX="376.0" layoutY="131.0" prefHeight="17.0" prefWidth="73.0" text="Clave" AnchorPane.leftAnchor="376.0" />
       <Label layoutX="376.0" layoutY="180.0" prefHeight="17.0" prefWidth="73.0" text="Nombre" AnchorPane.leftAnchor="376.0" />
@@ -30,7 +31,7 @@
          </font>
       </Label>
       <Label layoutX="376.0" layoutY="376.0" prefHeight="17.0" prefWidth="106.0" text="Código de barra" AnchorPane.bottomAnchor="157.0" AnchorPane.leftAnchor="376.0" />
-      <Label layoutX="376.0" layoutY="331.0" text="C. Mínima" AnchorPane.bottomAnchor="202.0" AnchorPane.leftAnchor="376.0" />
+      <Label layoutX="376.0" layoutY="367.0" text="C. Mínima" AnchorPane.bottomAnchor="252.0" AnchorPane.leftAnchor="376.0" />
       <HBox alignment="CENTER_RIGHT" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="30.0">
          <children>
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#regresar" text="Atrás">
@@ -90,5 +91,7 @@
          <image>
             <Image url="@../imgs/nofotoproducto.png" />
          </image></ImageView>
+      <Label layoutX="376.0" layoutY="420.0" text="Tratamiento" AnchorPane.bottomAnchor="199.0" AnchorPane.leftAnchor="376.0" />
+      <JFXCheckBox fx:id="Tratamiento" layoutX="489.0" layoutY="420.0" text=" " AnchorPane.bottomAnchor="198.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="381.5" />
    </children>
 </AnchorPane>

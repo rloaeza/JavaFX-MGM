@@ -34,9 +34,8 @@
                   <SeparatorMenuItem mnemonicParsing="false" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoPacientes" text="Pacientes" />
                   <MenuItem mnemonicParsing="false" onAction="#catalogoServicios" text="Servicios" />
-                  <MenuItem mnemonicParsing="false" onAction="#catalogoTiposDeProductos" text="Productos" />
-                  <MenuItem mnemonicParsing="false" onAction="#catalogoTratamientos" text="Tratamientos" />
-                   <MenuItem mnemonicParsing="false" onAction="#catalogoDescuentos" text="Descuentos" />
+                  <MenuItem mnemonicParsing="false" onAction="#catalogoTiposDeProductos" text="Productos/Tratamientos" />
+                  <MenuItem mnemonicParsing="false" onAction="#catalogoDescuentos" text="Descuentos" />
                </items>
             </Menu>
             <Menu mnemonicParsing="false" text="Movimientos">
@@ -49,8 +48,8 @@
                   </Menu>
                   <Menu mnemonicParsing="false" text="Costos">
                      <items>
-                        <MenuItem mnemonicParsing="false" onAction="#costoProductos" text="Costos de productos" />
-                        <MenuItem mnemonicParsing="false" onAction="#costoTratamientos" text="Costos de tratamientos" />
+                        <MenuItem mnemonicParsing="false" onAction="#costoProductos" text="Costos de productos/tratamientos" />
+
                      </items>
                   </Menu>
               </items>

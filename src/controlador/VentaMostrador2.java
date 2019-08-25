@@ -782,7 +782,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             if(producto.getIdProducto()==p.getIdProducto()) {
                 cantidad = producto.getCant();
 
-                if( p.getExistencia()< (cantidad+cantidad2))
+                if( p.getExistencia()< (cantidad+cantidad2) && (p.getTratamiento()==0) )
                 {
                     Map<String,Object> paramsAlert = new LinkedHashMap<>();
                     paramsAlert.put("titulo", "Almacen");
@@ -810,7 +810,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             }
         }
 
-        if( p.getExistencia()< (cantidad+cantidad2))
+        if( p.getExistencia()< (cantidad+cantidad2) && (p.getTratamiento()==0))
         {
             Map<String,Object> paramsAlert = new LinkedHashMap<>();
             paramsAlert.put("titulo", "Almacen");

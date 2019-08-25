@@ -7,6 +7,7 @@ public class ProductosConCosto {
     private String nombre;
     private String descripcion;
     private double cantidadMinima;
+    private int tratamiento;
     private String barCode;
 
     private double precio;
@@ -16,13 +17,14 @@ public class ProductosConCosto {
 
     private int existencia;
 
-    public ProductosConCosto(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, double cantidadMinima, String barCode, double precio, int idPrecioProducto, int existencia) {
+    public ProductosConCosto(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, double cantidadMinima, int tratamiento, String barCode, double precio, int idPrecioProducto, int existencia) {
         this.idProducto = idProducto;
         this.idTipoProducto = idTipoProducto;
         this.clave = clave;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.cantidadMinima = cantidadMinima;
+        this.tratamiento = tratamiento;
         this.barCode = barCode;
         this.precio = precio;
         this.idPrecioProducto = idPrecioProducto;
@@ -30,6 +32,14 @@ public class ProductosConCosto {
     }
 
     public ProductosConCosto() {
+    }
+
+    public int getTratamiento() {
+        return tratamiento;
+    }
+
+    public void setTratamiento(int tratamiento) {
+        this.tratamiento = tratamiento;
     }
 
     public int getIdProducto() {

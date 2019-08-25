@@ -7,20 +7,30 @@ public class Productos {
     private String nombre;
     private String descripcion;
     private int cantidadMinima;
+    private int tratamiento;
     private String barCode;
 
 
-    public Productos(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, int cantidadMinima, String barCode) {
+    public Productos(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, int cantidadMinima, int tratamiento, String barCode) {
         this.idProducto = idProducto;
         this.idTipoProducto = idTipoProducto;
         this.clave = clave;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.cantidadMinima = cantidadMinima;
+        this.tratamiento = tratamiento;
         this.barCode = barCode;
     }
 
     public Productos() {
+    }
+
+    public int getTratamiento() {
+        return tratamiento;
+    }
+
+    public void setTratamiento(int tratamiento) {
+        this.tratamiento = tratamiento;
     }
 
     public int getCantidadMinima() {

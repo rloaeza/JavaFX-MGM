@@ -118,7 +118,7 @@ public class CostoProductos extends Controlador implements Initializable {
 
     @FXML
     void limpiar(ActionEvent event) {
-        cargarDatosPantalla(new modelo.Productos(-1, -1,"", "","",-1, ""));
+        cargarDatosPantalla(new modelo.Productos(-1, -1,"", "","",-1, 0, ""));
         ListaDeProductos.getSelectionModel().clearSelection();
     }
 
