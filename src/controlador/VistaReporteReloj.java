@@ -99,9 +99,7 @@ public class VistaReporteReloj extends Controlador implements Initializable {
 
 
         String predeterminados = "celdaTitulo="+(String) parametros.get(0).get("Titulo") +
-                "@celdaDescripcion="+LocalDate.now()+
-                "@celdaTotal="+Funciones.valorAmoneda(gTotal);
-
+                "@celdaDescripcion="+LocalDate.now();
         valoresPDF.add(new PDFvalores("-1", predeterminados) );
 
 
