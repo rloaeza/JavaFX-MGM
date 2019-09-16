@@ -495,6 +495,19 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     @FXML
     void aceptarVenta(ActionEvent event) throws IOException {
 
+        if(listasVentasMostrador.get(nVentaSelect).size()<=0 ) {
+            Map<String,Object> paramsAlertImpresora = new LinkedHashMap<>();
+            paramsAlertImpresora.put("titulo", "Error");
+            paramsAlertImpresora.put("tiempo", "5");
+            paramsAlertImpresora.put("vista", "/vista/alert_box.fxml");
+
+            paramsAlertImpresora.put("texto", "No existen productos en la venta");
+            Funciones.displayFP(paramsAlertImpresora, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
+
+
+            return;
+        }
+
         // Verificar que la impresora este seleccionada
         PrinterService printerService = new PrinterService();
         List<String> listPrinters = printerService.getPrinters();
