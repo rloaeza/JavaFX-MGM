@@ -495,6 +495,19 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     @FXML
     void aceptarVenta(ActionEvent event) throws IOException {
 
+        if(listasVentasMostrador.get(nVentaSelect).size()<=0 ) {
+            Map<String,Object> paramsAlertImpresora = new LinkedHashMap<>();
+            paramsAlertImpresora.put("titulo", "Error");
+            paramsAlertImpresora.put("tiempo", "5");
+            paramsAlertImpresora.put("vista", "/vista/alert_box.fxml");
+
+            paramsAlertImpresora.put("texto", "No existen productos en la venta");
+            Funciones.displayFP(paramsAlertImpresora, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
+
+
+            return;
+        }
+
         // Verificar que la impresora este seleccionada
         PrinterService printerService = new PrinterService();
         List<String> listPrinters = printerService.getPrinters();
@@ -698,10 +711,44 @@ public class VentaMostrador2 extends Controlador implements Initializable {
     }
 
     @FXML
-    void seleccionarCliente(ActionEvent event) {
-        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
-        listasVentaCliente.set(nVentaSelect, ListaDeClientes.getSelectionModel().getSelectedItem().getIdPaciente());
-        Tabs.getTabs().get(nVentaSelect).setText(ListaDeClientes.getSelectionModel().getSelectedItem().toString());
+    void seleccionarCliente(ActionEvent event) throws IOException {
+        if( ListaDeClientes.getSelectionModel().isEmpty()) {
+            String nombrePaciente = BusquedaCliente.getText();
+
+            Map<String, Object> paramsAlert = new LinkedHashMap<>();
+            paramsAlert.put("titulo", "Crear nuevo usuaro");
+
+            paramsAlert.put("texto", "¿Crear el paciente " + nombrePaciente + "?");
+            paramsAlert.put("vista", "/vista/alert_box_confirmar.fxml");
+            Configuraciones.alertBoxConfirmar = false;
+            Funciones.display(paramsAlert, getClass().getResource("/vista/alert_box_confirmar.fxml"), new AlertBoxConfirmar(), 500, 250);
+            if( Configuraciones.alertBoxConfirmar) {
+                Map<String, Object> paramsJSON = new LinkedHashMap<>();
+                paramsJSON.put("Actividad", "Pacientes: Agregar");
+                paramsJSON.put("nombre", nombrePaciente);
+                paramsJSON.put("apellidos", "");
+                paramsJSON.put("email", "");
+                paramsJSON.put("telefono", "");
+                paramsJSON.put("movil", "");
+                paramsJSON.put("clave", "");
+                paramsJSON.put("huella0", "");
+                paramsJSON.put("huella1", "");
+                paramsJSON.put("huella2", "");
+                paramsJSON.put("huella3", "");
+                paramsJSON.put("huella4", "");
+                paramsJSON.put("idClinica", Configuraciones.idClinica);
+                JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+                Datos.cargarPacientes();
+                listaDeClientes = Datos.buscarPacientes(nombrePaciente);
+                seleccionarPersonal(null);
+
+            }
+
+        } else {
+            nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+            listasVentaCliente.set(nVentaSelect, ListaDeClientes.getSelectionModel().getSelectedItem().getIdPaciente());
+            Tabs.getTabs().get(nVentaSelect).setText(ListaDeClientes.getSelectionModel().getSelectedItem().toString());
+        }
     }
 
     @FXML

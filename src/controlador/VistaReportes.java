@@ -121,7 +121,7 @@ public class VistaReportes extends Controlador implements Initializable {
         paramsVista.put("vista", "/vista/vista_reporte_reloj.fxml" );
         paramsVista.put("Titulo", Configuraciones.reporteEncabezado+"Reporte: Reloj Checador");
         paramsVista.put("titulos", new String[]{"Fecha:30:CENTER","dia:20:CENTER", "tEntrada:20:CENTER", "tSalida:20:CENTER", "jornada:20:CENTER"});
-        paramsVista.put("pdf", "formatos/reporte_personal_2.pdf");
+        paramsVista.put("pdf", "formatos/reporte_reloj_checador_2.pdf");
         paramsVista.put("reporte", "Reporte: Reloj checador");
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReporteReloj());
 
