@@ -182,18 +182,18 @@ public class InicioAdministrador extends  Controlador implements Initializable {
 
     @FXML
     void almacenEntradas(ActionEvent event) throws IOException {
-        /*
+
         Map<String,Object> paramsVista = new LinkedHashMap<>();
         paramsVista.put("idClinica", Configuraciones.idClinica);
         paramsVista.put("vista", "/vista/almacen_entrada.fxml" );
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new AlmacenEntrada());
-         */
 
+/*
         Map<String,Object> paramsVista = new LinkedHashMap<>();
         paramsVista.put("idClinica", Configuraciones.idClinica);
         paramsVista.put("vista", "/vista/almacen_entrada_2.fxml" );
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new AlmacenEntrada2());
-
+*/
 
     }
 
