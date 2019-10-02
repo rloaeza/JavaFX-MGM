@@ -321,14 +321,18 @@ public class Funciones {
         document.save(archivo);
         document.close();
     }
+
     public static void llenarPDF2(String archivoOrigen,  ArrayList<PDFvalores>  valores, boolean imprimir, String archivoDestino) throws Exception {
+        llenarPDF2(archivoOrigen, valores, imprimir, archivoDestino, 12);
+    }
+    public static void llenarPDF2(String archivoOrigen,  ArrayList<PDFvalores>  valores, boolean imprimir, String archivoDestino, int elementos) throws Exception {
         File file = new File(archivoOrigen);
 
         PDDocument doc = new PDDocument();
 
         ArrayList<PDFvalores> valoresParciales = new ArrayList<>();
 
-        int elementos = 12;
+        //int elementos = 12;
         int index= 0;
 
         int f = 0;

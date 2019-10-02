@@ -103,6 +103,7 @@ public class VistaReporteExistenciaVerificar extends Controlador implements Init
 
         File file = null;
         String destino=null;
+
         if(guardar) {
             final FileChooser fileChooser = new FileChooser();
             fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Portable Document Format(*.pdf)", "*.pdf"));
@@ -113,7 +114,7 @@ public class VistaReporteExistenciaVerificar extends Controlador implements Init
             destino = file.getAbsolutePath();
         }
         try {
-            Funciones.llenarPDF2((String) parametros.get(0).get("pdf"),  valoresPDF, imprimir, guardar?destino:null);
+            Funciones.llenarPDF2((String) parametros.get(0).get("pdf"),  valoresPDF, imprimir, guardar?destino:null, 27);
         } catch (Exception e) {
             e.printStackTrace();
         }
