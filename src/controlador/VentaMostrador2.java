@@ -584,6 +584,11 @@ public class VentaMostrador2 extends Controlador implements Initializable {
 
             int ultimoInsertado = rootArray.get(1).getAsJsonObject().get(Funciones.ultimoInsertado).getAsInt();
 
+
+            int nVentaConsultado = rootArray.get(2).getAsJsonObject().get("nVenta").getAsInt();
+
+
+
             /**
              * Agregar cobros a la bd
              */
@@ -608,7 +613,7 @@ public class VentaMostrador2 extends Controlador implements Initializable {
             String ticketSTR=Configuraciones.ticketTituloClinicaThermal+
                     "Fecha: "+ timeStamp +"\n"+
                     "Cliente: "+cliente+"\n"+
-                    "Venta: "+ ultimoInsertado+ "\n\n"+
+                    "Venta: "+ nVentaConsultado+ "\n\n"+
                     Funciones.nuevaLinea("Cant", "Producto", " C. U.", "Total");
             for(modelo.VentaMostrador ventaMostrador: listasVentasMostrador.get(nVentaSelect)) {
                 Map<String,Object> paramsJSON2 = new LinkedHashMap<>();

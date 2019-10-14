@@ -411,7 +411,8 @@ public class VentaEditar extends Controlador implements Initializable {
         }
 
 
-        int ultimoInsertado = ListaDeProductos.getSelectionModel().getSelectedItem().getIdVentaProductos();
+        //int ultimoInsertado = ListaDeProductos.getSelectionModel().getSelectedItem().getIdVentaProductos();
+        int ultimoInsertado = ListaDeProductos.getSelectionModel().getSelectedItem().getnVenta();
         String timeStamp = new SimpleDateFormat("dd/MM/YY HH:mm").format(Calendar.getInstance().getTime());
 
 
@@ -673,7 +674,7 @@ public class VentaEditar extends Controlador implements Initializable {
 
 
         Tab tab = new Tab();
-        tab.setText(p.getIdVentaProductos()+"");
+        tab.setText(p.getnVenta()+"");
         TablasVentas.add(cargarTabla(new JFXTreeTableView<>() ));
         tab.setContent(TablasVentas.get(TablasVentas.size()-1));
         Tabs.getTabs().add(tab);
