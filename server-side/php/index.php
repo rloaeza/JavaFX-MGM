@@ -66,7 +66,8 @@
         echo $bdO->consultarInsert("INSERT INTO `tiposProductos` (clave, nombre, descripcion, idClinica) VALUES ('".$_POST["clave"]."', '".$_POST["nombre"]."', '".$_POST["descripcion"]."', ".$_POST["idClinica"].")");
         break;
       case "TiposProductos: Actualizar":
-        echo $bdO->actualizar("UPDATE `tiposProductos` SET clave = '".$_POST["clave"]."',  nombre = '".$_POST["nombre"]."', descripcion='".$_POST["descripcion"]."' WHERE idTipoProducto=".$_POST["idTipoProducto"]);
+        //echo $bdO->actualizar("UPDATE `tiposProductos` SET clave = '".$_POST["clave"]."',  nombre = '".$_POST["nombre"]."', descripcion='".$_POST["descripcion"]."' WHERE idTipoProducto=".$_POST["idTipoProducto"]);
+        echo $bdO->actualizar("UPDATE `tiposProductos` SET clave = '{$_POST["clave"]}',  nombre = '{$_POST["nombre"]}', descripcion='{$_POST["descripcion"]}' WHERE idTipoProducto={$_POST["idTipoProducto"]}");
         break;
 
 
@@ -94,11 +95,11 @@
         echo $bdO->eliminar("DELETE  FROM `productos` WHERE productos.idProducto=".$_POST["idProducto"]);
         break;
       case "Productos: Agregar":
-        echo $bdO->consultarInsert("INSERT INTO `productos` (clave, nombre, descripcion, cantidadMinima, barCode, idTipoProducto) VALUES ('".$_POST["clave"]."', '".$_POST["nombre"]."', '".$_POST["descripcion"]."', ".$_POST["cantidadMinima"].", '".addslashes($_POST["barCode"])."', ".$_POST["idTipoProducto"].")");
+        echo $bdO->consultarInsert("INSERT INTO `productos` (clave, nombre, descripcion, cantidadMinima, tratamiento, barCode, idTipoProducto) VALUES ('".$_POST["clave"]."', '".$_POST["nombre"]."', '".$_POST["descripcion"]."', ".$_POST["cantidadMinima"].", {$_POST['tratamiento']}, '".addslashes($_POST["barCode"])."', ".$_POST["idTipoProducto"].")");
         break;
       case "Productos: Actualizar":
 
-        echo $bdO->actualizar("UPDATE `productos` SET clave = '".$_POST["clave"]."',  nombre = '".$_POST["nombre"]."', descripcion='".$_POST["descripcion"]."', cantidadMinima=".$_POST["cantidadMinima"].", barCode='".addslashes($_POST["barCode"])."' WHERE idProducto=".$_POST["idProducto"]);
+        echo $bdO->actualizar("UPDATE `productos` SET clave = '{$_POST["clave"]}',  nombre = '{$_POST["nombre"]}', descripcion='{$_POST["descripcion"]}', cantidadMinima={$_POST["cantidadMinima"]}, tratamiento={$_POST['tratamiento']}, barCode='".addslashes($_POST["barCode"])."' WHERE idProducto=".$_POST["idProducto"]);
         break;
 
 
@@ -169,6 +170,11 @@
       case "Personal: Lista":
         echo $bdO->consultar("SELECT * FROM `personal` ");
         break;
+
+      case "Personal: Lista con horarios":
+        echo $bdO->consultar("SELECT * FROM `personal` ");
+        break;
+
       case "Personal: Lista con tipo":
         echo $bdO->consultar("SELECT * FROM `personal` WHERE  tipo={$_POST['tipo']}");
         break;
@@ -276,11 +282,13 @@
         break;
 
 
+
       case "Reloj: Agregar":
         echo $bdO->consultar("INSERT INTO `relojChecador` (idPersonal, entrada) VALUES ({$_POST['idPersonal']}, '{$_POST['fecha']}')");
         break;
       case "Reloj: Horarios de personal":
-        echo $bdO->consultar("SELECT horarios.*, personal.nombre, personal.apellidos FROM horarios, personal WHERE personal.idPersonal = horarios.idPersonal AND personal.idClinica={$_POST['idClinica']}" );
+        //echo $bdO->consultar("SELECT horarios.*, personal.nombre, personal.apellidos FROM horarios, personal WHERE personal.idPersonal = horarios.idPersonal AND personal.idClinica={$_POST['idClinica']}" );
+        echo $bdO->consultar("SELECT horarios.*, personal.nombre, personal.apellidos FROM horarios, personal WHERE personal.idPersonal = horarios.idPersonal " );
         break;
       case "Reloj: Agregar horarios de personal":
         echo $bdO->consultar("INSERT INTO horarios(lunes, martes, miercoles, jueves, viernes, sabado, domingo, toleranciaEntrada, idPersonal) VALUES('{$_POST['Lunes']}','{$_POST['Martes']}','{$_POST['Miercoles']}','{$_POST['Jueves']}','{$_POST['Viernes']}','{$_POST['Sabado']}','{$_POST['Domingo']}',{$_POST['Tolerancia']},{$_POST['idPersonal']} )" );
@@ -342,8 +350,9 @@
         break;
 
       case "Venta Productos: Agregar":
-        //echo $bdO->consultarInsert("INSERT INTO `ventasProductos`(fecha, cantidadProductos, subtotal, iva, total, idPersonal, idPaciente, tipoPago, idPersonalComision, idClinica) VALUES ({$now}, {$_POST['cantidadProductos']}, {$_POST['subtotal']}, {$_POST['iva']}, {$_POST['total']}, {$_POST['idPersonal']}, {$_POST['idPaciente']}, {$_POST['tipoPago']}, {$_POST['idPersonalComision']}, {$_POST['idClinica']})");
-        echo $bdO->consultarInsert("INSERT INTO `ventasProductos`(fecha, cantidadProductos, subtotal, iva, total, idPersonal, idPaciente, tipoPago, idClinica, descuento) VALUES ({$now}, {$_POST['cantidadProductos']}, {$_POST['subtotal']}, {$_POST['iva']}, {$_POST['total']}, {$_POST['idPersonalComision']}, {$_POST['idPaciente']}, {$_POST['tipoPago']},  {$_POST['idClinica']}, {$_POST['descuento']})");
+        //echo $bdO->consultarInsert("INSERT INTO `ventasProductos`(fecha, cantidadProductos, subtotal, iva, total, idPersonal, idPaciente, tipoPago, idClinica, descuento) VALUES ({$now}, {$_POST['cantidadProductos']}, {$_POST['subtotal']}, {$_POST['iva']}, {$_POST['total']}, {$_POST['idPersonalComision']}, {$_POST['idPaciente']}, {$_POST['tipoPago']},  {$_POST['idClinica']}, {$_POST['descuento']})");
+
+        echo $bdO->insertarVentaEnClinica("INSERT INTO `ventasProductos`(fecha, cantidadProductos, subtotal, iva, total, idPersonal, idPaciente, tipoPago, idClinica, descuento, nVenta) VALUES ({$now}, {$_POST['cantidadProductos']}, {$_POST['subtotal']}, {$_POST['iva']}, {$_POST['total']}, {$_POST['idPersonalComision']}, {$_POST['idPaciente']}, {$_POST['tipoPago']},  {$_POST['idClinica']}, {$_POST['descuento']}, NVENTA)", $_POST['idClinica']);
         break;
       case "Venta Productos: Agregar detalles":
         $bdO->consultar("INSERT INTO `ventasProductosDetalles`(cantidad, costo, total, idProducto, idVentasProductos) VALUES ({$_POST['cantidad']}, {$_POST['costo']}, {$_POST['total']}, {$_POST['idProducto']}, {$_POST['idVentasProductos']})");
@@ -441,17 +450,23 @@
       case "Reporte: Personal":
         //echo $bdO->consultar("SELECT DATE_FORMAT(CONVERT_TZ(ventasProductos.fecha,'+00:00','-05:00'), '%Y/%m/%d %k:%i') AS Fecha, ventasProductos.idVentaProductos AS IdVenta, ventasProductos.cantidadProductos AS Productos, ventasProductos.total AS Total, IF(ventasProductos.idPaciente=-1, 'Mostrador', CONCAT(pacientes.nombre,' ', pacientes.apellidos))  AS Cliente  FROM ventasProductos, personal, pacientes WHERE pacientes.idPaciente=ventasProductos.idPaciente AND  personal.idPersonal = ventasProductos.idPersonal AND  fecha BETWEEN '{$_POST['fechaInicial']}' AND '{$_POST['fechaFinal']} 23:59'  AND personal.idPersonal = {$_POST['idPersonal']} ORDER BY ventasProductos.fecha DESC");
 
-        echo $bdO->consultar("SELECT ventasProductos.fecha AS Fecha, ventasProductos.idVentaProductos AS IdVenta, ventasProductos.cantidadProductos AS Productos, ventasProductos.total AS Total, IF(ventasProductos.idPaciente=-1, 'Mostrador', CONCAT(pacientes.nombre,' ', pacientes.apellidos))  AS Cliente  FROM ventasProductos, personal, pacientes WHERE ventasProductos.idClinica={$_POST['idClinica']} AND pacientes.idPaciente=ventasProductos.idPaciente AND  personal.idPersonal = ventasProductos.idPersonal AND  fecha BETWEEN '{$_POST['fechaInicial']}' AND '{$_POST['fechaFinal']} 23:59'  AND personal.idPersonal = {$_POST['idPersonal']} ORDER BY ventasProductos.fecha DESC");
+        echo $bdO->consultar("SELECT ventasProductos.fecha AS Fecha, ventasProductos.idVentaProductos AS IdVenta,ventasProductos.nVenta AS Venta, ventasProductos.cantidadProductos AS Productos, ventasProductos.total AS Total, IF(ventasProductos.idPaciente=-1, 'Mostrador', CONCAT(pacientes.nombre,' ', pacientes.apellidos))  AS Cliente  FROM ventasProductos, personal, pacientes WHERE ventasProductos.idClinica={$_POST['idClinica']} AND pacientes.idPaciente=ventasProductos.idPaciente AND  personal.idPersonal = ventasProductos.idPersonal AND  fecha BETWEEN '{$_POST['fechaInicial']}' AND '{$_POST['fechaFinal']} 23:59'  AND personal.idPersonal = {$_POST['idPersonal']} ORDER BY ventasProductos.fecha DESC");
         break;
 
       case "Reporte: General completo":
-        echo $bdO->consultar("SELECT * FROM (SELECT ventasProductos.fecha, ventasProductos.idVentaProductos as IdVenta, CONCAT(pacientes.nombre,' ', pacientes.apellidos) AS Paciente, ventasProductos.total AS Total FROM ventasProductos, pacientes WHERE ventasProductos.idClinica={$_POST['idClinica']}  AND  pacientes.idPaciente = ventasProductos.idPaciente GROUP BY idVentaProductos) AS p  LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Efectivo FROM ventasCobros WHERE formaPago=1 GROUP BY idVentaProductos) Efectivo ON Efectivo.idVentaProductos = p.IdVenta LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Tarjeta FROM ventasCobros WHERE formaPago=2 GROUP BY idVentaProductos) Tarjeta ON Tarjeta.idVentaProductos = p.idVenta LEFT JOIN (SELECT ventasProductosDetalles.idVentasProductos, SUM(total) AS Producto FROM ventasProductosDetalles, productos WHERE ventasProductosDetalles.idProducto = productos.idProducto AND productos.cantidadMinima>-1 GROUP BY ventasProductosDetalles.idVentasProductos) Producto ON Producto.idVentasProductos = p.idVenta LEFT JOIN (SELECT ventasProductosDetalles.idVentasProductos, SUM(total) AS Tratamiento FROM ventasProductosDetalles, productos WHERE ventasProductosDetalles.idProducto = productos.idProducto AND productos.cantidadMinima=-1 GROUP BY ventasProductosDetalles.idVentasProductos) Tratamiento ON Tratamiento.idVentasProductos = p.idVenta WHERE  fecha BETWEEN '{$_POST['fechaInicial']}' AND  '{$_POST['fechaFinal']} 23:59' ");
+        //echo $bdO->consultar("SELECT * FROM (SELECT ventasProductos.fecha, ventasProductos.idVentaProductos as IdVenta, CONCAT(pacientes.nombre,' ', pacientes.apellidos) AS Paciente, ventasProductos.total AS Total FROM ventasProductos, pacientes WHERE ventasProductos.idClinica={$_POST['idClinica']}  AND  pacientes.idPaciente = ventasProductos.idPaciente GROUP BY idVentaProductos) AS p  LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Efectivo FROM ventasCobros WHERE formaPago=1 GROUP BY idVentaProductos) Efectivo ON Efectivo.idVentaProductos = p.IdVenta LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Tarjeta FROM ventasCobros WHERE formaPago=2 GROUP BY idVentaProductos) Tarjeta ON Tarjeta.idVentaProductos = p.idVenta LEFT JOIN (SELECT ventasProductosDetalles.idVentasProductos, SUM(total) AS Producto FROM ventasProductosDetalles, productos WHERE ventasProductosDetalles.idProducto = productos.idProducto AND productos.cantidadMinima>-1 GROUP BY ventasProductosDetalles.idVentasProductos) Producto ON Producto.idVentasProductos = p.idVenta LEFT JOIN (SELECT ventasProductosDetalles.idVentasProductos, SUM(total) AS Tratamiento FROM ventasProductosDetalles, productos WHERE ventasProductosDetalles.idProducto = productos.idProducto AND productos.cantidadMinima=-1 GROUP BY ventasProductosDetalles.idVentasProductos) Tratamiento ON Tratamiento.idVentasProductos = p.idVenta WHERE  fecha BETWEEN '{$_POST['fechaInicial']}' AND  '{$_POST['fechaFinal']} 23:59' ORDER BY tratamiento, IdVenta ASC");
+
+
+      //  echo $bdO->consultar("SELECT * FROM (SELECT ventasProductos.fecha, ventasProductos.idVentaProductos as IdVenta, CONCAT(pacientes.nombre,' ', pacientes.apellidos) AS Paciente, ventasProductos.total AS Total FROM ventasProductos, pacientes WHERE ventasProductos.idClinica={$_POST['idClinica']}  AND  pacientes.idPaciente = ventasProductos.idPaciente GROUP BY idVentaProductos) AS p  LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Efectivo FROM ventasCobros WHERE formaPago=1 GROUP BY idVentaProductos) Efectivo ON Efectivo.idVentaProductos = p.IdVenta LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Tarjeta FROM ventasCobros WHERE formaPago=2 GROUP BY idVentaProductos) Tarjeta ON Tarjeta.idVentaProductos = p.idVenta LEFT JOIN (SELECT ventasProductosDetalles.idVentasProductos, SUM(total) AS Producto FROM ventasProductosDetalles, productos WHERE ventasProductosDetalles.idProducto = productos.idProducto AND productos.tratamiento=0 GROUP BY ventasProductosDetalles.idVentasProductos) Producto ON Producto.idVentasProductos = p.idVenta LEFT JOIN (SELECT ventasProductosDetalles.idVentasProductos, SUM(total) AS Tratamiento FROM ventasProductosDetalles, productos WHERE ventasProductosDetalles.idProducto = productos.idProducto AND productos.tratamiento=1 GROUP BY ventasProductosDetalles.idVentasProductos) Tratamiento ON Tratamiento.idVentasProductos = p.idVenta WHERE  fecha BETWEEN '{$_POST['fechaInicial']}' AND  '{$_POST['fechaFinal']} 23:59' ORDER BY tratamiento, IdVenta ASC");
+
+
+        echo $bdO->consultar("SELECT * FROM (SELECT ventasProductos.fecha, ventasProductos.idVentaProductos as IdVenta, ventasProductos.nVenta as Venta, CONCAT(pacientes.nombre,' ', pacientes.apellidos) AS Paciente, ventasProductos.total AS Total FROM ventasProductos, pacientes WHERE ventasProductos.idClinica={$_POST['idClinica']}  AND  pacientes.idPaciente = ventasProductos.idPaciente GROUP BY idVentaProductos) AS p  LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Efectivo FROM ventasCobros WHERE formaPago=1 GROUP BY idVentaProductos) Efectivo ON Efectivo.idVentaProductos = p.IdVenta LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Tarjeta FROM ventasCobros WHERE formaPago=2 GROUP BY idVentaProductos) Tarjeta ON Tarjeta.idVentaProductos = p.idVenta LEFT JOIN (SELECT ventasProductosDetalles.idVentasProductos, SUM(total) AS Producto FROM ventasProductosDetalles, productos WHERE ventasProductosDetalles.idProducto = productos.idProducto AND productos.tratamiento=0 GROUP BY ventasProductosDetalles.idVentasProductos) Producto ON Producto.idVentasProductos = p.idVenta LEFT JOIN (SELECT ventasProductosDetalles.idVentasProductos, SUM(total) AS Tratamiento FROM ventasProductosDetalles, productos WHERE ventasProductosDetalles.idProducto = productos.idProducto AND productos.tratamiento=1 GROUP BY ventasProductosDetalles.idVentasProductos) Tratamiento ON Tratamiento.idVentasProductos = p.idVenta WHERE  fecha BETWEEN '{$_POST['fechaInicial']}' AND  '{$_POST['fechaFinal']} 23:59' ORDER BY tratamiento, IdVenta ASC");
         break;
 
 
 
       case "Reporte: General completo canceladas":
-        echo $bdO->consultar("SELECT * FROM (SELECT ventasCanceladasProductos.fecha, ventasCanceladasProductos.idVentaProductos as IdVenta, CONCAT(pacientes.nombre,' ', pacientes.apellidos) AS Paciente, ventasCanceladasProductos.total AS Total FROM ventasCanceladasProductos, pacientes WHERE ventasCanceladasProductos.idClinica={$_POST['idClinica']}  AND  pacientes.idPaciente = ventasCanceladasProductos.idPaciente GROUP BY idVentaProductos) AS p  LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Efectivo FROM ventasCobros WHERE formaPago=1 GROUP BY idVentaProductos) Efectivo ON Efectivo.idVentaProductos = p.IdVenta LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Tarjeta FROM ventasCobros WHERE formaPago=2 GROUP BY idVentaProductos) Tarjeta ON Tarjeta.idVentaProductos = p.idVenta LEFT JOIN (SELECT ventasCanceladasProductosDetalles.idVentasProductos, SUM(total) AS Producto FROM ventasCanceladasProductosDetalles, productos WHERE ventasCanceladasProductosDetalles.idProducto = productos.idProducto AND productos.cantidadMinima>-1 GROUP BY ventasCanceladasProductosDetalles.idVentasProductos) Producto ON Producto.idVentasProductos = p.idVenta LEFT JOIN (SELECT ventasCanceladasProductosDetalles.idVentasProductos, SUM(total) AS Tratamiento FROM ventasCanceladasProductosDetalles, productos WHERE ventasCanceladasProductosDetalles.idProducto = productos.idProducto AND productos.cantidadMinima=-1 GROUP BY ventasCanceladasProductosDetalles.idVentasProductos) Tratamiento ON Tratamiento.idVentasProductos = p.idVenta WHERE  fecha BETWEEN '{$_POST['fechaInicial']}' AND  '{$_POST['fechaFinal']} 23:59' ");
+        echo $bdO->consultar("SELECT * FROM (SELECT ventasCanceladasProductos.fecha, ventasCanceladasProductos.idVentaProductos as IdVenta,ventasCanceladasProductos.nVenta as Venta, CONCAT(pacientes.nombre,' ', pacientes.apellidos) AS Paciente, ventasCanceladasProductos.total AS Total FROM ventasCanceladasProductos, pacientes WHERE ventasCanceladasProductos.idClinica={$_POST['idClinica']}  AND  pacientes.idPaciente = ventasCanceladasProductos.idPaciente GROUP BY idVentaProductos) AS p  LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Efectivo FROM ventasCobros WHERE formaPago=1 GROUP BY idVentaProductos) Efectivo ON Efectivo.idVentaProductos = p.IdVenta LEFT JOIN (SELECT idVentaProductos, SUM(monto) AS Tarjeta FROM ventasCobros WHERE formaPago=2 GROUP BY idVentaProductos) Tarjeta ON Tarjeta.idVentaProductos = p.idVenta LEFT JOIN (SELECT ventasCanceladasProductosDetalles.idVentasProductos, SUM(total) AS Producto FROM ventasCanceladasProductosDetalles, productos WHERE ventasCanceladasProductosDetalles.idProducto = productos.idProducto AND productos.tratamiento=0 GROUP BY ventasCanceladasProductosDetalles.idVentasProductos) Producto ON Producto.idVentasProductos = p.idVenta LEFT JOIN (SELECT ventasCanceladasProductosDetalles.idVentasProductos, SUM(total) AS Tratamiento FROM ventasCanceladasProductosDetalles, productos WHERE ventasCanceladasProductosDetalles.idProducto = productos.idProducto AND productos.tratamiento=1 GROUP BY ventasCanceladasProductosDetalles.idVentasProductos) Tratamiento ON Tratamiento.idVentasProductos = p.idVenta WHERE  fecha BETWEEN '{$_POST['fechaInicial']}' AND  '{$_POST['fechaFinal']} 23:59' ");
         break;
 
 
@@ -463,6 +478,49 @@
 
       case "Reporte: Paciente":
         echo $bdO->consultar("SELECT ventasProductos.idVentaProductos, ventasProductos.fecha AS Fecha, CONCAT(pacientes.apellidos, ' ', pacientes.nombre) AS Paciente, ventasProductosDetalles.total AS Importe, clinicas.nombre AS Clinica, productos.clave, productos.nombre AS Producto FROM pacientes, ventasProductos, ventasProductosDetalles, productos, clinicas WHERE pacientes.idPaciente = ventasProductos.idPaciente AND ventasProductos.idVentaProductos = ventasProductosDetalles.idVentasProductos AND ventasProductosDetalles.idProducto = productos.idProducto AND clinicas.idClinica = ventasProductos.idClinica AND pacientes.idPaciente={$_POST['idPaciente']}");
+        break;
+
+      case "Reporte: Reloj checador":
+
+        $lu1 = "(SELECT SUBSTR(lunes,1,5) FROM `horarios` where idPersonal={$_POST['idPersonal']})";
+        $lu2 = "(SELECT SUBSTR(lunes,7,12)  FROM `horarios` where idPersonal={$_POST['idPersonal']})";
+
+        $ma1 = "(SELECT SUBSTR(martes,1,5) FROM `horarios` where idPersonal={$_POST['idPersonal']})";
+        $ma2 = "(SELECT SUBSTR(martes,7,12)  FROM `horarios` where idPersonal={$_POST['idPersonal']})";
+
+        $mi1 = "(SELECT SUBSTR(miercoles,1,5) FROM `horarios` where idPersonal={$_POST['idPersonal']})";
+        $mi2 = "(SELECT SUBSTR(miercoles,7,12)  FROM `horarios` where idPersonal={$_POST['idPersonal']})";
+
+        $ju1 = "(SELECT SUBSTR(jueves,1,5) FROM `horarios` where idPersonal={$_POST['idPersonal']})";
+        $ju2 = "(SELECT SUBSTR(jueves,7,12)  FROM `horarios` where idPersonal={$_POST['idPersonal']})";
+
+        $vi1 = "(SELECT SUBSTR(viernes,1,5) FROM `horarios` where idPersonal={$_POST['idPersonal']})";
+        $vi2 = "(SELECT SUBSTR(viernes,7,12)  FROM `horarios` where idPersonal={$_POST['idPersonal']})";
+
+        $sa1 = "(SELECT SUBSTR(sabado,1,5) FROM `horarios` where idPersonal={$_POST['idPersonal']})";
+        $sa2 = "(SELECT SUBSTR(sabado,7,12)  FROM `horarios` where idPersonal={$_POST['idPersonal']})";
+
+        $do1 = "(SELECT SUBSTR(domingo,1,5) FROM `horarios` where idPersonal={$_POST['idPersonal']})";
+        $do2 = "(SELECT SUBSTR(domingo,7,12)  FROM `horarios` where idPersonal={$_POST['idPersonal']})";
+
+        $dia = "SELECT  ELT(weekday(a.Fecha)+1, 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo')";
+
+        $lunes = "SELECT a.Fecha, ( {$dia} ) as dia,  TIME_FORMAT(a.tEntrada, '%H:%i') as tEntrada, TIME_FORMAT(b.tSalida, '%H:%i') as tSalida, timediff(b.ent, a.ent) as jornada FROM (SELECT date(entrada) as Fecha, weekday(entrada) AS dia, timediff(time(min(entrada)), ($lu1) ) AS tEntrada, min(entrada) AS ent FROM relojChecador WHERE weekday(entrada) = 0 AND idPersonal={$_POST['idPersonal']} GROUP BY Fecha) a LEFT JOIN (SELECT date(entrada) as Fecha, weekday(entrada), timediff( time(max(entrada)), ($lu2)) AS tSalida, max(entrada) as ent FROM relojChecador  GROUP BY Fecha) b ON a.Fecha = b.Fecha AND a.ent != b.ent";
+
+        $martes = "SELECT a.Fecha, ( {$dia} ) as dia,  TIME_FORMAT(a.tEntrada, '%H:%i'), TIME_FORMAT(b.tSalida, '%H:%i'), timediff(b.ent, a.ent) as jornada FROM (SELECT date(entrada) as Fecha, weekday(entrada) AS dia, timediff(time(min(entrada)), ($ma1) ) AS tEntrada, min(entrada) AS ent FROM relojChecador WHERE weekday(entrada) = 1 AND idPersonal={$_POST['idPersonal']} GROUP BY Fecha) a LEFT JOIN (SELECT date(entrada) as Fecha, weekday(entrada), timediff( time(max(entrada)), ($ma2)) AS tSalida, max(entrada) as ent FROM relojChecador  GROUP BY Fecha) b ON a.Fecha = b.Fecha AND a.ent != b.ent";
+
+        $miercoles = "SELECT a.Fecha, ( {$dia} ) as dia, TIME_FORMAT(a.tEntrada, '%H:%i'), TIME_FORMAT(b.tSalida, '%H:%i'), timediff(b.ent, a.ent) as jornada FROM (SELECT date(entrada) as Fecha, weekday(entrada) AS dia, timediff(time(min(entrada)), ($mi1) ) AS tEntrada, min(entrada) AS ent FROM relojChecador WHERE weekday(entrada) = 2 AND idPersonal={$_POST['idPersonal']} GROUP BY Fecha) a LEFT JOIN (SELECT date(entrada) as Fecha, weekday(entrada), timediff( time(max(entrada)), ($mi2)) AS tSalida, max(entrada) as ent FROM relojChecador  GROUP BY Fecha) b ON a.Fecha = b.Fecha AND a.ent != b.ent";
+
+        $jueves = "SELECT a.Fecha, ( {$dia} ) as dia, TIME_FORMAT(a.tEntrada, '%H:%i'), TIME_FORMAT(b.tSalida, '%H:%i'), timediff(b.ent, a.ent) as jornada FROM (SELECT date(entrada) as Fecha, weekday(entrada) AS dia, timediff(time(min(entrada)), ($ju1)) AS tEntrada, min(entrada) AS ent FROM relojChecador WHERE weekday(entrada) = 3 AND idPersonal={$_POST['idPersonal']} GROUP BY Fecha) a LEFT JOIN (SELECT date(entrada) as Fecha, weekday(entrada), timediff( time(max(entrada)), ($ju2)) AS tSalida, max(entrada) as ent FROM relojChecador  GROUP BY Fecha) b ON a.Fecha = b.Fecha AND a.ent != b.ent";
+
+        $viernes = "SELECT a.Fecha, ( {$dia} ) as dia, TIME_FORMAT(a.tEntrada, '%H:%i'), TIME_FORMAT(b.tSalida, '%H:%i'), timediff(b.ent, a.ent) as jornada FROM (SELECT date(entrada) as Fecha, weekday(entrada) AS dia, timediff(time(min(entrada)), ($vi1) ) AS tEntrada, min(entrada) AS ent FROM relojChecador WHERE weekday(entrada) = 4 AND idPersonal={$_POST['idPersonal']} GROUP BY Fecha) a LEFT JOIN (SELECT date(entrada) as Fecha, weekday(entrada), timediff( time(max(entrada)), ($vi2)) AS tSalida, max(entrada) as ent FROM relojChecador  GROUP BY Fecha) b ON a.Fecha = b.Fecha AND a.ent != b.ent";
+
+        $sabado = "SELECT a.Fecha, ( {$dia} ) as dia, TIME_FORMAT(a.tEntrada, '%H:%i'), TIME_FORMAT(b.tSalida, '%H:%i'), timediff(b.ent, a.ent) as jornada FROM (SELECT date(entrada) as Fecha, weekday(entrada) AS dia, timediff(time(min(entrada)), ($sa1) ) AS tEntrada, min(entrada) AS ent FROM relojChecador WHERE weekday(entrada) = 5 AND idPersonal={$_POST['idPersonal']} GROUP BY Fecha) a LEFT JOIN (SELECT date(entrada) as Fecha, weekday(entrada), timediff( time(max(entrada)), ($sa2)) AS tSalida, max(entrada) as ent FROM relojChecador  GROUP BY Fecha) b ON a.Fecha = b.Fecha AND a.ent != b.ent";
+
+        $domingo = "SELECT a.Fecha, ( {$dia} ) as dia, TIME_FORMAT(a.tEntrada, '%H:%i'), TIME_FORMAT(b.tSalida, '%H:%i'), timediff(b.ent, a.ent) as jornada FROM (SELECT date(entrada) as Fecha, weekday(entrada) AS dia, timediff(time(min(entrada)), ($do1) ) AS tEntrada, min(entrada) AS ent FROM relojChecador WHERE weekday(entrada) = 6 AND idPersonal={$_POST['idPersonal']} GROUP BY Fecha) a LEFT JOIN (SELECT date(entrada) as Fecha, weekday(entrada), timediff( time(max(entrada)), ($do2)) AS tSalida, max(entrada) as ent FROM relojChecador  GROUP BY Fecha) b ON a.Fecha = b.Fecha AND a.ent != b.ent";
+
+
+        echo $bdO->consultar("SELECT * FROM ({$lunes} UNION {$martes} UNION {$miercoles} UNION {$jueves} UNION {$viernes} UNION {$sabado} UNION {$domingo}) t WHERE Fecha BETWEEN '{$_POST['fechaInicial']}' AND '{$_POST['fechaFinal']}'  ORDER BY t.Fecha");
         break;
 
 

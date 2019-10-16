@@ -98,5 +98,29 @@
 
     }
 
+    function insertarVentaEnClinica($sql, $idClinica) {
+      $sqlLastId = "SELECT Max(nVenta) as nVenta FROM ventasProductos WHERE idClinica=$idClinica";
+
+      $result = mysqli_query($this->conexion, $sqlLastId);
+      $nVenta = 0;
+      if($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $nVenta = $row['nVenta'];
+      }
+
+      $sql = str_replace("NVENTA", $nVenta+1, $sql);
+
+      $result = mysqli_query($this->conexion, $sql);
+      $last_id_Insert = mysqli_insert_id($this->conexion);
+      $output[] = array($this->resultadoTXT=>2);
+      $output[] = array($this->ultimoInsertado=>$last_id_Insert);
+      $output[] = array('nVenta'=>$nVenta+1);
+
+
+
+      return json_encode($output);
+
+    }
+
   }
  ?>

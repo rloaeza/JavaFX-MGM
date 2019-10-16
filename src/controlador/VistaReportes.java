@@ -106,7 +106,7 @@ public class VistaReportes extends Controlador implements Initializable {
         paramsVista.put("idClinica", Configuraciones.idClinica);
         paramsVista.put("vista", "/vista/vista_reporte_personal.fxml" );
         paramsVista.put("Titulo", Configuraciones.reporteEncabezado+"Reporte: Personal");
-        paramsVista.put("titulos", new String[]{"Fecha:30:CENTER","Id Venta:20:CENTER","Cliente:70:CENTER-LEFT", "Productos:20:CENTER", "Total:20:CENTER"});
+        paramsVista.put("titulos", new String[]{"Fecha:30:CENTER","Venta:20:CENTER","Cliente:70:CENTER-LEFT", "Productos:20:CENTER", "Total:20:CENTER"});
         paramsVista.put("pdf", "formatos/reporte_personal_2.pdf");
         paramsVista.put("reporte", "Reporte: Personal");
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReportePersonal());
