@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXPasswordField;
+import com.jfoenix.controls.JFXTextArea;
 import com.jfoenix.controls.JFXTextField;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -42,6 +43,9 @@ public class AceptaAdministrador extends Controlador implements Initializable {
     private JFXPasswordField SupervisorClave;
 
     @FXML
+    private JFXTextArea Comentarios;
+
+    @FXML
     private Label Error;
 
     @FXML
@@ -65,6 +69,7 @@ public class AceptaAdministrador extends Controlador implements Initializable {
         //if(VendedorClave.getText().equals(Configuraciones.clavePersonal) && SupervisorClave.getText().equals(Supervisor.getValue().getClave())) {
         if( SupervisorClave.getText().equals(Supervisor.getValue().getClave())) {
             Configuraciones.supervisorOK = true;
+            Configuraciones.supervisorComentarios = Comentarios.getText();
             cerrar();
         }
 

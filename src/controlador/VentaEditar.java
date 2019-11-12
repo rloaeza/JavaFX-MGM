@@ -478,7 +478,7 @@ public class VentaEditar extends Controlador implements Initializable {
         paramsAlert.put("titulo", "¿Eliminar venta?");
         paramsAlert.put("vista", "/vista/acepta_administrador.fxml");
         Configuraciones.supervisorOK = false;
-        Funciones.display(paramsAlert, getClass().getResource("/vista/acepta_administrador.fxml"), new AceptaAdministrador(), 762, 324);
+        Funciones.display(paramsAlert, getClass().getResource("/vista/acepta_administrador.fxml"), new AceptaAdministrador(), 762, 446);
         if (!Configuraciones.supervisorOK)
             return;
 
@@ -505,7 +505,7 @@ public class VentaEditar extends Controlador implements Initializable {
         paramsAlert.put("titulo", "¿Cancelar venta?");
         paramsAlert.put("vista", "/vista/acepta_administrador.fxml");
         Configuraciones.supervisorOK = false;
-        Funciones.display(paramsAlert, getClass().getResource("/vista/acepta_administrador.fxml"), new AceptaAdministrador(), 762, 324);
+        Funciones.display(paramsAlert, getClass().getResource("/vista/acepta_administrador.fxml"), new AceptaAdministrador(), 762, 446);
         if (!Configuraciones.supervisorOK)
             return;
 
@@ -515,6 +515,7 @@ public class VentaEditar extends Controlador implements Initializable {
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Venta Productos: Cancelar");
         paramsJSON.put("idVentaProductos", idVentaProductos);
+        paramsJSON.put("comentarios", Configuraciones.supervisorComentarios);
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         Datos.cargarProductosConCosto();
 
@@ -535,7 +536,7 @@ public class VentaEditar extends Controlador implements Initializable {
         paramsAlert.put("titulo", "¿Actualizar venta?");
         paramsAlert.put("vista", "/vista/acepta_administrador.fxml");
         Configuraciones.supervisorOK = false;
-        Funciones.display(paramsAlert, getClass().getResource("/vista/acepta_administrador.fxml"), new AceptaAdministrador(), 762, 324);
+        Funciones.display(paramsAlert, getClass().getResource("/vista/acepta_administrador.fxml"), new AceptaAdministrador(), 762, 446);
         if (!Configuraciones.supervisorOK)
             return;
 

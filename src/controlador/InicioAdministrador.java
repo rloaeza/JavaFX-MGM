@@ -277,10 +277,20 @@ public class InicioAdministrador extends  Controlador implements Initializable {
         paramsVista.put("idClinica", Configuraciones.idClinica);
         paramsVista.put("vista", "/vista/vista_reporte_general_completo.fxml" );
         paramsVista.put("Titulo", Configuraciones.reporteEncabezado+"Reporte: Ventas general completo");
+        paramsVista.put("titulos", new String[]{"Venta:10:CENTER","Paciente:40:CENTER-LEFT","Tratamiento:20:CENTER", "Producto:20:CENTER", "Efectivo:20:CENTER", "Tarjeta:20:CENTER", "Total:20:CENTER"});
+        paramsVista.put("pdf", "formatos/reporte_venta_2.pdf");
+        paramsVista.put("reporte", "Reporte: General completo");
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReporteGeneralCompleto());
+        /*
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", Configuraciones.idClinica);
+        paramsVista.put("vista", "/vista/vista_reporte_general_completo.fxml" );
+        paramsVista.put("Titulo", Configuraciones.reporteEncabezado+"Reporte: Ventas general completo");
         paramsVista.put("titulos", new String[]{"Id Venta:10:CENTER","Paciente:40:CENTER-LEFT","Tratamiento:20:CENTER", "Producto:20:CENTER", "Efectivo:20:CENTER", "Tarjeta:20:CENTER", "Total:20:CENTER"});
         paramsVista.put("pdf", "formatos/reporte_venta_2.pdf");
         paramsVista.put("reporte", "Reporte: General completo");
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReporteGeneralCompleto());
+        */
     }
 
 

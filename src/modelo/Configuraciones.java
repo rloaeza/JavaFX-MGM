@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import java.net.URL;
 
 public class Configuraciones {
-    public static int versionId=32;
+    public static int versionId=33;
     public static String versionText = "Código: 2019.";
     public static int versionIdActualizar=-1;
     public static String versionActualizar;
@@ -216,4 +216,6 @@ public class Configuraciones {
     public static URL urlAlertBox;
     public static double descuento;
     public static int idVentaProductos;
+
+    public static String supervisorComentarios;
 }
