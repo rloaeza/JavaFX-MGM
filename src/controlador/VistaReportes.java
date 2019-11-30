@@ -75,6 +75,18 @@ public class VistaReportes extends Controlador implements Initializable {
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReporteGeneral());
     }
 
+
+    @FXML
+    void reporteVentasGeneralesTipoPago(ActionEvent event) throws IOException {
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", Configuraciones.idClinica);
+        paramsVista.put("vista", "/vista/vista_reporte_general_tipo_pago.fxml" );
+        paramsVista.put("Titulo", Configuraciones.reporteEncabezado+"Reporte: Ventas general tipo de pago");
+        paramsVista.put("titulos", new String[]{"Venta:10:CENTER","Paciente:40:CENTER-LEFT","Tratamiento:20:CENTER", "Producto:20:CENTER", "Efectivo:20:CENTER", "Tarjeta:20:CENTER", "Total:20:CENTER"});
+        paramsVista.put("pdf", "formatos/reporte_venta_2.pdf");
+        paramsVista.put("reporte", "Reporte: General completo tipo de pago");
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReporteGeneralTipoPago());
+    }
     @FXML
     void reporteVentasGeneralesCompleto(ActionEvent event) throws IOException {
         Map<String,Object> paramsVista = new LinkedHashMap<>();
