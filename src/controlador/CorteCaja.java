@@ -73,10 +73,14 @@ public class CorteCaja extends Controlador implements Initializable {
             Error.setText(Configuraciones.corteCajaErrorNoSupervisorSeleccionado);
             return;
         }
-        if(SupervisorClave.getText().isEmpty()) {
-            Error.setText(Configuraciones.corteCajaErrorNoClaveSupervisor);
-            return;
+       if(!SupervisorClave.getText().isEmpty()) {
+           if ( !SupervisorClave.getText().equals(Supervisor.getValue().getClave())) {
+               Error.setText(Configuraciones.corteCajaErrorNoClaveSupervisor);
+               return;
+           }
         }
+
+
         if(Monto.getText().isEmpty()&&Configuraciones.abriendoCaja) {
             Error.setText(Configuraciones.corteCajaErrorNoMonto);
             return;
@@ -87,7 +91,8 @@ public class CorteCaja extends Controlador implements Initializable {
         }
         boolean claveVendedor=false;
 
-        if(VendedorClave.getText().equals(Configuraciones.clavePersonal) && SupervisorClave.getText().equals(Supervisor.getValue().getClave()))
+        //if(VendedorClave.getText().equals(Configuraciones.clavePersonal) && SupervisorClave.getText().equals(Supervisor.getValue().getClave()))
+        if(VendedorClave.getText().equals(Configuraciones.clavePersonal) && Supervisor.getSelectionModel().getSelectedIndex()!=-1  )
         {
 
 
@@ -143,6 +148,13 @@ public class CorteCaja extends Controlador implements Initializable {
             corteCajaSTR=corteCajaSTR.replace("$caja$", CBCajas.getSelectionModel().getSelectedItem().toString() );
             corteCajaSTR=corteCajaSTR.replace("$fecha$", fecha );
             corteCajaSTR=corteCajaSTR.replace("$vendedor$", Vendedor.getText());
+
+            //autorizado
+            if( SupervisorClave.getText().equals(Supervisor.getValue().getClave()) )
+                corteCajaSTR=corteCajaSTR.replace("$supervisor$", Supervisor.getSelectionModel().getSelectedItem().toString());
+            else
+                corteCajaSTR=corteCajaSTR.replace("$supervisor$", "Sin validar");
+
             corteCajaSTR=corteCajaSTR.replace("$supervisor$", Supervisor.getSelectionModel().getSelectedItem().toString());
             if(Configuraciones.abriendoCaja) {
                 corteCajaSTR = corteCajaSTR.replace("$monto$", Monto.getText());

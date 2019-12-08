@@ -2,10 +2,7 @@ package controlador;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXTreeTableColumn;
-import com.jfoenix.controls.JFXTreeTableView;
-import com.jfoenix.controls.RecursiveTreeItem;
+import com.jfoenix.controls.*;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -17,6 +14,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableView;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -34,6 +32,7 @@ import java.util.ResourceBundle;
 
 public class VistaReportePaciente extends Controlador implements Initializable {
 
+    private String patron = "";
     @FXML
     private AnchorPane Pane;
 
@@ -41,12 +40,16 @@ public class VistaReportePaciente extends Controlador implements Initializable {
     private JFXTreeTableView<VistaReporte> TablaReporte;
 
 
+    @FXML
+    private JFXTextField PacienteNombre;
+
 
     @FXML
     private Label titulo;
 
+
     @FXML
-    private JFXComboBox <Pacientes> Paciente;
+    private JFXListView<Pacientes> Paciente;
 
     @FXML
     private Label descripcion;
@@ -71,8 +74,14 @@ public class VistaReportePaciente extends Controlador implements Initializable {
 
     }
 
+
     @FXML
-    void cambiarPaciente(ActionEvent event) throws IOException {
+    void patronPaciente(KeyEvent event) throws IOException {
+        patron = PacienteNombre.getText();
+        Paciente.setItems(Datos.buscarPacientes(patron));
+    }
+    @FXML
+    void cambiarPaciente(MouseEvent event) throws IOException {
         cargarDatos();
     }
 
@@ -87,7 +96,8 @@ public class VistaReportePaciente extends Controlador implements Initializable {
         Map<String, String> valorPDf = new LinkedHashMap<>();
         String pacienteSelec = "Mostrador";
         if( Paciente.getSelectionModel().getSelectedIndex() != -1) {
-            pacienteSelec = Paciente.getValue().getApellidos() + " " + Paciente.getValue().getNombre();
+
+            pacienteSelec = Paciente.getSelectionModel().getSelectedItem().getApellidos() + " " + Paciente.getSelectionModel().getSelectedItem().getNombre();
         }
 
         String predeterminados = "celdaTitulo="+(String) parametros.get(0).get("Titulo") +
@@ -169,8 +179,8 @@ public class VistaReportePaciente extends Controlador implements Initializable {
         TablaReporte.setColumnResizePolicy(TreeTableView.UNCONSTRAINED_RESIZE_POLICY);
         try {
             cargarDatos();
-            Paciente.setItems(Datos.pacientes);
-            Paciente.setPromptText("Mostrador");
+            Paciente.setItems(Datos.buscarPacientes(patron));
+            //Paciente.setPromptText("Mostrador");
         } catch (IOException  e) {
             e.printStackTrace();
         }

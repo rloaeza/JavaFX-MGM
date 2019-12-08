@@ -2,6 +2,7 @@ package controlador;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXListView;
 import com.jfoenix.controls.JFXPasswordField;
 import com.jfoenix.controls.JFXTextField;
@@ -29,6 +30,9 @@ public class Pacientes extends Controlador implements Initializable {
 
     @FXML
     private AnchorPane Pane;
+
+    @FXML
+    private JFXComboBox<modelo.Pacientes> Paciente;
 
     @FXML
     private JFXTextField Busqueda;
@@ -74,6 +78,18 @@ public class Pacientes extends Controlador implements Initializable {
 
     private String[] huellas = new String[]{"","","","",""};
 
+
+    @FXML
+    void transferir(ActionEvent event) throws IOException {
+        Map<String,Object> paramsJSON = new LinkedHashMap<>();
+        paramsJSON.put("Actividad", "Pacientes: Transferir");
+        paramsJSON.put("idPaciente", ListaDePacientes.getSelectionModel().getSelectedItem().getIdPaciente());
+        paramsJSON.put("pacienteId", Paciente.getValue().getIdPaciente());
+        JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+        Datos.cargarPacientes();
+        cargarDatos();
+        limpiar(null);
+    }
 
     @FXML
     void busqueda(KeyEvent event) {
@@ -188,6 +204,8 @@ public class Pacientes extends Controlador implements Initializable {
         paramsJSON.put("Actividad", "Pacientes: Eliminar");
         paramsJSON.put("idPaciente", ListaDePacientes.getSelectionModel().getSelectedItem().getIdPaciente());
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+
+
         Datos.cargarPacientes();
         cargarDatos();
         limpiar(null);
@@ -244,6 +262,7 @@ public class Pacientes extends Controlador implements Initializable {
 
         */
         ListaDePacientes.setItems(Datos.pacientes);
+        Paciente.setItems(Datos.pacientes);
 
     }
 

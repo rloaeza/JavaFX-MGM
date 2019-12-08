@@ -747,6 +747,12 @@ public class VentaMostrador2 extends Controlador implements Initializable {
                 listaDeClientes = Datos.buscarPacientes(nombrePaciente);
                 seleccionarPersonal(null);
 
+
+
+                nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+                listasVentaCliente.set(nVentaSelect, ListaDeClientes.getSelectionModel().getSelectedItem().getIdPaciente());
+                Tabs.getTabs().get(nVentaSelect).setText(ListaDeClientes.getSelectionModel().getSelectedItem().toString());
+
             }
 
         } else {
