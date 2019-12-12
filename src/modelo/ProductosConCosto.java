@@ -1,6 +1,8 @@
 package modelo;
 
-public class ProductosConCosto {
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
+public class ProductosConCosto extends RecursiveTreeObject<ProductosConCosto> {
     private int idProducto;
     private int idTipoProducto;
     private String clave;

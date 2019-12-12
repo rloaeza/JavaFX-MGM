@@ -197,6 +197,16 @@ public class InicioAdministrador extends  Controlador implements Initializable {
 
     }
 
+
+    @FXML
+    void almacenExistencias(ActionEvent event) throws IOException {
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", Configuraciones.idClinica);
+        paramsVista.put("vista", "/vista/almacen_existencias.fxml" );
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new AlmacenExistencias());
+    }
+
+
     @FXML
     void almacenSalidas(ActionEvent event) throws IOException {
         Map<String,Object> paramsVista = new LinkedHashMap<>();
@@ -206,11 +216,25 @@ public class InicioAdministrador extends  Controlador implements Initializable {
     }
 
     @FXML
+    void costoProductosTodos(ActionEvent event) throws IOException {
+
+
+
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", Configuraciones.idClinica);
+        paramsVista.put("vista", "/vista/costo_productos_todos.fxml" );
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new CostoProductosTodos());
+
+    }
+    @FXML
     void costoProductos(ActionEvent event) throws IOException {
+
         Map<String,Object> paramsVista = new LinkedHashMap<>();
         paramsVista.put("idClinica", Configuraciones.idClinica);
         paramsVista.put("vista", "/vista/costo_productos.fxml" );
         Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new CostoProductos());
+
+
     }
 
     @FXML
