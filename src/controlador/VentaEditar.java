@@ -92,6 +92,9 @@ public class VentaEditar extends Controlador implements Initializable {
     @FXML
     void TabCambiando(MouseEvent event) {
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+        if( nVentaSelect == -1)
+            return;
+
         calcularTotal();
         int idVentaProductos = Integer.valueOf(Tabs.getSelectionModel().getSelectedItem().getText());
 
@@ -501,6 +504,30 @@ public class VentaEditar extends Controlador implements Initializable {
 
     @FXML
     void cancelarVenta(ActionEvent event) throws IOException {
+
+        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+        int idVentaProductos = ListaDeProductos.getSelectionModel().getSelectedItem().getIdVentaProductos();
+        int ventaID = ListaDeProductos.getSelectionModel().getSelectedItem().getnVenta();
+        String strVenta= "";
+        if( nVentaSelect >= 0)
+            strVenta = Tabs.getSelectionModel().getSelectedItem().getText();
+
+        if( !strVenta.equalsIgnoreCase(ventaID+"") ) {
+
+            Map<String,Object> paramsAlerta = new LinkedHashMap<>();
+            paramsAlerta.put("titulo", "Error");
+            paramsAlerta.put("tiempo", "5");
+            paramsAlerta.put("vista", "/vista/alert_box.fxml");
+
+            paramsAlerta.put("texto", "Se debe cargar primero la venta");
+
+            Funciones.displayFP(paramsAlerta, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
+
+            return;
+
+        }
+
+
         Map<String, Object> paramsAlert = new LinkedHashMap<>();
         paramsAlert.put("titulo", "¿Cancelar venta?");
         paramsAlert.put("vista", "/vista/acepta_administrador.fxml");
@@ -510,8 +537,9 @@ public class VentaEditar extends Controlador implements Initializable {
             return;
 
 
-        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
-        int idVentaProductos = ListaDeProductos.getSelectionModel().getSelectedItem().getIdVentaProductos();
+        imprimirCancelado();
+        imprimirCancelado();
+
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Venta Productos: Cancelar");
         paramsJSON.put("idVentaProductos", idVentaProductos);
@@ -744,6 +772,102 @@ public class VentaEditar extends Controlador implements Initializable {
 
         calcularTotal();
         TablasVentas.get(nVentaSelect).getSelectionModel().select(listasVentasMostrador.get(nVentaSelect).size()-1);
+    }
+
+
+
+
+    void imprimirCancelado() throws IOException {
+
+
+        nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
+
+
+        if(productosActualizar.get(nVentaSelect).size()>0)
+        {
+            Map<String,Object> paramsAlerta = new LinkedHashMap<>();
+            paramsAlerta.put("titulo", "Error");
+            paramsAlerta.put("tiempo", "5");
+            paramsAlerta.put("vista", "/vista/alert_box.fxml");
+
+            paramsAlerta.put("texto", "Se debe guardar primero");
+
+            Funciones.displayFP(paramsAlerta, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
+
+            return;
+        }
+
+        PrinterService printerService = new PrinterService();
+        List<String> listPrinters = printerService.getPrinters();
+        boolean impresoraValida = false;
+        for(String printer : listPrinters) {
+            if( printer.contains(Configuraciones.impresoraTicket)) {
+                impresoraValida = true;
+
+            }
+        }
+
+        Map<String,Object> paramsAlertImpresora = new LinkedHashMap<>();
+        paramsAlertImpresora.put("titulo", "Error");
+        paramsAlertImpresora.put("tiempo", "5");
+        paramsAlertImpresora.put("vista", "/vista/alert_box.fxml");
+        if(!impresoraValida) {
+            paramsAlertImpresora.put("texto", "No existe la impresora: "+Configuraciones.impresoraTicket+ " en el sistema");
+
+            Funciones.displayFP(paramsAlertImpresora, getClass().getResource("/vista/alert_box.fxml"), new AlertBox());
+
+            return;
+        }
+
+
+        //int ultimoInsertado = ListaDeProductos.getSelectionModel().getSelectedItem().getIdVentaProductos();
+        int ultimoInsertado = ListaDeProductos.getSelectionModel().getSelectedItem().getnVenta();
+        String timeStamp = new SimpleDateFormat("dd/MM/YY HH:mm").format(Calendar.getInstance().getTime());
+
+
+
+        String ticketSTR=Configuraciones.ticketTituloClinicaThermal+
+                ".:: VENTA CANCELADA ::. \n\n"+
+                "Fecha: "+ timeStamp +"\n"+
+                //"Cliente:\n"+
+                "Venta: "+ ultimoInsertado+ "\n\n"+
+
+                Funciones.nuevaLinea("Cant", "Producto", " C. U.", "Total");
+
+
+        for(modelo.VentaMostrador ventaMostrador: listasVentasMostrador.get(nVentaSelect)) {
+            ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(" "+ventaMostrador.getCantidad(), ventaMostrador.getProducto(), " "+ventaMostrador.getCosto()+"", Funciones.valorAmoneda(ventaMostrador.getTotal()));
+        }
+
+        ticketSTR = ticketSTR + "\n\n"+ Funciones.nuevaLinea(" "+CantidadProductos.getText(), "productos", "Total", Funciones.valorAmoneda(Configuraciones.ventaMostradorTotal));
+
+        Configuraciones.formaPagoCobros = ListaCobros.getItems();
+        //ticketSTR = ticketSTR + "\n\nMovimientos:\n"+Funciones.formaPago();
+
+        ticketSTR = ticketSTR + "\n\n\n\nFirma: __________________";
+        ticketSTR = ticketSTR + "\n\nVenta cancelada por: \n";
+        ticketSTR = ticketSTR + Configuraciones.supervisorComentarios;
+
+        ticketSTR = ticketSTR + "\n\n¡Gracias por su compra!\n\n\n\n\n\n\n\n\n";
+
+
+
+
+        try {
+            //printerService.printImage(Configuraciones.impresoraTicket, "formatos/mgm_t.png", DocFlavor.INPUT_STREAM.PNG);
+            printerService.printString(Configuraciones.impresoraTicket, ticketSTR);
+
+            byte[] cutP = new byte[]{0x1d, 'V', 1};
+            printerService.printBytes(Configuraciones.impresoraTicket, cutP);
+
+
+            byte[] openCashDrawer = new byte[]{27, 112, 48, 55, 121};
+            printerService.printBytes(Configuraciones.impresoraTicket, openCashDrawer);
+        } catch (Exception e) {
+            paramsAlertImpresora.put("texto", "Error en la impresora :(, "+Configuraciones.impresoraTicket);
+            Funciones.displayFP(paramsAlertImpresora, getClass().getResource("/vista/alert_box.fxml"), new AlertBox() );
+            return;
+        }
     }
 
 }

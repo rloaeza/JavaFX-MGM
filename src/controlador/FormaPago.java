@@ -87,10 +87,22 @@ public class FormaPago extends Controlador {
 
     private boolean calcular() {
         double total = 0;
+        double totalTarjeta = 0;
         cambio = 0;
         for(Cobro c : Configuraciones.formaPagoCobros) {
             total += c.getMonto();
+            if( c.getFormaPago() == 2) {
+                totalTarjeta += c.getMonto();
+            }
         }
+        if (totalTarjeta > Configuraciones.formaPagoMonto) {
+            Error.setText(Configuraciones.formaPagoExcesoTarjeta);
+            Error.setVisible(true);
+            Error.setStyle("-fx-background-color: #ef5728;");
+            pagoValido=false;
+            return pagoValido;
+        }
+
         if( total < Configuraciones.formaPagoMonto) {
             Error.setText(Configuraciones.formaPagoFaltaEfectivo+ ", " + Funciones.fixN(Configuraciones.formaPagoMonto-total,2));
             Error.setVisible(true);

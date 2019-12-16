@@ -8,6 +8,7 @@ public class AlmacenExistencias extends RecursiveTreeObject<AlmacenExistencias> 
     private String Producto;
     private String Clase;
     private String Existencia;
+    private String idProduct;
 
     public AlmacenExistencias(String idProducto, String clave, String producto, String clase, String existencia) {
         this.idProducto = idProducto;
@@ -15,6 +16,14 @@ public class AlmacenExistencias extends RecursiveTreeObject<AlmacenExistencias> 
         Producto = producto;
         Clase = clase;
         Existencia = existencia;
+    }
+
+    public String getIdProduct() {
+        return idProduct;
+    }
+
+    public void setIdProduct(String idProduct) {
+        this.idProduct = idProduct;
     }
 
     public String getIdProducto() {
@@ -60,6 +69,6 @@ public class AlmacenExistencias extends RecursiveTreeObject<AlmacenExistencias> 
 
     @Override
     public String toString() {
-        return Clave+": "+Producto;
+        return getProducto()+": "+getClave();
     }
 }

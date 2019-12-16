@@ -5,7 +5,8 @@ import javafx.collections.ObservableList;
 import java.net.URL;
 
 public class Configuraciones {
-    public static int versionId=35;
+    public static int versionId=36;
+    public static boolean estoyDepurando = false;
     public static String versionText = "Código: 2019.";
     public static int versionIdActualizar=-1;
     public static String versionActualizar;
@@ -130,6 +131,7 @@ public class Configuraciones {
     public static String formaPagoMontoRecibido = "Monto recibido";
     public static String formaPagoIdTransaccion = "Id de transacción";
 
+    public static String formaPagoExcesoTarjeta = "El pago con tarjeta no debe superar el total";
     public static String formaPagoFaltaEfectivo = "Falta efectivo";
     public static String formaPagoFaltaTransaccion = "Falta transacción";
     public static String formaPagoVerificar = "Verifique los valores";

@@ -17,10 +17,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.layout.AnchorPane;
-import modelo.Clinica;
-import modelo.Datos;
-import modelo.Funciones;
-import modelo.ProductosConCosto;
+import modelo.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -35,9 +32,9 @@ public class AlmacenExistencias extends Controlador implements Initializable {
 
 
     @FXML
-    JFXTreeTableView<modelo.AlmacenExistencias> tvProductos;
+    JFXTreeTableView<VistaReporte> tvProductos;
 
-    private ObservableList<modelo.AlmacenExistencias> listaProductos = FXCollections.observableArrayList();
+    private ObservableList<VistaReporte> listaProductos = FXCollections.observableArrayList();
 
 
     @FXML
@@ -63,56 +60,57 @@ public class AlmacenExistencias extends Controlador implements Initializable {
     private void cargarDatos() throws IOException {
 
 
-        JFXTreeTableColumn<modelo.AlmacenExistencias, String> columnCantidad = new JFXTreeTableColumn<>("Clave");
-        columnCantidad.setPrefWidth(100);
-        columnCantidad.setCellValueFactory((TreeTableColumn.CellDataFeatures<modelo.AlmacenExistencias, String> param) ->  {
-            if (columnCantidad.validateValue(param)) {
-                return new ReadOnlyObjectWrapper<String>(param.getValue().getValue().getClave()+"");
+        JFXTreeTableColumn<VistaReporte, String> columnClave = new JFXTreeTableColumn<>("Clave");
+        columnClave.setPrefWidth(100);
+        columnClave.setCellValueFactory((TreeTableColumn.CellDataFeatures<VistaReporte, String> param) ->  {
+            if (columnClave.validateValue(param)) {
+                return new ReadOnlyObjectWrapper<String>(param.getValue().getValue().getDato("Clave"));
             }
             else {
-                return columnCantidad.getComputedValue(param);
+                return columnClave.getComputedValue(param);
 
             }
         });
-        columnCantidad.setStyle("-fx-alignment: CENTER;");
+        columnClave.setStyle("-fx-alignment: CENTER;");
 
 
 
 
-        JFXTreeTableColumn<modelo.AlmacenExistencias, String> columnNombre = new JFXTreeTableColumn<>("Producto");
-        columnNombre.setPrefWidth(300);
-        columnNombre.setCellValueFactory((TreeTableColumn.CellDataFeatures<modelo.AlmacenExistencias, String> param) ->  {
+        JFXTreeTableColumn<VistaReporte, String> columnNombre = new JFXTreeTableColumn<>("Producto");
+        columnNombre.setPrefWidth(500);
+        columnNombre.setCellValueFactory((TreeTableColumn.CellDataFeatures<VistaReporte, String> param) ->  {
             if (columnNombre.validateValue(param)) {
-                return new ReadOnlyObjectWrapper<String>(param.getValue().getValue().getProducto());
+                return new ReadOnlyObjectWrapper<String>(param.getValue().getValue().getDato("Producto"));
             }
             else {
                 return columnNombre.getComputedValue(param);
 
             }
         });
-        columnNombre.setStyle("-fx-alignment: CENTER;");
+        //columnNombre.setStyle("-fx-alignment: CENTER;");
 
 
-        JFXTreeTableColumn<modelo.AlmacenExistencias, String> columnPrecioActual = new JFXTreeTableColumn<>("Existencia");
-        columnPrecioActual.setPrefWidth(100);
-        columnPrecioActual.setCellValueFactory((TreeTableColumn.CellDataFeatures<modelo.AlmacenExistencias, String> param) ->  {
-            if (columnPrecioActual.validateValue(param)) {
-                return new ReadOnlyObjectWrapper<String>(param.getValue().getValue().getExistencia()+"");
+        JFXTreeTableColumn<VistaReporte, String> columnExistencia = new JFXTreeTableColumn<>("Existencia");
+        columnExistencia.setPrefWidth(100);
+        columnExistencia.setCellValueFactory((TreeTableColumn.CellDataFeatures<VistaReporte, String> param) ->  {
+            if (columnExistencia.validateValue(param)) {
+                return new ReadOnlyObjectWrapper<String>(param.getValue().getValue().getDato("Existencia"));
+
             }
             else {
-                return columnPrecioActual.getComputedValue(param);
+                return columnExistencia.getComputedValue(param);
 
             }
         });
-        columnPrecioActual.setStyle("-fx-alignment: CENTER;");
+        columnExistencia.setStyle("-fx-alignment: CENTER;");
 
-        columnPrecioActual.setCellFactory((TreeTableColumn<modelo.AlmacenExistencias, String> param) ->
+        columnExistencia.setCellFactory((TreeTableColumn<VistaReporte, String> param) ->
                 new GenericEditableTreeTableCell<>(new TextFieldEditorBuilder())
         );
 
-        columnPrecioActual.setOnEditCommit((TreeTableColumn.CellEditEvent<modelo.AlmacenExistencias, String> t) -> {
+        columnExistencia.setOnEditCommit((TreeTableColumn.CellEditEvent<VistaReporte, String> t) -> {
                 int index = t.getTreeTablePosition().getRow();
-                modelo.AlmacenExistencias productosConCosto = listaProductos.get(index);
+                //modelo.AlmacenExistencias productosConCosto = listaProductos.get(index);
 
 
 
@@ -128,11 +126,11 @@ public class AlmacenExistencias extends Controlador implements Initializable {
         listaProductos =  FXCollections.observableArrayList();
         cargarProductos();
 
-        TreeItem<modelo.AlmacenExistencias> root = new RecursiveTreeItem<>(listaProductos, RecursiveTreeObject::getChildren);
+        TreeItem<VistaReporte> root = new RecursiveTreeItem<>(listaProductos, RecursiveTreeObject::getChildren);
 
 
 
-        tvProductos.getColumns().addAll( columnCantidad, columnNombre, columnPrecioActual);
+        tvProductos.getColumns().addAll( columnClave, columnNombre, columnExistencia);
         tvProductos.setRoot(root);
         tvProductos.setEditable(true);
         tvProductos.setShowRoot(false);
@@ -169,14 +167,18 @@ public class AlmacenExistencias extends Controlador implements Initializable {
     public void cargarProductos() throws IOException {
         listaProductos.clear();
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
-        paramsJSON.put("Actividad", "Reportes: Existencia en almacen verificar");
+        paramsJSON.put("Actividad", "Almacen: Existencias");
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
             for(int i = 1; i< t; i++) {
                 System.out.println(i+" >> "+rootArray.get(i).getAsJsonObject());
-                listaProductos.add(new Gson().fromJson(rootArray.get(i).getAsJsonObject(), modelo.AlmacenExistencias.class) );
+
+                Map<String, Object> v = new LinkedHashMap<>();
+                v= new Gson().fromJson(rootArray.get(i).getAsJsonObject(), v.getClass());
+                listaProductos.add(new VistaReporte(v));
             }
         }
+
     }
 }
