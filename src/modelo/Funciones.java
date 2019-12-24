@@ -514,6 +514,8 @@ public class Funciones {
             for (PDFvalores valor : valores) {
                 //System.out.println("Agregando valor: "+valor.getCampo());
                 acroForm.getField(valor.getCampo()).setValue(valor.getValor());
+
+
             }
         }
     }

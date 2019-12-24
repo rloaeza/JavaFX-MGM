@@ -19,6 +19,37 @@
       </Label>
       <HBox alignment="CENTER_RIGHT" layoutX="489.0" layoutY="403.0" nodeOrientation="LEFT_TO_RIGHT" prefWidth="381.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="30.0">
          <children>
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#imprimir" text="Imprimir reporte">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/imprimir.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator visible="false" />
+
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#guardar" text="Guardar reporte">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/guardar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator visible="false" />
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#actualizar" text="Guardar almacen">
+               <graphic>
+                  <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/actualizar.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Separator visible="false" />
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#regresar" text="Inicio">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -30,7 +61,7 @@
             </Button>
 
             <Separator visible="false" />
-            <Separator visible="false" />
+
          </children>
       </HBox>
       <JFXTreeTableView fx:id="tvProductos" layoutX="39.0" layoutY="120.0" prefHeight="297.0" prefWidth="1341.0" AnchorPane.bottomAnchor="130.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="120.0" />
