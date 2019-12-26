@@ -12,7 +12,7 @@
 
 <AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="1401.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.AlmacenExistencias">
    <children>
-      <Label fx:id="Titulo" alignment="CENTER" layoutX="25.0" layoutY="58.0" prefHeight="44.0" prefWidth="1346.0" text="Costo de productos" textAlignment="CENTER" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
+      <Label fx:id="Titulo" alignment="CENTER" layoutX="25.0" layoutY="58.0" prefHeight="44.0" prefWidth="1346.0" text="Verificacion de almacen" textAlignment="CENTER" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0">
          <font>
             <Font name="System Bold" size="24.0" />
          </font>
