@@ -120,8 +120,6 @@ public class AlmacenExistencias extends Controlador implements Initializable {
         columnClave.setStyle("-fx-alignment: CENTER;");
 
 
-
-
         JFXTreeTableColumn<VistaReporte, String> columnNombre = new JFXTreeTableColumn<>("Producto");
         columnNombre.setPrefWidth(500);
         columnNombre.setCellValueFactory((TreeTableColumn.CellDataFeatures<VistaReporte, String> param) ->  {
@@ -198,6 +196,7 @@ public class AlmacenExistencias extends Controlador implements Initializable {
                     listaProductos.get(index).setDato("Fisico", (intFisico)+"" );
 
                     tvProductos.refresh();
+                    tvProductos.requestFocus();
 
 
                 }
@@ -210,18 +209,10 @@ public class AlmacenExistencias extends Controlador implements Initializable {
 
         TreeItem<VistaReporte> root = new RecursiveTreeItem<>(listaProductos, RecursiveTreeObject::getChildren);
 
-
-
         tvProductos.getColumns().addAll( columnClave, columnNombre, columnExistencia, columnFisico, columnDiferencias);
         tvProductos.setRoot(root);
         tvProductos.setEditable(true);
         tvProductos.setShowRoot(false);
-
-
-
-
-
-
 
     }
 
@@ -324,9 +315,6 @@ public class AlmacenExistencias extends Controlador implements Initializable {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
-
 
     }
 }
