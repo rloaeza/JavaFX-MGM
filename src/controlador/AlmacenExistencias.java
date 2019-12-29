@@ -244,12 +244,24 @@ public class AlmacenExistencias extends Controlador implements Initializable {
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
+            String clase = "";
             for(int i = 1; i< t; i++) {
-                Map<String, Object> v = new LinkedHashMap<>();
 
+
+
+                Map<String, Object> v = new LinkedHashMap<>();
                 v= new Gson().fromJson(rootArray.get(i).getAsJsonObject(), v.getClass());
-               // System.out.println(v);
-                listaProductos.add(new VistaReporte(v));
+                VistaReporte vr = new VistaReporte(v);
+                String nuevaClase = vr.getDato("Clase");
+                if(!clase.equalsIgnoreCase(nuevaClase)) {
+                    clase = nuevaClase;
+                    Map<String, Object> datos =  new LinkedHashMap<>();
+                    datos.put("Clave", "******");
+                    datos.put("Producto", clase);
+                    listaProductos.add(new VistaReporte(datos));
+                }
+
+                listaProductos.add(vr);
             }
         }
 
@@ -277,11 +289,16 @@ public class AlmacenExistencias extends Controlador implements Initializable {
         for(VistaReporte fila: listaProductos) {
 
             // Agrega titulo de categorias
+
+            /*
             if( !tituloAnterior.equalsIgnoreCase(fila.getDato("Clase")) ) {
                 tituloAnterior = fila.getDato("Clase");
                 valoresPDF.add(new PDFvalores(row+"","Clave=*****@Producto=" + tituloAnterior ));
                 row++;
             }
+
+
+             */
 
 
             String valor="";
