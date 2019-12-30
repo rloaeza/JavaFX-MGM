@@ -57,6 +57,8 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
 
     VistaReporte vr=null;
 
+    String descripcion = "";
+
     @FXML
     void generarReporte(ActionEvent event) throws IOException {
         paramsJSONReporte.clear();
@@ -65,6 +67,11 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
         Descripcion.setText(
 
                 "Periodo "+FechaInicio.getValue()+" a " + FechaFin.getValue());
+
+        descripcion = "Periodo de\n" +
+                FechaInicio.getValue()+" a\n" +
+                FechaFin.getValue()+"\n" +
+                "Generado: "+LocalDate.now();
 
         cargarDatos();
     }
@@ -101,7 +108,7 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
         Map<String, String> valorPDf = new LinkedHashMap<>();
 
         String predeterminados = "celdaTitulo="+(String) parametros.get(0).get("Titulo") +
-                "@celdaDescripcion="+LocalDate.now()+
+                "@celdaDescripcion="+descripcion+
                 "@celdaTratamiento="+vr.getDato("Tratamiento")+
                 "@celdaProducto="+vr.getDato("Producto")+
                 "@celdaEfectivo="+vr.getDato("Efectivo")+

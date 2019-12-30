@@ -108,6 +108,24 @@
         $nVenta = $row['nVenta'];
       }
 
+
+      $nVentaID = $nVenta;
+
+      $sqlLastId = "SELECT Max(nVenta) as nVenta FROM ventasCanceladasProductos WHERE idClinica=$idClinica";
+      $result = mysqli_query($this->conexion, $sqlLastId);
+      $nVenta = 0;
+      if($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $nVenta = $row['nVenta'];
+      }
+
+      if($nVentaID>$nVenta) {
+        $nVenta = $nVentaID;
+      }
+
+
+
+
       $sql = str_replace("NVENTA", $nVenta+1, $sql);
 
       $result = mysqli_query($this->conexion, $sql);

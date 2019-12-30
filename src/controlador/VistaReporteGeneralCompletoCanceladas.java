@@ -58,7 +58,7 @@ public class VistaReporteGeneralCompletoCanceladas extends Controlador implement
     Map<String,Object> paramsJSONReporte = new LinkedHashMap<>();
 
     VistaReporte vr=null;
-
+    String descripcion = "";
     @FXML
     void generarReporte(ActionEvent event) throws IOException {
         paramsJSONReporte.clear();
@@ -67,7 +67,10 @@ public class VistaReporteGeneralCompletoCanceladas extends Controlador implement
         Descripcion.setText(
 
                 "Periodo "+FechaInicio.getValue()+" a " + FechaFin.getValue());
-
+        descripcion = "Periodo de\n" +
+                FechaInicio.getValue()+" a\n" +
+                FechaFin.getValue()+"\n" +
+                "Generado: "+LocalDate.now();
         cargarDatos();
     }
 
@@ -103,7 +106,7 @@ public class VistaReporteGeneralCompletoCanceladas extends Controlador implement
         Map<String, String> valorPDf = new LinkedHashMap<>();
 
         String predeterminados = "celdaTitulo="+(String) parametros.get(0).get("Titulo") +
-                "@celdaDescripcion="+LocalDate.now()+
+                "@celdaDescripcion="+descripcion+
                 "@celdaTratamiento="+vr.getDato("Tratamiento")+
                 "@celdaProducto="+vr.getDato("Producto")+
                 "@celdaTotal="+vr.getDato("Total");
