@@ -70,13 +70,24 @@ public class AlmacenEntradas extends Controlador implements Initializable {
 
 
         Funciones.nuevaLinea("Cant", "Producto", " ", "");
+        int tot = 0;
         for(int i=0; i<listaProductos.size(); i++) {
             if (listaProductos.get(i).getDato("Entrada") != null) {
                 String cant = listaProductos.get(i).getDato("Entrada");
                 String prod = listaProductos.get(i).getDato("Producto");
+                tot += Integer.valueOf(cant);
                 ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(cant, prod, "", "");
             }
         }
+
+
+        ticketSTR = ticketSTR + "\n\n "+tot+" productos. ";
+
+        ticketSTR = ticketSTR + "\n\n\n  ____________   ______________\n";
+        ticketSTR = ticketSTR +       "    Recibido       Autorizado\n";
+
+
+        ticketSTR = ticketSTR + "\n\n\n\n\n\n\n\n\n";
 
         try {
             printerService.printString(Configuraciones.impresoraTicket, ticketSTR);

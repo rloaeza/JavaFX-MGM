@@ -68,13 +68,30 @@ public class AlmacenSalidas extends Controlador implements Initializable {
 
 
         Funciones.nuevaLinea("Cant", "Producto", " ", "");
+        int tot = 0;
         for(int i=0; i<listaProductos.size(); i++) {
-            if (listaProductos.get(i).getDato("Entrada") != null) {
-                String cant = listaProductos.get(i).getDato("Entrada");
+            if (listaProductos.get(i).getDato("Salida") != null) {
+
+                String cant = listaProductos.get(i).getDato("Salida");
                 String prod = listaProductos.get(i).getDato("Producto");
+
+                tot += Integer.valueOf(cant);
+
                 ticketSTR = ticketSTR + "\n"+ Funciones.nuevaLinea(cant, prod, "", "");
             }
         }
+
+
+
+        ticketSTR = ticketSTR + "\n\n "+tot+" productos. ";
+
+        ticketSTR = ticketSTR + "\n\n\n  ____________   ______________\n";
+        ticketSTR = ticketSTR +       "    Recibido       Autorizado\n";
+
+
+        ticketSTR = ticketSTR + "\n\n\n\n\n\n\n\n\n";
+
+
 
         try {
             printerService.printString(Configuraciones.impresoraTicket, ticketSTR);
@@ -180,11 +197,11 @@ public class AlmacenSalidas extends Controlador implements Initializable {
         //columnNombre.setStyle("-fx-alignment: CENTER;");
 
 
-        JFXTreeTableColumn<VistaReporte, String> columnEntrada = new JFXTreeTableColumn<>("Entrada");
+        JFXTreeTableColumn<VistaReporte, String> columnEntrada = new JFXTreeTableColumn<>("Salida");
         columnEntrada.setPrefWidth(100);
         columnEntrada.setCellValueFactory((TreeTableColumn.CellDataFeatures<VistaReporte, String> param) ->  {
             if (columnEntrada.validateValue(param)) {
-                return new ReadOnlyObjectWrapper<String>(param.getValue().getValue().getDato("Entrada"));
+                return new ReadOnlyObjectWrapper<String>(param.getValue().getValue().getDato("Salida"));
 
             }
             else {
@@ -205,7 +222,7 @@ public class AlmacenSalidas extends Controlador implements Initializable {
         columnEntrada.setOnEditCommit((TreeTableColumn.CellEditEvent<VistaReporte, String> t) -> {
                     int index = t.getTreeTablePosition().getRow();
                     if(!listaProductos.get(index).getDato("Clave").contains("*")) {
-                        listaProductos.get(index).setDato("Entrada", t.getNewValue());
+                        listaProductos.get(index).setDato("Salida", t.getNewValue());
 
                     }
                 tvProductos.refresh();

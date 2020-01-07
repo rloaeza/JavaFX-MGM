@@ -5,9 +5,9 @@ import javafx.collections.ObservableList;
 import java.net.URL;
 
 public class Configuraciones {
-    public static int versionId=39;
+    public static int versionId=42;
     public static boolean estoyDepurando = false;
-    public static String versionText = "Código: 2019.";
+    public static String versionText = "Código: 0.20.";
     public static int versionIdActualizar=-1;
     public static String versionActualizar;
     public static int idPersonal;
@@ -208,7 +208,7 @@ public class Configuraciones {
 
 
     public static String reporteEncabezado =
-            "MGM PLUS SA de CV\n" +
+            "MGM\n" +
             "\n";
 
 
