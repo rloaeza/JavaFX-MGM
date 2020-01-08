@@ -5,7 +5,7 @@ import javafx.collections.ObservableList;
 import java.net.URL;
 
 public class Configuraciones {
-    public static int versionId=42;
+    public static int versionId=43;
     public static boolean estoyDepurando = false;
     public static String versionText = "Código: 0.20.";
     public static int versionIdActualizar=-1;
@@ -30,7 +30,7 @@ public class Configuraciones {
 
     public static int[] tiposUsuarioInt = new int[]{tipoAdministrador, tipoSupervisor, tipoVendedor, tipoCosmeatra};
     public static String[] tiposUsuarios = new String[] {"Administrador", "Supervisor", "Vendedor", "Cosmeatra"};
-
+    public static String[] tiposInhabilitados = new String[] {"No", "Si"};
 
     public static String inicioVendedor = "/vista/inicio_venta.fxml";
     public static String inicioAdministrador = "/vista/inicio_administrador.fxml";

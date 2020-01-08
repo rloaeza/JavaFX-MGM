@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="Pane" prefHeight="680.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Personal">
+<AnchorPane fx:id="Pane" prefHeight="744.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.Personal">
    <children>
       <JFXListView fx:id="ListaDePersonal" layoutX="7.0" minWidth="300.0" AnchorPane.bottomAnchor="20.0" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0" />
       <JFXTextField fx:id="Nombre" layoutX="489.0" layoutY="128.0" onKeyTyped="#capitalizarEntradaCompleta" prefHeight="27.0" prefWidth="381.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="30.0" />
@@ -144,5 +144,7 @@
             </Button>
          </children>
       </HBox>
+      <Label layoutX="394.0" layoutY="560.0" prefHeight="17.0" prefWidth="73.0" text="Inhabilitado" AnchorPane.leftAnchor="394.0" />
+      <JFXComboBox fx:id="Inhabilitado" layoutX="489.0" layoutY="555.0" prefHeight="27.0" prefWidth="148.0" AnchorPane.leftAnchor="489.0" />
    </children>
 </AnchorPane>

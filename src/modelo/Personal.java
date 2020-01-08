@@ -19,11 +19,12 @@ public class Personal {
     private String titulo;
 
     private int tipo;
+    private int inhabilitado;
 
     public Personal() {
     }
 
-    public Personal(int idPersonal, String nombre, String apellidos, String email, String telefono, String movil, String usuario, String clave, String huella0, String huella1, String huella2, String huella3, String huella4, int idClinica, int tipo) {
+    public Personal(int idPersonal, String nombre, String apellidos, String email, String telefono, String movil, String usuario, String clave, String huella0, String huella1, String huella2, String huella3, String huella4, int idClinica, int tipo, int inhabilitado) {
         this.idPersonal = idPersonal;
         this.nombre = nombre;
         this.apellidos = apellidos;
@@ -39,6 +40,7 @@ public class Personal {
         this.huella4 = huella4;
         this.idClinica = idClinica;
         this.tipo = tipo;
+        this.inhabilitado = inhabilitado;
     }
 
     public int getIdPersonal() {
@@ -129,6 +131,13 @@ public class Personal {
         this.tipo = tipo;
     }
 
+    public int getInhabilitado() {
+        return inhabilitado;
+    }
+
+    public void setInhabilitado(int inhabilitado) {
+        this.inhabilitado = inhabilitado;
+    }
 
     public String getHuella0() {
         return huella0;

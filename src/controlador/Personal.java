@@ -81,6 +81,8 @@ public class Personal extends Controlador implements Initializable {
     @FXML
     private JFXComboBox<String> TipoUsuario;
 
+    @FXML
+    private JFXComboBox<String> Inhabilitado;
 
     private String[] huellas = new String[]{"","","","",""};
 
@@ -152,6 +154,7 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("huella3", huellas[3]);
         paramsJSON.put("huella4", huellas[4]);
         paramsJSON.put("tipo", TipoUsuario.getSelectionModel().getSelectedIndex());
+        paramsJSON.put("inhabilitado", Inhabilitado.getSelectionModel().getSelectedIndex());
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         Datos.cargarPersonal();
@@ -177,6 +180,8 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("huella3", huellas[3]);
         paramsJSON.put("huella4", huellas[4]);
         paramsJSON.put("tipo", TipoUsuario.getSelectionModel().getSelectedIndex());
+        paramsJSON.put("inhabilitado", Inhabilitado.getSelectionModel().getSelectedIndex());
+
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
         Datos.cargarPersonal();
@@ -197,7 +202,7 @@ public class Personal extends Controlador implements Initializable {
 
     @FXML
     void limpiar(ActionEvent event) {
-        cargarDatosPantalla(new modelo.Personal(-1, "", "","","","","","","","","","","",-1,-1 ));
+        cargarDatosPantalla(new modelo.Personal(-1, "", "","","","","","","","","","","",-1,-1, -1 ));
         ListaDePersonal.getSelectionModel().clearSelection();
     }
 
@@ -221,6 +226,7 @@ public class Personal extends Controlador implements Initializable {
         Usuario.setText(p.getUsuario());
         Clave.setText(p.getClave());
         TipoUsuario.getSelectionModel().select(p.getTipo());
+        Inhabilitado.getSelectionModel().select(p.getInhabilitado());
         cargarImagen(p.getHuella0(), FP0);
         cargarImagen(p.getHuella1(), FP1);
         cargarImagen(p.getHuella2(), FP2);
@@ -274,5 +280,12 @@ public class Personal extends Controlador implements Initializable {
         valoresTipoUsuarios = FXCollections.observableArrayList();
         valoresTipoUsuarios.addAll(Configuraciones.tiposUsuarios);
         TipoUsuario.setItems(valoresTipoUsuarios);
+
+        ObservableList<String> valoresInhabilitado;
+        valoresInhabilitado = FXCollections.observableArrayList();
+        valoresInhabilitado.addAll(Configuraciones.tiposInhabilitados);
+        Inhabilitado.setItems(valoresInhabilitado);
+
+
     }
 }
