@@ -7,11 +7,12 @@ public class Productos {
     private String nombre;
     private String descripcion;
     private int cantidadMinima;
+    private int inhabilitado;
     private int tratamiento;
     private String barCode;
 
 
-    public Productos(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, int cantidadMinima, int tratamiento, String barCode) {
+    public Productos(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, int cantidadMinima, int tratamiento, int inhabilitado, String barCode) {
         this.idProducto = idProducto;
         this.idTipoProducto = idTipoProducto;
         this.clave = clave;
@@ -19,10 +20,19 @@ public class Productos {
         this.descripcion = descripcion;
         this.cantidadMinima = cantidadMinima;
         this.tratamiento = tratamiento;
+        this.inhabilitado = inhabilitado;
         this.barCode = barCode;
     }
 
     public Productos() {
+    }
+
+    public int getInhabilitado() {
+        return inhabilitado;
+    }
+
+    public void setInhabilitado(int inhabilitado) {
+        this.inhabilitado = inhabilitado;
     }
 
     public int getTratamiento() {

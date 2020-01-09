@@ -2,6 +2,7 @@ package controlador;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.jfoenix.controls.JFXCheckBox;
 import com.jfoenix.controls.JFXTreeTableColumn;
 import com.jfoenix.controls.JFXTreeTableView;
 import com.jfoenix.controls.RecursiveTreeItem;
@@ -29,6 +30,8 @@ public class AlmacenSalidas extends Controlador implements Initializable {
     @FXML
     private AnchorPane Pane;
 
+    @FXML
+    private JFXCheckBox Cortesia;
 
     @FXML
     JFXTreeTableView<VistaReporte> tvProductos;
@@ -64,10 +67,16 @@ public class AlmacenSalidas extends Controlador implements Initializable {
 
         String ticketSTR=Configuraciones.ticketTituloClinicaThermal+
                 "Salida de almacen "+"\n"+
-                "Fecha: "+ timeStamp +"\n\n"+
+                "Fecha: "+ timeStamp +"\n\n";
 
 
-        Funciones.nuevaLinea("Cant", "Producto", " ", "");
+        if(Cortesia.isSelected())
+            ticketSTR = ticketSTR + "\nCortesía\n";
+        else
+            ticketSTR = ticketSTR + "\nCosmeatra: "+Configuraciones.nombrePersonal+"\n";
+
+
+        ticketSTR = ticketSTR + "\n"+Funciones.nuevaLinea("Cant", "Producto", " ", "");
         int tot = 0;
         for(int i=0; i<listaProductos.size(); i++) {
             if (listaProductos.get(i).getDato("Salida") != null) {
@@ -126,8 +135,8 @@ public class AlmacenSalidas extends Controlador implements Initializable {
             return;
 
         for(int i=0; i<listaProductos.size(); i++) {
-            if(listaProductos.get(i).getDato("Entrada") !=  null) {
-                int entrada = Integer.valueOf(listaProductos.get(i).getDato("Entrada") );
+            if(listaProductos.get(i).getDato("Salida") !=  null) {
+                int entrada = Integer.valueOf(listaProductos.get(i).getDato("Salida") );
                 String idProducto = listaProductos.get(i).getDato("idProducto");
                 Map<String,Object> paramsJSON = new LinkedHashMap<>();
                 paramsJSON.put("Actividad", "Almacen: Agregar entradas o salidas");

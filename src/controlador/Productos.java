@@ -14,6 +14,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 import modelo.Configuraciones;
+import modelo.Datos;
 import modelo.Funciones;
 import modelo.SubirFoto;
 
@@ -52,6 +53,8 @@ public class Productos extends Controlador implements Initializable {
     @FXML
     private JFXTextField CantidadMinima;
 
+    @FXML
+    private JFXCheckBox Inhabilitado;
 
     @FXML
     private JFXCheckBox Tratamiento;
@@ -76,6 +79,7 @@ public class Productos extends Controlador implements Initializable {
         paramsJSON.put("nombre", Nombre.getText());
         paramsJSON.put("descripcion", Descripcion.getText());
         paramsJSON.put("cantidadMinima", CantidadMinima.getText());
+        paramsJSON.put("inhabilitado", Inhabilitado.isSelected()?1:0);
         paramsJSON.put("tratamiento", Tratamiento.isSelected()?1:0);
         paramsJSON.put("barCode", BarCode.getText());
         paramsJSON.put("idTipoProducto", ListaDeProductos.getSelectionModel().getSelectedItem().getIdTipoProducto());
@@ -124,6 +128,7 @@ public class Productos extends Controlador implements Initializable {
         paramsJSON.put("nombre", Nombre.getText());
         paramsJSON.put("descripcion", Descripcion.getText());
         paramsJSON.put("cantidadMinima", CantidadMinima.getText());
+        paramsJSON.put("inhabilitado", Inhabilitado.isSelected()?1:0);
         paramsJSON.put("tratamiento", Tratamiento.isSelected()?1:0);
         paramsJSON.put("barCode", BarCode.getText());
         paramsJSON.put("idTipoProducto", parametros.get(0).get("idTipoProducto"));
@@ -189,7 +194,7 @@ public class Productos extends Controlador implements Initializable {
 
     @FXML
     void limpiar(ActionEvent event) {
-        cargarDatosPantalla(new modelo.Productos(-1, -1,"", "","",-1,0, ""));
+        cargarDatosPantalla(new modelo.Productos(-1, -1,"", "","",-1,0,0, ""));
         ListaDeProductos.getSelectionModel().clearSelection();
     }
 
@@ -235,6 +240,10 @@ public class Productos extends Controlador implements Initializable {
             CantidadMinima.setText(String.valueOf( p.getCantidadMinima() ));
         BarCode.setText(p.getBarCode());
 
+        if(p.getInhabilitado()==0)
+            Inhabilitado.setSelected(false);
+        else
+            Inhabilitado.setSelected(true);
 
         if(p.getTratamiento()==0)
             Tratamiento.setSelected(false);
@@ -264,6 +273,7 @@ public class Productos extends Controlador implements Initializable {
         }
 
         ListaDeProductos.setItems(listaProductos);
+        Datos.cargarProductosConCosto();
 
     }
 

@@ -81,6 +81,12 @@ public class CorteCaja extends Controlador implements Initializable {
         }
 
 
+       if(SupervisorClave.getText().isEmpty() && !Configuraciones.abriendoCaja) {
+           Error.setText(Configuraciones.corteCajaErrorNoClaveSupervisor);
+           return;
+       }
+
+
         if(Monto.getText().isEmpty()&&Configuraciones.abriendoCaja) {
             Error.setText(Configuraciones.corteCajaErrorNoMonto);
             return;
