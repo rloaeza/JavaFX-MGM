@@ -44,6 +44,7 @@
                   </ImageView>
                </graphic>
             </Button>
+            <!--
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#reporteExistencias" text="Existencias">
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
@@ -53,6 +54,7 @@
                   </ImageView>
                </graphic>
             </Button>
+            -->
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#reporteExistenciasVerificar" text="Inventario para verificar">
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
@@ -100,6 +102,7 @@
                   </ImageView>
                </graphic>
             </Button>
+            <!--
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#reporteVentasGeneralesCompleto" text="Ventas Generales Completo Ventas">
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
@@ -109,6 +112,7 @@
                   </ImageView>
                </graphic>
             </Button>
+            -->
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#reporteVentasGeneralesCompletoCanceladas" text="Ventas Generales Completo Canceladas">
                <graphic>
                   <ImageView fitHeight="150.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">

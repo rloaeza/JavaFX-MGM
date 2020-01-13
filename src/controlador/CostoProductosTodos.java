@@ -1,5 +1,6 @@
 package controlador;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.jfoenix.controls.*;
 import com.jfoenix.controls.cells.editors.TextFieldEditorBuilder;
@@ -57,11 +58,11 @@ public class CostoProductosTodos extends Controlador implements Initializable {
     private void cargarDatos() throws IOException {
 
 
-        JFXTreeTableColumn<ProductosConCosto, String> columnCantidad = new JFXTreeTableColumn<>("ID");
+        JFXTreeTableColumn<ProductosConCosto, String> columnCantidad = new JFXTreeTableColumn<>("Clave");
         columnCantidad.setPrefWidth(100);
         columnCantidad.setCellValueFactory((TreeTableColumn.CellDataFeatures<modelo.ProductosConCosto, String> param) ->  {
             if (columnCantidad.validateValue(param)) {
-                return new ReadOnlyObjectWrapper<String>(param.getValue().getValue().getIdProducto()+"");
+                return new ReadOnlyObjectWrapper<String>(param.getValue().getValue().getClave()+"");
             }
             else {
                 return columnCantidad.getComputedValue(param);
@@ -105,7 +106,7 @@ public class CostoProductosTodos extends Controlador implements Initializable {
         columnPrecioActual.setPrefWidth(100);
         columnPrecioActual.setCellValueFactory((TreeTableColumn.CellDataFeatures<modelo.ProductosConCosto, String> param) ->  {
             if (columnPrecioActual.validateValue(param)) {
-                return new ReadOnlyObjectWrapper<String>(param.getValue().getValue().getPrecio()+"");
+                return new ReadOnlyObjectWrapper<String>(param.getValue().getValue().getPrecio()==-1?"":Funciones.valorAmoneda(param.getValue().getValue().getPrecio()));
             }
             else {
                 return columnPrecioActual.getComputedValue(param);
@@ -124,6 +125,10 @@ public class CostoProductosTodos extends Controlador implements Initializable {
                 try {
                     if(actualizarPrecio(productosConCosto, Double.valueOf(t.getNewValue()))) {
                         listaProductos.get(index).setPrecio(Double.valueOf(t.getNewValue()));
+                        Funciones.mostrarMSG_No_Modal("Costos", "Costo agregado satisfactoriamente", 5);
+                    }
+                    else {
+                        listaProductos.get(index).setPrecio(Double.valueOf(t.getOldValue()));
                     }
                 } catch (IOException e) {
                     e.printStackTrace();
@@ -139,7 +144,8 @@ public class CostoProductosTodos extends Controlador implements Initializable {
 
 
 
-        listaProductos = Datos.productosConCostos;
+        //listaProductos = Datos.productosConCostos;
+        cargarProductos();
         TreeItem<ProductosConCosto> root = new RecursiveTreeItem<>(listaProductos, RecursiveTreeObject::getChildren);
 
 
@@ -152,11 +158,36 @@ public class CostoProductosTodos extends Controlador implements Initializable {
 
 
 
-
     }
 
 
+    public void cargarProductos() {
+        listaProductos.clear();
+
+        String clase = "";
+        int t = Datos.productosConCostos.size();
+        for (int i = 0; i < t; i++) {
+
+            String nuevaClase = Datos.productosConCostos.get(i).getClase() + "";
+            if (!clase.equalsIgnoreCase(nuevaClase)) {
+                clase = nuevaClase;
+                ProductosConCosto pc = new ProductosConCosto(-1, -1, "******", clase, "", -1, -1, "", -1, -1, -1, "");
+                listaProductos.add(pc);
+            }
+
+            listaProductos.add(Datos.productosConCostos.get(i));
+        }
+        tvProductos.refresh();
+    }
+
+
+
     boolean actualizarPrecio(ProductosConCosto p, Double nuevoPrecio) throws IOException {
+        if( p.getPrecio() == -1)
+            return  false;
+
+        if ( p.getPrecio() == nuevoPrecio)
+            return false;
         Map<String,Object> paramsJSON = new LinkedHashMap<>();
         paramsJSON.put("Actividad", "Precio Productos: Agregar");
         paramsJSON.put("precio", nuevoPrecio);

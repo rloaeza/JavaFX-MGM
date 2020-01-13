@@ -12,14 +12,15 @@ public class ProductosConCosto extends RecursiveTreeObject<ProductosConCosto> {
     private int tratamiento;
     private String barCode;
 
+
     private double precio;
     private int idPrecioProducto;
-
+    private String clase;
 
 
     private int existencia;
 
-    public ProductosConCosto(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, double cantidadMinima, int tratamiento, String barCode, double precio, int idPrecioProducto, int existencia) {
+    public ProductosConCosto(int idProducto, int idTipoProducto, String clave, String nombre, String descripcion, double cantidadMinima, int tratamiento, String barCode, double precio, int idPrecioProducto, int existencia, String clase) {
         this.idProducto = idProducto;
         this.idTipoProducto = idTipoProducto;
         this.clave = clave;
@@ -31,9 +32,18 @@ public class ProductosConCosto extends RecursiveTreeObject<ProductosConCosto> {
         this.precio = precio;
         this.idPrecioProducto = idPrecioProducto;
         this.existencia = existencia;
+        this.clase = clase;
     }
 
     public ProductosConCosto() {
+    }
+
+    public String getClase() {
+        return clase;
+    }
+
+    public void setClase(String clase) {
+        this.clase = clase;
     }
 
     public int getTratamiento() {
