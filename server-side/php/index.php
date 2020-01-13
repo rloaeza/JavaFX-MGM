@@ -80,7 +80,7 @@
         //echo $bdO->consultar("SELECT precioProductos.precio, precioProductos.idPrecioProducto, productos.* FROM productos, precioProductos, (SELECT max(idPrecioProducto) AS idPrecioProducto FROM precioProductos GROUP BY idProducto) AS pP WHERE pP.idPrecioProducto = precioProductos.idPrecioProducto AND productos.idProducto = precioProductos.idProducto ORDER BY productos.clave ");
 
         // consulta con existencia
-        echo $bdO->consultar("SELECT sql_1.*, sql_2.existencia FROM (SELECT precioProductos.precio, precioProductos.idPrecioProducto, productos.* FROM productos, precioProductos, (SELECT max(idPrecioProducto) AS idPrecioProducto FROM precioProductos GROUP BY idProducto) AS pP WHERE pP.idPrecioProducto = precioProductos.idPrecioProducto AND productos.idProducto = precioProductos.idProducto ORDER BY productos.clave) sql_1 LEFT JOIN (SELECT productos.idProducto, vistaAlmacen.existencia FROM productos, (SELECT SUM(cantidad) AS existencia, idProducto FROM almacen WHERE idClinica={$_POST['idClinica']} GROUP BY idProducto ) AS vistaAlmacen WHERE productos.idProducto =vistaAlmacen.idProducto) sql_2 ON sql_1.idProducto = sql_2.idProducto ORDER BY sql_1.clave");
+        echo $bdO->consultar("SELECT sql_1.*, sql_2.existencia FROM (SELECT precioProductos.precio, precioProductos.idPrecioProducto, productos.*, tiposProductos.nombre as clase FROM productos, precioProductos, tiposProductos, (SELECT max(idPrecioProducto) AS idPrecioProducto FROM precioProductos GROUP BY idProducto) AS pP WHERE pP.idPrecioProducto = precioProductos.idPrecioProducto AND productos.idTipoProducto = tiposProductos.idTipoProducto AND productos.idProducto = precioProductos.idProducto AND productos.inhabilitado=0 ORDER BY productos.clave) sql_1 LEFT JOIN (SELECT productos.idProducto, vistaAlmacen.existencia FROM productos, (SELECT SUM(cantidad) AS existencia, idProducto FROM almacen WHERE idClinica={$_POST['idClinica']} GROUP BY idProducto ) AS vistaAlmacen WHERE productos.idProducto =vistaAlmacen.idProducto) sql_2 ON sql_1.idProducto = sql_2.idProducto ORDER BY sql_1.clave");
         break;
       case "Productos: Lista con precio":
         echo $bdO->consultar("SELECT precioProductos.precio, precioProductos.idPrecioProducto, productos.* FROM productos, precioProductos, (SELECT max(idPrecioProducto) AS idPrecioProducto FROM precioProductos GROUP BY idProducto) AS pP WHERE pP.idPrecioProducto = precioProductos.idPrecioProducto AND productos.idProducto = precioProductos.idProducto AND (productos.clave LIKE '%{$_POST['patron']}%' OR productos.nombre LIKE '%{$_POST['patron']}%') ORDER BY productos.clave ");
@@ -95,11 +95,11 @@
         echo $bdO->eliminar("DELETE  FROM `productos` WHERE productos.idProducto=".$_POST["idProducto"]);
         break;
       case "Productos: Agregar":
-        echo $bdO->consultarInsert("INSERT INTO `productos` (clave, nombre, descripcion, cantidadMinima, tratamiento, barCode, idTipoProducto) VALUES ('".$_POST["clave"]."', '".$_POST["nombre"]."', '".$_POST["descripcion"]."', ".$_POST["cantidadMinima"].", {$_POST['tratamiento']}, '".addslashes($_POST["barCode"])."', ".$_POST["idTipoProducto"].")");
+        echo $bdO->consultarInsert("INSERT INTO `productos` (clave, nombre, descripcion, cantidadMinima, inhabilitado, tratamiento, barCode, idTipoProducto) VALUES ('".$_POST["clave"]."', '".$_POST["nombre"]."', '".$_POST["descripcion"]."', ".$_POST["cantidadMinima"].", {$_POST['inhabilitado']}, {$_POST['tratamiento']}, '".addslashes($_POST["barCode"])."', ".$_POST["idTipoProducto"].")");
         break;
       case "Productos: Actualizar":
 
-        echo $bdO->actualizar("UPDATE `productos` SET clave = '{$_POST["clave"]}',  nombre = '{$_POST["nombre"]}', descripcion='{$_POST["descripcion"]}', cantidadMinima={$_POST["cantidadMinima"]}, tratamiento={$_POST['tratamiento']}, barCode='".addslashes($_POST["barCode"])."' WHERE idProducto=".$_POST["idProducto"]);
+        echo $bdO->actualizar("UPDATE `productos` SET clave = '{$_POST["clave"]}',  nombre = '{$_POST["nombre"]}', descripcion='{$_POST["descripcion"]}', cantidadMinima={$_POST["cantidadMinima"]}, inhabilitado={$_POST['inhabilitado']}, tratamiento={$_POST['tratamiento']}, barCode='".addslashes($_POST["barCode"])."' WHERE idProducto=".$_POST["idProducto"]);
         break;
 
 
@@ -175,7 +175,7 @@
 
 
       case "Personal: Lista":
-        echo $bdO->consultar("SELECT * FROM `personal` ");
+        echo $bdO->consultar("SELECT * FROM `personal` WHERE inhabilitado = 0 ");
         break;
 
       case "Personal: Lista con horarios":
@@ -192,10 +192,10 @@
         echo $bdO->consultar("DELETE  FROM `personal` WHERE personal.idPersonal=".$_POST["idPersonal"]);
         break;
       case "Personal: Agregar":
-        echo $bdO->consultar("INSERT INTO `personal` (nombre, apellidos, email, telefono, movil, usuario, clave, huella0, huella1, huella2, huella3, huella4, idClinica, tipo) VALUES ('{$_POST['nombre']}', '{$_POST['apellidos']}', '{$_POST['email']}', '{$_POST['telefono']}', '{$_POST['movil']}','{$_POST['usuario']}', '{$_POST['clave']}',  '{$_POST['huella0']}', '{$_POST['huella1']}', '{$_POST['huella2']}', '{$_POST['huella3']}', '{$_POST['huella4']}', {$_POST['idClinica']}, {$_POST['tipo']})");
+        echo $bdO->consultar("INSERT INTO `personal` (nombre, apellidos, email, telefono, movil, usuario, clave, huella0, huella1, huella2, huella3, huella4, idClinica, tipo, inhabilitado) VALUES ('{$_POST['nombre']}', '{$_POST['apellidos']}', '{$_POST['email']}', '{$_POST['telefono']}', '{$_POST['movil']}','{$_POST['usuario']}', '{$_POST['clave']}',  '{$_POST['huella0']}', '{$_POST['huella1']}', '{$_POST['huella2']}', '{$_POST['huella3']}', '{$_POST['huella4']}', {$_POST['idClinica']}, {$_POST['tipo']}, {$_POST['inhabilitado']})");
         break;
       case "Personal: Actualizar":
-        echo $bdO->consultar("UPDATE `personal` SET   nombre = '{$_POST['nombre']}', apellidos='{$_POST['apellidos']}', email='{$_POST['email']}', telefono='{$_POST['telefono']}', movil='{$_POST['movil']}', usuario='{$_POST['usuario']}', clave='{$_POST['clave']}', huella0='{$_POST['huella0']}', huella1='{$_POST['huella1']}', huella2='{$_POST['huella2']}', huella3='{$_POST['huella3']}', huella4='{$_POST['huella4']}', tipo={$_POST['tipo']}  WHERE idPersonal=".$_POST["idPersonal"]);
+        echo $bdO->consultar("UPDATE `personal` SET   nombre = '{$_POST['nombre']}', apellidos='{$_POST['apellidos']}', email='{$_POST['email']}', telefono='{$_POST['telefono']}', movil='{$_POST['movil']}', usuario='{$_POST['usuario']}', clave='{$_POST['clave']}', huella0='{$_POST['huella0']}', huella1='{$_POST['huella1']}', huella2='{$_POST['huella2']}', huella3='{$_POST['huella3']}', huella4='{$_POST['huella4']}', tipo={$_POST['tipo']}, inhabilitado={$_POST['inhabilitado']}  WHERE idPersonal=".$_POST["idPersonal"]);
         break;
 
 
@@ -214,7 +214,7 @@
         break;
 
       case "Almacen: Existencias":
-        echo $bdO->consultar("SELECT * FROM (SELECT productos.idProducto, productos.nombre AS Producto, productos.clave AS Clave, tiposProductos.nombre AS Clase from productos, tiposProductos WHERE productos.idTipoProducto= tiposProductos.idTipoProducto ) Prod LEFT JOIN (SELECT almacen.idProducto AS idProduct, SUM(almacen.cantidad) AS Existencia FROM almacen WHERE almacen.idClinica={$_POST['idClinica']} GROUP BY idProduct ) Alma ON Prod.idProducto = Alma.idProduct ORDER BY clave ASC");
+        echo $bdO->consultar("SELECT * FROM (SELECT productos.idProducto, productos.nombre AS Producto, productos.clave AS Clave, tiposProductos.nombre AS Clase from productos, tiposProductos WHERE productos.tratamiento = 0 AND productos.idTipoProducto= tiposProductos.idTipoProducto ) Prod LEFT JOIN (SELECT almacen.idProducto AS idProduct, SUM(almacen.cantidad) AS Existencia FROM almacen WHERE almacen.idClinica={$_POST['idClinica']} GROUP BY idProduct ) Alma ON Prod.idProducto = Alma.idProduct ORDER BY clave ASC");
         break;
 
       case "Almacen: Lista entradas":
@@ -425,7 +425,7 @@
 
       case "Reportes: Existencia en almacen":
         //echo $bdO->consultar("SELECT productos.nombre AS Producto, productos.cantidadMinima as CantidadMinima, vistaAlmacen.existencia as Existencia FROM tiposProductos, productos, (SELECT SUM(cantidad) AS existencia, idProducto FROM almacen WHERE idClinica={$_POST['idClinica']} GROUP BY idProducto ) AS vistaAlmacen WHERE productos.idProducto =vistaAlmacen.idProducto AND productos.idTipoProducto=tiposProductos.idTipoProducto ORDER BY vistaAlmacen.existencia ASC");
-        echo $bdO->consultar("SELECT productos.nombre AS Producto, productos.cantidadMinima as CantidadMinima, vistaAlmacen.existencia as Existencia FROM tiposProductos, productos, (SELECT SUM(cantidad) AS existencia, idProducto FROM almacen WHERE idClinica={$_POST['idClinica']}  AND almacen.fecha BETWEEN '{$_POST['fechaInicial']}' AND  '{$_POST['fechaFinal']} 23:59' GROUP BY idProducto ) AS vistaAlmacen WHERE productos.idProducto =vistaAlmacen.idProducto AND productos.idTipoProducto=tiposProductos.idTipoProducto ORDER BY vistaAlmacen.existencia ASC");
+        echo $bdO->consultar("SELECT productos.nombre AS Producto, productos.cantidadMinima as CantidadMinima, vistaAlmacen.existencia as Existencia FROM tiposProductos, productos, (SELECT SUM(cantidad) AS existencia, idProducto FROM almacen WHERE idClinica={$_POST['idClinica']}  AND almacen.fecha BETWEEN '{$_POST['fechaInicial']}' AND  '{$_POST['fechaFinal']} 23:59' GROUP BY idProducto ) AS vistaAlmacen WHERE productos.tratamiento = 0 AND productos.idProducto =vistaAlmacen.idProducto AND productos.idTipoProducto=tiposProductos.idTipoProducto ORDER BY vistaAlmacen.existencia ASC");
         break;
 
 
@@ -512,7 +512,13 @@
 
       case "Reportes: Existencia en almacen verificar":
       //echo $bdO->consultar("SELECT productos.nombre AS Producto, productos.cantidadMinima as CantidadMinima, vistaAlmacen.existencia as Existencia FROM tiposProductos, productos, (SELECT SUM(cantidad) AS existencia, idProducto FROM almacen GROUP BY idProductod WHERE idClinica={$_POST['idClinica']}) AS vistaAlmacen WHERE productos.idProducto =vistaAlmacen.idProducto AND productos.idTipoProducto=tiposProductos.idTipoProducto AND tiposProductos.idClinica={$_POST['idClinica']} ORDER BY vistaAlmacen.existencia ASC");
-        echo $bdO->consultar("SELECT * FROM (SELECT productos.idProducto, productos.nombre AS Producto, productos.clave AS Clave, tiposProductos.nombre AS Clase from productos, tiposProductos WHERE productos.idTipoProducto= tiposProductos.idTipoProducto ) Prod LEFT JOIN (SELECT almacen.idProducto, SUM(almacen.cantidad) AS Existencia FROM almacen WHERE almacen.idClinica={$_POST['idClinica']} GROUP BY almacen.idProducto) Alma ON Prod.idProducto = Alma.idProducto ORDER BY clave ASC");
+        echo $bdO->consultar("SELECT * FROM (SELECT productos.idProducto, productos.nombre AS Producto, productos.clave AS Clave, tiposProductos.nombre AS Clase from productos, tiposProductos WHERE productos.tratamiento = 0 AND productos.idTipoProducto= tiposProductos.idTipoProducto ) Prod LEFT JOIN (SELECT almacen.idProducto, SUM(almacen.cantidad) AS Existencia FROM almacen WHERE almacen.idClinica={$_POST['idClinica']} GROUP BY almacen.idProducto) Alma ON Prod.idProducto = Alma.idProducto ORDER BY clave ASC");
+        break;
+
+      case "Reportes: Existencia en almacen valorizado":
+      //        echo $bdO->consultar("SELECT precioProductos.precio, precioProductos.idPrecioProducto, productos.* FROM productos, precioProductos, (SELECT max(idPrecioProducto) AS idPrecioProducto FROM precioProductos GROUP BY idProducto) AS pP WHERE pP.idPrecioProducto = precioProductos.idPrecioProducto AND productos.idProducto = precioProductos.idProducto AND (productos.clave LIKE '%{$_POST['patron']}%' OR productos.nombre LIKE '%{$_POST['patron']}%') ORDER BY productos.clave ");
+
+        echo $bdO->consultar("SELECT *, (Existencia*Precio) as Total FROM (SELECT precioProductos.idPrecioProducto, precioProductos.precio as Precio, productos.idProducto, productos.nombre AS Producto, productos.clave AS Clave, tiposProductos.nombre AS Clase from productos, tiposProductos, precioProductos , (SELECT max(idPrecioProducto) AS idPrecioProducto FROM precioProductos GROUP BY idProducto) AS pP WHERE pP.idPrecioProducto = precioProductos.idPrecioProducto AND productos.idProducto = precioProductos.idProducto AND productos.idTipoProducto= tiposProductos.idTipoProducto AND productos.tratamiento=0) Prod LEFT JOIN (SELECT almacen.idProducto, SUM(almacen.cantidad) AS Existencia FROM almacen WHERE almacen.idClinica={$_POST['idClinica']} GROUP BY almacen.idProducto) Alma ON Prod.idProducto = Alma.idProducto ORDER BY clave ASC");
         break;
 
       case "Reporte: Paciente":
