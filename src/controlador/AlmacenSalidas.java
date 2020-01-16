@@ -134,17 +134,40 @@ public class AlmacenSalidas extends Controlador implements Initializable {
         if (!Configuraciones.supervisorOK)
             return;
 
-        for(int i=0; i<listaProductos.size(); i++) {
-            if(listaProductos.get(i).getDato("Salida") !=  null) {
-                int entrada = Integer.valueOf(listaProductos.get(i).getDato("Salida") );
-                String idProducto = listaProductos.get(i).getDato("idProducto");
-                Map<String,Object> paramsJSON = new LinkedHashMap<>();
-                paramsJSON.put("Actividad", "Almacen: Agregar entradas o salidas");
-                paramsJSON.put("idProducto", idProducto);
-                paramsJSON.put("cantidad", -entrada);
-                JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+
+        Map<String,Object> paramsJSONvale = new LinkedHashMap<>();
+        paramsJSONvale.put("Actividad", "Almacen vales: Agregar");
+        paramsJSONvale.put("idPersonalAut", Configuraciones.idPersonal);
+        JsonArray rootArrayVale = Funciones.consultarBD(paramsJSONvale);
+        if(rootArrayVale.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
+            int ultimoInsertado = rootArrayVale.get(1).getAsJsonObject().get(Funciones.ultimoInsertado).getAsInt();
+            int cantidad = 0;
+
+
+            for (int i = 0; i < listaProductos.size(); i++) {
+                if (listaProductos.get(i).getDato("Salida") != null) {
+                    int entrada = Integer.valueOf(listaProductos.get(i).getDato("Salida"));
+                    String idProducto = listaProductos.get(i).getDato("idProducto");
+                    Map<String, Object> paramsJSON = new LinkedHashMap<>();
+                    paramsJSON.put("Actividad", "Almacen: Agregar entradas o salidas");
+                    paramsJSON.put("idProducto", idProducto);
+                    paramsJSON.put("cantidad", -entrada);
+                    paramsJSON.put("idAlmacenVale", ultimoInsertado);
+
+                    cantidad -= entrada;
+
+                    JsonArray rootArray = Funciones.consultarBD(paramsJSON);
+
+                }
 
             }
+
+            Map<String, Object> paramsJSONvaleActualizar = new LinkedHashMap<>();
+            paramsJSONvaleActualizar.put("Actividad", "Almacen vales: Actualizar");
+            paramsJSONvaleActualizar.put("idAlmacenVale", ultimoInsertado);
+            paramsJSONvaleActualizar.put("productos", cantidad);
+            JsonArray rootArrayValeActualizar = Funciones.consultarBD(paramsJSONvaleActualizar);
+
 
         }
         Datos.cargarProductosConCosto();

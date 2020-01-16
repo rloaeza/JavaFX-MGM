@@ -93,7 +93,7 @@
          </image></ImageView>
       <Label layoutX="376.0" layoutY="420.0" text="Tratamiento" AnchorPane.bottomAnchor="199.0" AnchorPane.leftAnchor="376.0" />
       <JFXCheckBox fx:id="Tratamiento" layoutX="489.0" layoutY="420.0" text=" " AnchorPane.bottomAnchor="198.0" AnchorPane.leftAnchor="489.0" AnchorPane.rightAnchor="381.5" />
-      <Label layoutX="378.0" layoutY="382.0" text="Inhabilitado" AnchorPane.bottomAnchor="237.0" AnchorPane.leftAnchor="376.0" />
+      <Label layoutX="378.0" layoutY="382.0" text="Eliminado" AnchorPane.bottomAnchor="237.0" AnchorPane.leftAnchor="376.0" />
       <JFXCheckBox fx:id="Inhabilitado" layoutX="491.0" layoutY="382.0" text=" " AnchorPane.bottomAnchor="236.0" AnchorPane.leftAnchor="489.0" />
    </children>
 </AnchorPane>
