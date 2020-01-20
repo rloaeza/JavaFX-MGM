@@ -140,6 +140,16 @@
                   </ImageView>
                </graphic>
             </Button>
+
+            <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#reporteVales" text="Reporte vales">
+               <graphic>
+                  <ImageView fitHeight="150.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../imgs/b_reportes.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </FlowPane>
    </children>

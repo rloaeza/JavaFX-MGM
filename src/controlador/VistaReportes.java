@@ -158,6 +158,19 @@ public class VistaReportes extends Controlador implements Initializable {
 
     }
 
+    @FXML
+    void reporteVales(ActionEvent event) throws IOException {
+
+        Map<String,Object> paramsVista = new LinkedHashMap<>();
+        paramsVista.put("idClinica", Configuraciones.idClinica);
+        paramsVista.put("vista", "/vista/vista_reporte_vales.fxml" );
+        paramsVista.put("Titulo", Configuraciones.reporteEncabezado+"Reporte: Vales");
+        paramsVista.put("titulos", new String[]{"clave:30:CENTER","nombre:100:CENTER-LEFT", "cantidad:20:CENTER"});
+        paramsVista.put("pdf", "formatos/reporte_reloj_checador_2.pdf");
+        paramsVista.put("reporte", "Reporte: Vales");
+        Funciones.CargarVista((AnchorPane)Pane, getClass().getResource(paramsVista.get("vista").toString()), paramsVista, new VistaReporteGeneralVales());
+
+    }
     @Override
     public void init() {
 
