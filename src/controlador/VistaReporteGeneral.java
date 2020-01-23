@@ -452,6 +452,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
             vrTotal.setDato("Tarjeta", Funciones.valorAmoneda(tarjetaC));
             vrTotal.setDato("Total", Funciones.valorAmoneda(totalC));
             listaReporte.add(vrTotal);
+
             vrSig = new VistaReporte(new LinkedHashMap<>());
             vrSig.setDato("Venta", "");
             vrSig.setDato("Paciente", "");
@@ -466,12 +467,14 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
             vrTotal = new VistaReporte(new LinkedHashMap<>());
             vrTotal.setDato("IdVenta", "");
             vrTotal.setDato("Paciente", "Total General");
-            vrTotal.setDato("Tratamiento", Funciones.valorAmoneda(tratamiento-tratamientoC));
-            vrTotal.setDato("Producto", Funciones.valorAmoneda(producto-productoC));
-            vrTotal.setDato("Efectivo", Funciones.valorAmoneda(efectivo-efectivoC));
-            vrTotal.setDato("Tarjeta", Funciones.valorAmoneda(tarjeta-tarjetaC));
-            vrTotal.setDato("Total", Funciones.valorAmoneda(total-totalC));
+            vrTotal.setDato("Tratamiento", Funciones.valorAmoneda(tratamiento));
+            vrTotal.setDato("Producto", Funciones.valorAmoneda(producto));
+            vrTotal.setDato("Efectivo", Funciones.valorAmoneda(efectivo));
+            vrTotal.setDato("Tarjeta", Funciones.valorAmoneda(tarjeta));
+            vrTotal.setDato("Total", Funciones.valorAmoneda(total));
             listaReporte.add(vrTotal);
+
+
         }
 
 
