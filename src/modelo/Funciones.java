@@ -47,6 +47,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.net.URLEncoder;
 import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class Funciones {
@@ -945,5 +947,12 @@ public class Funciones {
         Scene scene = new Scene(p, 500, 250);
         window.setScene(scene);
         window.showAndWait();
+    }
+
+    public static String cambiarFormatoFecha(String fecha, String formatoOriginal, String formatoDestino) throws ParseException {
+            SimpleDateFormat dt = new SimpleDateFormat(formatoOriginal);
+            Date date = dt.parse(fecha);
+            SimpleDateFormat dt1 = new SimpleDateFormat(formatoDestino);
+            return dt1.format(date);
     }
 }

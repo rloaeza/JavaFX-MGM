@@ -100,6 +100,6 @@ public class VentaLista {
     @Override
     public String toString() {
         //return nVenta+ ": " + cantidadProductos + "  productos el   " + fecha + "  con un total de: $" + total+" de "+paciente;
-        return nVenta+ ": " + paciente + "  " + fecha + "  con un total de: $" + total;
+        return "No. "+ nVenta+ "  " + paciente + "  " + fecha + "  con un total de: $" + total;
     }
 }

@@ -24,11 +24,10 @@ import modelo.Pacientes;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class VistaReportePaciente extends Controlador implements Initializable {
 
@@ -230,6 +229,14 @@ public class VistaReportePaciente extends Controlador implements Initializable {
                 v= new Gson().fromJson(rootArray.get(i).getAsJsonObject(), v.getClass());
                 total += Double.valueOf(v.get("Importe").toString());
                 v.put("Importe", Funciones.valorAmoneda(Double.valueOf((v.get("Importe").toString()) )));
+
+                String f = v.get("Fecha").toString();
+                try {
+                    v.put("Fecha", Funciones.cambiarFormatoFecha(f, "yyyy-MM-dd hh:mm:ss", "dd-MM-yyyy    hh:mm:ss"));
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
                 listaReporte.add(new VistaReporte(v));
             }
             Map<String, Object> v = new LinkedHashMap<>();
