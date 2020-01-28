@@ -63,6 +63,12 @@ public class Cobro {
         else if(getFormaPago()==2) {
             return "Transaccion (" + getDescripcion() + "): "+ Funciones.valorAmoneda(Funciones.fixN(getMonto(), 2) );
         }
+        else if(getFormaPago()==3) {
+            return "Depósito (" + getDescripcion() + "): "+ Funciones.valorAmoneda(Funciones.fixN(getMonto(), 2) );
+        }
+        else if(getFormaPago()==4) {
+            return "Transferencia (" + getDescripcion() + "): "+ Funciones.valorAmoneda(Funciones.fixN(getMonto(), 2) );
+        }
         else {
             return "Cambio: "+ Funciones.valorAmoneda(Funciones.fixN(getMonto(), 2) );
         }

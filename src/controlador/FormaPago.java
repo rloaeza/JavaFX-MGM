@@ -40,6 +40,12 @@ public class FormaPago extends Controlador {
     private ToggleButton FormaTarjeta;
 
     @FXML
+    private ToggleButton FormaDeposito;
+
+    @FXML
+    private ToggleButton FormaTransferencia;
+
+    @FXML
     private JFXComboBox<modelo.Descuento> Descuento;
     @FXML
     private Label Error;
@@ -69,6 +75,14 @@ public class FormaPago extends Controlador {
     @FXML
     void agregar(ActionEvent event) {
         int formaPago = FormaEfectivo.isSelected()?1:2;
+        if ( FormaEfectivo.isSelected())
+            formaPago = 1;
+        else if( FormaTarjeta.isSelected())
+            formaPago = 2;
+        else if( FormaDeposito.isSelected())
+            formaPago = 3;
+        else if( FormaTransferencia.isSelected() )
+            formaPago = 4;
 
 
         Configuraciones.formaPagoCobros.add(new Cobro(
@@ -165,19 +179,20 @@ public class FormaPago extends Controlador {
         Descripcion.setText("");
         Pago.setText("");
         Pago.setPromptText(Configuraciones.formaPagoMontoRecibido);
+        /*
         if(event!=null)
             if( event.getSource().equals(FormaEfectivo) )
                 FormaEfectivo.setSelected(true);
             else
                 FormaTarjeta.setSelected(true);
-
+*/
         if(FormaEfectivo.isSelected()) {
             Descripcion.setPromptText("Efectivo");
             Descripcion.setEditable(false);
             Descripcion.setVisible(false);
         }
-        if (FormaTarjeta.isSelected() ){
-            FormaTarjeta.setSelected(true);
+        else {
+            //FormaTarjeta.setSelected(true);
             Descripcion.setPromptText(Configuraciones.formaPagoIdTransaccion);
             Descripcion.setEditable(true);
             Descripcion.setVisible(true);
