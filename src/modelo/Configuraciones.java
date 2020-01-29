@@ -21,7 +21,7 @@ public class Configuraciones {
     public static boolean clinicaOK = false;
     public static boolean alertBoxConfirmar = false;
 
-    public static String[] formasPago = new String[] {"Efectivo", "Crédito / Débito"};
+    //public static String[] formasPago = new String[] {"Efectivo", "Crédito / Débito"};
     public static final  int  tipoAdministrador = 0;
     public static final int tipoSupervisor = 1;
     public static final int tipoVendedor = 2;
