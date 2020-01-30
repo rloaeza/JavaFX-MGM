@@ -24,15 +24,13 @@ import modelo.Configuraciones;
 import modelo.Funciones;
 import modelo.PDFvalores;
 import modelo.VistaReporte;
+import net.sf.jasperreports.engine.JRException;
 
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class VistaReporteGeneralVales extends Controlador implements Initializable {
 
@@ -57,6 +55,8 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
 
     Map<String,Object> paramsJSONReporte = new LinkedHashMap<>();
 
+    ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+
     VistaReporte vr=null;
     String descripcion = "";
     @FXML
@@ -78,9 +78,19 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
     @FXML
     void imprimir(ActionEvent event) {
 
+        try {
+
+
+            new Reporte().mostrarReporte("reportes/reporteValesEntrada.jrxml", list);
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+
+        /*
         vr = listaReporte.remove(listaReporte.size()-1);
         prepararPDF(true, false);
         listaReporte.add(vr);
+    */
     }
 
     @FXML
@@ -209,7 +219,7 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
 
         VistaReporte vrTotal=null;
         String actividad = (String) parametros.get(0).get("reporte");
-
+        list.clear();
         listaReporte.clear();
         paramsJSONReporte.put("Actividad", actividad);
 
@@ -219,9 +229,13 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
 
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
+
+
+
             for(int i = 1; i< t; i++) {
                 Map<String, Object> v = new LinkedHashMap<>();
 
+                HashMap<String, Object> parameters = new HashMap<String, Object>();
                 v= new Gson().fromJson(rootArray.get(i).getAsJsonObject(), v.getClass());
                 if( !v.get("idAlmacenVale").toString().equalsIgnoreCase(idAlmacenAnterior) ) {
                     Map<String, Object> titulo = new LinkedHashMap<>();
@@ -230,8 +244,14 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
                     titulo.put("cantidad", v.get("fecha").toString());
                     listaReporte.add(new VistaReporte(titulo));
                     idAlmacenAnterior = v.get("idAlmacenVale").toString();
+
                 }
 
+
+                parameters.put("clave", v.get("clave"));
+                parameters.put("nombre", v.get("nombre"));
+                parameters.put("cantidad", v.get("cantidad"));
+                list.add(parameters);
 
 
                 listaReporte.add(new VistaReporte(v));

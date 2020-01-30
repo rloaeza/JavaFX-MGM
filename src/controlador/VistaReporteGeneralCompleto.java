@@ -24,6 +24,7 @@ import modelo.Configuraciones;
 import modelo.Funciones;
 import modelo.PDFvalores;
 import modelo.VistaReporte;
+import net.sf.jasperreports.engine.JRException;
 
 import java.io.File;
 import java.io.IOException;
@@ -57,6 +58,8 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
 
     VistaReporte vr=null;
 
+
+
     String descripcion = "";
 
     @FXML
@@ -79,7 +82,6 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
 
     @FXML
     void imprimir(ActionEvent event) {
-
         vr = listaReporte.remove(listaReporte.size()-1);
         prepararPDF(true, false);
         listaReporte.add(vr);
@@ -367,8 +369,10 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
                 if(v.get("Efectivo")!=null) v.put("Efectivo", Funciones.valorAmoneda(Double.valueOf(v.get("Efectivo").toString())));
                 if(v.get("Tarjeta")!=null) v.put("Tarjeta", Funciones.valorAmoneda(Double.valueOf(v.get("Tarjeta").toString())));
                 if(v.get("Total")!=null) v.put("Total", Funciones.valorAmoneda(Double.valueOf(v.get("Total").toString())));
-
                 listaReporte.add(new modelo.VistaReporte(v));
+
+
+
             }
             vrTotal = new VistaReporte(new LinkedHashMap<>());
             vrTotal.setDato("IdVenta", "");
@@ -379,6 +383,8 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
             vrTotal.setDato("Tarjeta", Funciones.valorAmoneda(tarjeta));
             vrTotal.setDato("Total", Funciones.valorAmoneda(total));
             listaReporte.add(vrTotal);
+
+
         }
     }
 

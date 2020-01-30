@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="VentasGeneralesCompleto" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="dfc04960-27fa-4f2a-baa5-26ad77779543">
+	<queryString>
+		<![CDATA[]]>
+	</queryString>
+	<field name="Venta" class="java.lang.String"/>
+	<field name="Paciente" class="java.lang.String"/>
+	<field name="Tratamiento" class="java.lang.String"/>
+	<field name="Producto" class="java.lang.String"/>
+	<field name="Efectivo" class="java.lang.String"/>
+	<field name="Tarjeta" class="java.lang.String"/>
+	<field name="Total" class="java.lang.String"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="92" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="10" width="110" height="50" uuid="c9514d76-0798-464b-b1fc-1ce4a36c421a"/>
+				<imageExpression><![CDATA["imgs/logo_mgm.jpg"]]></imageExpression>
+			</image>
+			<staticText>
+				<reportElement x="130" y="20" width="440" height="30" uuid="e0a136aa-a0a9-48bf-81b9-88398858ef1a"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18"/>
+				</textElement>
+				<text><![CDATA[Reporte Ventas General Completo]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="35" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="31" splitType="Stretch">
+			<staticText>
+				<reportElement x="-11" y="0" width="60" height="30" uuid="a8bf51d4-c091-4c2e-9cff-b54c30a86146">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="162ba204-3141-44d0-96e8-bdc50666e22e"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Venta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="50" y="0" width="180" height="30" uuid="fe6aa5ce-b4d6-47ac-9c47-87eb20b5636e">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d5af4165-9eb9-4cfc-8024-35ecaa4de230"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Paciente]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="230" y="0" width="60" height="30" uuid="8d608309-8d4f-420a-a152-1a2f71109533">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="226969ae-df41-40f8-9fa1-acafa47bc1d2"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Tratamiento]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="289" y="0" width="60" height="30" uuid="0b08bcca-12fe-4d26-8313-127dceadd2e4">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="83158519-c768-413a-871c-5939c51d90d4"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Producto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="349" y="0" width="60" height="30" uuid="ad9076ce-6e4a-4ca6-86a4-bef52e189a60">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="560685db-63c4-4598-8d93-5031eff5deb2"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Efectivo]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="409" y="0" width="60" height="30" uuid="a41aaa9c-9f1b-4cbb-b82b-63400ceb608f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f6655014-3590-487c-bd17-28a14c9874f5"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Tarjeta]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="469" y="0" width="60" height="30" uuid="20effe2c-b3de-4b86-8dd0-fa6383aacb3f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d7c13e2d-5140-4774-85c4-375067fa0174"/>
+					<property name="com.jaspersoft.studio.unit.width" value="px"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center"/>
+				<text><![CDATA[Total]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="31" splitType="Stretch">
+			<textField>
+				<reportElement x="-11" y="0" width="61" height="30" uuid="3baa1853-41c2-4129-8298-2432de9c3dd2">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="162ba204-3141-44d0-96e8-bdc50666e22e"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Venta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="50" y="0" width="180" height="30" uuid="a548249f-c30e-4d1b-b86a-95c5fb0ba63c">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d5af4165-9eb9-4cfc-8024-35ecaa4de230"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Paciente}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="230" y="0" width="60" height="30" uuid="399350e0-bcaa-434b-a5ad-57481a4adaaf">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="226969ae-df41-40f8-9fa1-acafa47bc1d2"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tratamiento}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="290" y="0" width="59" height="30" uuid="d3fbdf1c-c8ca-4d12-8ef4-eba2e9bcf8be">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="83158519-c768-413a-871c-5939c51d90d4"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Producto}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="349" y="0" width="60" height="30" uuid="5ced8603-de6d-4391-b198-29ff58efeec0">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="560685db-63c4-4598-8d93-5031eff5deb2"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Efectivo}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="409" y="0" width="60" height="30" uuid="7c7de73a-014c-4e26-b8d4-19ad45052d5d">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f6655014-3590-487c-bd17-28a14c9874f5"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Tarjeta}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="470" y="0" width="59" height="30" uuid="b81bff98-d155-4156-b413-eab0225c47bc">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d7c13e2d-5140-4774-85c4-375067fa0174"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="1.0"/>
+					<leftPen lineWidth="1.0"/>
+					<bottomPen lineWidth="1.0"/>
+					<rightPen lineWidth="1.0"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="9"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{Total}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>

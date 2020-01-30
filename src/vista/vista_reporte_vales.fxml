@@ -31,7 +31,7 @@
                   </ImageView>
                </graphic>
             </Button>
-            <!--
+
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#imprimir" text="Imprimir">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
@@ -41,6 +41,7 @@
                   </ImageView>
                </graphic>
             </Button>
+            <!--
             <Button contentDisplay="TOP" mnemonicParsing="false" onAction="#descargar" text="Descargar">
                <graphic>
                   <ImageView fitHeight="50.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
