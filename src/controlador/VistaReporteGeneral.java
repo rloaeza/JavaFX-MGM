@@ -569,7 +569,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
 
             fila = new HashMap<String, Object>();
             fila.put("Venta", "");
-            fila.put("Paciente", "Total Generl");
+            fila.put("Paciente", "Total General");
             fila.put("Tratamiento", Funciones.valorAmoneda(tratamiento));
             fila.put("Producto", Funciones.valorAmoneda(producto));
             fila.put("Efectivo", Funciones.valorAmoneda(efectivo));
