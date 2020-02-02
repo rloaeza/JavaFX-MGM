@@ -9,8 +9,10 @@ public class VentaLista {
     private double total;
     private int idPersonal;
     private String paciente;
+
     private int nVenta;
 
+    private int descuento;
 
     public String getPaciente() {
         return paciente;
@@ -22,7 +24,7 @@ public class VentaLista {
 
 
 
-    public VentaLista(int idVentaProductos, String fecha, int cantidadProductos, double subtotoal, double iva, double total, int idPersonal, String paciente) {
+    public VentaLista(int idVentaProductos, String fecha, int cantidadProductos, double subtotoal, double iva, double total, int idPersonal, String paciente, int descuento) {
         this.idVentaProductos = idVentaProductos;
         this.fecha = fecha;
         this.cantidadProductos = cantidadProductos;
@@ -31,6 +33,7 @@ public class VentaLista {
         this.total = total;
         this.idPersonal = idPersonal;
         this.paciente = paciente;
+        this.descuento = descuento;
     }
 
     public int getIdVentaProductos() {
@@ -95,6 +98,14 @@ public class VentaLista {
 
     public void setnVenta(int nVenta) {
         this.nVenta = nVenta;
+    }
+
+    public int getDescuento() {
+        return descuento;
+    }
+
+    public void setDescuento(int descuento) {
+        this.descuento = descuento;
     }
 
     @Override

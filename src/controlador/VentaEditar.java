@@ -29,6 +29,7 @@ import javax.print.DocFlavor;
 import java.awt.print.PrinterException;
 import java.io.IOException;
 import java.net.URL;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -372,7 +373,7 @@ public class VentaEditar extends Controlador implements Initializable {
 
 
     @FXML
-    void imprimir(ActionEvent event) throws IOException {
+    void imprimir(ActionEvent event) throws IOException, ParseException {
 
 
         nVentaSelect = Tabs.getSelectionModel().getSelectedIndex();
@@ -418,11 +419,14 @@ public class VentaEditar extends Controlador implements Initializable {
         int ultimoInsertado = ListaDeProductos.getSelectionModel().getSelectedItem().getnVenta();
         String timeStamp = new SimpleDateFormat("dd/MM/YY HH:mm").format(Calendar.getInstance().getTime());
 
-
+        Date date = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(ListaDeProductos.getSelectionModel().getSelectedItem().getFecha());
+        String timeStampOriginal = new SimpleDateFormat("dd/MM/YY HH:mm").format(date.getTime());
 
         String ticketSTR= Configuraciones.ticketTituloClinicaThermal+
+
                 "           .:: REIMPRESION ::."+"\n\n" +
-                "Fecha: "+ timeStamp +"\n"+
+                "Fecha de venta:     " + timeStampOriginal+"\n"+
+                "Fecha de impresion: "+ timeStamp +"\n"+
                 "Cliente: "+ ListaDeProductos.getSelectionModel().getSelectedItem().getPaciente() + "\n" +
                 "Venta: "+ ultimoInsertado+ "\n\n"+
                 Funciones.nuevaLinea("Cant", "Producto", " C. U.", "Total");
@@ -436,6 +440,11 @@ public class VentaEditar extends Controlador implements Initializable {
 
         Configuraciones.formaPagoCobros = ListaCobros.getItems();
         ticketSTR = ticketSTR + "\n\nMovimientos:\n"+Funciones.formaPago();
+
+        if(ListaDeProductos.getSelectionModel().getSelectedItem().getDescuento()>0 ) {
+            ticketSTR = ticketSTR + "\n\nDescuento: "+ListaDeProductos.getSelectionModel().getSelectedItem().getDescuento()+"%";
+        }
+
 
         ticketSTR = ticketSTR + "\n\n¡Gracias por su compra!\n\n\n\n\n\n\n\n\n";
 
