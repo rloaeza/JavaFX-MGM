@@ -7,6 +7,7 @@ import com.zkteco.biometric.FingerprintSensorErrorCode;
 import com.zkteco.biometric.FingerprintSensorEx;
 import controlador.AlertBox;
 import controlador.Controlador;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -170,6 +171,14 @@ public class Funciones {
         window.setScene(scene);
         window.showAndWait();
 
+    }
+
+    public static ArrayList<Map<String, Object>> table2JasperReports(ObservableList<VistaReporte> tableData){
+        ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+        tableData.forEach((data) -> {
+            list.add(data.getDatos());
+        });
+        return list;
     }
 
     public static void displayFP( Map<String, Object> params,  URL vista,  Controlador c ) throws IOException {

@@ -55,7 +55,7 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
 
     Map<String,Object> paramsJSONReporte = new LinkedHashMap<>();
 
-    ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+    ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 
     VistaReporte vr=null;
     String descripcion = "";
@@ -81,16 +81,11 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
         try {
 
 
-            new Reporte().mostrarReporte("reportes/reporteValesEntrada.jrxml", list);
+            new Reporte().mostrarReporte2("reportes/reporteValesEntrada.jrxml", list);
         } catch (JRException e) {
             e.printStackTrace();
         }
 
-        /*
-        vr = listaReporte.remove(listaReporte.size()-1);
-        prepararPDF(true, false);
-        listaReporte.add(vr);
-    */
     }
 
     @FXML
@@ -171,7 +166,7 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
 
         titulos= (String[]) parametros.get(0).get("titulos");
 
-        Titulo.setText((String) parametros.get(0).get("clinicaDescripcion"));
+        Titulo.setText((String) parametros.get(0).get("Titulo"));
 
         double anchoTabla = TablaReporte.getPrefWidth();
 
@@ -194,7 +189,6 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
         TablaReporte.setShowRoot(false);
         TablaReporte.setColumnResizePolicy(TreeTableView.UNCONSTRAINED_RESIZE_POLICY);
 
-        Titulo.setText("Reporte general canceladas");
         //FechaInicio.setValue(LocalDate.now().minusMonths(1) );
         FechaInicio.setValue(LocalDate.now() );
         FechaFin.setValue(LocalDate.now() );
@@ -219,7 +213,7 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
 
         VistaReporte vrTotal=null;
         String actividad = (String) parametros.get(0).get("reporte");
-        list.clear();
+        //list.clear();
         listaReporte.clear();
         paramsJSONReporte.put("Actividad", actividad);
 
@@ -232,30 +226,49 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
 
 
 
+            int totalProductos = 0;
+            VistaReporte vistaReporte = new VistaReporte("clave", "nombre", "cantidad");
+
             for(int i = 1; i< t; i++) {
                 Map<String, Object> v = new LinkedHashMap<>();
-
                 HashMap<String, Object> parameters = new HashMap<String, Object>();
                 v= new Gson().fromJson(rootArray.get(i).getAsJsonObject(), v.getClass());
                 if( !v.get("idAlmacenVale").toString().equalsIgnoreCase(idAlmacenAnterior) ) {
-                    Map<String, Object> titulo = new LinkedHashMap<>();
-                    titulo.put("clave", "****");
-                    titulo.put("nombre", v.get("idAlmacenVale").toString() + ": " + v.get("usuario").toString());
-                    titulo.put("cantidad", v.get("fecha").toString());
-                    listaReporte.add(new VistaReporte(titulo));
+                    if( totalProductos != 0 ) {
+                        vistaReporte = vistaReporte.registroNuevo();
+                        vistaReporte.setDato("nombre", "Cantidad total de productos");
+                        vistaReporte.setDato("cantidad", totalProductos+"");
+                        listaReporte.add(vistaReporte);
+                        listaReporte.add(vistaReporte.registroNuevo() );
+                    }
+                    vistaReporte = vistaReporte.registroNuevo();
+                    vistaReporte.setDato("clave", "****");
+                    vistaReporte.setDato("nombre", v.get("idAlmacenVale").toString() + ": " + v.get("usuario").toString());
+                    vistaReporte.setDato("cantidad", v.get("fecha").toString());
+                    listaReporte.add(vistaReporte);
                     idAlmacenAnterior = v.get("idAlmacenVale").toString();
-
+                    totalProductos = 0;
                 }
 
 
                 parameters.put("clave", v.get("clave"));
                 parameters.put("nombre", v.get("nombre"));
                 parameters.put("cantidad", v.get("cantidad"));
-                list.add(parameters);
+                System.out.println(v);
+                System.out.println("Cantidad: "+v.get("cantidad"));
+                totalProductos = totalProductos + Integer.valueOf(v.get("cantidad")+"");
+                //list.add(parameters);
 
-
-                listaReporte.add(new VistaReporte(v));
+                vistaReporte = vistaReporte.registroNuevo();
+                vistaReporte.setDatos(v);
+                listaReporte.add(vistaReporte);
             }
+            vistaReporte = vistaReporte.registroNuevo();
+            vistaReporte.setDato("nombre", "Cantidad total de productos");
+            vistaReporte.setDato("cantidad", totalProductos+"");
+            listaReporte.add(vistaReporte);
+
+            list = Funciones.table2JasperReports(listaReporte);
         }
     }
 

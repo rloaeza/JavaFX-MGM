@@ -180,7 +180,8 @@ public class Personal extends Controlador implements Initializable {
         paramsJSON.put("huella3", huellas[3]);
         paramsJSON.put("huella4", huellas[4]);
         paramsJSON.put("tipo", TipoUsuario.getSelectionModel().getSelectedIndex());
-        paramsJSON.put("inhabilitado", Inhabilitado.getSelectionModel().getSelectedIndex());
+        int inhabilitado = Inhabilitado.getSelectionModel().getSelectedIndex();
+        paramsJSON.put("inhabilitado", inhabilitado==-1?0:inhabilitado);
 
         paramsJSON.put("idClinica", parametros.get(0).get("idClinica"));
         JsonArray rootArray = Funciones.consultarBD(paramsJSON);
