@@ -5,13 +5,15 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VistaReporteGeneralVales">
+<AnchorPane fx:id="Pane" prefHeight="550.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controlador.VistaReporteGeneralVales">
    <children>
       <JFXTreeTableView fx:id="TablaReporte" layoutX="59.0" layoutY="238.0" prefHeight="212.0" prefWidth="820.0" AnchorPane.bottomAnchor="100.0" AnchorPane.leftAnchor="40.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="238.0" />
       <Label fx:id="Titulo" alignment="CENTER" contentDisplay="CENTER" layoutX="59.0" layoutY="14.0" text="Título de reporte" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0" AnchorPane.topAnchor="20.0">
@@ -70,5 +72,11 @@
             </ImageView>
          </graphic>
       </Button>
+      <RadioButton fx:id="Entradas" layoutX="542.0" layoutY="147.0" mnemonicParsing="false" selected="true" text="Entradas" AnchorPane.leftAnchor="542.0">
+         <toggleGroup>
+            <ToggleGroup fx:id="opcion" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton fx:id="Salidas" layoutX="542.0" layoutY="193.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="92.0" text="Salidas" toggleGroup="$opcion" AnchorPane.leftAnchor="542.0" />
    </children>
 </AnchorPane>

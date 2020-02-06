@@ -14,9 +14,7 @@ import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.Label;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -53,10 +51,16 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
     @FXML
     private JFXDatePicker FechaFin;
 
+    @FXML
+    private RadioButton Entradas;
+
+    @FXML
+    private ToggleGroup opcion;
+
+    @FXML
+    private RadioButton Salidas;
+
     Map<String,Object> paramsJSONReporte = new LinkedHashMap<>();
-
-    ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
     VistaReporte vr=null;
     String descripcion = "";
     @FXML
@@ -79,9 +83,7 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
     void imprimir(ActionEvent event) {
 
         try {
-
-
-            new Reporte().mostrarReporte2("reportes/reporteValesEntrada.jrxml", list);
+            new Reporte().mostrarReporte2("reportes/reporteValesEntrada.jrxml", Funciones.table2JasperReports(listaReporte) );
         } catch (JRException e) {
             e.printStackTrace();
         }
@@ -90,9 +92,6 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
 
     @FXML
     void descargar(ActionEvent event) {
-        vr = listaReporte.remove(listaReporte.size()-1);
-        prepararPDF(false, true);
-        listaReporte.add(vr);
 
     }
 
@@ -105,58 +104,7 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
     }
     private ObservableList<VistaReporte> listaReporte;
     private String[] titulos;
-    private void prepararPDF(boolean imprimir, boolean guardar) {
-        String tituloAnterior = "";
-        ArrayList<PDFvalores> valoresPDF = new ArrayList<>();
-        Map<String, String> valorPDf = new LinkedHashMap<>();
 
-        String predeterminados = "celdaTitulo="+(String) parametros.get(0).get("Titulo") +
-                "@celdaDescripcion="+descripcion+
-                "@celdaTratamiento="+vr.getDato("Tratamiento")+
-                "@celdaProducto="+vr.getDato("Producto")+
-                "@celdaTotal="+vr.getDato("Total");
-
-        valoresPDF.add(new PDFvalores("-1", predeterminados) );
-
-        int row = 0;
-        for(VistaReporte fila: listaReporte) {
-
-
-            String valor="";
-            for(int col=0; col<titulos.length; col++) {
-
-                String t = titulos[col].split(":")[0].replace(" ", "");
-                String v = fila.getDato(t)==null?"":fila.getDato(t);
-                valor += t+"="+v+"@";
-                // System.out.print(row+", "+col+"="+valor+"\t");
-
-            }
-            valoresPDF.add(new PDFvalores(row+"" ,valor));
-            row++;
-        }
-
-
-        File file = null;
-        String destino=null;
-        if(guardar) {
-            final FileChooser fileChooser = new FileChooser();
-            fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Portable Document Format(*.pdf)", "*.pdf"));
-            file = fileChooser.showSaveDialog(Pane.getScene().getWindow());
-            if(file == null)
-                return;
-
-            destino = file.getAbsolutePath();
-        }
-        try {
-            Funciones.llenarPDF2((String) parametros.get(0).get("pdf"),  valoresPDF, imprimir, guardar?destino:null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-
-
-
-    }
 
     @Override
     public void init() {
@@ -184,11 +132,9 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
 
 
         TablaReporte.setRoot(root);
-
         TablaReporte.setEditable(true);
         TablaReporte.setShowRoot(false);
         TablaReporte.setColumnResizePolicy(TreeTableView.UNCONSTRAINED_RESIZE_POLICY);
-
         //FechaInicio.setValue(LocalDate.now().minusMonths(1) );
         FechaInicio.setValue(LocalDate.now() );
         FechaFin.setValue(LocalDate.now() );
@@ -213,11 +159,10 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
 
         VistaReporte vrTotal=null;
         String actividad = (String) parametros.get(0).get("reporte");
-        //list.clear();
         listaReporte.clear();
         paramsJSONReporte.put("Actividad", actividad);
+        paramsJSONReporte.put("tipo", Entradas.isSelected()?"entrada":"salida");
 
-        //paramsJSONReporte.put("idClinica", Configuraciones.idClinica);
         JsonArray rootArray = Funciones.consultarBD(paramsJSONReporte);
         String idAlmacenAnterior  = "";
 
@@ -254,10 +199,7 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
                 parameters.put("clave", v.get("clave"));
                 parameters.put("nombre", v.get("nombre"));
                 parameters.put("cantidad", v.get("cantidad"));
-                System.out.println(v);
-                System.out.println("Cantidad: "+v.get("cantidad"));
                 totalProductos = totalProductos + Integer.valueOf(v.get("cantidad")+"");
-                //list.add(parameters);
 
                 vistaReporte = vistaReporte.registroNuevo();
                 vistaReporte.setDatos(v);
@@ -267,8 +209,6 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
             vistaReporte.setDato("nombre", "Cantidad total de productos");
             vistaReporte.setDato("cantidad", totalProductos+"");
             listaReporte.add(vistaReporte);
-
-            list = Funciones.table2JasperReports(listaReporte);
         }
     }
 
