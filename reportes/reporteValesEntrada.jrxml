@@ -2,6 +2,9 @@
 <!-- Created with Jaspersoft Studio version 6.11.0.final using JasperReports Library version 6.11.0-0c4056ccaa4d25a5a8c45672d2f764ea3498bebb  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="reporteValesEntrada" pageWidth="612" pageHeight="792" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4fc75060-24c2-4d8d-b836-f569b87676c8">
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="One Empty Record"/>
+	<parameter name="DESCRIPCION" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="TITULO" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="CLINICA" class="java.lang.String" isForPrompting="false"/>
 	<queryString>
 		<![CDATA[]]>
 	</queryString>
@@ -12,20 +15,46 @@
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="87" splitType="Stretch">
+		<band height="75" splitType="Stretch">
 			<image>
-				<reportElement x="0" y="10" width="120" height="60" uuid="aa0358d4-ac52-4213-8b48-ec0382fb3977"/>
+				<reportElement x="0" y="-10" width="120" height="60" uuid="aa0358d4-ac52-4213-8b48-ec0382fb3977"/>
 				<imageExpression><![CDATA["imgs/logo_mgm.jpg"]]></imageExpression>
 			</image>
-			<staticText>
-				<reportElement x="171" y="28" width="231" height="30" uuid="a034b094-11dc-4964-b887-3a9ab193e73c"/>
+			<textField>
+				<reportElement x="180" y="-10" width="382" height="30" uuid="ad50a714-a0ab-4c19-97c6-0915ee8a29c9"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font size="18" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$P{TITULO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="27" width="382" height="40" uuid="797e381d-a40c-4609-8733-487bf1051bcd"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle"/>
-				<text><![CDATA[Reporte de vales de salida]]></text>
+				<textFieldExpression><![CDATA[$P{DESCRIPCION}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="46" y="47" width="134" height="20" uuid="e6bf3cd2-8424-48e9-8e9b-2a760ebec07a"/>
+				<textFieldExpression><![CDATA[$P{CLINICA}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="0" y="47" width="40" height="20" uuid="c362fba8-8588-4954-a175-0afdf6fb0c15"/>
+				<text><![CDATA[Clinica:]]></text>
 			</staticText>
 		</band>
 	</title>
 	<pageHeader>
-		<band height="35" splitType="Stretch"/>
+		<band height="20" splitType="Stretch">
+			<textField>
+				<reportElement x="420" y="0" width="100" height="12" uuid="4b3142ec-9c90-4511-a97f-32d1e53decf9"/>
+				<textElement textAlignment="Right"/>
+				<textFieldExpression><![CDATA["Hoja " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField evaluationTime="Report">
+				<reportElement x="520" y="0" width="60" height="12" uuid="e46f0af4-e51e-4576-9ab2-f30a7cb2cb49"/>
+				<textElement textAlignment="Left"/>
+				<textFieldExpression><![CDATA[" de " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
 	</pageHeader>
 	<columnHeader>
 		<band height="30" splitType="Stretch">
@@ -33,18 +62,45 @@
 				<reportElement x="0" y="0" width="80" height="30" uuid="4cf202a0-38fe-40fd-bb5e-f438298dc554">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4a97a05d-0a92-40eb-84d8-92ed9229494b"/>
 				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Clave]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="80" y="0" width="350" height="30" uuid="acc9b9f6-f148-4696-9e4e-5ac75d05ec23">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ef5dbf07-9666-4106-a9da-49e3b22e3acd"/>
 				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Nombre]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="430" y="0" width="150" height="30" uuid="7f3353f9-8e7d-40e8-aaeb-5e99c5994c3d">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="dd138fb0-e7f5-48d0-a2ed-49264c50f662"/>
 				</reportElement>
+				<box>
+					<topPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="1.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
 				<text><![CDATA[Cantidad]]></text>
 			</staticText>
 		</band>
@@ -61,12 +117,14 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{clave}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="80" y="0" width="350" height="30" uuid="763c4bea-e0ae-4478-b7b3-66e210320076">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="ef5dbf07-9666-4106-a9da-49e3b22e3acd"/>
+					<property name="com.jaspersoft.studio.unit.spacingBefore" value="pixel"/>
+					<property name="com.jaspersoft.studio.unit.leftIndent" value="px"/>
 				</reportElement>
 				<box>
 					<topPen lineWidth="1.0"/>
@@ -74,7 +132,9 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement verticalAlignment="Middle">
+					<paragraph leftIndent="10"/>
+				</textElement>
 				<textFieldExpression><![CDATA[$F{nombre}]]></textFieldExpression>
 			</textField>
 			<textField>
@@ -87,7 +147,7 @@
 					<bottomPen lineWidth="1.0"/>
 					<rightPen lineWidth="1.0"/>
 				</box>
-				<textElement verticalAlignment="Middle"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
 				<textFieldExpression><![CDATA[$F{cantidad}]]></textFieldExpression>
 			</textField>
 		</band>

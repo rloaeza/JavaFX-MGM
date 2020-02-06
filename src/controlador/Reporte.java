@@ -10,10 +10,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Reporte extends JFrame {
-    public void mostrarReporte2(String reporte, ArrayList<Map<String, Object>>valores) throws JRException {
+    public void mostrarReporte2(String reporte, ArrayList<Map<String, Object>>valores, HashMap parametros) throws JRException {
         JasperReport jasperReport = JasperCompileManager.compileReport(reporte);
         JRBeanCollectionDataSource beanColDataSource = new JRBeanCollectionDataSource(valores);
-        JasperPrint print = JasperFillManager.fillReport(jasperReport, null, beanColDataSource);
+        JasperPrint print = JasperFillManager.fillReport(jasperReport, parametros, beanColDataSource);
         JRViewer viewer = new JRViewer(print);
         viewer.setOpaque(true);
         viewer.setVisible(true);

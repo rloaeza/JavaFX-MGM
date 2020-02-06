@@ -61,6 +61,7 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
     private RadioButton Salidas;
 
     Map<String,Object> paramsJSONReporte = new LinkedHashMap<>();
+    HashMap parametrosReporte = new HashMap();
     VistaReporte vr=null;
     String descripcion = "";
     @FXML
@@ -75,6 +76,9 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
                 FechaInicio.getValue()+" a\n" +
                 FechaFin.getValue()+"\n" +
                 "Generado: "+LocalDate.now();
+        parametrosReporte.put("DESCRIPCION", Descripcion.getText());
+        parametrosReporte.put("CLINICA", Configuraciones.nombreClinica);
+        parametrosReporte.put("TITULO", Titulo.getText() + (Entradas.isSelected()?" (Entradas)":" (Salidas)") );
         cargarDatos();
     }
 
@@ -83,7 +87,7 @@ public class VistaReporteGeneralVales extends Controlador implements Initializab
     void imprimir(ActionEvent event) {
 
         try {
-            new Reporte().mostrarReporte2("reportes/reporteValesEntrada.jrxml", Funciones.table2JasperReports(listaReporte) );
+            new Reporte().mostrarReporte2("reportes/reporteValesEntrada.jrxml", Funciones.table2JasperReports(listaReporte), parametrosReporte );
         } catch (JRException e) {
             e.printStackTrace();
         }
