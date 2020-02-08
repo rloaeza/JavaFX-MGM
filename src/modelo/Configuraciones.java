@@ -5,8 +5,8 @@ import javafx.collections.ObservableList;
 import java.net.URL;
 
 public class Configuraciones {
-    public static int versionId=56;
-    public static boolean estoyDepurando = true;
+    public static int versionId=57;
+    public static boolean estoyDepurando = false;
     public static String versionText = "Código: 0.20.";
     public static int versionIdActualizar=-1;
     public static String versionActualizar;

@@ -269,6 +269,7 @@ public class VistaReporteGeneralCompleto extends Controlador implements Initiali
     @Override
     public void init() {
 
+        Funciones.print("Estoy entrando a VistaReporteGeneralComleto.java\n");
         listaReporte = FXCollections.observableArrayList();
         TreeItem<modelo.VistaReporte> root = new RecursiveTreeItem<>(listaReporte, RecursiveTreeObject::getChildren);
 

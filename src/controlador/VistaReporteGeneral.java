@@ -58,6 +58,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
     VistaReporte vr=null;
 
     ArrayList<HashMap<String, Object>> list = new ArrayList<HashMap<String, Object>>();
+    HashMap parametrosReporte = new HashMap();
 
 
     String descripcion = "";
@@ -76,12 +77,23 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
                 FechaFin.getValue()+"\n" +
                 "Generado: "+LocalDate.now();
 
+        parametrosReporte.put("DESCRIPCION", Descripcion.getText());
+        parametrosReporte.put("CLINICA", Configuraciones.nombreClinica);
+        parametrosReporte.put("TITULO", Titulo.getText());
         cargarDatos();
     }
 
 
     @FXML
     void imprimir(ActionEvent event) {
+
+        try {
+            new Reporte().mostrarReporte2("reportes/reporteVentaGeneralCompleto.jrxml", Funciones.table2JasperReports(listaReporte), parametrosReporte );
+        } catch (JRException e) {
+            e.printStackTrace();
+        }
+
+        /*
         try {
 
 
@@ -277,6 +289,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
 
     @Override
     public void init() {
+        Funciones.print("Estoy entrando a VistaReporteGeneral.java\n");
 
         listaReporte = FXCollections.observableArrayList();
         TreeItem<modelo.VistaReporte> root = new RecursiveTreeItem<>(listaReporte, RecursiveTreeObject::getChildren);
@@ -353,7 +366,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
         String actividad = (String) parametros.get(0).get("reporteVentas");
 
         listaReporte.clear();
-        list.clear();
+
 
         paramsJSONReporte.put("Actividad", actividad);
         paramsJSONReporte.put("idClinica", Configuraciones.idClinica);
@@ -363,6 +376,8 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
         double producto = 0;
         double efectivo = 0;
         double tarjeta = 0;
+        double deposito = 0;
+        double transferencia = 0;
         double total  =0;
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
             int t = rootArray.size();
@@ -375,25 +390,20 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
                 producto += v.get("Producto")==null?0:Double.valueOf(v.get("Producto").toString());
                 efectivo += v.get("Efectivo")==null?0:Double.valueOf(v.get("Efectivo").toString());
                 tarjeta += v.get("Tarjeta")==null?0:Double.valueOf(v.get("Tarjeta").toString());
+                deposito += v.get("Deposito")==null?0:Double.valueOf(v.get("Deposito").toString());
+                transferencia += v.get("Transferencia")==null?0:Double.valueOf(v.get("Transferencia").toString());
                 total += v.get("Total")==null?0:Double.valueOf(v.get("Total").toString());
 
                 if(v.get("Tratamiento")!=null) v.put("Tratamiento", Funciones.valorAmoneda(Double.valueOf(v.get("Tratamiento").toString()))); else v.put("Tratamiento", "");
                 if(v.get("Producto")!=null) v.put("Producto", Funciones.valorAmoneda(Double.valueOf(v.get("Producto").toString()))); else v.put("Producto", "");
                 if(v.get("Efectivo")!=null) v.put("Efectivo", Funciones.valorAmoneda(Double.valueOf(v.get("Efectivo").toString()))); else v.put("Efectivo", "");
                 if(v.get("Tarjeta")!=null) v.put("Tarjeta", Funciones.valorAmoneda(Double.valueOf(v.get("Tarjeta").toString()))); else v.put("Tarjeta", "");
+
+                if(v.get("Deposito")!=null) v.put("Deposito", Funciones.valorAmoneda(Double.valueOf(v.get("Deposito").toString()))); else v.put("Deposito", "");
+                if(v.get("Transferencia")!=null) v.put("Transferencia", Funciones.valorAmoneda(Double.valueOf(v.get("Transferencia").toString()))); else v.put("Transferencia", "");
                 if(v.get("Total")!=null) v.put("Total", Funciones.valorAmoneda(Double.valueOf(v.get("Total").toString()))); else v.put("Total", "");
 
                 listaReporte.add(new modelo.VistaReporte(v));
-
-                HashMap<String, Object> fila = new HashMap<String, Object>();
-                fila.put("Venta", v.get("Venta"));
-                fila.put("Paciente", v.get("Paciente"));
-                fila.put("Tratamiento", v.get("Tratamiento"));
-                fila.put("Producto", v.get("Producto"));
-                fila.put("Efectivo", v.get("Efectivo"));
-                fila.put("Tarjeta", v.get("Tarjeta"));
-                fila.put("Total", v.get("Total"));
-                list.add(fila);
 
             }
             vrTotal = new VistaReporte(new LinkedHashMap<>());
@@ -403,21 +413,11 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
             vrTotal.setDato("Producto", Funciones.valorAmoneda(producto));
             vrTotal.setDato("Efectivo", Funciones.valorAmoneda(efectivo));
             vrTotal.setDato("Tarjeta", Funciones.valorAmoneda(tarjeta));
+            vrTotal.setDato("Deposito", Funciones.valorAmoneda(deposito));
+            vrTotal.setDato("Transferencia", Funciones.valorAmoneda(transferencia));
+            vrTotal.setDato("Descuento", "");
             vrTotal.setDato("Total", Funciones.valorAmoneda(total));
             listaReporte.add(vrTotal);
-
-
-            HashMap<String, Object> fila = new HashMap<String, Object>();
-            fila.put("Venta", "");
-            fila.put("Paciente", "Total");
-            fila.put("Tratamiento", Funciones.valorAmoneda(tratamiento));
-            fila.put("Producto", Funciones.valorAmoneda(producto));
-            fila.put("Efectivo", Funciones.valorAmoneda(efectivo));
-            fila.put("Tarjeta", Funciones.valorAmoneda(tarjeta));
-            fila.put("Total", Funciones.valorAmoneda(total));
-            list.add(fila);
-
-
 
             vrSig = new VistaReporte(new LinkedHashMap<>());
             vrSig.setDato("Venta", "");
@@ -426,20 +426,11 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
             vrSig.setDato("Producto", "");
             vrSig.setDato("Efectivo", "");
             vrSig.setDato("Tarjeta", "");
+            vrSig.setDato("Deposito", "");
+            vrSig.setDato("Transferencia", "");
+            vrSig.setDato("Descuento", "");
             vrSig.setDato("Total", "");
             listaReporte.add(vrSig);
-
-
-            HashMap<String, Object> filaNueva = new HashMap<String, Object>();
-            filaNueva.put("Venta", "");
-            filaNueva.put("Paciente", "");
-            filaNueva.put("Tratamiento", "");
-            filaNueva.put("Producto",  "");
-            filaNueva.put("Efectivo",  "");
-            filaNueva.put("Tarjeta",  "");
-            filaNueva.put("Total",  "");
-            list.add(filaNueva);
-
 
         }
 
@@ -457,6 +448,8 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
         double productoC = 0;
         double efectivoC = 0;
         double tarjetaC = 0;
+        double depositoC = 0;
+        double transferenciaC = 0;
         double totalC  =0;
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
 
@@ -467,21 +460,15 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
             vrSig.setDato("Producto", "");
             vrSig.setDato("Efectivo", "");
             vrSig.setDato("Tarjeta", "");
+            vrSig.setDato("Deposito", "");
+            vrSig.setDato("Transferencia", "");
+            vrSig.setDato("Descuento", "");
+
             vrSig.setDato("Total", "");
 
 
             listaReporte.add(vrSig);
 
-
-            HashMap<String, Object> filaNueva = new HashMap<String, Object>();
-            filaNueva.put("Venta", "");
-            filaNueva.put("Paciente", "CANCELADAS");
-            filaNueva.put("Tratamiento", "");
-            filaNueva.put("Producto",  "");
-            filaNueva.put("Efectivo",  "");
-            filaNueva.put("Tarjeta",  "");
-            filaNueva.put("Total",  "");
-            list.add(filaNueva);
 
             int t = rootArray.size();
             for(int i = 1; i< t; i++) {
@@ -493,47 +480,38 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
                 productoC += v.get("Producto")==null?0:Double.valueOf(v.get("Producto").toString());
                 efectivoC += v.get("Efectivo")==null?0:Double.valueOf(v.get("Efectivo").toString());
                 tarjetaC += v.get("Tarjeta")==null?0:Double.valueOf(v.get("Tarjeta").toString());
+
+                depositoC += v.get("Deposito")==null?0:Double.valueOf(v.get("Deposito").toString());
+                transferenciaC += v.get("Transferencia")==null?0:Double.valueOf(v.get("Transferencia").toString());
                 totalC += v.get("Total")==null?0:Double.valueOf(v.get("Total").toString());
 
                 if(v.get("Tratamiento")!=null) v.put("Tratamiento", Funciones.valorAmoneda(Double.valueOf(v.get("Tratamiento").toString()))); else v.put("Tratamiento", "");
                 if(v.get("Producto")!=null) v.put("Producto", Funciones.valorAmoneda(Double.valueOf(v.get("Producto").toString()))); else v.put("Producto", "");
                 if(v.get("Efectivo")!=null) v.put("Efectivo", Funciones.valorAmoneda(Double.valueOf(v.get("Efectivo").toString()))); else v.put("Efectivo", "");
                 if(v.get("Tarjeta")!=null) v.put("Tarjeta", Funciones.valorAmoneda(Double.valueOf(v.get("Tarjeta").toString()))); else v.put("Tarjeta", "");
+                if(v.get("Deposito")!=null) v.put("Deposito", Funciones.valorAmoneda(Double.valueOf(v.get("Deposito").toString()))); else v.put("Deposito", "");
+                if(v.get("Transferencia")!=null) v.put("Transferencia", Funciones.valorAmoneda(Double.valueOf(v.get("Transferencia").toString()))); else v.put("Transferencia", "");
                 if(v.get("Total")!=null) v.put("Total", Funciones.valorAmoneda(Double.valueOf(v.get("Total").toString()))); else v.put("Total", "");
 
                 listaReporte.add(new VistaReporte(v));
 
-                HashMap<String, Object> fila = new HashMap<String, Object>();
-                fila.put("Venta", v.get("Venta"));
-                fila.put("Paciente", v.get("Paciente"));
-                fila.put("Tratamiento", v.get("Tratamiento"));
-                fila.put("Producto", v.get("Producto"));
-                fila.put("Efectivo", v.get("Efectivo"));
-                fila.put("Tarjeta", v.get("Tarjeta"));
-                fila.put("Total", v.get("Total"));
-                list.add(fila);
 
 
             }
             vrTotal = new VistaReporte(new LinkedHashMap<>());
-            vrTotal.setDato("IdVenta", "");
+            vrTotal.setDato("Venta", "");
             vrTotal.setDato("Paciente", "Total");
             vrTotal.setDato("Tratamiento", Funciones.valorAmoneda(tratamientoC));
             vrTotal.setDato("Producto", Funciones.valorAmoneda(productoC));
             vrTotal.setDato("Efectivo", Funciones.valorAmoneda(efectivoC));
             vrTotal.setDato("Tarjeta", Funciones.valorAmoneda(tarjetaC));
+
+            vrTotal.setDato("Deposito", Funciones.valorAmoneda(depositoC));
+            vrTotal.setDato("Transferencia", Funciones.valorAmoneda(transferenciaC));
             vrTotal.setDato("Total", Funciones.valorAmoneda(totalC));
             listaReporte.add(vrTotal);
 
-            HashMap<String, Object> fila = new HashMap<String, Object>();
-            fila.put("Venta", "");
-            fila.put("Paciente", "Total");
-            fila.put("Tratamiento", Funciones.valorAmoneda(tratamientoC));
-            fila.put("Producto", Funciones.valorAmoneda(productoC));
-            fila.put("Efectivo", Funciones.valorAmoneda(efectivoC));
-            fila.put("Tarjeta", Funciones.valorAmoneda(tarjetaC));
-            fila.put("Total", Funciones.valorAmoneda(totalC));
-            list.add(fila);
+
 
 
             vrSig = new VistaReporte(new LinkedHashMap<>());
@@ -543,42 +521,26 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
             vrSig.setDato("Producto", "");
             vrSig.setDato("Efectivo", "");
             vrSig.setDato("Tarjeta", "");
+            vrSig.setDato("Deposito", "");
+            vrSig.setDato("Transferencia", "");
+            vrSig.setDato("Descuento", "");
             vrSig.setDato("Total", "");
             listaReporte.add(vrSig);
 
-            filaNueva = new HashMap<String, Object>();
-            filaNueva.put("Venta", "");
-            filaNueva.put("Paciente", "");
-            filaNueva.put("Tratamiento", "");
-            filaNueva.put("Producto",  "");
-            filaNueva.put("Efectivo",  "");
-            filaNueva.put("Tarjeta",  "");
-            filaNueva.put("Total",  "");
-            list.add(filaNueva);
 
 
             vrTotal = new VistaReporte(new LinkedHashMap<>());
-            vrTotal.setDato("IdVenta", "");
+            vrTotal.setDato("Venta", "");
             vrTotal.setDato("Paciente", "Total General");
             vrTotal.setDato("Tratamiento", Funciones.valorAmoneda(tratamiento));
             vrTotal.setDato("Producto", Funciones.valorAmoneda(producto));
             vrTotal.setDato("Efectivo", Funciones.valorAmoneda(efectivo));
             vrTotal.setDato("Tarjeta", Funciones.valorAmoneda(tarjeta));
+
+            vrTotal.setDato("Deposito", Funciones.valorAmoneda(deposito));
+            vrTotal.setDato("Transferencia", Funciones.valorAmoneda(transferencia));
             vrTotal.setDato("Total", Funciones.valorAmoneda(total));
             listaReporte.add(vrTotal);
-
-            fila = new HashMap<String, Object>();
-            fila.put("Venta", "");
-            fila.put("Paciente", "Total General");
-            fila.put("Tratamiento", Funciones.valorAmoneda(tratamiento));
-            fila.put("Producto", Funciones.valorAmoneda(producto));
-            fila.put("Efectivo", Funciones.valorAmoneda(efectivo));
-            fila.put("Tarjeta", Funciones.valorAmoneda(tarjeta));
-            fila.put("Total", Funciones.valorAmoneda(total));
-            list.add(fila);
-
-
-
 
         }
 

@@ -964,4 +964,11 @@ public class Funciones {
             SimpleDateFormat dt1 = new SimpleDateFormat(formatoDestino);
             return dt1.format(date);
     }
+
+    public static void print(String msg) {
+        if( Configuraciones.estoyDepurando ) {
+            System.out.print(msg);
+        }
+
+    }
 }
