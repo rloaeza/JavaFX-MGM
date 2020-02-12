@@ -377,6 +377,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
         double efectivo = 0;
         double tarjeta = 0;
         double deposito = 0;
+        double descuentoEfectivo = 0;
         double transferencia = 0;
         double total  =0;
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
@@ -391,6 +392,8 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
                 efectivo += v.get("Efectivo")==null?0:Double.valueOf(v.get("Efectivo").toString());
                 tarjeta += v.get("Tarjeta")==null?0:Double.valueOf(v.get("Tarjeta").toString());
                 deposito += v.get("Deposito")==null?0:Double.valueOf(v.get("Deposito").toString());
+                descuentoEfectivo += v.get("DescuentoEfectivo")==null?0:Double.valueOf(v.get("DescuentoEfectivo").toString());
+
                 transferencia += v.get("Transferencia")==null?0:Double.valueOf(v.get("Transferencia").toString());
                 total += v.get("Total")==null?0:Double.valueOf(v.get("Total").toString());
 
@@ -400,6 +403,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
                 if(v.get("Tarjeta")!=null) v.put("Tarjeta", Funciones.valorAmoneda(Double.valueOf(v.get("Tarjeta").toString()))); else v.put("Tarjeta", "");
 
                 if(v.get("Deposito")!=null) v.put("Deposito", Funciones.valorAmoneda(Double.valueOf(v.get("Deposito").toString()))); else v.put("Deposito", "");
+                if(v.get("DescuentoEfectivo")!=null) v.put("DescuentoEfectivo", Funciones.valorAmoneda(Double.valueOf(v.get("DescuentoEfectivo").toString()))); else v.put("DescuentoEfectivo", "");
                 if(v.get("Transferencia")!=null) v.put("Transferencia", Funciones.valorAmoneda(Double.valueOf(v.get("Transferencia").toString()))); else v.put("Transferencia", "");
                 if(v.get("Total")!=null) v.put("Total", Funciones.valorAmoneda(Double.valueOf(v.get("Total").toString()))); else v.put("Total", "");
 
@@ -414,8 +418,10 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
             vrTotal.setDato("Efectivo", Funciones.valorAmoneda(efectivo));
             vrTotal.setDato("Tarjeta", Funciones.valorAmoneda(tarjeta));
             vrTotal.setDato("Deposito", Funciones.valorAmoneda(deposito));
+
             vrTotal.setDato("Transferencia", Funciones.valorAmoneda(transferencia));
             vrTotal.setDato("Descuento", "");
+            vrTotal.setDato("DescuentoEfectivo", Funciones.valorAmoneda(descuentoEfectivo));
             vrTotal.setDato("Total", Funciones.valorAmoneda(total));
             listaReporte.add(vrTotal);
 
@@ -429,6 +435,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
             vrSig.setDato("Deposito", "");
             vrSig.setDato("Transferencia", "");
             vrSig.setDato("Descuento", "");
+            vrSig.setDato("DescuentoEfectivo", "");
             vrSig.setDato("Total", "");
             listaReporte.add(vrSig);
 
@@ -449,6 +456,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
         double efectivoC = 0;
         double tarjetaC = 0;
         double depositoC = 0;
+        double descuentoEfectivoC = 0;
         double transferenciaC = 0;
         double totalC  =0;
         if(rootArray.get(0).getAsJsonObject().get(Funciones.res).getAsInt()>0) {
@@ -463,7 +471,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
             vrSig.setDato("Deposito", "");
             vrSig.setDato("Transferencia", "");
             vrSig.setDato("Descuento", "");
-
+            vrSig.setDato("DescuentoEfectivo", "");
             vrSig.setDato("Total", "");
 
 
@@ -482,6 +490,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
                 tarjetaC += v.get("Tarjeta")==null?0:Double.valueOf(v.get("Tarjeta").toString());
 
                 depositoC += v.get("Deposito")==null?0:Double.valueOf(v.get("Deposito").toString());
+                descuentoEfectivoC += v.get("DescuentoEfectivo")==null?0:Double.valueOf(v.get("DescuentoEfectivo").toString());
                 transferenciaC += v.get("Transferencia")==null?0:Double.valueOf(v.get("Transferencia").toString());
                 totalC += v.get("Total")==null?0:Double.valueOf(v.get("Total").toString());
 
@@ -490,6 +499,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
                 if(v.get("Efectivo")!=null) v.put("Efectivo", Funciones.valorAmoneda(Double.valueOf(v.get("Efectivo").toString()))); else v.put("Efectivo", "");
                 if(v.get("Tarjeta")!=null) v.put("Tarjeta", Funciones.valorAmoneda(Double.valueOf(v.get("Tarjeta").toString()))); else v.put("Tarjeta", "");
                 if(v.get("Deposito")!=null) v.put("Deposito", Funciones.valorAmoneda(Double.valueOf(v.get("Deposito").toString()))); else v.put("Deposito", "");
+                if(v.get("DescuentoEfectivo")!=null) v.put("DescuentoEfectivo", Funciones.valorAmoneda(Double.valueOf(v.get("DescuentoEfectivo").toString()))); else v.put("DescuentoEfectivo", "");
                 if(v.get("Transferencia")!=null) v.put("Transferencia", Funciones.valorAmoneda(Double.valueOf(v.get("Transferencia").toString()))); else v.put("Transferencia", "");
                 if(v.get("Total")!=null) v.put("Total", Funciones.valorAmoneda(Double.valueOf(v.get("Total").toString()))); else v.put("Total", "");
 
@@ -507,6 +517,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
             vrTotal.setDato("Tarjeta", Funciones.valorAmoneda(tarjetaC));
 
             vrTotal.setDato("Deposito", Funciones.valorAmoneda(depositoC));
+            vrTotal.setDato("DescuentoEfectivo", Funciones.valorAmoneda(descuentoEfectivo));
             vrTotal.setDato("Transferencia", Funciones.valorAmoneda(transferenciaC));
             vrTotal.setDato("Total", Funciones.valorAmoneda(totalC));
             listaReporte.add(vrTotal);
@@ -522,6 +533,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
             vrSig.setDato("Efectivo", "");
             vrSig.setDato("Tarjeta", "");
             vrSig.setDato("Deposito", "");
+            vrSig.setDato("DescuentoEfectivo", "");
             vrSig.setDato("Transferencia", "");
             vrSig.setDato("Descuento", "");
             vrSig.setDato("Total", "");
@@ -538,6 +550,7 @@ public class VistaReporteGeneral extends Controlador implements Initializable {
             vrTotal.setDato("Tarjeta", Funciones.valorAmoneda(tarjeta));
 
             vrTotal.setDato("Deposito", Funciones.valorAmoneda(deposito));
+            vrTotal.setDato("DescuentoEfectivo", Funciones.valorAmoneda(descuentoEfectivo));
             vrTotal.setDato("Transferencia", Funciones.valorAmoneda(transferencia));
             vrTotal.setDato("Total", Funciones.valorAmoneda(total));
             listaReporte.add(vrTotal);
